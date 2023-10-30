@@ -5,18 +5,21 @@ const TotalButton = styled.div`
     justify-content: center;
     align-items: center;    
     position: fixed;
-    bottom: 12.32%;
+    bottom: 10.32vh;
     width: 350px;
-    height: 8.10%;
+    height: 8.10vh;
     background-color: #FFC700;
     border-radius: 12px;
+
+    /*font*/
     color: #333;
     font-size: 18px;
     font-weight: 600;
+    cursor: pointer;
 `;
 const JoinButton = (props) => {
     return(
-        <TotalButton>{props.btnName}</TotalButton>
+        <TotalButton onClick={props.nextPage}>{props.btnName}</TotalButton>
     )
 }
 export default JoinButton;

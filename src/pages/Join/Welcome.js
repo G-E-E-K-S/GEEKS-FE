@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
-import JoinButton from '../../components/JoinButton';
+import JoinButton from '../../components/Join/JoinButton';
 import HeaderLogo from '../../assets/img/headerLogo.svg';
 import Chick from '../../assets/img/chick.svg';
 
 const TopLogo = styled.img`
-    margin-top: 6.63%;
-    margin-bottom: 4.73%;
+    margin-top: 6.63vh;
+    margin-bottom: 4.73vh;
 `;
 
 const StartMent = styled.div`
@@ -24,7 +24,7 @@ const SubMent = styled.div`
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
-    margin-top: 1.89%;
+    margin-top: 1.89vh;
 `;
 
 const TopImg = styled.div`
@@ -34,10 +34,15 @@ const TopImg = styled.div`
     align-items: center;
 `;
 const MainImg = styled.img`
-    margin-top: 5.09%;
+    margin-top: 5.09vh;
 `;
 const Intro = () => {
-
+    const navigator = useNavigate();
+    
+    const nextPage = () => {
+        navigator('/inputemail');
+    }
+  
     return (
         <c.Totalframe>
             <c.ScreenComponent>
@@ -47,7 +52,7 @@ const Intro = () => {
                 <TopImg>
                     <MainImg src={Chick}/>
                 </TopImg>
-                <JoinButton btnName={'시작하기'}/>
+                <JoinButton btnName={'시작하기'} nextPage={nextPage}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );
