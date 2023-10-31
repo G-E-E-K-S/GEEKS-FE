@@ -5,7 +5,7 @@ const TotalButton = styled.div`
     justify-content: center;
     align-items: center;    
     position: fixed;
-    bottom: 10.32vh;
+    bottom: 10.18vh;
     width: 350px;
     height: 8.10vh;
     background-color: ${(props) => (props.select ? '#F7F7F7' : '#FFC700')};
