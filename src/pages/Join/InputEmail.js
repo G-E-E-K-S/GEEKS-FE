@@ -5,6 +5,7 @@ import * as c from '../../components/Common/CommonStyle';
 import GoBack from '../../components/Join/GoBack';
 import TopNumber from '../../components/Join/TopNumber';
 import JoinButton from '../../components/Join/JoinButton';
+import MainText from '../../components/Join/MainText';
 
 const InputEmailText = styled.div`
     font-size: 24px;
@@ -50,8 +51,8 @@ const InputEmail = () => {
         <c.Totalframe>
             <c.ScreenComponent>
                 <GoBack/>
-                <TopNumber/>
-                <InputEmailText>{`재학생 인증을 위해\n학교 이메일 주소를 입력해 주세요`}</InputEmailText>
+                <TopNumber flag={1}/>
+                <MainText maintitle={`재학생 인증을 위해\n학교 이메일 주소를 입력해 주세요`}/>
                 <InputInfos isSelected={isSelected}>
                     <Input maxLength={9} onClick={()=>ChangeColor()} />
                     <Univ>@sangmyung.kr</Univ>
