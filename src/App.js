@@ -5,6 +5,7 @@ import InputEmail from './pages/Join/InputEmail';
 import InputCode from './pages/Join/InputCode';
 import NickName from "./pages/Join/NickName";
 import QuesText from "./pages/Join/QuesText";
+import FinalPage from "./pages/Join/FinalPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/inputcode" element={<InputCode/>} />
           <Route path="/nickname" element={<NickName/>} />
           <Route path="/questiontext" element={<QuesText/>} />
+          <Route path="/finalpage" element={<FinalPage/>} />
         </Routes>
       </Router>
     </div>
