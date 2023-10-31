@@ -8,7 +8,7 @@ const TotalButton = styled.div`
     bottom: 10.32vh;
     width: 350px;
     height: 8.10vh;
-    background-color: #FFC700;
+    background-color: ${(props) => (props.select ? '#F7F7F7' : '#FFC700')};
     border-radius: 12px;
 
     /*font*/
@@ -19,7 +19,7 @@ const TotalButton = styled.div`
 `;
 const JoinButton = (props) => {
     return(
-        <TotalButton onClick={props.nextPage}>{props.btnName}</TotalButton>
+        <TotalButton onClick={props.nextPage} select={props.select}>{props.btnName}</TotalButton>
     )
 }
 export default JoinButton;
