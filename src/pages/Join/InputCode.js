@@ -50,7 +50,7 @@ const Code = styled.input`
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
-    border-bottom: 2px solid ${(props)=>props.isSelected ? '#707070' : '#EFEFEF'};
+    border-bottom: 2px solid ${(props)=>props.isSelected ? '#ECAA00' : '#EFEFEF'};
     margin-right: 20px;
     font-style: normal;
     text-align: center;

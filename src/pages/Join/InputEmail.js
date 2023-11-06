@@ -19,7 +19,7 @@ const InputInfos = styled.div`
     display: flex;
     margin-top: 7.10vh;
     padding: 7px 0px 8px 0px;
-    border-bottom: 2px solid ${(props) => (props.isSelected ? '#707070' : '#EFEFEF')};
+    border-bottom: 2px solid ${(props) => (props.isSelected ? '#ECAA00' : '#EFEFEF')};
     color: #C4C7C7;
     font-size: 24px;
     font-weight: 600;
@@ -54,7 +54,7 @@ const InputEmail = () => {
                 <TopNumber flag={1}/>
                 <MainText maintitle={`재학생 인증을 위해\n학교 이메일 주소를 입력해 주세요`}/>
                 <InputInfos isSelected={isSelected}>
-                    <Input maxLength={9} onClick={()=>ChangeColor()} />
+                    <Input maxLength={9} placeholder='학번' onClick={()=>ChangeColor()} />
                     <Univ>@sangmyung.kr</Univ>
                 </InputInfos>
                 <JoinButton btnName={'인증 메일 받기'} />
