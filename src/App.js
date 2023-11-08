@@ -9,6 +9,7 @@ import QuesText from "./pages/Join/QuesText";
 import FinalPage from "./pages/Join/FinalPage";
 import Gender from "./pages/Join/Gender";
 import Major from "./pages/Join/Major";
+import Dormitory from "./pages/Join/Dormitory";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/major" element={<Major/>} />
           <Route path="/finalpage" element={<FinalPage/>} />
           <Route path="/gender" element={<Gender/>} />
+          <Route path="/dormitory" element={<Dormitory/>} />
         </Routes>
       </Router>
     </div>
