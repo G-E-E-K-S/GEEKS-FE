@@ -14,6 +14,15 @@ const DormitoryTotal = styled.div`
     }
 `;
 
+const DormitoryBoxChoice = styled.div`
+    height: 9vh;
+    border-radius: 12px;
+    background: #EFEFEF;
+    color: #707070;
+    padding-left: 20px;
+    margin-bottom: 1.89vh;
+`;
+
 const Dormitory = () => {
     const [isSelected, setIsSelected] = useState(false);
     const [isgirl, setIsgirl] = useState(false);

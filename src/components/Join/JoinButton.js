@@ -19,7 +19,7 @@ const TotalButton = styled.div`
 `;
 const JoinButton = (props) => {
     return(
-        <TotalButton onClick={props.nextPage} select={props.select}>{props.btnName}</TotalButton>
+        <TotalButton onClick={props.handleClick} select={props.select}>{props.btnName}</TotalButton>
     )
 }
 export default JoinButton;

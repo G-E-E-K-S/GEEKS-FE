@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
@@ -28,10 +29,26 @@ const Gender = () => {
         if(gender=='여자'){
             setIsgirl(true);
             setIsboy(false);
+            localStorage.setItem('mode', 2);
         }else{
             setIsgirl(false);
             setIsboy(true);
+            localStorage.setItem('mode', 1);
         }
+    }
+
+    const checkGender = () => {
+        const CurGender = isgirl ? 2 : 1;
+        async function fetchGenderPage(){
+            try{
+                axios.defaults.withCredentials=true; // allow cookies
+                const res = await axios.get("http://localhost:8080/member/gender?gender="+ CurGender);
+                console.log(res)
+            }catch(error){
+              console.error(error);
+            }
+        }
+        fetchGenderPage();
     }
 
     return (
@@ -43,7 +60,7 @@ const Gender = () => {
                     <GenderBox gender={'남자'} onClick={()=>SelectGender('남자')} isSelected={isboy}></GenderBox>
                     <GenderBox gender={'여자'} onClick={()=>SelectGender('여자')} isSelected={isgirl}></GenderBox>
                 </GenderTotal>
-                <JoinButton btnName={'다음'} />
+                <JoinButton btnName={'다음'} handleClick={()=>checkGender()}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );

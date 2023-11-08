@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
@@ -41,12 +42,25 @@ const Univ = styled.div`
 
 const InputEmail = () => {
     const [isSelected, setIsSelected] = useState(false);
+    const emailVal = useRef();
     const navigator = useNavigate();
 
     const ChangeColor = () => {
         setIsSelected(true);
     }
 
+    //axios
+    const handleEmail = () => {
+        async function fetchEmailPage(){
+            try{
+                axios.defaults.withCredentials=true; // allow cookies
+                const res = await axios.get("http://localhost:8080/mail/send?email="+emailVal.current.value + '@sangmyung.kr');
+            }catch(error){
+              console.error(error);
+            }
+        }
+        fetchEmailPage();
+    }
     return (
         <c.Totalframe>
             <c.ScreenComponent>
@@ -54,10 +68,10 @@ const InputEmail = () => {
                 <TopNumber flag={1}/>
                 <MainText maintitle={`재학생 인증을 위해\n학교 이메일 주소를 입력해 주세요`}/>
                 <InputInfos isSelected={isSelected}>
-                    <Input maxLength={9} placeholder='학번' onClick={()=>ChangeColor()} />
+                    <Input maxLength={9} placeholder='학번' onClick={()=>ChangeColor()} ref={emailVal}/>
                     <Univ>@sangmyung.kr</Univ>
                 </InputInfos>
-                <JoinButton btnName={'인증 메일 받기'} />
+                <JoinButton btnName={'인증 메일 받기'} handleClick={()=>handleEmail()}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );
