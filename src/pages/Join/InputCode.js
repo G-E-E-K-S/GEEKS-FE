@@ -1,4 +1,5 @@
 import React, { useState,useRef } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
@@ -66,18 +67,30 @@ const InputCode = () => {
     const inputRefs = [useRef(), useRef(), useRef(), useRef()];
     const [isSelected, setIsSelected] = useState(false);
     const navigator = useNavigate();
-    let num = "";
+    let code = "";
 
     const handleInputChange = (index, event) => {
         const nextIndex = index + 1;
     
-        num += event.target.value;
+        code += event.target.value;
     
         if (event.target.value.length === 1 && nextIndex < inputRefs.length) {
           inputRefs[nextIndex].current.focus();
         }
 
     };
+
+    const checkCode = () => {
+        async function fetchCode(){
+            try{
+                axios.defaults.withCredentials=true; // allow cookies
+                const res = await axios.get("http://localhost:8080/mail/auth?code="+code);
+            }catch(error){
+              console.error(error);
+            }
+        }
+        fetchCode();
+    }
 
     const ChangeBarColor = () => {
         setIsSelected(true);
@@ -105,7 +118,7 @@ const InputCode = () => {
                         onFocus={()=>ChangeBarColor()}/>
                     ))}
                 </InputNumber>
-                <JoinButton btnName={'코드 확인하기'} select={()=>ChangeBarColor()}/>
+                <JoinButton btnName={'코드 확인하기'} select={()=>ChangeBarColor()} handleClick={()=>checkCode()}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );

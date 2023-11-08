@@ -1,4 +1,5 @@
 import React, { useState,useRef } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
@@ -35,7 +36,7 @@ const LetterLen = styled.div`
 `;
 const NickName = () => {
     const [isSelected, setIsSelected] = useState(false);
-    const [inputval, setInputval] = useState('');
+    const [inputNickName, setInputNickName] = useState('');
     const letterCnt = useRef(0);
     const navigator = useNavigate();
 
@@ -45,14 +46,25 @@ const NickName = () => {
     
     const handleInputChange = (e) => {
         const value = e.target.value;
-        setInputval(value);
+        setInputNickName(value);
 
         // Calculate the length of the input value
         const length = value.length;
-        // You can limit it to 8 characters if needed
-        const maxLength = 8;
         // Update the letter count
         letterCnt.current = length;
+    }
+
+    const handleNickName = () => {
+        async function fetchNickName(){
+            try{
+                axios.defaults.withCredentials=true; // allow cookies
+                const res = await axios.get("http://localhost:8080/member/nickname?nickname="+inputNickName);
+                console.log(res)
+            }catch(error){
+              console.error(error);
+            }
+        }
+        fetchNickName();
     }
 
     return (
@@ -62,9 +74,9 @@ const NickName = () => {
                 <TopNumber/>
                 <MainText maintitle={`회원님을 표현할\n닉네임을 알려주세요`}/>
                 <InputNickName isSelected={isSelected} onClick={ChangeBarColor}
-                value={inputval} onChange={handleInputChange} maxLength={8}/>
+                value={inputNickName} onChange={handleInputChange} maxLength={8}/>
                 <LetterLen>{letterCnt.current}/{8}</LetterLen>
-                <JoinButton btnName={'다음'}/>
+                <JoinButton btnName={'다음'} handleClick={()=>handleNickName()}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );
