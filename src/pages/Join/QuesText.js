@@ -6,7 +6,7 @@ import GoBack from '../../components/Join/GoBack';
 import TopNumber from '../../components/Join/TopNumber';
 import JoinButton from '../../components/Join/JoinButton';
 import MainText from '../../components/Join/MainText';
-import Chick from '../../assets/img/chick.svg';
+import Chick from '../../assets/img/Join/chick.svg';
 
 const CenterImg = styled.div`
     width: 100%;

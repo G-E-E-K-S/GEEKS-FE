@@ -1,17 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Intro from './pages/Join/Intro';
-import Welcome from './pages/Join/Welcome';
-import InputEmail from './pages/Join/InputEmail';
-import InputCode from './pages/Join/InputCode';
-import Password from "./pages/Join/Password";
-import NickName from "./pages/Join/NickName";
-import QuesText from "./pages/Join/QuesText";
-import FinalPage from "./pages/Join/FinalPage";
-import Gender from "./pages/Join/Gender";
-import Major from "./pages/Join/Major";
-import Dormitory from "./pages/Join/Dormitory";
-import MainPage from "./pages/Main/Home";
-
+import {Intro, Welcome, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage} from './pages/Join/Index';
+import MainPage from './pages/Main/Home';
 function App() {
   return (
     <div>

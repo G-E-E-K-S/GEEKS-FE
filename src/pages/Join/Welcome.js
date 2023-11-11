@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
 import JoinButton from '../../components/Join/JoinButton';
-import HeaderLogo from '../../assets/img/headerLogo.svg';
-import Chick from '../../assets/img/chick.svg';
+import HeaderLogo from '../../assets/img/Join/headerLogo.svg';
+import Chick from '../../assets/img/Join/chick.svg';
 
 const TopLogo = styled.img`
     margin-top: 6.63vh;
@@ -36,7 +36,7 @@ const TopImg = styled.div`
 const MainImg = styled.img`
     margin-top: 5.09vh;
 `;
-const Intro = () => {
+const Welcome = () => {
     const navigator = useNavigate();
     
     const nextPage = () => {
@@ -58,4 +58,4 @@ const Intro = () => {
     );
 };
 
-export default Intro;
+export default Welcome;

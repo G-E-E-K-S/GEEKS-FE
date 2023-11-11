@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import closeModal from '../../assets/img/closeModal.svg';
+import closeModal from '../../assets/img/Join/closeModal.svg';
 
 const ModalBackground = styled.div`
   position: absolute;

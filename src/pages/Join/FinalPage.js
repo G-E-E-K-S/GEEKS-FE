@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
 import JoinButton from '../../components/Join/JoinButton';
-import Home from '../../assets/img/joinFinalPage.svg';
+import Home from '../../assets/img/Join/joinFinalPage.svg';
 
 const WelcomeText = styled.div`
     margin-top: 14.21vh;

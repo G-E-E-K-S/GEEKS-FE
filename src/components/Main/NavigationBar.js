@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import styled from 'styled-components';
-import Home from '../../assets/img/Main/Navigation/home.svg';
-import FillHome from '../../assets/img/Main/Navigation/fillHome.svg';
-import Roommate from '../../assets/img/Main/Navigation/roommate.svg';
-import FillRoommate from '../../assets/img/Main/Navigation/fillRoommate.svg';
-import Chat from '../../assets/img/Main/Navigation/chat.svg';
-import FillChat from '../../assets/img/Main/Navigation/fillChat.svg';
-import Community from '../../assets/img/Main/Navigation/community.svg';
-import FillCommunity from '../../assets/img/Main/Navigation/fillCommumnity.svg';
-import Mypage from '../../assets/img/Main/Navigation/myPage.svg';
-import FillMyPage from '../../assets/img/Main/Navigation/fillMyPage.svg';
+import Home from '../../assets/img//Navigation/home.svg';
+import FillHome from '../../assets/img//Navigation/fillHome.svg';
+import Roommate from '../../assets/img//Navigation/roommate.svg';
+import FillRoommate from '../../assets/img//Navigation/fillRoommate.svg';
+import Chat from '../../assets/img//Navigation/chat.svg';
+import FillChat from '../../assets/img//Navigation/fillChat.svg';
+import Community from '../../assets/img//Navigation/community.svg';
+import FillCommunity from '../../assets/img//Navigation/fillCommumnity.svg';
+import Mypage from '../../assets/img/Navigation/myPage.svg';
+import FillMyPage from '../../assets/img//Navigation/fillMyPage.svg';
 
 const TotalNavigationBar = styled.div`
   box-sizing: border-box;

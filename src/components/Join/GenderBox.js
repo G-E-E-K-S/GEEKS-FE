@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import genderCheck from "../../assets/img/genderCheck.svg";
+import genderCheck from "../../assets/img/Join/genderCheck.svg";
 
 const GenderTotalBox = styled.div`
     width: 171px;

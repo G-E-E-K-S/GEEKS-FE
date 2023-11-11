@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
-import GoBackImg from "../../assets/img/goback.svg";
+import GoBackImg from "../../assets/img/Join/goback.svg";
 
 const GoBackTotal = styled.img`
     margin-top: 6.64vh;
