@@ -9,7 +9,6 @@ export const Totalframe = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  position: relative; 
 `;
 
 export const ScreenComponent = styled.div`
