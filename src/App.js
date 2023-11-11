@@ -1,6 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import {Intro, Welcome, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage} from './pages/Join/Index';
-import MainPage from './pages/Main/Home';
+import Home from './pages/Main/Home';
 function App() {
   return (
     <div>
@@ -17,7 +17,7 @@ function App() {
           <Route path="/finalpage" element={<FinalPage/>} />
           <Route path="/gender" element={<Gender/>} />
           <Route path="/dormitory" element={<Dormitory/>} />
-          <Route path="/main" element={<MainPage/>} />
+          <Route path="/home" element={<Home/>} />
         </Routes>
       </Router>
     </div>
