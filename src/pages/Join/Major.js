@@ -6,7 +6,7 @@ import GoBack from '../../components/Join/GoBack';
 import JoinButton from '../../components/Join/JoinButton';
 import MainText from '../../components/Join/MainText';
 import BottomSheet from '../../components/Join/BottmSheet';
-import UnderArrow from '../../assets/img/arrow_under.svg';
+import UnderArrow from '../../assets/img/Join/arrow_under.svg';
 
 const MajorTotal = styled.div`
     margin-top: 6.16vh;

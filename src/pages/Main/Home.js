@@ -7,6 +7,7 @@ const Home = () => {
     return (
         <c.Totalframe>
             <c.ScreenComponent>
+                <c.SubScreen></c.SubScreen>
             </c.ScreenComponent>
             <NavigationBar/>
         </c.Totalframe>
