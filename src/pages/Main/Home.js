@@ -91,10 +91,12 @@ const Home = () => {
                             <Icon src={stayOut}/>
                             <IconText>외박 신청</IconText>
                         </Icons>
-                        <Icons>
-                            <Icon src={dormiNoti}/>
-                            <IconText>기숙사 공지</IconText>
-                        </Icons>
+                        <a href={'https://www.smu.ac.kr/dormi2/board/notice.do'} target="_blank">
+                            <Icons>
+                                <Icon src={dormiNoti} />
+                                <IconText>기숙사 공지</IconText>
+                            </Icons>
+                        </a>
                     </System>
                     <Roommate>
                         <SubTitle subtitle={`은진님과 딱 맞는\n룸메이트를 찾았어요`}/>
