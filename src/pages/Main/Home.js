@@ -1,8 +1,15 @@
 import React from "react";
+import * as c from '../../components/Common/CommonStyle';
+import NavigationBar from '../../components/Main/NavigationBar';
 import styled from 'styled-components';
 
 const Home = () => {
-    return(<>
-    </>)
+    return (
+        <c.Totalframe>
+            <c.ScreenComponent>
+            </c.ScreenComponent>
+            <NavigationBar/>
+        </c.Totalframe>
+    );
 }
 export default Home
