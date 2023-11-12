@@ -63,6 +63,7 @@ const Password = () => {
   const [pwdSpecial, setpwdSpecial] = useState(false);
   const [pwdSame, setpwdSame] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
+  const [isNextPage, setIsNextPage] = useState(false);
   const navigator = useNavigate();
 
   const ChangeBarColor = () => {
@@ -72,21 +73,41 @@ const Password = () => {
   const handlePwd = () => {
     setShowPwd(!showPwd);
   };
-
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInputval(value);
-
-    const length = value.length;
-    const specialCharRegex = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\=\(\'\"]/;
-    const sameCharRegex = /(.)\1{3,}/;
-    // pwd len
-    length >= 8 && length <= 15 ? setPwdLen(true) : setPwdLen(false);
-    //pwd 특수문자
-    specialCharRegex.test(value) ? setpwdSpecial(true) : setpwdSpecial(false);
-    //pwd 4번반복여부
-    sameCharRegex.test(value) ? setpwdSame(false) : setpwdSame(true);
+  
+    const handleInputChange = (e) => {
+      const value = e.target.value;
+      setInputval(value);
+    
+    const validatePassword = () => {
+      return new Promise((resolve, reject) => {
+        const length = value.length;
+        const specialCharRegex = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\=\(\'\"]/;
+        const sameCharRegex = /(.)\1{3,}/;
+  
+        // pwd len
+        const isPwdLen = length >= 8 && length <= 15;
+        setPwdLen(isPwdLen);
+  
+        // pwd 특수문자
+        const hasPwdSpecial = specialCharRegex.test(value);
+        setpwdSpecial(hasPwdSpecial);
+  
+        // pwd 4번반복여부
+        const hasPwdSame = sameCharRegex.test(value);
+        setpwdSame(!hasPwdSame);
+  
+        // 하단 버튼색 바뀜유무
+        const isNextPage = isPwdLen && hasPwdSpecial && !hasPwdSame;
+        setIsNextPage(isNextPage);
+  
+        resolve(); // Resolve the Promise immediately
+      });
+    };
+  
+    validatePassword().then(() => {
+    });
   };
+  
 
   const checkPassword = () => {
     async function fetchPassword() {
@@ -138,7 +159,7 @@ const Password = () => {
             똑같은 문자가 4번 반복되면 안돼요
           </ConditionTxt>
         </PwdCondition>
-        <JoinButton btnName={"다음"} handleClick={() => checkPassword()} />
+        <JoinButton btnName={"다음"} handleClick={() => checkPassword()} isNextPage={isNextPage}/>
       </c.ScreenComponent>
     </c.Totalframe>
   );

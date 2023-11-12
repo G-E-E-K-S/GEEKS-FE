@@ -42,11 +42,16 @@ const Univ = styled.div`
 
 const InputEmail = () => {
     const [isSelected, setIsSelected] = useState(false);
+    const [isNextPage, setIsNextPage] = useState(false);
     const emailVal = useRef();
-    const navigator = useNavigate();
+    const navigate = useNavigate();
 
     const ChangeColor = () => {
         setIsSelected(true);
+    }
+    const handleEmailVal = () => {
+        let EmailLen = emailVal.current.value.length;
+        EmailLen > 0 ? setIsNextPage(true) : setIsNextPage(false);
     }
 
     //axios
@@ -55,11 +60,13 @@ const InputEmail = () => {
             try{
                 axios.defaults.withCredentials=true; // allow cookies
                 const res = await axios.get("http://localhost:8080/mail/send?email="+emailVal.current.value + '@sangmyung.kr');
+                res.data == 'duplicate' ? alert('중복'): navigate('/inputcode');
             }catch(error){
               console.error(error);
             }
         }
         fetchEmailPage();
+        
     }
     return (
         <c.Totalframe>
@@ -68,10 +75,10 @@ const InputEmail = () => {
                 <TopNumber page={1}/>
                 <MainText maintitle={`재학생 인증을 위해\n학교 이메일 주소를 입력해 주세요`}/>
                 <InputInfos isSelected={isSelected}>
-                    <Input maxLength={9} placeholder='학번' onClick={()=>ChangeColor()} ref={emailVal}/>
+                    <Input maxLength={9} placeholder='학번' onClick={()=>ChangeColor()} ref={emailVal} onChange={()=>handleEmailVal()}/>
                     <Univ>@sangmyung.kr</Univ>
                 </InputInfos>
-                <JoinButton btnName={'인증 메일 받기'} handleClick={()=>handleEmail()}/>
+                <JoinButton btnName={'인증 메일 받기'} handleClick={()=>handleEmail()} isNextPage={isNextPage}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );

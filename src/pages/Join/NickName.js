@@ -37,6 +37,7 @@ const LetterLen = styled.div`
 const NickName = () => {
     const [isSelected, setIsSelected] = useState(false);
     const [inputNickName, setInputNickName] = useState('');
+    const [isNextPage, setIsNextPage] = useState(false);
     const letterCnt = useRef(0);
     const navigator = useNavigate();
 
@@ -47,11 +48,10 @@ const NickName = () => {
     const handleInputChange = (e) => {
         const value = e.target.value;
         setInputNickName(value);
-
-        // Calculate the length of the input value
         const length = value.length;
-        // Update the letter count
         letterCnt.current = length;
+
+        length > 0 ? setIsNextPage(true) : setIsNextPage(false);
     }
 
     const handleNickName = () => {
@@ -76,7 +76,7 @@ const NickName = () => {
                 <InputNickName isSelected={isSelected} onClick={ChangeBarColor}
                 value={inputNickName} onChange={handleInputChange} maxLength={8}/>
                 <LetterLen>{letterCnt.current}/{8}</LetterLen>
-                <JoinButton btnName={'다음'} handleClick={()=>handleNickName()}/>
+                <JoinButton btnName={'다음'} handleClick={()=>handleNickName()} isNextPage={isNextPage}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );
