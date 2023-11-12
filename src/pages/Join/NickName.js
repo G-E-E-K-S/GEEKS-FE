@@ -71,7 +71,7 @@ const NickName = () => {
         <c.Totalframe>
             <c.ScreenComponent>
                 <GoBack/>
-                <TopNumber/>
+                <TopNumber page={4}/>
                 <MainText maintitle={`회원님을 표현할\n닉네임을 알려주세요`}/>
                 <InputNickName isSelected={isSelected} onClick={ChangeBarColor}
                 value={inputNickName} onChange={handleInputChange} maxLength={8}/>
