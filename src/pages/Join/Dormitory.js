@@ -24,10 +24,6 @@ const DormitoryBoxChoice = styled.div`
 `;
 
 const Dormitory = () => {
-    const [isSelected, setIsSelected] = useState(false);
-    const [newDormi, setNewDormi] = useState(false);
-    const [old, setOld] = useState(false);
-    const [happy, setHappy] = useState(false);
     const [dormiVal, setDormiVal] = useState('');
     const navigator = useNavigate();
 
