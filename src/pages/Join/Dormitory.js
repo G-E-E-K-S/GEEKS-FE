@@ -25,12 +25,14 @@ const DormitoryBoxChoice = styled.div`
 
 const Dormitory = () => {
     const [isSelected, setIsSelected] = useState(false);
-    const [isgirl, setIsgirl] = useState(false);
-    const [isboy, setIsboy] = useState(false);
+    const [newDormi, setNewDormi] = useState(false);
+    const [old, setOld] = useState(false);
+    const [happy, setHappy] = useState(false);
+    const [dormiVal, setDormiVal] = useState('');
     const navigator = useNavigate();
 
-    const ChangeColor = () => {
-        setIsSelected(true);
+    const SelectDormitory = (dormitory) => {
+        setDormiVal(dormitory);
     }
 
     return (
@@ -39,9 +41,9 @@ const Dormitory = () => {
                 <GoBack/>
                 <MainText maintitle={`어떤 기숙사에서 생활하시나요?`}/>
                 <DormitoryTotal>
-                    <DormitoryBox dormitory={'신관'}/>
-                    <DormitoryBox dormitory={'구관'}/>
-                    <DormitoryBox dormitory={'천안 행복기숙사'}/>
+                    <DormitoryBox disable={false} dormitory={'신관'} onClick={()=>SelectDormitory('신관')} isSelected={dormiVal == '신관'}/>
+                    <DormitoryBox disable={localStorage.getItem('mode') == 1} dormitory={'구관'} onClick={()=>SelectDormitory('구관')} isSelected={dormiVal == '구관'}/>
+                    <DormitoryBox disable={false} dormitory={'천안 행복기숙사'} onClick={()=>SelectDormitory('천안 행복기숙사')} isSelected={dormiVal == '천안 행복기숙사'}/>
                 </DormitoryTotal>
                 <JoinButton btnName={'다음'} />
             </c.ScreenComponent>
