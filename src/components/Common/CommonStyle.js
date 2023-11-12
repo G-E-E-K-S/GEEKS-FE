@@ -9,6 +9,7 @@ export const Totalframe = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+  background: ${(props) => props.main ? '#FAFAFA' : '#fff'}
 `;
 
 export const ScreenComponent = styled.div`
