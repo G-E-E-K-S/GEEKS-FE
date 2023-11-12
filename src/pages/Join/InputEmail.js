@@ -65,7 +65,7 @@ const InputEmail = () => {
         <c.Totalframe>
             <c.ScreenComponent>
                 <GoBack/>
-                <TopNumber flag={1}/>
+                <TopNumber page={1}/>
                 <MainText maintitle={`재학생 인증을 위해\n학교 이메일 주소를 입력해 주세요`}/>
                 <InputInfos isSelected={isSelected}>
                     <Input maxLength={9} placeholder='학번' onClick={()=>ChangeColor()} ref={emailVal}/>

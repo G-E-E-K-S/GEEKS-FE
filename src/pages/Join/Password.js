@@ -106,7 +106,7 @@ const Password = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <GoBack />
-        <TopNumber />
+        <TopNumber page={3}/>
         <MainText maintitle={`로그인 때 사용할\n비밀번호를 입력해 주세요`} />
         <SubText>로그인 아이디는 이메일 주소를 입력하면 돼요</SubText>
         <InputPasswordTotal isSelected={isSelected}>

@@ -100,7 +100,7 @@ const InputCode = () => {
         <c.Totalframe>
             <c.ScreenComponent>
                 <GoBack/>
-                <TopNumber/>
+                <TopNumber page={2}/>
                 <MainText maintitle={`수신된 메일에 적힌\n4자리 코드를 입력해 주세요`}/>
                 <TotalSendMail>
                     <SendMailText>메일이 도착하지 않았나요?</SendMailText>
