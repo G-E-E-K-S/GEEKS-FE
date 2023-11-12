@@ -19,6 +19,7 @@ const Gender = () => {
     const [isSelected, setIsSelected] = useState(false);
     const [isgirl, setIsgirl] = useState(false);
     const [isboy, setIsboy] = useState(false);
+    const [isNextPage, setIsNextPage] = useState(false);
     const navigator = useNavigate();
 
     const ChangeColor = () => {
@@ -35,6 +36,7 @@ const Gender = () => {
             setIsboy(true);
             localStorage.setItem('mode', 1);
         }
+        setIsNextPage(true);
     }
 
     const checkGender = () => {
@@ -60,7 +62,7 @@ const Gender = () => {
                     <GenderBox gender={'남자'} onClick={()=>SelectGender('남자')} isSelected={isboy}></GenderBox>
                     <GenderBox gender={'여자'} onClick={()=>SelectGender('여자')} isSelected={isgirl}></GenderBox>
                 </GenderTotal>
-                <JoinButton btnName={'다음'} handleClick={()=>checkGender()}/>
+                <JoinButton btnName={'다음'} handleClick={()=>checkGender()} isNextPage={isNextPage}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );

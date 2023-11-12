@@ -66,6 +66,7 @@ const Code = styled.input`
 const InputCode = () => {
     const inputRefs = [useRef(), useRef(), useRef(), useRef()];
     const [isSelected, setIsSelected] = useState(false);
+    const [isNextPage, setIsNextPage] = useState(false);
     const navigator = useNavigate();
     let code = "";
 
@@ -78,7 +79,19 @@ const InputCode = () => {
           inputRefs[nextIndex].current.focus();
         }
 
+        event.target.value.length > 0 ? setIsNextPage(true) : setIsNextPage(false);
+
     };
+
+    const handleKeydown = (index, event) => {
+        let beforeIndex = index - 1;
+        if(index == 0 ){
+            beforeIndex = 0;
+        }
+        if(event.keyCode == 8){
+            inputRefs[beforeIndex].current.focus();
+        }
+    }
 
     const checkCode = () => {
         async function fetchCode(){
@@ -115,10 +128,11 @@ const InputCode = () => {
                         type="number"
                         maxLength={1}
                         onChange={(e) => handleInputChange(index, e)}
+                        onKeyUp={(e)=> handleKeydown(index,e)}
                         onFocus={()=>ChangeBarColor()}/>
                     ))}
                 </InputNumber>
-                <JoinButton btnName={'코드 확인하기'} select={()=>ChangeBarColor()} handleClick={()=>checkCode()}/>
+                <JoinButton btnName={'코드 확인하기'} select={()=>ChangeBarColor()} handleClick={()=>checkCode()} isNextPage={isNextPage}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );

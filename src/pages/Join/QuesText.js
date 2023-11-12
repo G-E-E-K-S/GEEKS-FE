@@ -29,7 +29,7 @@ const QuesText = () => {
                 <CenterImg>
                     <img src={Chick}/>
                 </CenterImg>
-                <JoinButton btnName={'다음'}/>
+                <JoinButton btnName={'다음'} isNextPage={true}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );
