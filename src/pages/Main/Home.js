@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
 import Header from '../../components/Main/Header';
@@ -54,7 +55,7 @@ const EnrollHabit = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 12px;
-    background: #FAFAFA;
+    background: #fff;
     margin-top: 2.36vh;
 `;
 const EnrollText = styled.div`
@@ -72,9 +73,19 @@ const Club = styled.div`
     margin-top: 8.53vh;
     margin-bottom: 2.36vh;
 `;
+const Post = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8.53vh;
+    margin-botton: 2.36vh;
+`;
 const Home = () => {
+    const navigate = useNavigate();
+    const handlePage = () => {
+        navigate('/liverule');
+    }
     return (
-        <c.Totalframe>
+        <c.Totalframe main={true}>
             <c.ScreenComponent>
                 <c.SubScreen>
                     <Header/>
@@ -83,7 +94,7 @@ const Home = () => {
                             <Icon src={checklist}/>
                             <IconText>체크리스트</IconText>
                         </Icons>
-                        <Icons>
+                        <Icons onClick={() => handlePage()}>
                             <Icon src={rule}/>
                             <IconText>생활 규칙</IconText>
                         </Icons>
@@ -112,6 +123,10 @@ const Home = () => {
                     </Club>
                     <ClubCategory clubCategory={`배달`}></ClubCategory>
                     <ClubBox profileImg={chick} nickName={`이소윤`} clubTitle={`같이 신전떡볶이 시키실 분 구해요`} JoinPerson={`8명`}/>
+                    <Post>
+                        <SubTitle subtitle={`이런 글은 어떠세요?`}/>
+                        <img src={forwardArrow}/>
+                    </Post>
                 </c.SubScreen>
             </c.ScreenComponent>
             <NavigationBar/>
