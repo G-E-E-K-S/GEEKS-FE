@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Home from '../../assets/img//Navigation/home.svg';
 import FillHome from '../../assets/img//Navigation/fillHome.svg';
@@ -51,6 +52,8 @@ const NavigationBar = () => {
   const [isCommunity, setIsCommunity] = useState(false);
   const [isMy, setIsMy] = useState(false);
 
+  let navigate = useNavigate();
+
   const handlePage = (pageName) => {
     setIsHome(false);
     setIsRoommate(false);
@@ -61,6 +64,7 @@ const NavigationBar = () => {
     switch (pageName) {
       case 'isHome':
         setIsHome(true);
+        navigate('/home');
         break;
       case 'isRoommate':
         setIsRoommate(true);
@@ -73,6 +77,7 @@ const NavigationBar = () => {
         break;
       case 'isMy':
         setIsMy(true);
+        navigate('/mypage');
         break;
       default:
         break;
