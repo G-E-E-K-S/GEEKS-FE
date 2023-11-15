@@ -129,7 +129,7 @@ const Home = () => {
                     </Post>
                 </c.SubScreen>
             </c.ScreenComponent>
-            <NavigationBar/>
+            <NavigationBar type={`home`}/>
         </c.Totalframe>
     )
 };

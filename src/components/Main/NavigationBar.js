@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Home from '../../assets/img//Navigation/home.svg';
@@ -45,14 +45,19 @@ const IconText = styled.div`
   font-weight: 600;
 `;
 
-const NavigationBar = () => {
+const NavigationBar = (props) => {
   const [isHome, setIsHome] = useState(true);
   const [isRoommate, setIsRoommate] = useState(false);
   const [isChat, setIsChat] = useState(false);
   const [isCommunity, setIsCommunity] = useState(false);
   const [isMy, setIsMy] = useState(false);
+  const [selectIcon, setSelectIcon] = useState("home");
 
   let navigate = useNavigate();
+
+  useEffect(() => {
+    setSelectIcon(props.type);
+  },[props.type]);
 
   const handlePage = (pageName) => {
     setIsHome(false);
@@ -86,8 +91,8 @@ const NavigationBar = () => {
 
   return (
     <TotalNavigationBar>
-      <Icons isSelected={isHome} onClick={() => handlePage('isHome')}>
-        {isHome ? <Icon src={FillHome} /> : <Icon src={Home} />}
+      <Icons isSelected={selectIcon == 'home'} onClick={() => handlePage('isHome')}>
+        {selectIcon == 'home' ? <Icon src={FillHome} /> : <Icon src={Home} />}
         <IconText>홈</IconText>
       </Icons>
       <Icons isSelected={isRoommate} onClick={() => handlePage('isRoommate')}>
@@ -102,8 +107,8 @@ const NavigationBar = () => {
         {isCommunity ? <Icon src={FillCommunity} /> : <Icon src={Community} />}
         <IconText>커뮤니티</IconText>
       </Icons>
-      <Icons isSelected={isMy} onClick={() => handlePage('isMy')}>
-        {isMy ? <Icon src={FillMyPage} /> : <Icon src={Mypage} />}
+      <Icons isSelected={selectIcon == 'mypage'} onClick={() => handlePage('isMy')}>
+        {selectIcon == 'mypage' ? <Icon src={FillMyPage} /> : <Icon src={Mypage} />}
         <IconText>마이</IconText>
       </Icons>
     </TotalNavigationBar>
