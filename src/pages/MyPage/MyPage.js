@@ -13,7 +13,7 @@ const MyPage = () => {
                     <GoBack/>
                 </c.SubScreen>
             </c.ScreenComponent>
-            <NavigationBar/>
+            <NavigationBar type={`mypage`}/>
         </c.Totalframe>
     )
 };
