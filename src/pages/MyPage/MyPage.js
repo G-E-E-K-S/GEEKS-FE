@@ -5,8 +5,18 @@ import * as c from '../../components/Common/CommonStyle';
 import GoBack from "../../components/Join/GoBack";
 import PageName from "../../components/Main/PageName";
 import UserInfo from '../../components/Main/UserInfo';
+import MyPageMenu from "../../components/Main/MyPageMenu";
 import NavigationBar from "../../components/Main/NavigationBar";
 import basicProfile from '../../assets/img/MyPage/basicProfile.svg';
+import rightArrow from '../../assets/img/MyPage/rightArrow.svg';
+import enrollLifeStyle from '../../assets/img/MyPage/enrollLIfeStyle.svg';
+import saveList from '../../assets/img/MyPage/saveList.svg';
+import rommateApply from '../../assets/img/MyPage/rommateApply.svg';
+import userInfo from '../../assets/img/MyPage/userInfo.svg';
+import notice from '../../assets/img/MyPage/notice.svg';
+import announce from '../../assets/img/MyPage/announce.svg';
+import question from '../../assets/img/MyPage/question.svg';
+import inquiry from '../../assets/img/MyPage/inquiry.svg';
 
 const UserInfoTop = styled.div`
     margin-top: 4.50vh;
@@ -30,6 +40,7 @@ const ShowMyProfile = styled.div`
     display: flex;
     justify-content: space-between;
     margin-top: 4.14vh;
+    margin-bottom: 2.72vh;
 `;
 const ShowProfileTxt = styled.div`
     color: #333;
@@ -73,6 +84,31 @@ const Circle = styled.div`
         transition: all 0.5s ease-in-out;
     `}
 `;
+const SortLine = styled.div`
+    position: relative;
+    z-index: 10;
+    left: -20px; /* 수정: 음수 값을 사용하여 부모 컴포넌트의 패딩을 무시 */
+    width: 390px;
+    height: 1.41vh;
+    background: #F7F7F7 !important;
+` 
+const WelcomeKit = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 8.05vh;
+    padding: 0px 24px 0px 20px;
+    margin: 2.36vh 0px;
+    border-radius: 12px;
+    background: #FFC700;
+    color: #333;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    white-space: pre-wrap;
+    line-height: 18px; /* 128.571% */
+`;
 const MyPage = () => {
     const [toggle, setToggle] = useState(false);
     const clickedToggle = () => {
@@ -100,6 +136,20 @@ const MyPage = () => {
                             <Circle toggle={toggle} />
                         </ToggleBtn>
                     </ShowMyProfile>
+                    <SortLine/>
+                    <WelcomeKit>
+                        {`긱스 사용 후기 작성하고\n기숙사 웰컴 키트 받아가세요!`}
+                        <img src={rightArrow}/>    
+                    </WelcomeKit>
+                    <MyPageMenu menuImg={enrollLifeStyle} menuName={`생활 습관 등록하기`}/>
+                    <MyPageMenu menuImg={saveList} menuName={`룸메이트 저장 목록`}/>
+                    <MyPageMenu menuImg={rommateApply} menuName={`룸메이트 신청 목록`}/>
+                    <SortLine/>
+                    <MyPageMenu menuImg={userInfo} menuName={`회원 정보 설정`}/>
+                    <MyPageMenu menuImg={notice} menuName={`알림 설정`}/>
+                    <MyPageMenu menuImg={announce} menuName={`공지사항`}/>
+                    <MyPageMenu menuImg={question} menuName={`자주 묻는 질문`}/>
+                    <MyPageMenu menuImg={inquiry} menuName={`문의하기`}/>
                 </c.SubScreen>
             </c.ScreenComponent>
             <NavigationBar type={`mypage`}/>
