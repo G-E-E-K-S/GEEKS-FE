@@ -114,6 +114,7 @@ const MyPage = () => {
     const clickedToggle = () => {
         setToggle((prev) => !prev);
       };
+    const navigate = useNavigate();
     return(
         <c.Totalframe>
             <c.ScreenComponent>
@@ -141,7 +142,7 @@ const MyPage = () => {
                         {`긱스 사용 후기 작성하고\n기숙사 웰컴 키트 받아가세요!`}
                         <img src={rightArrow}/>    
                     </WelcomeKit>
-                    <MyPageMenu menuImg={enrollLifeStyle} menuName={`생활 습관 등록하기`}/>
+                    <MyPageMenu menuImg={enrollLifeStyle} menuName={`생활 습관 등록하기`} onClick={()=>navigate('/lifestyle')}/>
                     <MyPageMenu menuImg={saveList} menuName={`룸메이트 저장 목록`}/>
                     <MyPageMenu menuImg={rommateApply} menuName={`룸메이트 신청 목록`}/>
                     <SortLine/>
