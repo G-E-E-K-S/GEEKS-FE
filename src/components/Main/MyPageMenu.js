@@ -4,9 +4,9 @@ import * as c from '../../components/Common/CommonStyle';
 import MenuArrow from '../../assets/img/MyPage/menuArrow.svg';
 
 const TotalMenu = styled.div`
-    height: 8.53vh;
+    height: 72px;
     width: 100%;
-    padding: 2.36vh 0px;
+    padding: 20px 0px;
     display: flex;
     justify-content: space-between;
     cursor: pointer;
