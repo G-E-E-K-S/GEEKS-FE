@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import * as c from '../Common/CommonStyle';
 import styled from "styled-components";
 
@@ -56,7 +57,9 @@ const UserInfo = (props) => {
           </>
         </UserInfos>
       </c.Flex>
-      <Edit>수정</Edit>
+      <Link to={'/editprofile'}>
+        <Edit>수정</Edit>
+      </Link>      
     </Users>
   );
 };
