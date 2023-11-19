@@ -14,6 +14,8 @@ const TotalMenu = styled.div`
 `;
 const MenuImg = styled.img`
     margin-right: 16px;
+    width: 28px;
+    height: 28px;
 `;
 const MenuName = styled.div`
     display: flex;
@@ -23,6 +25,10 @@ const MenuName = styled.div`
     font-style: normal;
     font-weight: 600;
 `;
+const Arrow = styled.img`
+    width:20px;
+    height: 20px;
+`;
 const MyPageMenu = (props) => {
     return(
         <TotalMenu onClick={props.onClick}>
@@ -30,7 +36,7 @@ const MyPageMenu = (props) => {
                 <MenuImg src={props.menuImg}></MenuImg>
                 <MenuName>{props.menuName}</MenuName>
             </c.Flex>
-            <img src={MenuArrow}/>
+            <Arrow src={MenuArrow}/>
         </TotalMenu>
     )
 }
