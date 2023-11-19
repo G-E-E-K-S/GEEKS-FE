@@ -2,7 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import {Intro, Welcome, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage} from './pages/Join/Index';
 import Home from './pages/Main/Home';
 import LiveRule from "./pages/Main/LiveRule";
-import { MyPage, LifeStyles } from './pages/MyPage/Index';
+import { MyPage, LifeStyles, EditProfile } from './pages/MyPage/Index';
 function App() {
   return (
     <div>
@@ -23,6 +23,7 @@ function App() {
           <Route path="/liverule" element={<LiveRule/>} />
           <Route path="/mypage" element={<MyPage/>} />
           <Route path="/lifestyle" element={<LifeStyles/>} />
+          <Route path="/editprofile" element={<EditProfile/>} />
         </Routes>
       </Router>
     </div>

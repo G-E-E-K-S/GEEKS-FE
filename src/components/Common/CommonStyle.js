@@ -34,3 +34,8 @@ export const ScreenJoin = styled.div`
 export const Flex = styled.div`
   display:flex;
 `
+
+export const SpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
