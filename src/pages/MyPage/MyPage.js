@@ -146,7 +146,7 @@ const MyPage = () => {
                     <MyPageMenu menuImg={saveList} menuName={`룸메이트 저장 목록`}/>
                     <MyPageMenu menuImg={rommateApply} menuName={`룸메이트 신청 목록`}/>
                     <SortLine/>
-                    <MyPageMenu menuImg={userInfo} menuName={`회원 정보 설정`}/>
+                    <MyPageMenu menuImg={userInfo} menuName={`회원 정보 설정`} onClick={()=>navigate('/settinguserinfo')}/>
                     <MyPageMenu menuImg={notice} menuName={`알림 설정`}/>
                     <MyPageMenu menuImg={announce} menuName={`공지사항`}/>
                     <MyPageMenu menuImg={question} menuName={`자주 묻는 질문`}/>
