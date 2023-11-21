@@ -51,7 +51,7 @@ const FinalPage = () => {
                 <TopImg>
                     <MainImg src={Home}/>
                 </TopImg>
-                <JoinButton btnName={'룸메이트 찾으러 가기'} nextPage={nextPage}/>
+                <JoinButton btnName={'룸메이트 찾으러 가기'} nextPage={nextPage} isNextPage={true}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );
