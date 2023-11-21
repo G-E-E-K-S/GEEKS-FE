@@ -2,8 +2,8 @@ import styled from "styled-components";
 import genderCheck from "../../assets/img/Join/genderCheck.svg";
 
 const GenderTotalBox = styled.div`
-    width: 171px;
-    height: 27.01vh;
+    width: 43.84vw;
+    height: 220px;
     border-radius: 16px;
     border-radius: 16px;
     margin-top: 6.16vh;

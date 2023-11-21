@@ -6,7 +6,7 @@ const TotalButton = styled.div`
     align-items: center;    
     position: fixed;
     bottom: 10.18vh;
-    width: 350px;
+    width: 89.74vw;
     height: 8.10vh;
     background-color: ${(props) => (props.isNextPage ? '#FFC700' : '#F7F7F7')};
     border-radius: 12px;
