@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const Totalframe = styled.div`
-  width: 390px;
+  // width: 390px;
+  widtth: 100vw;
   height: 100vh;
   border: 1px solid #eceeef;
   margin: 0 auto;
@@ -13,7 +14,7 @@ export const Totalframe = styled.div`
 `;
 
 export const ScreenComponent = styled.div`
-  padding: 0px 20px;
+  padding: 0px 5.12vw;
 `;
 
 export const SubScreen = styled.div`
