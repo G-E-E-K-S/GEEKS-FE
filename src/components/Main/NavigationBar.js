@@ -18,8 +18,8 @@ const TotalNavigationBar = styled.div`
   justify-content: space-between;
   position: fixed;
   bottom: 0;
-  width: 390px;
-  padding: 1.42vh 25px 4.73vh 25px;
+  width: 100vw;
+  padding: 12px 0;
   height: 11.84vh;
   border-radius: 12px 12px 0px 0px;
   border-top: 1px solid #EFEFEF;
@@ -28,7 +28,8 @@ const TotalNavigationBar = styled.div`
 
 const Icons = styled.div`
   color: ${(props) => (props.isSelected ? '#333' : '#B7B7B7')};
-  width: 48px;
+  width: 20vw;
+  height: 9vh;
   margin: 0 auto;
   text-align: center;
   cursor: pointer;
