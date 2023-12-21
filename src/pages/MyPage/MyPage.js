@@ -25,7 +25,7 @@ const SelfIntro = styled.div`
     border-radius: 8px;
     background: #F7F7F7;
     display: flex;
-    width: 350px;
+    width: 89.74vw;
     padding: 10px 16px;
     align-items: center;
     margin-top: 1.42vh;

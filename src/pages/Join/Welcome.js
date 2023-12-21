@@ -52,7 +52,7 @@ const Welcome = () => {
                 <TopImg>
                     <MainImg src={Chick}/>
                 </TopImg>
-                <JoinButton btnName={'시작하기'} nextPage={nextPage} isNextPage={true}/>
+                <JoinButton btnName={'이메일 회원가입'} handleClick={nextPage} isNextPage={true}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );
