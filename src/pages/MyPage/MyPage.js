@@ -87,8 +87,7 @@ const Circle = styled.div`
 const SortLine = styled.div`
     position: relative;
     z-index: 10;
-    left: -20px; /* 수정: 음수 값을 사용하여 부모 컴포넌트의 패딩을 무시 */
-    width: 390px;
+    width: 100vw;
     height: 1.41vh;
     background: #F7F7F7 !important;
 ` 
