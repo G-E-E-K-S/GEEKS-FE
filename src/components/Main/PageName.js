@@ -8,10 +8,12 @@ const MainText = styled.div`
     font-weight: 700;
     margin-top: 6.64vh;
     margin-left: 8px;
+    white-space: nowrap;
+    display: ${(props)=>props.handleShow ? 'none' : 'block'};
 `;
 const pageName = (props) => {
     return(
-        <MainText>{props.pageName}</MainText>
+        <MainText handleShow={props.handleShow}>{props.pageName}</MainText>
     )
 }
 export default pageName;

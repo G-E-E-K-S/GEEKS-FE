@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import Chart from 'chart.js/auto';
 import * as c from "../../components/Common/CommonStyle";
 import fillSave from '../../assets/img/MyPage/fillSave.svg';
 
 const TotalProfile = styled.div`
   width: 100%;
   border-radius: 12px;
-  background: #fafafa;
+  background: ${(props)=>props.activeCheck ? '#FFFBEE' : '#fafafa'};
+  border: 1px solid ${(props)=>props.activeCheck ? '#ECAA00' : '#FFFBEE'};
   padding: 14px 5.12vw;
   margin-bottom: 16px;
 `;
@@ -48,7 +50,7 @@ const Intro = styled.div`
 `;
 const OtherProfile = (props) => {
   return (
-    <TotalProfile>
+    <TotalProfile activeCheck={props.activeCheck}>
       <c.Flex>
         <UserProfile src={props.userprofile} />
         <div>
