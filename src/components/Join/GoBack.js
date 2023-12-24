@@ -3,6 +3,9 @@ import styled from "styled-components";
 import GoBackImg from "../../assets/img/Join/goback.svg";
 
 const GoBackTotal = styled.img`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 6.64vh;
     cursor: pointer;
 `;
