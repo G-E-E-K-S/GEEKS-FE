@@ -18,18 +18,21 @@ import chick from '../../assets/img/Join/chick.svg';
 const System = styled.div`
     width: 100%;
     display: flex;
-    margin: 4.26vh 5px 0 5px;
+    margin: 4.26vh 1.28vw 0 1.28vw;
     &>:last-child {
         margin-right: 0; /* 마지막 이미지에는 간격을 적용하지 않음 */
     }
 `;
 const Icons = styled.div`
-    width: 64px;
+    width: 16.41vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 28px;
+    margin-right: 7.17vw;
     cursor: pointer;
+    &:last-child {
+        margin-right: 0;
+    }
 `;
 const Icon = styled.img`
     margin-bottom: 8px;
