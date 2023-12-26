@@ -44,8 +44,9 @@ const OnlyMargin = styled.div`
 const LifeStyle = (props) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const handleOptionChange = (value) => {
-    setSelectedOption(value);
+  const handleOptionChange = (key,value) => {
+    setSelectedOption(key);
+    props.lifeStyleSection(value);
   };
 
   useEffect(()=>{
@@ -60,11 +61,11 @@ const LifeStyle = (props) => {
           <label key={index}>
             <InputRadio
               type="radio"
-              value={option}
-              checked={selectedOption === option}
-              onChange={() => handleOptionChange(option)}
+              value={Object.keys(option)[0]}
+              checked={selectedOption === Object.keys(option)[0]}
+              onChange={() => handleOptionChange(Object.keys(option)[0], Object.values(option)[0])}
             />
-            <SubLifeStyle checked={selectedOption === option}>{option}</SubLifeStyle>
+            <SubLifeStyle checked={selectedOption === Object.keys(option)[0]}>{Object.keys(option)[0]}</SubLifeStyle>
           </label>
         ))}
       </Flex>
