@@ -74,6 +74,7 @@ const NavigationBar = (props) => {
         break;
       case 'isRoommate':
         setIsRoommate(true);
+        navigate('/rommate');
         break;
       case 'isChat':
         setIsChat(true);
@@ -96,8 +97,8 @@ const NavigationBar = (props) => {
         {selectIcon == 'home' ? <Icon src={FillHome} /> : <Icon src={Home} />}
         <IconText>홈</IconText>
       </Icons>
-      <Icons isSelected={isRoommate} onClick={() => handlePage('isRoommate')}>
-        {isRoommate ? <Icon src={FillRoommate} /> : <Icon src={Roommate} />}
+      <Icons isSelected={selectIcon == 'rommate'} onClick={() => handlePage('isRoommate')}>
+        {selectIcon == 'rommate' ? <Icon src={FillRoommate} /> : <Icon src={Roommate} />}
         <IconText>룸메찾기</IconText>
       </Icons>
       <Icons isSelected={isChat} onClick={() => handlePage('isChat')}>

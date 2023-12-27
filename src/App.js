@@ -3,6 +3,7 @@ import {Intro, Welcome, InputEmail, InputCode, Password, NickName, QuesText, Maj
 import Home from './pages/Main/Home';
 import LiveRule from "./pages/Main/LiveRule";
 import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList } from './pages/MyPage/Index';
+import FindRommate from "./pages/FindRommate/FindRommate";
 function App() {
   return (
     <div>
@@ -26,6 +27,7 @@ function App() {
           <Route path="/editprofile" element={<EditProfile/>} />
           <Route path="/settinguserinfo" element={<SettingUserInfo/>} />
           <Route path="/savelist" element={<SaveList/>} />
+          <Route path="/rommate" element={<FindRommate/>} />
         </Routes>
       </Router>
     </div>
