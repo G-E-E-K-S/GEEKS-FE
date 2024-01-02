@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Chart from 'chart.js/auto';
+import ApexChart from "react-apexcharts";
 import * as c from "../../components/Common/CommonStyle";
 import fillSave from '../../assets/img/MyPage/fillSave.svg';
 
@@ -49,17 +49,51 @@ const Intro = styled.div`
   line-height: 18px; /* 128.571% */
 `;
 const OtherProfile = (props) => {
+  const chartOptions = {
+    chart: {
+      
+      type: "radialBar",
+    },
+    fill: {
+      colors: "#6CABE5",
+    },
+    plotOptions: {
+      radialBar: {
+        hollow: {
+          size: "50%",
+        },
+        dataLabels:{
+          width: 100,
+          showOn:"always",
+          name:{
+            show:true,
+            fontSize: "1rem",
+          },
+          value:{
+            show:false
+          }
+        }
+      },
+    },
+    stroke: {
+      lineCap: "round",
+    },
+    labels: ["90"],
+  };
   return (
     <TotalProfile activeCheck={props.activeCheck}>
-      <c.Flex>
-        <UserProfile src={props.userprofile} />
-        <div>
-          <NickName>{props.nickName}</NickName>
-          <Major>
-            {props.major} · {props.id}
-          </Major>
-        </div>
-      </c.Flex>
+      <c.SpaceBetween>
+        <c.Flex>
+          <UserProfile src={props.userprofile} />
+          <div>
+            <NickName>{props.nickName}</NickName>
+            <Major>
+              {props.major} · {props.id}
+            </Major>
+          </div>
+        </c.Flex>
+        <ApexChart type="radialBar" series={[90]} options={chartOptions} height="50%" width="50%"/>
+      </c.SpaceBetween>
       <Contour />
       <c.SpaceBetween>
         <Intro>외출이 잦아요! 기숙사는 가끔 들어와요</Intro>
