@@ -147,7 +147,7 @@ const MyPage = () => {
                     <SortLine/>
                     <MyPageMenu menuImg={userInfo} menuName={`회원 정보 설정`} onClick={()=>navigate('/settinguserinfo')}/>
                     <MyPageMenu menuImg={notice} menuName={`알림 설정`}/>
-                    <MyPageMenu menuImg={announce} menuName={`공지사항`}/>
+                    <MyPageMenu menuImg={announce} menuName={`공지사항`} onClick={()=>navigate('/notice')}/>
                     <MyPageMenu menuImg={question} menuName={`자주 묻는 질문`}/>
                     <MyPageMenu menuImg={inquiry} menuName={`문의하기`}/>
                 </c.SubScreen>
