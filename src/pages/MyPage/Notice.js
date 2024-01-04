@@ -31,7 +31,7 @@ const NoticeDate = styled.div`
 `;
 const Br = styled.div`
     height:1px;
-    background-color: #B7B7B7;
+    background-color: #EFEFEF;
     margin: 2.36vh 0;
 `;
 const Notice = () => {
