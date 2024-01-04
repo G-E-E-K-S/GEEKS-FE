@@ -9,10 +9,6 @@ const NoticeTop = styled.div`
     display: flex;
     margin-bottom: 5.68vh;
 `;
-const SubTitleBox = styled.div`
-  margin-top: 6.64vh;
-  margin-left: 8px;
-`;
 const NoticeText = styled.div`
 
   color: #333;
@@ -40,9 +36,7 @@ const Notice = () => {
       <c.ScreenComponent>
         <NoticeTop>
           <GoBack />
-          <SubTitleBox>
-            <SubTitle subtitle={`공지사항`} />
-          </SubTitleBox>
+          <SubTitle subtitle={`공지사항`} />
         </NoticeTop>
         <NoticeText>{`편리한 채팅을 위한 새로운 기능이 생겼어요 두줄은 이렇게 써져요`}</NoticeText>
         <NoticeDate>{`2023.09.25`}</NoticeDate>
