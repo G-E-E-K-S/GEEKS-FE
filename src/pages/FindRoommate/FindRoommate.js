@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Main/Header";
-import Condition from "../../components/Rommate/Condition";
+import Condition from "../../components/Roommate/Condition";
 import OtherProfile from "../../components/Main/OtherProfile";
 import NavigationBar from "../../components/Main/NavigationBar";
-import BottomSheet from "../../components/Rommate/BottomSheet";
+import BottomSheet from "../../components/Roommate/BottomSheet";
 import basicProfile from "../../assets/img/MyPage/basicProfile.svg";
 
 const TitleText = styled.div`
@@ -26,7 +26,7 @@ overflow-x: auto;
 `
 
 ;
-const FindRommate = () => {
+const FindRoommate = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <c.Totalframe main={true}>
@@ -56,4 +56,4 @@ const FindRommate = () => {
     </c.Totalframe>
   );
 };
-export default FindRommate;
+export default FindRoommate;
