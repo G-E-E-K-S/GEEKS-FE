@@ -3,6 +3,7 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import LifeStyle from "../Main/LifeStyle";
 import CloseModal from "../../assets/img/Join/closeModal.svg";
+import reset from '../../assets/img/MyPage/reset.svg';
 
 const ModalBackground = styled.div`
   position: absolute;
@@ -32,6 +33,12 @@ const TotalBottomSheet = styled.div`
 `;
 const Content = styled.div`
   margin: 2.84vh 5.12vw 0 5.12vw;
+  height: calc(84.83vh - 19.19vh);
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const Titles = styled.div`
   display: flex;
@@ -45,6 +52,50 @@ const Title = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: 28px;
+`;
+const BottomMenu = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 2.38vh; 20px 0px 20px;
+  height: 148px;
+  border-top: 1px solid #EFEFEF;
+  background: #FFF;
+`;
+const Reset = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 16px 5.512vw;
+  height: max-content;
+  margin-right: 12px;
+  background: #EFEFEF;
+
+  color: #707070;
+  text-align: center;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+`;
+const ResetImg = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+`;
+const ApplyBtn = styled.div`
+  border-radius: 12px;
+  background: #FFC700;
+  width: 100%;
+  padding: 16px 0;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
 `;
 const BottomSheet = (props) => {
   const [resetStat, setResetStat] = useState(false);
@@ -114,6 +165,13 @@ const BottomSheet = (props) => {
             resetStat={resetStat}
             lifeStyleSection={setIsTendency}/>
         </Content>
+        <BottomMenu>
+          <Reset>
+            <ResetImg src={reset}/>
+              초기화
+          </Reset>
+          <ApplyBtn>적용하기</ApplyBtn>
+        </BottomMenu>
       </TotalBottomSheet>
     </div>
   );
