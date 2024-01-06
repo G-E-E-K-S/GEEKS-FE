@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import GoBack from "../../components/Join/GoBack";
-import UserLifeStyle from "../../components/Rommate/UserLifeStyle";
+import UserLifeStyle from "../../components/Roommate/UserLifeStyle";
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
-import ChatImg from "../../assets/img/Rommate/chat.svg";
-import Info from "../../assets/img/Rommate/info.svg";
+import ChatImg from "../../assets/img/Roommate/chat.svg";
+import Info from "../../assets/img/Roommate/info.svg";
 import SaveBtn from "../../assets/img/MyPage/save.svg";
 
 const TopProfile = styled.div`

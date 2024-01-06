@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import smallDownArrow from "../../assets/img/Rommate/smallDownArrow.svg";
+import smallDownArrow from "../../assets/img/Roommate/smallDownArrow.svg";
 
 const ConditionTotal = styled.div`
   width: max-content;
