@@ -29,7 +29,7 @@ overflow-x: auto;
 const FindRommate = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <c.Totalframe>
+    <c.Totalframe main={true}>
       <c.ScreenComponent>
         <c.SubScreen>
           <Header />
@@ -48,6 +48,7 @@ const FindRommate = () => {
             nickName={`눈누난나`}
             major={`스마트정보통신`}
             id={`19학번`}
+            score={`90`}
           />
         </c.SubScreen>
       </c.ScreenComponent>
