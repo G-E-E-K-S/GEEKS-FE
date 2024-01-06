@@ -8,6 +8,7 @@ import OtherProfile from "../../components/Main/OtherProfile";
 import NavigationBar from "../../components/Main/NavigationBar";
 import BottomSheet from "../../components/Roommate/BottomSheet";
 import basicProfile from "../../assets/img/MyPage/basicProfile.svg";
+import reset from '../../assets/img/MyPage/reset.svg';
 
 const TitleText = styled.div`
   margin-top: 3.31vh;
@@ -21,13 +22,25 @@ const TitleText = styled.div`
   line-height: 32px;
 `;
 const ConditionScroll = styled.div`
-display: flex;
-overflow-x: auto;
-`
-
-;
+  display: flex;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+const BottomMenues = styled.div`
+  display: flex;
+  padding: 2.38vh; 5.12vw 0px 5.12vw;
+  border-top: 1px solid #EFEFEF;
+`;
+const ResetImg = styled.img`
+  width: 5.12vw;
+  height: 20px;
+  margin-right: 4px;
+`;
 const FindRoommate = () => {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <c.Totalframe main={true}>
       <c.ScreenComponent>
