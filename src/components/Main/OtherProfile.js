@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import ApexChart from "react-apexcharts";
 import * as c from "../../components/Common/CommonStyle";
 import fillSave from '../../assets/img/MyPage/fillSave.svg';
+import save from '../../assets/img/MyPage/save.svg';
 
 const TotalProfile = styled.div`
   width: 100%;
   border-radius: 12px;
-  background: ${(props)=>props.activeCheck ? '#FFFBEE' : '#fafafa'};
+  background: ${(props)=>props.activeCheck ? '#FFFBEE' : '#fff'};
   border: 1px solid ${(props)=>props.activeCheck ? '#ECAA00' : '#FFFBEE'};
   padding: 14px 5.12vw;
   margin-bottom: 16px;
@@ -34,12 +34,33 @@ const Major = styled.div`
   font-weight: 500;
   line-height: 18px; /* 128.571% */
 `;
-const Contour = styled.div`
-  height: 1px;
-  width: 100%;
-  background: #efefef;
-  margin-top: 18px;
-  margin-bottom: 17px;
+const Score = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  color: #2B75CB;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px; /* 133.333% */
+`;
+const ScoreUnit = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2B75CB;
+  text-align: center;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+  margin-left: 2px;
+`;
+const IntroSelf = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
 `;
 const Intro = styled.div`
   color: #333;
@@ -47,39 +68,22 @@ const Intro = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: 18px; /* 128.571% */
+  border-radius: 8px;
+  background: #F7F7F7;
+  padding: 8px 3.07vw;
+  width: 64.61vw;
+`;
+const SaveImg = styled.img`
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
 `;
 const OtherProfile = (props) => {
-  const chartOptions = {
-    chart: {
-      
-      type: "radialBar",
-    },
-    fill: {
-      colors: "#6CABE5",
-    },
-    plotOptions: {
-      radialBar: {
-        hollow: {
-          size: "50%",
-        },
-        dataLabels:{
-          width: 100,
-          showOn:"always",
-          name:{
-            show:true,
-            fontSize: "1rem",
-          },
-          value:{
-            show:false
-          }
-        }
-      },
-    },
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["90"],
-  };
+  const [fill,isFill] = useState(false);
+
+  const handleFill = () => {
+    isFill(!fill)
+  }
   return (
     <TotalProfile activeCheck={props.activeCheck}>
       <c.SpaceBetween>
@@ -92,13 +96,17 @@ const OtherProfile = (props) => {
             </Major>
           </div>
         </c.Flex>
-        <ApexChart type="radialBar" series={[90]} options={chartOptions} height="50%" width="50%"/>
+        <c.Flex>
+          <Score>{props.score}</Score>
+          <ScoreUnit>점</ScoreUnit>
+        </c.Flex>
+
       </c.SpaceBetween>
-      <Contour />
-      <c.SpaceBetween>
+      {/* intro self */}
+      <IntroSelf>
         <Intro>외출이 잦아요! 기숙사는 가끔 들어와요</Intro>
-        <img src={fillSave}/>
-      </c.SpaceBetween>
+        <SaveImg src={fill? fillSave : save} onClick={()=>handleFill()}/>
+      </IntroSelf>
     </TotalProfile>
   );
 };
