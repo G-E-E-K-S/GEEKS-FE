@@ -32,7 +32,7 @@ const SelfIntro = styled.div`
 
     color: #333;
     text-align: center;
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 500;
 `;
@@ -44,13 +44,13 @@ const ShowMyProfile = styled.div`
 `;
 const ShowProfileTxt = styled.div`
     color: #333;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-style: normal;
     font-weight: 600;
 `;
 const ShowProfileSubtxt = styled.div`
     color: #949494;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-style: normal;
     font-weight: 500;
     margin-top: 0.71vh;
@@ -97,12 +97,12 @@ const WelcomeKit = styled.div`
     align-items: center;
     width: 100%;
     height: 8.05vh;
-    padding: 0px 24px 0px 20px;
+    padding: 0px 6.15vw;
     margin: 2.36vh 0px;
     border-radius: 12px;
     background: #FFC700;
     color: #333;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-style: normal;
     font-weight: 600;
     white-space: pre-wrap;
