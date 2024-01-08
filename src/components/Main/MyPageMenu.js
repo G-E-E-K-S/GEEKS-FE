@@ -10,7 +10,7 @@ const TotalMenu = styled.div`
     display: flex;
     justify-content: space-between;
     cursor: pointer;
-    
+    align-items: center
 `;
 const MenuImg = styled.img`
     margin-right: 16px;

@@ -17,20 +17,20 @@ const UserInfos = styled.div`
 `;
 const UserName = styled.div`
   color: #333;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-style: normal;
   font-weight: 600;
   margin-bottom: 4px;
 `;
 const UserMajorId = styled.div`
   color: #707070;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 500;
 `;
 const Edit = styled.div`
   display: inline-flex;
-  padding: 1.41vh 20px;
+  padding: 1.41vh 5.12vw;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
@@ -38,7 +38,7 @@ const Edit = styled.div`
   background: #fff;
 
   color: #333;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 600;
   cursor: pointer;
