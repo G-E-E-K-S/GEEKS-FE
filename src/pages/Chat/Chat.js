@@ -53,7 +53,7 @@ const Chat = () => {
           {isSelectMenu === 'group' && <ChatList chatprofile={basicProfile} name={`같이 신전떡볶이 주문하신분`} prevDate={`1일 전`} chat={`안녕하세요. 룸메 구하셨나요?요를레히힣힣넘어가는지확인하는중입니다.`} noneReadCnt={`2`}/>}
         </c.SubScreen>
       </c.ScreenComponent>
-      <NavigationBar/>
+      <NavigationBar type={`chat`}/>
     </c.Totalframe>
   );
 };
