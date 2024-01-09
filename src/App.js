@@ -4,7 +4,7 @@ import Home from './pages/Main/Home';
 import LiveRule from "./pages/Main/LiveRule";
 import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate } from './pages/MyPage/Index';
 import { FindRoommate , User, ApplyConfirm } from './pages/FindRoommate/Index';
-import Chat from "./pages/Chat/Chat";
+import { Chat , ChatRoom } from './pages/Chat/Index';
 function App() {
   return (
     <div>
@@ -35,6 +35,7 @@ function App() {
           <Route path="/user" element={<User/>} />
           <Route path="/applyconfirm" element={<ApplyConfirm/>} />
           <Route path="/chat" element={<Chat/>} />
+          <Route path="/chat/chatroom" element={<ChatRoom/>} />
         </Routes>
       </Router>
     </div>

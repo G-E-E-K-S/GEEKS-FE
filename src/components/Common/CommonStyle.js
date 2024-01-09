@@ -40,3 +40,8 @@ export const SpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+export const DirectionCol = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
