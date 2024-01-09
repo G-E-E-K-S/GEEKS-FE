@@ -74,10 +74,11 @@ const NavigationBar = (props) => {
         break;
       case 'isRoommate':
         setIsRoommate(true);
-        navigate('/rommate');
+        navigate('/roommate');
         break;
       case 'isChat':
         setIsChat(true);
+        navigate('/chat');
         break;
       case 'isCommunity':
         setIsCommunity(true);
@@ -101,8 +102,8 @@ const NavigationBar = (props) => {
         {selectIcon == 'rommate' ? <Icon src={FillRoommate} /> : <Icon src={Roommate} />}
         <IconText>룸메찾기</IconText>
       </Icons>
-      <Icons isSelected={isChat} onClick={() => handlePage('isChat')}>
-        {isChat ? <Icon src={FillChat} /> : <Icon src={Chat} />}
+      <Icons isSelected={isChat == 'chat'} onClick={() => handlePage('isChat')}>
+        {selectIcon == 'chat' ? <Icon src={FillChat} /> : <Icon src={Chat} />}
         <IconText>대화</IconText>
       </Icons>
       <Icons isSelected={isCommunity} onClick={() => handlePage('isCommunity')}>
