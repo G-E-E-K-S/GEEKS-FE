@@ -6,6 +6,7 @@ import InputSelf from "../../components/Main/InputSelf";
 import Major from "../../components/Join/Major";
 import ReactModal from "react-modal";
 import ExampleBox from "../../components/MyPage/ExampleBox";
+import Br from "../../components/Common/Br";
 import Profile from "../../assets/img/MyPage/basicProfile.svg";
 import Camera from "../../assets/img/MyPage/camera.svg";
 import MiniQeustion from "../../assets/img/MyPage/miniQuestion.svg";
@@ -64,12 +65,6 @@ const QuestionMark = styled.img`
   margin-left: 4px; 
   cursor:pointer;
 `;
-const Br = styled.div`
-  display: flex;
-  width: 390px;
-  height: 12px;
-  background: #F7F7F7;
-`;
 // we have to refactoring
 const modalStyle = {
   overlay:{
@@ -115,7 +110,7 @@ const EditProfile = () => {
         {/* choose major */}
         <SubTitle>전공/학번</SubTitle>
         <Major edit={true}/>
-        <Br/>
+        <Br marginTop={`3.31vh`}/>
         {/* input introduce self */}
         <c.Flex>
           <SubTitle>나를 소개하는 한 줄</SubTitle>
