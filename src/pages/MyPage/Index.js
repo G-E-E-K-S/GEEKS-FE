@@ -6,6 +6,7 @@ import SaveList from './SaveList';
 import Notice from './Notice';
 import FAQ from './Faq';
 import FaqRommate from './FaqRommate';
+import RoommateApply from './RoommateApply';
 
 
-export { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate };
+export { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply };

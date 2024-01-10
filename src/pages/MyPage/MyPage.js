@@ -12,7 +12,7 @@ import basicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import rightArrow from "../../assets/img/MyPage/rightArrow.svg";
 import enrollLifeStyle from "../../assets/img/MyPage/enrollLIfeStyle.svg";
 import saveList from "../../assets/img/MyPage/saveList.svg";
-import rommateApply from "../../assets/img/MyPage/rommateApply.svg";
+import roommateApply from "../../assets/img/MyPage/rommateApply.svg";
 import userInfo from "../../assets/img/MyPage/userInfo.svg";
 import notice from "../../assets/img/MyPage/notice.svg";
 import announce from "../../assets/img/MyPage/announce.svg";
@@ -111,65 +111,71 @@ const MyPage = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <c.Flex>
-          <GoBack />
-          <PageName pageName={`마이`} />
-        </c.Flex>
-        <UserInfoTop>
-          <UserInfo
-            pageName={`마이`}
-            profileImg={basicProfile}
-            userName={`은진`}
-            userMajor={`커뮤니케이션디자인`}
-            UserId={`20학번`}
+        <c.SubScreen>
+          <c.Flex>
+            <GoBack />
+            <PageName pageName={`마이`} />
+          </c.Flex>
+          <UserInfoTop>
+            <UserInfo
+              pageName={`마이`}
+              profileImg={basicProfile}
+              userName={`은진`}
+              userMajor={`커뮤니케이션디자인`}
+              UserId={`20학번`}
+            />
+          </UserInfoTop>
+          <SelfIntro>늦게 일어나는 편이에요~</SelfIntro>
+          <ShowMyProfile>
+            <div>
+              <ShowProfileTxt>내 프로필 노출하기</ShowProfileTxt>
+              <ShowProfileSubtxt>
+                룸메이트가 맺어지면 내 프로필이 숨겨져요
+              </ShowProfileSubtxt>
+            </div>
+            <ToggleBtn onClick={clickedToggle} toggle={toggle}>
+              <Circle toggle={toggle} />
+            </ToggleBtn>
+          </ShowMyProfile>
+          <Br />
+          <WelcomeKit>
+            {`긱스 사용 후기 작성하고\n기숙사 웰컴 키트 받아가세요!`}
+            <img src={rightArrow} />
+          </WelcomeKit>
+          <MyPageMenu
+            menuImg={enrollLifeStyle}
+            menuName={`생활 습관 등록하기`}
+            onClick={() => navigate("/lifestyle")}
           />
-        </UserInfoTop>
-        <SelfIntro>늦게 일어나는 편이에요~</SelfIntro>
-        <ShowMyProfile>
-          <div>
-            <ShowProfileTxt>내 프로필 노출하기</ShowProfileTxt>
-            <ShowProfileSubtxt>
-              룸메이트가 맺어지면 내 프로필이 숨겨져요
-            </ShowProfileSubtxt>
-          </div>
-          <ToggleBtn onClick={clickedToggle} toggle={toggle}>
-            <Circle toggle={toggle} />
-          </ToggleBtn>
-        </ShowMyProfile>
-        <Br />
-        <WelcomeKit>
-          {`긱스 사용 후기 작성하고\n기숙사 웰컴 키트 받아가세요!`}
-          <img src={rightArrow} />
-        </WelcomeKit>
-        <MyPageMenu
-          menuImg={enrollLifeStyle}
-          menuName={`생활 습관 등록하기`}
-          onClick={() => navigate("/lifestyle")}
-        />
-        <MyPageMenu
-          menuImg={saveList}
-          menuName={`룸메이트 저장 목록`}
-          onClick={() => navigate("/savelist")}
-        />
-        <MyPageMenu menuImg={rommateApply} menuName={`룸메이트 신청 목록`} />
-        <Br/>
-        <MyPageMenu
-          menuImg={userInfo}
-          menuName={`회원 정보 설정`}
-          onClick={() => navigate("/settinguserinfo")}
-        />
-        <MyPageMenu menuImg={notice} menuName={`알림 설정`} />
-        <MyPageMenu
-          menuImg={announce}
-          menuName={`공지사항`}
-          onClick={() => navigate("/notice")}
-        />
-        <MyPageMenu
-          menuImg={question}
-          menuName={`자주 묻는 질문`}
-          onClick={() => navigate("/faq")}
-        />
-        <MyPageMenu menuImg={inquiry} menuName={`문의하기`} />
+          <MyPageMenu
+            menuImg={saveList}
+            menuName={`룸메이트 저장 목록`}
+            onClick={() => navigate("/savelist")}
+          />
+          <MyPageMenu
+            menuImg={roommateApply}
+            menuName={`룸메이트 신청 목록`}
+            onClick={() => navigate("/roommate/apply")}
+          />
+          <Br />
+          <MyPageMenu
+            menuImg={userInfo}
+            menuName={`회원 정보 설정`}
+            onClick={() => navigate("/settinguserinfo")}
+          />
+          <MyPageMenu menuImg={notice} menuName={`알림 설정`} />
+          <MyPageMenu
+            menuImg={announce}
+            menuName={`공지사항`}
+            onClick={() => navigate("/notice")}
+          />
+          <MyPageMenu
+            menuImg={question}
+            menuName={`자주 묻는 질문`}
+            onClick={() => navigate("/faq")}
+          />
+          <MyPageMenu menuImg={inquiry} menuName={`문의하기`} />
+        </c.SubScreen>
       </c.ScreenComponent>
       <NavigationBar type={`mypage`} />
     </c.Totalframe>
