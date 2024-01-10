@@ -2,7 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import {Intro, Welcome, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage} from './pages/Join/Index';
 import Home from './pages/Main/Home';
 import LiveRule from "./pages/Main/LiveRule";
-import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate } from './pages/MyPage/Index';
+import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply } from './pages/MyPage/Index';
 import { FindRoommate , User, ApplyConfirm } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
 function App() {
@@ -36,6 +36,7 @@ function App() {
           <Route path="/applyconfirm" element={<ApplyConfirm/>} />
           <Route path="/chat" element={<Chat/>} />
           <Route path="/chat/chatroom" element={<ChatRoom/>} />
+          <Route path="/roommate/apply" element={<RoommateApply/>} />
         </Routes>
       </Router>
     </div>

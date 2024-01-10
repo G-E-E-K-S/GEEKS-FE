@@ -6,9 +6,7 @@ const SubTitleText = styled.div`
     font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
-    line-height: 32px;
     white-space: pre-wrap;
-    margin-top: 6.64vh;
     margin-left: 8px;
 `;
 const SubTitle = (props) => {

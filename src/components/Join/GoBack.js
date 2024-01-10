@@ -6,7 +6,8 @@ const GoBackTotal = styled.img`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 6.64vh;
+    height: 28px;
+    width: 28px;
     cursor: pointer;
 `;
 const GoBack = () => {
