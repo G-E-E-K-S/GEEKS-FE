@@ -9,11 +9,12 @@ const GoBackTotal = styled.img`
     height: 28px;
     width: 28px;
     cursor: pointer;
+    margin-top: ${(props)=>props.marginTop};
 `;
-const GoBack = () => {
+const GoBack = (props) => {
     let navigate = useNavigate();
     return(
-        <GoBackTotal src={GoBackImg} onClick={() => navigate(-1)}/>
+        <GoBackTotal marginTop={props.marginTop}src={GoBackImg} onClick={() => navigate(-1)}/>
     )
 }
 export default GoBack;

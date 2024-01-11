@@ -95,7 +95,7 @@ const EditProfile = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SpaceBetween>
-          <GoBack />
+          <GoBack marginTop={`7.58vh`}/>
           <Finish>완료</Finish>
         </c.SpaceBetween>
         <UploadProfile>

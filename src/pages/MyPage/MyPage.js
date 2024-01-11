@@ -112,10 +112,7 @@ const MyPage = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
-          <c.Flex>
-            <GoBack />
-            <PageName pageName={`마이`} />
-          </c.Flex>
+          <PageName pageName={`마이`} />
           <UserInfoTop>
             <UserInfo
               pageName={`마이`}

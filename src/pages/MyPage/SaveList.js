@@ -58,7 +58,7 @@ const LifeStyles = () => {
         <c.SubScreen>
           <c.SpaceBetween>
             <c.Flex>
-              <GoBack />
+              <GoBack marginTop={`7.58vh`}/>
               <PageName pageName={`저장 목록`} handleShow={activeEdit}/>
             </c.Flex>
             {activeEdit ? (
@@ -71,7 +71,7 @@ const LifeStyles = () => {
           <TotalSaveNum>총 3명</TotalSaveNum>
           <c.Flex>
             {activeEdit ? <CheckImg src={activeCheck ? Check : NoCheck} onClick={()=>handleCheck()}/> : null }
-            <OtherProfile userprofile={Profile} nickName={`너굴너굴`} major={`스마트정보통신공학과`} id={`19학번`} activeCheck={activeCheck}/>
+            <OtherProfile score={90}userprofile={Profile} nickName={`너굴너굴`} major={`스마트정보통신공학과`} id={`19학번`} activeCheck={activeCheck}/>
           </c.Flex>
           
         </c.SubScreen>

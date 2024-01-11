@@ -95,7 +95,7 @@ const LifeStyles = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
-            <GoBack/>
+            <GoBack marginTop={`7.58vh`}/>
             <SubTitleBox>
                 <SubTitle subtitle={`나의 생활 습관을\n등록해 보세요`}/>
             </SubTitleBox>
