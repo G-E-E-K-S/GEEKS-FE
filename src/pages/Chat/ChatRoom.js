@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import NavigationBar from "../../components/Main/NavigationBar";
-import GoBack from "../../components/Join/GoBack";
+import GoBack from "../../components/Common/GoBack";
 import MyChat from "../../components/Chat/MyChat";
 import OtherChat from "../../components/Chat/OtherChat";
 import Dots from "../../assets/img/Home/edit.svg";

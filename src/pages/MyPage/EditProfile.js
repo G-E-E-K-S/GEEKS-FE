@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Join/GoBack";
+import GoBack from "../../components/Common/GoBack";
 import InputSelf from "../../components/Main/InputSelf";
 import Major from "../../components/Join/Major";
 import ReactModal from "react-modal";

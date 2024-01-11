@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Join/GoBack";
+import GoBack from "../../components/Common/GoBack";
 import UserLifeStyle from "../../components/Roommate/UserLifeStyle";
 import YellowCheck from "../../assets/img/Roommate/yellowCheck.svg";
 import KnownCircle from "../../assets/img/Roommate/knownCircle.svg";

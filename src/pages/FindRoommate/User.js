@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Join/GoBack";
+import GoBack from "../../components/Common/GoBack";
 import UserLifeStyle from "../../components/Roommate/UserLifeStyle";
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import ChatImg from "../../assets/img/Roommate/chat.svg";

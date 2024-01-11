@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
-import GoBack from '../../components/Join/GoBack';
+import GoBack from '../../components/Common/GoBack';
 import TopNumber from '../../components/Join/TopNumber';
 import JoinButton from '../../components/Join/JoinButton';
 import MainText from '../../components/Join/MainText';
