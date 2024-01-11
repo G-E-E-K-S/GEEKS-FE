@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Join/GoBack";
+import GoBack from "../../components/Common/GoBack";
 import SubTitle from "../../components/Main/SubTitle";
 import LiveRuleCategory from "../../components/Main/LiveRuleCategory";
 import Window from "../../assets/img/Home/window.svg";

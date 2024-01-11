@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Join/GoBack";
+import GoBack from "../../components/Common/GoBack";
 import SubTitle from "../../components/Main/SubTitle";
 import OtherProfileApply from "../../components/MyPage/OtherProfileApply";
 import Popup from "../../components/Common/Popup";

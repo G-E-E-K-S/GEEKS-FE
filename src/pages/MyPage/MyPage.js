@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Join/GoBack";
+import GoBack from "../../components/Common/GoBack";
 import PageName from "../../components/Main/PageName";
 import UserInfo from "../../components/Main/UserInfo";
 import MyPageMenu from "../../components/Main/MyPageMenu";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Join/GoBack";
+import GoBack from "../../components/Common/GoBack";
 import PageName from "../../components/Main/PageName";
 import OtherProfile from "../../components/Main/OtherProfile";
 import Edit from "../../assets/img/MyPage/edit.svg";
