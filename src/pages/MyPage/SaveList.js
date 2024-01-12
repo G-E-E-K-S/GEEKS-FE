@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Common/GoBack";
-import PageName from "../../components/Main/PageName";
+import Header from "../../components/MyPage/Header";
 import OtherProfile from "../../components/Main/OtherProfile";
 import JoinButton from "../../components/Join/JoinButton";
 import Popup from "../../components/Common/Popup";
@@ -58,16 +57,13 @@ const LifeStyles = () => {
       setActiveCheck(false);
     }
   }
-  
+
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
           <c.SpaceBetween>
-            <c.Flex>
-              <GoBack marginTop={`7.58vh`}/>
-              <PageName pageName={`저장 목록`} handleShow={activeEdit}/>
-            </c.Flex>
+            <Header subtitle={`저장 목록`} andleShow={activeEdit}/>
             {activeEdit ? (
               <DoneBtn>완료</DoneBtn>
             ) : (

@@ -5,11 +5,14 @@ import * as c from "../../components/Common/CommonStyle";
 import GoBack from "../../components/Common/GoBack";
 import SubTitle from "../../components/Main/SubTitle";
 import FaqRommate from "./FaqRommate";
+import Header from "../../components/MyPage/Header";
 import SearchImg from "../../assets/img/MyPage/search.svg";
 
 const FAQTop = styled.div`
   display: flex;
   margin-bottom: 3.31vh;
+  height: 52px;
+  margin-top: 52px;
 `;
 const SearchBox = styled.div`
   display: flex;
@@ -78,10 +81,7 @@ const FAQ = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <FAQTop>
-          <GoBack />
-          <SubTitle subtitle={`자주 묻는 질문`} />
-        </FAQTop>
+        <Header subtitle={`자주 묻는 질문`}/>
         <SearchBox>
           <img src={SearchImg} />
           <SearchInput placeholder={`궁금한 것을 검색해 보세요`} />

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Common/GoBack";
-import SubTitle from "../../components/Main/SubTitle";
+import Header from "../../components/MyPage/Header";
 
 const SubTitleBox = styled.div`
   margin-top: 6.64vh;
@@ -51,12 +50,7 @@ const SettingUserInfo = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <c.Flex>
-          <GoBack />
-          <SubTitleBox>
-            <SubTitle subtitle={`회원 정보 설정`} />
-          </SubTitleBox>
-        </c.Flex>
+        <Header subtitle={`회원 정보 설정`}/>
         <AccountInfoTxt>계정 정보</AccountInfoTxt>
         {/* Email */}
         <AccountInfoBox>
