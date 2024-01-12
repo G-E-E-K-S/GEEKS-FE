@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 
 const TotalBox = styled.div`
@@ -11,7 +11,7 @@ const PopupBox = styled.div`
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 10.18vh;
+  bottom: ${(props) => props.bottom};
   border-radius: 12px;
   background: #525252;
 
@@ -23,9 +23,14 @@ const PopupBox = styled.div`
   margin: auto 0;
 `;
 const Popup = (props) => {
+  useEffect(() => {
+    setTimeout(() => {
+      props.setShowPopup(false);
+    }, 2000);
+  }, [props.setShowPopup]);
   return (
     <TotalBox>
-      <PopupBox>{props.message}</PopupBox>
+      <PopupBox bottom={props.bottom}>{props.message}</PopupBox>
     </TotalBox>
   );
 };

@@ -11,6 +11,7 @@ const TotalProfile = styled.div`
   border: 1px solid ${(props)=>props.activeCheck ? '#ECAA00' : '#FFFBEE'};
   padding: 14px 5.12vw;
   margin-bottom: 16px;
+  overflow-x: auto;
 `;
 const UserProfile = styled.img`
   width: 48px;
@@ -21,16 +22,14 @@ const UserProfile = styled.img`
 const NickName = styled.div`
   margin-bottom: 4px;
   color: #333;
-  font-size: 14px;
-  font-style: normal;
+  font-size: 0.875rem;
   font-weight: 600;
   line-height: 18px; /* 128.571% */
 `;
 const Major = styled.div`
   color: #707070;
-
-  font-size: 14px;
-  font-style: normal;
+  font-size: 0.875rem;
+  color: #333;
   font-weight: 500;
   line-height: 18px; /* 128.571% */
 `;
