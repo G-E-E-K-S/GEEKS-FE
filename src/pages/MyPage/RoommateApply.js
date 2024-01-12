@@ -135,9 +135,6 @@ const RoommateApply = () => {
   const handleCancle = () => {
     setIsBtsShow(false);
     setShowPopup(true);
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 2000);
   };
   return (
     <c.Totalframe>
@@ -208,7 +205,7 @@ const RoommateApply = () => {
             </BottomSheet>
           </div>
         )}
-        {showPopup && <Popup message={`룸메이트 신청을 취소하였습니다`} />}
+        {showPopup && <Popup bottom={`9.95vh`} setShowPopup={setShowPopup} message={`룸메이트 신청을 취소하였습니다`}/>}
       </c.ScreenComponent>
     </c.Totalframe>
   );

@@ -4,6 +4,8 @@ import * as c from "../../components/Common/CommonStyle";
 import GoBack from "../../components/Common/GoBack";
 import PageName from "../../components/Main/PageName";
 import OtherProfile from "../../components/Main/OtherProfile";
+import JoinButton from "../../components/Join/JoinButton";
+import Popup from "../../components/Common/Popup";
 import Edit from "../../assets/img/MyPage/edit.svg";
 import Profile from "../../assets/img/MyPage/basicProfile.svg";
 import NoCheck from "../../assets/img/MyPage/noCheck.svg";
@@ -44,14 +46,19 @@ const CheckImg = styled.img`
 const LifeStyles = () => {
   const [activeEdit, setActiveEdit] = useState(false);
   const [activeCheck, setActiveCheck] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleEdit = () => {
     setActiveEdit(true);
   };
-  const handleCheck = () => {
-    setActiveCheck(!activeCheck);
-  }
 
+  const handleBtn = () => {
+    if (activeCheck) {
+      setShowPopup(true);
+      setActiveCheck(false);
+    }
+  }
+  
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -70,10 +77,11 @@ const LifeStyles = () => {
           {/* total save list */}
           <TotalSaveNum>총 3명</TotalSaveNum>
           <c.Flex>
-            {activeEdit ? <CheckImg src={activeCheck ? Check : NoCheck} onClick={()=>handleCheck()}/> : null }
-            <OtherProfile score={90}userprofile={Profile} nickName={`너굴너굴`} major={`스마트정보통신공학과`} id={`19학번`} activeCheck={activeCheck}/>
+            {activeEdit ? <CheckImg src={activeCheck ? Check : NoCheck} onClick={()=>setActiveCheck(!activeCheck)}/> : null }
+            <OtherProfile score={90} userprofile={Profile} nickName={`너굴너굴`} major={`인더스트리얼디자인`} id={`19학번`} activeCheck={activeCheck}/>
           </c.Flex>
-          
+          <JoinButton btnName={`삭제하기`} isNextPage={activeCheck} handleClick={() => handleBtn()} />
+          {showPopup ? <Popup bottom={`18.24vh`} setShowPopup={setShowPopup} message={`‘~~...’님이 삭제되었습니다`}/> : null}
         </c.SubScreen>
       </c.ScreenComponent>
     </c.Totalframe>

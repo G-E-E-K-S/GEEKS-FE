@@ -7,15 +7,15 @@ const TotalButton = styled.div`
     position: fixed;
     bottom: 10.18vh;
     width: 89.74vw;
-    height: 8.10vh;
+    height: 60px;
     background-color: ${(props) => (props.isNextPage ? '#FFC700' : '#F7F7F7')};
     border-radius: 12px;
 
-    /*font*/
-    color: #333;
-    font-size: 18px;
+    color: ${(props)=> (props.isNextPage ? '#333' : '#B7B7B7')};
+    text-align: center;
+    font-size: 1.125rem;
     font-weight: 600;
-    cursor: pointer;
+    line-height: 24px; /* 133.333% */
 `;
 const JoinButton = (props) => {
     return(
