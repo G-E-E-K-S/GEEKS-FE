@@ -8,7 +8,7 @@ import Popup from "../../components/Common/Popup";
 import BottomSheet from "../../components/Common/BottomSheet";
 import Dots from "../../assets/img/Home/edit.svg";
 import Colse from "../../assets/img/MyPage/close.svg";
-import Chick from "../../assets/img/Join/chick.svg";
+import CancelRoommate from "../../assets/img/MyPage/cancleRoommate.svg";
 
 const ApplyTop = styled.div`
   display: flex;
@@ -107,8 +107,11 @@ const DeleteContent = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-right: 2.17vw;
-  margin: 0 auto;
+`;
+const ContainBottom =styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 `;
 const DeletMainIcon = styled.img`
   width: 56px;
@@ -126,6 +129,7 @@ const CloseIcon = styled.img`
   width: 28px;
   height: 28px;
   cursor: pointer;
+  margin-left: 2.17vw;
 `;
 const RoommateApply = () => {
   const [isChoose, setIsChoose] = useState("send");
@@ -194,13 +198,13 @@ const RoommateApply = () => {
         {isBtsShow && (
           <div>
             <BottomSheet height={`331px`}>
-              <c.Flex>
+              <ContainBottom>
                 <DeleteContent>
-                  <DeletMainIcon src={Chick} />
+                  <DeletMainIcon src={CancelRoommate} />
                   <DeleteMsg>{`닉네임여덟글자만 님께\n전송한 룸메이트 신청을 취소할까요?`}</DeleteMsg>
                 </DeleteContent>
                 <CloseIcon src={Colse} onClick={() => setIsBtsShow(false)}/>
-              </c.Flex>
+              </ContainBottom>
               <BtsCancelBtn onClick={()=>handleCancle()}>취소하기</BtsCancelBtn>
             </BottomSheet>
           </div>
