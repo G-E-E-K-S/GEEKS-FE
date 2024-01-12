@@ -23,7 +23,7 @@ const TotalBottomSheet = styled.div`
   bottom: 0px;
   height: ${(props)=>props.height};
   border-radius: 20px 20px 0px 0px;
-  padding: 24px;
+  padding: ${(props)=>props.padding};
   background: #fff;
   overflow-y: auto;
   overflow-x: hidden;
@@ -35,7 +35,7 @@ const BottomSheet = (props) => {
   return (
     <div>
       <ModalBackground />
-      <TotalBottomSheet height={props.height}>{props.children}</TotalBottomSheet>
+      <TotalBottomSheet height={props.height} padding={props.padding}>{props.children}</TotalBottomSheet>
     </div>
   );
 };

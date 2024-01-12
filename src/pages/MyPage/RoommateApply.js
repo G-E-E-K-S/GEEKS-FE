@@ -197,7 +197,7 @@ const RoommateApply = () => {
         )}
         {isBtsShow && (
           <div>
-            <BottomSheet height={`331px`}>
+            <BottomSheet height={`331px`} padding={`24px`}>
               <ContainBottom>
                 <DeleteContent>
                   <DeletMainIcon src={CancelRoommate} />
