@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Common/GoBack";
-import SubTitle from "../../components/Main/SubTitle";
+import Header from "../../components/MyPage/Header";
 
 const NoticeTop = styled.div`
     display: flex;
@@ -34,10 +33,7 @@ const Notice = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <NoticeTop>
-          <GoBack />
-          <SubTitle subtitle={`공지사항`} />
-        </NoticeTop>
+        <Header subtitle={`공지사항`}/>
         <NoticeText>{`편리한 채팅을 위한 새로운 기능이 생겼어요 두줄은 이렇게 써져요`}</NoticeText>
         <NoticeDate>{`2023.09.25`}</NoticeDate>
         <Br/>
