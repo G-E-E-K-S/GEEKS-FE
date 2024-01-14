@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import HeaderMenu from "../../components/Common/HeaderMenu";
@@ -58,28 +59,57 @@ const InputContent = styled.input`
     line-height: 32px; /* 133.333% */
   }
 `;
+const InputFile = styled.input`
+  display: none;
+`;
 const Community = () => {
-  const [contentHeight, setContentHeight] = useState("168px");
-  const handleInput = () => {
-    let inputElement = document.getElementById("test");
-    setContentHeight(`${inputElement.scrollHeight}px`);
-  };
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [file, setFile] = useState(null);
+
+    const Test = () => {
+        const fd = new FormData();
+        Object.values(file).forEach((file)=>{
+            fd.append('file',file);
+        });
+    }
+    const handleFile = (event) => {
+        setFile(event.target.value);
+    }
+    const UploadPost = () => {
+        async function fetchPost() {
+          try {
+            const res = await axios.post("http://127.0.0.1:8080/post/create", fd,{
+                headers:{
+                    'Content-Type': `multipart/form-data`
+                },body:{
+                    title: title,
+                    content: content,
+                    file: file
+                }
+            });
+            console.log(res);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        fetchPost();
+      };
+  
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
           <HeaderMenu>
-            <DoneBtn>완료</DoneBtn>
+            <DoneBtn onClick={() => Test()}>완료</DoneBtn>
           </HeaderMenu>
-          <InputTitle placeholder={`글 제목을 입력하세요`}></InputTitle>
+          <InputTitle placeholder={`글 제목을 입력하세요`} onChange={(event)=>setTitle(event.target.value)}></InputTitle>
           <Line />
-          <InputContent
-            onChange={() => handleInput()}
-            id="test"
-            contentHeight={contentHeight}
-            placeholder={`내용을 입력하세요`}
-          ></InputContent>
-          <img src={AddPhoto} />
+          <InputContent placeholder={`내용을 입력하세요`} onChange={(event)=>setContent(event.target.value)}></InputContent>
+          <label>
+            <img src={AddPhoto} />
+            <InputFile type="file" multiple="multiple" onChange={handleFile}/>
+          </label>
         </c.SubScreen>
       </c.ScreenComponent>
     </c.Totalframe>
