@@ -1,3 +1,4 @@
-import Community from "./Community";
+import WritePost from "./WritePost";
+import Post from "./Post";
 
-export { Community };
+export { WritePost, Post };
