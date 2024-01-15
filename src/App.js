@@ -5,7 +5,7 @@ import LiveRule from "./pages/Main/LiveRule";
 import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply } from './pages/MyPage/Index';
 import { FindRoommate , User, ApplyConfirm } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
-import { Community } from './pages/Community/Index';
+import { WritePost, Post } from './pages/Community/Index';
 function App() {
   return (
     <div>
@@ -38,7 +38,8 @@ function App() {
           <Route path="/chat" element={<Chat/>} />
           <Route path="/chat/chatroom" element={<ChatRoom/>} />
           <Route path="/roommate/apply" element={<RoommateApply/>} />
-          <Route path="/community" element={<Community/>} />
+          <Route path="/writepost" element={<WritePost/>} />
+          <Route path="/post" element={<Post/>} />
         </Routes>
       </Router>
     </div>

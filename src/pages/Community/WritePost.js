@@ -62,39 +62,53 @@ const InputContent = styled.input`
 const InputFile = styled.input`
   display: none;
 `;
+const ShowImg = styled.img`
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  margin-left: 12px;
+`;
 const Community = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [file, setFile] = useState(null);
+    const [uploadImg, setUploadImg] = useState();
 
+    const handleFile = (event) => {
+        const selectedFile = event.target.files[0];
+        setUploadImg(selectedFile.name);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setUploadImg(reader.result);
+        };
+        reader.readAsDataURL(selectedFile);
+    }
     const Test = () => {
-        const fd = new FormData();
+        let fd = new FormData();
         Object.values(file).forEach((file)=>{
             fd.append('file',file);
         });
+        console.log(fd)
     }
-    const handleFile = (event) => {
-        setFile(event.target.value);
-    }
-    const UploadPost = () => {
-        async function fetchPost() {
-          try {
-            const res = await axios.post("http://127.0.0.1:8080/post/create", fd,{
-                headers:{
-                    'Content-Type': `multipart/form-data`
-                },body:{
-                    title: title,
-                    content: content,
-                    file: file
-                }
-            });
-            console.log(res);
-          } catch (error) {
-            console.error(error);
-          }
-        }
-        fetchPost();
-      };
+    // const UploadPost = () => {
+    //     async function fetchPost() {
+    //       try {
+    //         const res = await axios.post("http://127.0.0.1:8080/post/create", {
+    //             headers:{
+    //                 'Content-Type': `multipart/form-data`
+    //             },body:{
+    //                 title: title,
+    //                 content: content,
+    //                 file: file
+    //             }
+    //         });
+    //         console.log(res);
+    //       } catch (error) {
+    //         console.error(error);
+    //       }
+    //     }
+    //     fetchPost();
+    //   };
   
   return (
     <c.Totalframe>
@@ -106,10 +120,14 @@ const Community = () => {
           <InputTitle placeholder={`글 제목을 입력하세요`} onChange={(event)=>setTitle(event.target.value)}></InputTitle>
           <Line />
           <InputContent placeholder={`내용을 입력하세요`} onChange={(event)=>setContent(event.target.value)}></InputContent>
-          <label>
-            <img src={AddPhoto} />
-            <InputFile type="file" multiple="multiple" onChange={handleFile}/>
-          </label>
+          <c.Flex>
+            <label>
+                <img src={AddPhoto} />
+                <InputFile type="file" accept="image/*" multiple="multiple" onChange={handleFile.bind(this)} />
+            </label>
+          
+            <ShowImg src={uploadImg} />
+          </c.Flex>
         </c.SubScreen>
       </c.ScreenComponent>
     </c.Totalframe>
