@@ -72,7 +72,6 @@ const Community = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [file, setFile] = useState(null);
-    const [uploadImg, setUploadImg] = useState();
 
     const handleFile = (event) => {
         // const selectedFile = event.target.files[0];
@@ -82,13 +81,6 @@ const Community = () => {
         //     setUploadImg(reader.result);
         // };
         // reader.readAsDataURL(selectedFile);
-    }
-    const Test = () => {
-        let fd = new FormData();
-        Object.values(file).forEach((file)=>{
-            fd.append('file',file);
-        });
-        console.log(fd)
     }
     const UploadPost = () => {
       const postData = {
@@ -130,9 +122,7 @@ const Community = () => {
         console.log(e);
       }
     }
-
     fetch();
-
   }
   return (
     <c.Totalframe>
@@ -150,7 +140,7 @@ const Community = () => {
                 <InputFile type="file" accept="image/*" multiple="multiple" onChange={handleFile.bind(this)} />
             </label>
           
-            <ShowImg src={uploadImg} />
+            {/* <ShowImg src={uploadImg} /> */}
             <button onClick={()=>getCookies()}>get coo</button>
           </c.Flex>
         </c.SubScreen>
