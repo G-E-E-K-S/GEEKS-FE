@@ -75,13 +75,13 @@ const Community = () => {
     const [uploadImg, setUploadImg] = useState();
 
     const handleFile = (event) => {
-        const selectedFile = event.target.files[0];
-        setUploadImg(selectedFile.name);
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setUploadImg(reader.result);
-        };
-        reader.readAsDataURL(selectedFile);
+        // const selectedFile = event.target.files[0];
+        setFile(event.target.files);
+        // const reader = new FileReader();
+        // reader.onloadend = () => {
+        //     setUploadImg(reader.result);
+        // };
+        // reader.readAsDataURL(selectedFile);
     }
     const Test = () => {
         let fd = new FormData();
@@ -90,32 +90,56 @@ const Community = () => {
         });
         console.log(fd)
     }
-    // const UploadPost = () => {
-    //     async function fetchPost() {
-    //       try {
-    //         const res = await axios.post("http://127.0.0.1:8080/post/create", {
-    //             headers:{
-    //                 'Content-Type': `multipart/form-data`
-    //             },body:{
-    //                 title: title,
-    //                 content: content,
-    //                 file: file
-    //             }
-    //         });
-    //         console.log(res);
-    //       } catch (error) {
-    //         console.error(error);
-    //       }
-    //     }
-    //     fetchPost();
-    //   };
-  
+    const UploadPost = () => {
+      const postData = {
+        'title': title,
+        'content': content
+      }
+      const formData = new FormData();
+
+      formData.append(
+        "dto",
+        new Blob([JSON.stringify(postData)],{type: "application/json"})
+      );
+
+      if(file !== null){
+        Object.values(file).forEach((f)=> formData.append('files',f));
+      }
+        async function fetchPost() {
+          try {
+            axios.defaults.withCredentials = true;
+            const res = await axios.post("http://localhost:8080/post/create", formData,{
+                headers:{
+                    'Content-Type': `multipart/form-data`
+                }
+            });
+            console.log(res);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        fetchPost();
+      };
+  const getCookies = () => {
+    async function fetch() {
+      try {
+        axios.defaults.withCredentials = true;
+        const res = await axios.get("http://localhost:8080/member/admin");
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    fetch();
+
+  }
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
           <HeaderMenu>
-            <DoneBtn onClick={() => Test()}>완료</DoneBtn>
+            <DoneBtn onClick={() => UploadPost()}>완료</DoneBtn>
           </HeaderMenu>
           <InputTitle placeholder={`글 제목을 입력하세요`} onChange={(event)=>setTitle(event.target.value)}></InputTitle>
           <Line />
@@ -127,6 +151,7 @@ const Community = () => {
             </label>
           
             <ShowImg src={uploadImg} />
+            <button onClick={()=>getCookies()}>get coo</button>
           </c.Flex>
         </c.SubScreen>
       </c.ScreenComponent>

@@ -7,6 +7,7 @@ import Br from "../../components/Common/Br";
 import PostInfo from "../../components/Community/PostInfo";
 import PostContent from "../../components/Community/PostContent";
 import LikeAndStarBtn from "../../components/Community/LikeAndStarBtn";
+import Comment from "../../components/Community/Comment";
 import Dot from "../../assets/img/Community/dots.svg";
 import Like from "../../assets/img/Community/like.svg";
 import Star from "../../assets/img/Community/star.svg";
@@ -14,6 +15,7 @@ const Post = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
+      <c.SubScreen>
           <HeaderMenu>
             <img src={Dot}/>
           </HeaderMenu>
@@ -24,7 +26,7 @@ const Post = () => {
             <LikeAndStarBtn icon={Star} text={`스크랩`} marginLeft={`2.05vw`}></LikeAndStarBtn>
           </c.Flex>
           <Br/>
-        <c.SubScreen>
+        <Comment number={`2`}/>
         </c.SubScreen>
       </c.ScreenComponent>
     </c.Totalframe>
