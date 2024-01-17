@@ -1,5 +1,6 @@
 import Intro from './Intro';
 import Welcome from './Welcome';
+import Login from './Login';
 import InputEmail from './InputEmail';
 import InputCode from './InputCode';
 import Password from './Password';
@@ -10,4 +11,4 @@ import Gender from './Gender';
 import Dormitory from './Dormitory';
 import FinalPage from './FinalPage';
 
-export { Intro, Welcome, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage};
+export { Intro, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage};
