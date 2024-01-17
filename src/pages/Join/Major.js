@@ -2,7 +2,7 @@ import React, { useState,useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
-import GoBack from '../../components/Common/GoBack';
+import Header from '../../components/Join/Header';
 import JoinButton from '../../components/Join/JoinButton';
 import MainText from '../../components/Join/MainText';
 import BottomSheet from '../../components/Join/BottmSheet';
@@ -45,7 +45,7 @@ const Major = () => {
     return (
         <c.Totalframe>
             <c.ScreenComponent>
-                <GoBack/>
+                <Header/>
                 <MainText maintitle={`전공 학과와 학번을 알려주세요`}/>
                 <BottomSheet/>
                 <MajorTotal>
