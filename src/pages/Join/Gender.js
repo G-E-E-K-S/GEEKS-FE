@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
-import GoBack from '../../components/Common/GoBack';
+import Header from '../../components/Join/Header';
 import JoinButton from '../../components/Join/JoinButton';
 import MainText from '../../components/Join/MainText';
 import GenderBox from '../../components/Join/GenderBox';
@@ -56,7 +56,7 @@ const Gender = () => {
     return (
         <c.Totalframe>
             <c.ScreenComponent>
-                <GoBack/>
+                <Header/>
                 <MainText maintitle={`성별을 알려주세요`}/>
                 <GenderTotal>
                     <GenderBox gender={'남자'} onClick={()=>SelectGender('남자')} isSelected={isboy}></GenderBox>

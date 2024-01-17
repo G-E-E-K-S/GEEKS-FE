@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
-import GoBack from '../../components/Common/GoBack';
+import Header from '../../components/Join/Header';
 import JoinButton from '../../components/Join/JoinButton';
 import MainText from '../../components/Join/MainText';
 import DormitoryBox from '../../components/Join/DormitoryBox';
@@ -34,7 +34,7 @@ const Dormitory = () => {
     return (
         <c.Totalframe>
             <c.ScreenComponent>
-                <GoBack/>
+                <Header/>
                 <MainText maintitle={`어떤 기숙사에서 생활하시나요?`}/>
                 <DormitoryTotal>
                     <DormitoryBox disable={false} dormitory={'신관'} onClick={()=>SelectDormitory('신관')} isSelected={dormiVal == '신관'}/>

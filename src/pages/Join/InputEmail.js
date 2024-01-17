@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
-import GoBack from '../../components/Common/GoBack';
+import Header from '../../components/Join/Header';
 import TopNumber from '../../components/Join/TopNumber';
 import JoinButton from '../../components/Join/JoinButton';
 import MainText from '../../components/Join/MainText';
@@ -33,6 +33,9 @@ const Input = styled.input`
     border: none;
     outline: none;
     font-size: 24px;
+    &::placeholder{
+        color: #D0D0D0;
+    }
 `;
 
 const Univ = styled.div`
@@ -71,7 +74,7 @@ const InputEmail = () => {
     return (
         <c.Totalframe>
             <c.ScreenComponent>
-                <GoBack/>
+                <Header/>
                 <TopNumber page={1}/>
                 <MainText maintitle={`재학생 인증을 위해\n학교 이메일 주소를 입력해 주세요`}/>
                 <InputInfos isSelected={isSelected}>

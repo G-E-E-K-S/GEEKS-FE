@@ -2,7 +2,7 @@ import React, { useState,useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
-import GoBack from '../../components/Common/GoBack';
+import Header from '../../components/Join/Header';
 import TopNumber from '../../components/Join/TopNumber';
 import JoinButton from '../../components/Join/JoinButton';
 import MainText from '../../components/Join/MainText';
@@ -23,7 +23,7 @@ const QuesText = () => {
     return (
         <c.Totalframe>
             <c.ScreenComponent>
-                <GoBack/>
+                <Header/>
                 <TopNumber/>
                 <MainText maintitle={`은진 님 반가워요!\n\n기숙사 생활을 위한\n몇 가지만 여쭤볼게요`}/>
                 <CenterImg>
