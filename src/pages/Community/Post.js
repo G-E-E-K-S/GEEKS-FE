@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import HeaderMenu from "../../components/Common/HeaderMenu";
@@ -41,7 +42,49 @@ const InputComment = styled.input`
     line-height: 24px;
   }
 `;
+const PostImg = styled.img`
+  border-radius: 16px;
+  width: 100%;
+  height: 245px;
+  overflow: hidden;
+  object-fit: cover;
+  margin-top: 20px;
+`;
 const Post = () => {
+  const [postInfo, setPostInfo] = useState("");
+  const commentRef = useRef();
+  let { postId } = useParams();
+
+  useEffect(() => {
+    async function fetchPost() {
+      try {
+        axios.defaults.withCredentials = true; // allow cookies
+        const res = await axios.get("http://localhost:8080/post/show?postId=" + postId);
+        setPostInfo(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchPost();
+  }, []);
+
+  const UploadComment = () => {    
+    async function fetchPost() {
+      try {
+        axios.defaults.withCredentials = true; // allow cookies
+        const res = await axios.post("http://localhost:8080/post/comment",{
+          postId: postId,
+          parentId: null,
+          content: commentRef.current.value
+        });
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchPost();
+  }
+
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -49,37 +92,42 @@ const Post = () => {
           <HeaderMenu>
             <img src={Dot} />
           </HeaderMenu>
-          <PostInfo username={`배고파`} uploadtime={`10분전`}></PostInfo>
+          <PostInfo username={`test`} uploadtime={`10분전`}></PostInfo>
           <PostContent
-            title={`아이스크림 먹고 싶다`}
-            content={`진짜 맛있는 아이스크림...\n근데 배불러...\n딱 한 입만 먹고싶다 초코맛 셀렉션 뭔지 알지...\n아니면 초코케이크 딱 한 입...\n🍨🍰`}
-          ></PostContent>
+            title={postInfo.title}
+            content={postInfo.content}></PostContent>
+            {postInfo.photoNames?.map((photo)=>(
+            <PostImg src={'https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/'+ photo} />
+          ))}
           <c.Flex>
             <LikeAndStarBtn icon={Like}></LikeAndStarBtn>
-            <LikeAndStarBtn
-              icon={Star}
-              text={`스크랩`}
-              marginLeft={`2.05vw`}
-            ></LikeAndStarBtn>
+            <LikeAndStarBtn icon={Star} text={`스크랩`} marginLeft={`2.05vw`}></LikeAndStarBtn>
           </c.Flex>
-          <Br />
-          <CommentCnt number={`2`} />
-          <Comment
-            postInfo={{ username: "익명", uploadtime: "10분전" }}
-            comment={`아니면 티코`}
-          />
-          <Comment
-            paddingLeft={`8.17vw`}
-            recomment={true}
-            postInfo={{ username: "익명", uploadtime: "10분전" }}
-            comment={`아니면 티코`}
-          />
+          {/* 구분선 */}
+          <Br/>
+
+          {/* 댓글 부분 */}
+          <CommentCnt number={`3`}/>
+          {postInfo.comments?.map((comment)=>(
+            <div>
+              <Comment
+                postInfo={{ username: comment.writer, uploadtime: comment.createdDate }}
+                comment={comment.content}/>
+                {comment.children?.map((child)=>(
+                  <Comment
+                  paddingLeft={`8.17vw`}
+                  recomment={true}
+                  postInfo={{ username: child.writer, uploadtime: child.createdDate }}
+                  comment={child.content}/>
+                ))}
+            </div>
+          ))}
         </c.SubScreen>
       </c.ScreenComponent>
       <InputCommentBox>
         <TotalInput>
-          <InputComment placeholder="댓글을 입력하세요" />
-          <img src={Send} />
+          <InputComment placeholder="댓글을 입력하세요" ref={commentRef}/>
+          <img src={Send} onClick={()=>UploadComment()}/>
         </TotalInput>
       </InputCommentBox>
     </c.Totalframe>

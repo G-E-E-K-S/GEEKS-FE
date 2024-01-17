@@ -1,11 +1,11 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import {Intro, Welcome, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage} from './pages/Join/Index';
+import {Intro, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage} from './pages/Join/Index';
 import Home from './pages/Main/Home';
 import LiveRule from "./pages/Main/LiveRule";
 import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply } from './pages/MyPage/Index';
 import { FindRoommate , User, ApplyConfirm } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
-import { WritePost, Post } from './pages/Community/Index';
+import { WritePost, Post, Community } from './pages/Community/Index';
 function App() {
   return (
     <div>
@@ -13,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Intro/>} />
           <Route path="/welcome" element={<Welcome/>} />
+          <Route path="/login" element={<Login/>} />
           <Route path="/inputemail" element={<InputEmail/>} />
           <Route path="/inputcode" element={<InputCode/>} />
           <Route path="/password" element={<Password/>} />
@@ -39,7 +40,8 @@ function App() {
           <Route path="/chat/chatroom" element={<ChatRoom/>} />
           <Route path="/roommate/apply" element={<RoommateApply/>} />
           <Route path="/writepost" element={<WritePost/>} />
-          <Route path="/post" element={<Post/>} />
+          <Route path="/post/:postId" element={<Post/>} />
+          <Route path="/community" element={<Community/>} />
         </Routes>
       </Router>
     </div>

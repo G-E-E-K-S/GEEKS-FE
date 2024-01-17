@@ -38,7 +38,7 @@ const Comment = (props) => {
           uploadtime={props.postInfo.uploadtime}
         />
         <c.FlexCenter>
-          <CommentImg src={CommentIcon} />
+          <CommentImg src={CommentIcon} onClick={props.wirteChild}/>
           <ThreeDots src={Dots} />
         </c.FlexCenter>
       </c.SpaceBetween>
