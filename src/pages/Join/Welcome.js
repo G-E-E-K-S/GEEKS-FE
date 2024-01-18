@@ -31,6 +31,23 @@ const TopImg = styled.div`
     justify-content: center;
     align-items: center;
 `;
+const LoginButton = styled.div`
+    width: 89.74vw;
+    height: 60px;
+    border-radius: 12px;
+    border: 1px solid #E2E2E2;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    position: fixed;
+    bottom: calc(60px + 10.18vh + 12px);
+    cursor: pointer;
+    color: #333;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 24px;
+`;
 const Welcome = () => {
     const navigator = useNavigate();
     
@@ -47,6 +64,7 @@ const Welcome = () => {
                 <TopImg>
                     {/* Input img */}
                 </TopImg>
+                <LoginButton onClick={()=>navigator('/login')}>로그인</LoginButton>
                 <JoinButton btnName={'이메일 회원가입'} handleClick={nextPage} isNextPage={true}/>
             </c.ScreenComponent>
         </c.Totalframe>

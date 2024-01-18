@@ -15,7 +15,8 @@ const TotalButton = styled.div`
     text-align: center;
     font-size: 1.125rem;
     font-weight: 600;
-    line-height: 24px; /* 133.333% */
+    line-height: 24px;
+    cursor: pointer;
 `;
 const JoinButton = (props) => {
     return(
