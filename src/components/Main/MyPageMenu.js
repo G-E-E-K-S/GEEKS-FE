@@ -29,6 +29,18 @@ const Arrow = styled.img`
     width:20px;
     height: 20px;
 `;
+const RedCircle = styled.div`
+    width: 8px;
+    height: 8px;
+    background-color: #CB3D0B;
+    border-radius: 50%;
+    margin-right: 1.53vw;
+`;
+const Arrows = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
 const MyPageMenu = (props) => {
     return(
         <TotalMenu onClick={props.onClick}>
@@ -36,7 +48,10 @@ const MyPageMenu = (props) => {
                 <MenuImg src={props.menuImg}></MenuImg>
                 <MenuName>{props.menuName}</MenuName>
             </c.Flex>
-            <Arrow src={MenuArrow}/>
+            <Arrows>
+                {props.enrollLifeStyle && <RedCircle/>}
+                <Arrow src={MenuArrow}/>
+            </Arrows>
         </TotalMenu>
     )
 }

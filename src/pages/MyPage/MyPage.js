@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Common/GoBack";
 import PageName from "../../components/Main/PageName";
 import UserInfo from "../../components/Main/UserInfo";
 import MyPageMenu from "../../components/Main/MyPageMenu";
@@ -13,7 +13,7 @@ import rightArrow from "../../assets/img/MyPage/rightArrow.svg";
 import enrollLifeStyle from "../../assets/img/MyPage/enrollLIfeStyle.svg";
 import saveList from "../../assets/img/MyPage/saveList.svg";
 import roommateApply from "../../assets/img/MyPage/rommateApply.svg";
-import userInfo from "../../assets/img/MyPage/userInfo.svg";
+import userInfoImg from "../../assets/img/MyPage/userInfo.svg";
 import notice from "../../assets/img/MyPage/notice.svg";
 import announce from "../../assets/img/MyPage/announce.svg";
 import question from "../../assets/img/MyPage/question.svg";
@@ -104,10 +104,24 @@ const WelcomeKit = styled.div`
 `;
 const MyPage = () => {
   const [toggle, setToggle] = useState(false);
+  const [userInfo, setUserInfo] = useState('');
   const clickedToggle = () => {
     setToggle((prev) => !prev);
   };
   const navigate = useNavigate();
+  useEffect(()=>{
+    async function fetchUserInfo(){
+      try{
+          axios.defaults.withCredentials=true; // allow cookies
+          const res = await axios.get("http://localhost:8080/member/myPage");
+          setUserInfo(res.data);
+          console.log(res);
+      }catch(error){
+        console.error(error);
+      }
+  }
+  fetchUserInfo();
+  },[]);
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -115,14 +129,14 @@ const MyPage = () => {
           <PageName pageName={`마이`} />
           <UserInfoTop>
             <UserInfo
-              pageName={`마이`}
               profileImg={basicProfile}
-              userName={`은진`}
-              userMajor={`커뮤니케이션디자인`}
-              UserId={`20학번`}
+              userName={userInfo.nickname}
+              userMajor={userInfo.major}
+              UserId={userInfo.studentID}
+              enrollLifeStyle={!userInfo.exist}
             />
           </UserInfoTop>
-          <SelfIntro>늦게 일어나는 편이에요~</SelfIntro>
+          <SelfIntro>{userInfo.introduction}</SelfIntro>
           <ShowMyProfile>
             <div>
               <ShowProfileTxt>내 프로필 노출하기</ShowProfileTxt>
@@ -143,6 +157,7 @@ const MyPage = () => {
             menuImg={enrollLifeStyle}
             menuName={`생활 습관 등록하기`}
             onClick={() => navigate("/lifestyle")}
+            enrollLifeStyle={!userInfo.exist}
           />
           <MyPageMenu
             menuImg={saveList}
@@ -156,7 +171,7 @@ const MyPage = () => {
           />
           <Br />
           <MyPageMenu
-            menuImg={userInfo}
+            menuImg={userInfoImg}
             menuName={`회원 정보 설정`}
             onClick={() => navigate("/settinguserinfo")}
           />

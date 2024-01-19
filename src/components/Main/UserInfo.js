@@ -58,7 +58,7 @@ const UserInfo = (props) => {
         </UserInfos>
       </c.Flex>
       <Link to={'/editprofile'}>
-        <Edit>수정</Edit>
+        <Edit>내 프로필</Edit>
       </Link>      
     </Users>
   );
