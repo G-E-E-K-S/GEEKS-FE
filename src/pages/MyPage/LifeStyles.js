@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -56,7 +56,6 @@ const Enroll = styled.div`
   font-weight: 600;
 `;
 const LifeStyles = () => {
-  const [resetStat, setResetStat] = useState(false);
   const [isClicked, setIsCliked] = useState(false);
   const [isSmoke, setIsSmoke] = useState(null);
   const [isHabit, setIsHabit] = useState(null);
@@ -66,11 +65,48 @@ const LifeStyles = () => {
   const [isOut, setIsOut] = useState(null);
   const [isCleaning, setIsCleaning] = useState(null);
   const [isTendency, setIsTendency] = useState(null);
-
+  const [receiveData, setReceiveData] = useState(null);
 
   const handleReset = () => {
-    setResetStat(!resetStat);
+    setIsSmoke(null);
+    setIsHabit(null);
+    setIsEar(null);
+    setIsSleep(null);
+    setIsWakeUp(null);
+    setIsOut(null);
+    setIsCleaning(null);
+    setIsTendency(null);
+    setIsCliked(false);
   }
+  useEffect(()=>{
+    async function fetchReceiveData(){
+      try{
+          axios.defaults.withCredentials=true; // allow cookies
+          const res = await axios.get("http://localhost:8080/detail/send");
+          setReceiveData(res.data);
+      }catch(error){
+        console.error(error);
+      }
+  }
+  fetchReceiveData();
+  },[]);
+
+  useEffect(()=>{
+    if(receiveData === null || !receiveData?.exist) return;
+    setIsSmoke(receiveData.smoking);
+    setIsHabit(receiveData.habit);
+    setIsEar(receiveData.ear);
+    setIsSleep(receiveData.sleep);
+    setIsWakeUp(receiveData.wakeup);
+    setIsOut(receiveData.out);
+    setIsCleaning(receiveData.cleaning);
+    setIsTendency(receiveData.tendency);
+  },[receiveData]);
+
+  useEffect(()=>{
+    if ( isSmoke !== null && isHabit !== null && isEar !== null && isSleep !== null && isWakeUp !== null && isOut !== null && isCleaning !== null &&isTendency !== null) setIsCliked(true);
+  },[isSmoke,isHabit,isEar,isSleep,isWakeUp,isOut,isCleaning,isTendency]);
+
   const handleButtonClick = () => {
     if ( isSmoke !== null && isHabit !== null && isEar !== null && isSleep !== null && isWakeUp !== null && isOut !== null && isCleaning !== null &&isTendency !== null){
       async function fetchLifeStyle() {
@@ -102,14 +138,14 @@ const LifeStyles = () => {
             <SubTitleBox>
                 <SubTitle subtitle={`나의 생활 습관을\n등록해 보세요`}/>
             </SubTitleBox>
-            <LifeStyle lifeStyleText={`흡연 여부`} lifeStyle={[{'흡연자에요': true},{'비흡연자에요': false}]} resetStat={resetStat} lifeStyleSection={setIsSmoke} isClicked={setIsCliked}/>
-            <LifeStyle lifeStyleText={`잠버릇`} lifeStyle={[{'잠버릇 있어요' : true},{'잠버릇 없어요' : false}]} resetStat={resetStat} lifeStyleSection={setIsHabit} isClicked={setIsCliked}/>
-            <LifeStyle lifeStyleText={`잠귀`} lifeStyle={[{'귀 밝아요' : 'BRIGHT'},{'귀 어두워요' : 'DARK'}]} resetStat={resetStat} lifeStyleSection={setIsEar} isClicked={setIsCliked}/>
-            <LifeStyle lifeStyleText={`취침`} lifeStyle={[{'일찍 자요': 'EARLY'},{'늦게 자요' : 'LATE'},{'때마다 달라요' : 'RANDOM'}]} resetStat={resetStat} lifeStyleSection={setIsSleep} isClicked={setIsCliked}/>
-            <LifeStyle lifeStyleText={`기상`} lifeStyle={[{'일찍 일어나요' : 'EARLY'},{'늦게 일어나요' : 'LATE'},{'때마다 달라요' : 'RANDOM'}]} resetStat={resetStat} lifeStyleSection={setIsWakeUp} isClicked={setIsCliked}/>
-            <LifeStyle lifeStyleText={`외출`} lifeStyle={[{'집순이에요' : 'HOME'},{'밖순이에요' : 'OUT'},{'약속이 있으면 나가요' : 'PROMISE'}]} resetStat={resetStat} lifeStyleSection={setIsOut} isClicked={setIsCliked}/>
-            <LifeStyle lifeStyleText={`청소`} lifeStyle={[{'주기적으로 청소해요' : 'CLEAN'},{'더러워지면 청소해요' : 'DIRTY'},{'상대에게 맞춰요' : 'OPPONENT'}]} resetStat={resetStat} lifeStyleSection={setIsCleaning} isClicked={setIsCliked}/>
-            <LifeStyle lifeStyleText={`성향`} lifeStyle={[{'혼자 조용히 지내요' : 'ALONE'},{'함께 놀고 싶어요' : 'TOGETHER'},{'상대에게 맞춰요' : 'OPPONENT'}]} noShowLine={true} resetStat={resetStat} lifeStyleSection={setIsTendency} isClicked={setIsCliked}/>
+            <LifeStyle lifeStyleText={`흡연 여부`} lifeStyle={[{'흡연자에요': true},{'비흡연자에요': false}]} lifeStyleSection={setIsSmoke} isState={isSmoke}/>
+            <LifeStyle lifeStyleText={`잠버릇`} lifeStyle={[{'잠버릇 있어요' : true},{'잠버릇 없어요' : false}]} lifeStyleSection={setIsHabit} isState={isHabit}/>
+            <LifeStyle lifeStyleText={`잠귀`} lifeStyle={[{'귀 밝아요' : 'BRIGHT'},{'귀 어두워요' : 'DARK'}]} lifeStyleSection={setIsEar} isState={isEar}/>
+            <LifeStyle lifeStyleText={`취침`} lifeStyle={[{'일찍 자요': 'EARLY'},{'늦게 자요' : 'LATE'},{'때마다 달라요' : 'RANDOM'}]} lifeStyleSection={setIsSleep} isState={isSleep}/>
+            <LifeStyle lifeStyleText={`기상`} lifeStyle={[{'일찍 일어나요' : 'EARLY'},{'늦게 일어나요' : 'LATE'},{'때마다 달라요' : 'RANDOM'}]} lifeStyleSection={setIsWakeUp} isState={isWakeUp}/>
+            <LifeStyle lifeStyleText={`외출`} lifeStyle={[{'집순이에요' : 'HOME'},{'밖순이에요' : 'OUT'},{'약속이 있으면 나가요' : 'PROMISE'}]} lifeStyleSection={setIsOut} isState={isOut}/>
+            <LifeStyle lifeStyleText={`청소`} lifeStyle={[{'주기적으로 청소해요' : 'CLEAN'},{'더러워지면 청소해요' : 'DIRTY'},{'상대에게 맞춰요' : 'OPPONENT'}]} lifeStyleSection={setIsCleaning} isState={isCleaning}/>
+            <LifeStyle lifeStyleText={`성향`} lifeStyle={[{'혼자 조용히 지내요' : 'ALONE'},{'함께 놀고 싶어요' : 'TOGETHER'},{'상대에게 맞춰요' : 'OPPONENT'}]} noShowLine={true} lifeStyleSection={setIsTendency} isState={isTendency}/>
         </c.SubScreen>
       </c.ScreenComponent>
       <BottomMenues>

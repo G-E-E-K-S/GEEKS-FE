@@ -42,33 +42,22 @@ const OnlyMargin = styled.div`
   margin: 24px 0px;
 `;
 const LifeStyle = (props) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-
   const handleOptionChange = (key,value) => {
-    setSelectedOption(key);
+    // setSelectedOption(key);
     props.lifeStyleSection(value);
-    props.isClicked(true);
   };
-
-  useEffect(()=>{
-    setSelectedOption(null);
-  },[props.resetStat]);
 
   return (
     <>
       <LifeStyleTxt>{props.lifeStyleText}</LifeStyleTxt>
       <Flex>
-        {props.lifeStyle.map((option, index) => (
-          <label key={index}>
-            <InputRadio
-              type="radio"
-              value={Object.keys(option)[0]}
-              checked={selectedOption === Object.keys(option)[0]}
-              onChange={() => handleOptionChange(Object.keys(option)[0], Object.values(option)[0])}
-            />
-            <SubLifeStyle checked={selectedOption === Object.keys(option)[0]}>{Object.keys(option)[0]}</SubLifeStyle>
-          </label>
-        ))}
+      {props.lifeStyle.map((value)=>(
+        <label>
+          <InputRadio
+            onClick={() => handleOptionChange(Object.keys(value)[0], Object.values(value)[0])}/>
+          <SubLifeStyle checked={Object.values(value)[0] === props.isState}>{Object.keys(value)}</SubLifeStyle>
+        </label>
+      ))}
       </Flex>
       {props.noShowLine ? <OnlyMargin/> : <Line/>}
     </>
