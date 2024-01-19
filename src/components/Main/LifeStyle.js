@@ -47,6 +47,7 @@ const LifeStyle = (props) => {
   const handleOptionChange = (key,value) => {
     setSelectedOption(key);
     props.lifeStyleSection(value);
+    props.isClicked(true);
   };
 
   useEffect(()=>{
