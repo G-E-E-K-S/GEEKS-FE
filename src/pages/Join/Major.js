@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -21,7 +21,7 @@ const MajorTotal = styled.div`
 
 const MajorText = styled.div`
   color: #d0d0d0;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 600;
 `;
@@ -30,14 +30,27 @@ const StudentIdTotal = styled.div`
   margin-top: 1.77vh;
   padding: 7px 0px 8px 0px;
   display: flex;
-  width: 88px;
+  width: 22.82vw;
   justify-content: space-between;
-  border-bottom: 2px solid #efefef;
+  border-bottom: 2px solid ${(props)=>props.isSelected? '#ECAA00' : '#efefef'};
+`;
+const InputStudentId = styled.input`
+  outline: none;
+  border: none;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 32px;
+  &::placeholder {
+    color: #d0d0d0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 32px;
+  }
 `;
 const MajorBtsTxt = styled.div`
   color: #333;
   font-size: 1.25rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 28px;
   margin-bottom: 20px;
@@ -48,16 +61,18 @@ const CloseImg = styled.img`
 `;
 const Major = () => {
   const [isSelected, setIsSelected] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMajorOpen, setIsMajorOpen] = useState(false);
+  
   const navigator = useNavigate();
 
-  const ChangeBarColor = () => {
-    setIsSelected(true);
+  const handleStudentId = (state) => {
+    setIsSelected(state);
   };
   const handleBottomSheet = () => {
-    setIsOpen(!isOpen);
+    setIsMajorOpen(!isMajorOpen);
   };
-  const DepartmentList = ["글로벌인문학부대학","디자인대학","예술대학","융합기술대학","융합기술대학"];
+
+  const DepartmentList = ["글로벌인문학부대학","디자인대학","예술대학","융합기술대학","공과대학",];
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -67,8 +82,8 @@ const Major = () => {
           <MajorText>학과/전공</MajorText>
           <img src={UnderArrow} />
         </MajorTotal>
-
-        {isOpen && (
+        {/* open Major Bottom Sheet */}
+        {isMajorOpen && (
           <BottomSheet height={`487px`} padding={`24px 5.12vw 0px 5.12vw`}>
             <c.SpaceBetween>
               <MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
@@ -79,10 +94,11 @@ const Major = () => {
             ))}
           </BottomSheet>
         )}
-        <StudentIdTotal>
-          <MajorText>학번</MajorText>
-          <img src={UnderArrow} />
+        <StudentIdTotal onFocus={() => handleStudentId(true)} onBlur={()=>handleStudentId(false)} isSelected={isSelected}>
+          <InputStudentId placeholder="학번 입력" />
         </StudentIdTotal>
+        {/* open StudentId Bottom Sheet */}
+
         <JoinButton btnName={"다음"} />
       </c.ScreenComponent>
     </c.Totalframe>
