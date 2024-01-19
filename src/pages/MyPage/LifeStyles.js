@@ -72,15 +72,6 @@ const LifeStyles = () => {
     setResetStat(!resetStat);
   }
   const handleButtonClick = () => {
-    // setIsCliked(!isClicked);
-    console.log('isSmoke:', isSmoke);
-  console.log('isHabit:', isHabit);
-  console.log('isEar:', isEar);
-  console.log('isSleep:', isSleep);
-  console.log('isWakeUp:', isWakeUp);
-  console.log('isOut:', isOut);
-  console.log('isCleaning:', isCleaning);
-  console.log('isTendency:', isTendency);
     if ( isSmoke !== null && isHabit !== null && isEar !== null && isSleep !== null && isWakeUp !== null && isOut !== null && isCleaning !== null &&isTendency !== null){
       async function fetchLifeStyle() {
         try {
