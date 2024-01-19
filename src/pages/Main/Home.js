@@ -7,6 +7,7 @@ import NavigationBar from '../../components/Main/NavigationBar';
 import SubTitle from "../../components/Main/SubTitle";
 import ClubCategory from "../../components/Main/ClubCategory";
 import ClubBox from "../../components/Main/ClubBox";
+import FindRoommateBox from "../../components/Main/FindRoommateBox";
 import checklist from '../../assets/img/Home/checkList.svg';
 import rule from '../../assets/img/Home/Rule.svg';
 import stayOut from '../../assets/img/Home/stayOut.svg';
@@ -45,30 +46,30 @@ const IconText = styled.div`
     font-style: normal;
     font-weight: 500;
 `;
-const Roommate = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-top: 5.68vh;
-`;
-const EnrollHabit = styled.div`
-    height: 21.8vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 12px;
-    background: #fff;
-    margin-top: 2.36vh;
-`;
-const EnrollText = styled.div`
+const FindRoommateTxt = styled.div`
+    white-space: pre-wrap;
     color: #707070;
     text-align: center;
-    font-size: 16px;
-    font-style: normal;
+    font-size: 1rem;
     font-weight: 500;
-    white-space: pre-wrap;
-    margin-top: 16px;
+    line-height: 24px;
+    margin-top: 1.89vh;
+`;
+const EnrollRule = styled.div`
+    width: 100%;
+    height: 56px;
+    border-radius: 12px;
+    background: #FFC700;
+    margin-top: 1.89vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #1A1A1A;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 24px;
 `;
 const Club = styled.div`
     display: flex;
@@ -112,14 +113,11 @@ const Home = () => {
                             </Icons>
                         </a>
                     </System>
-                    <Roommate>
-                        <SubTitle subtitle={`은진님과 딱 맞는\n룸메이트를 찾았어요`}/>
-                        <img src={forwardArrow}/>
-                    </Roommate>
-                    <EnrollHabit>
-                        <img src={addCircle}/>
-                        <EnrollText>{`생활 습관을 등록하고\n나와 딱 맞는 룸메이트를 찾아보세요!`}</EnrollText>
-                    </EnrollHabit>
+                    <FindRoommateBox name={`은진`}>
+                        {/* 이미지 삽입 */}
+                        <FindRoommateTxt>{`생활 습관을 등록하고\n나와 딱 맞는 룸메이트를 찾아보세요!`}</FindRoommateTxt>
+                        <EnrollRule>{`생활습관 등록하기`}</EnrollRule>
+                    </FindRoommateBox>
                     <Club>
                         <SubTitle subtitle={`현재 가장 인기있는 모임이에요`}/>
                         <img src={forwardArrow}/>
