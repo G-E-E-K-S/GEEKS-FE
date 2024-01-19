@@ -109,13 +109,14 @@ const MyPage = () => {
     setToggle((prev) => !prev);
   };
   const navigate = useNavigate();
+
   useEffect(()=>{
     async function fetchUserInfo(){
       try{
           axios.defaults.withCredentials=true; // allow cookies
           const res = await axios.get("http://localhost:8080/member/myPage");
           setUserInfo(res.data);
-          console.log(res);
+          navigate('/mypage');
       }catch(error){
         console.error(error);
       }
