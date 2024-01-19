@@ -9,9 +9,7 @@ const WelcomeText = styled.div`
     margin-top: 14.21vh;
     color: #333;
     text-align: center;
-
-    font-size: 32px;
-    font-style: normal;
+    font-size: 2rem;
     font-weight: 700;
 `;
 
@@ -19,9 +17,7 @@ const SubText = styled.div`
     margin-top:2.84vh;
     color: #949494;
     text-align: center;
-
-    font-size: 20px;
-    font-style: normal;
+    font-size: 1.25rem;
     font-weight: 600;
     line-height: 28px; /* 140% */
     white-space: pre-wrap;
@@ -37,11 +33,7 @@ const MainImg = styled.img`
     margin-top: 8.29vh;
 `;
 const FinalPage = () => {
-    const navigator = useNavigate();
-    
-    const nextPage = () => {
-        console.log('next page')
-    }
+    const navigate = useNavigate();
   
     return (
         <c.Totalframe>
@@ -51,7 +43,7 @@ const FinalPage = () => {
                 <TopImg>
                     <MainImg src={Home}/>
                 </TopImg>
-                <JoinButton btnName={'룸메이트 찾으러 가기'} nextPage={nextPage} isNextPage={true}/>
+                <JoinButton btnName={'룸메이트 찾으러 가기'} isNextPage={true} handleClick={()=>navigate('/home')}/>
             </c.ScreenComponent>
         </c.Totalframe>
     );
