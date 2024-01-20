@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import * as c from '../../components/Common/CommonStyle';
@@ -13,7 +13,7 @@ import rule from '../../assets/img/Home/Rule.svg';
 import stayOut from '../../assets/img/Home/stayOut.svg';
 import dormiNoti from '../../assets/img/Home/dormiNoti.svg';
 import forwardArrow from '../../assets/img/Home/forwardArrow.svg';
-import addCircle from '../../assets/img/Home/addCircle.svg';
+import Close from '../../assets/img/Home/close.svg';
 import chick from '../../assets/img/Join/chick.svg';
 
 const System = styled.div`
@@ -83,7 +83,34 @@ const Post = styled.div`
     margin-top: 8.53vh;
     margin-botton: 2.36vh;
 `;
+const ShowReviewBox = styled.div`
+    width: 100%:
+    height: 86px;
+    padding: 20px 5.12vw;
+    border-radius: 20px;
+    background: #FCEDE8;
+    margin-top: 24px;
+`;
+const ReviewTxt = styled.div`
+    color: #1A1A1A;
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 24px;
+    margin-bottom: 4px;
+`;
+const CloseImg = styled.img`
+    width: 20px;
+    height: 20px;
+`;
+const MoreSecurityTxt = styled.div`
+    color: #525252;
+    font-size: 0.875;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+`;
 const Home = () => {
+    const [isShowReview, setIsSHowReiew] = useState(true);
     const navigate = useNavigate();
     const handlePage = () => {
         navigate('/liverule');
@@ -118,6 +145,15 @@ const Home = () => {
                         <FindRoommateTxt>{`생활 습관을 등록하고\n나와 딱 맞는 룸메이트를 찾아보세요!`}</FindRoommateTxt>
                         <EnrollRule>{`생활습관 등록하기`}</EnrollRule>
                     </FindRoommateBox>
+                    {isShowReview && 
+                        <ShowReviewBox>
+                            <c.SpaceBetween>
+                                <ReviewTxt>{`긱스 이용 후기를 남겨주세요!`}</ReviewTxt>
+                                <CloseImg src={Close} onClick={()=>setIsSHowReiew(false)}/>
+                            </c.SpaceBetween>
+                            <MoreSecurityTxt>{`더 멋지게 보완해서 찾아올게요`}</MoreSecurityTxt>
+                        </ShowReviewBox>
+                    }
                     <Club>
                         <SubTitle subtitle={`현재 가장 인기있는 모임이에요`}/>
                         <img src={forwardArrow}/>
