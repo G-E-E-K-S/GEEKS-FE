@@ -81,7 +81,7 @@ const FAQ = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header subtitle={`자주 묻는 질문`}/>
+        <Header subtitle={`자주 묻는 질문`} />
         <SearchBox>
           <img src={SearchImg} />
           <SearchInput placeholder={`궁금한 것을 검색해 보세요`} />

@@ -32,7 +32,8 @@ const StudentIdTotal = styled.div`
   display: flex;
   width: 22.82vw;
   justify-content: space-between;
-  border-bottom: 2px solid ${(props)=>props.isSelected? '#ECAA00' : '#efefef'};
+  border-bottom: 2px solid
+    ${(props) => (props.isSelected ? "#ECAA00" : "#efefef")};
 `;
 const InputStudentId = styled.input`
   outline: none;
@@ -62,7 +63,7 @@ const CloseImg = styled.img`
 const Major = () => {
   const [isSelected, setIsSelected] = useState(false);
   const [isMajorOpen, setIsMajorOpen] = useState(false);
-  
+
   const navigator = useNavigate();
 
   const handleStudentId = (state) => {
@@ -72,7 +73,13 @@ const Major = () => {
     setIsMajorOpen(!isMajorOpen);
   };
 
-  const DepartmentList = ["글로벌인문학부대학","디자인대학","예술대학","융합기술대학","공과대학",];
+  const DepartmentList = [
+    "글로벌인문학부대학",
+    "디자인대학",
+    "예술대학",
+    "융합기술대학",
+    "공과대학",
+  ];
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -94,7 +101,11 @@ const Major = () => {
             ))}
           </BottomSheet>
         )}
-        <StudentIdTotal onFocus={() => handleStudentId(true)} onBlur={()=>handleStudentId(false)} isSelected={isSelected}>
+        <StudentIdTotal
+          onFocus={() => handleStudentId(true)}
+          onBlur={() => handleStudentId(false)}
+          isSelected={isSelected}
+        >
           <InputStudentId placeholder="학번 입력" />
         </StudentIdTotal>
         {/* open StudentId Bottom Sheet */}

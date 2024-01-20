@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import Header from '../../components/Join/Header';
+import Header from "../../components/Join/Header";
 import TopNumber from "../../components/Join/TopNumber";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
@@ -73,47 +73,46 @@ const Password = () => {
   const handlePwd = () => {
     setShowPwd(!showPwd);
   };
-  
-    const handleInputChange = (e) => {
-      const value = e.target.value;
-      setInputval(value);
-    
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputval(value);
+
     const validatePassword = () => {
       return new Promise((resolve, reject) => {
         const length = value.length;
-        const specialCharRegex = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\=\(\'\"]/;
+        const specialCharRegex =
+          /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\=\(\'\"]/;
         const sameCharRegex = /(.)\1{3,}/;
-  
+
         // pwd len
         const isPwdLen = length >= 8 && length <= 15;
         setPwdLen(isPwdLen);
-  
+
         // pwd 특수문자
         const hasPwdSpecial = specialCharRegex.test(value);
         setpwdSpecial(hasPwdSpecial);
-  
+
         // pwd 4번반복여부
         const hasPwdSame = sameCharRegex.test(value);
         setpwdSame(!hasPwdSame);
-  
+
         // 하단 버튼색 바뀜유무
         const isNextPage = isPwdLen && hasPwdSpecial && !hasPwdSame;
         setIsNextPage(isNextPage);
-  
+
         resolve(); // Resolve the Promise immediately
       });
     };
-  
-    validatePassword().then(() => {
-    });
+
+    validatePassword().then(() => {});
   };
-  
 
   const checkPassword = () => {
     async function fetchPassword() {
       try {
         const res = await axios.post("http://127.0.0.1:8080/member/password", {
-          'password': inputval,
+          password: inputval,
         });
         console.log(res);
       } catch (error) {
@@ -127,7 +126,7 @@ const Password = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <Header />
-        <TopNumber page={3}/>
+        <TopNumber page={3} />
         <MainText maintitle={`로그인 때 사용할\n비밀번호를 입력해 주세요`} />
         <SubText>로그인 아이디는 이메일 주소를 입력하면 돼요</SubText>
         <InputPasswordTotal isSelected={isSelected}>
@@ -159,7 +158,11 @@ const Password = () => {
             똑같은 문자가 4번 반복되면 안돼요
           </ConditionTxt>
         </PwdCondition>
-        <JoinButton btnName={"다음"} handleClick={() => checkPassword()} isNextPage={isNextPage}/>
+        <JoinButton
+          btnName={"다음"}
+          handleClick={() => checkPassword()}
+          isNextPage={isNextPage}
+        />
       </c.ScreenComponent>
     </c.Totalframe>
   );
