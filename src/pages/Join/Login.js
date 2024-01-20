@@ -53,7 +53,6 @@ const InputEmail = () => {
   const passwordVal = useRef();
   const navigate = useNavigate();
 
-  
   const handleEmailVal = () => {
     let EmailLen = emailVal.current.value.length;
     let PwdLen = passwordVal.current.value.length;
@@ -86,8 +85,8 @@ const InputEmail = () => {
           <Input
             maxLength={9}
             placeholder="학번"
-            onFocus={()=>setIsEmailSelected(true)}
-            onBlur={()=>setIsEmailSelected(false)}
+            onFocus={() => setIsEmailSelected(true)}
+            onBlur={() => setIsEmailSelected(false)}
             ref={emailVal}
             onChange={() => handleEmailVal()}
           />
@@ -96,8 +95,8 @@ const InputEmail = () => {
         <InputInfos isSelected={isPwdSelected} isPwd={true}>
           <Input
             placeholder="비밀번호"
-            onFocus={()=>setIsPwdSelected(true)}
-            onBlur={()=>setIsPwdSelected(false)}
+            onFocus={() => setIsPwdSelected(true)}
+            onBlur={() => setIsPwdSelected(false)}
             ref={passwordVal}
             onChange={() => handleEmailVal()}
           />
