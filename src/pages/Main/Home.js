@@ -4,17 +4,13 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Main/Header";
 import NavigationBar from "../../components/Main/NavigationBar";
-import SubTitle from "../../components/Main/SubTitle";
-import ClubCategory from "../../components/Main/ClubCategory";
-import ClubBox from "../../components/Main/ClubBox";
-import FindRoommateBox from "../../components/Main/FindRoommateBox";
+import HomeBox from "../../components/Main/HomeBox";
 import checklist from "../../assets/img/Home/checkList.svg";
 import rule from "../../assets/img/Home/Rule.svg";
 import stayOut from "../../assets/img/Home/stayOut.svg";
 import dormiNoti from "../../assets/img/Home/dormiNoti.svg";
 import forwardArrow from "../../assets/img/Home/forwardArrow.svg";
 import Close from "../../assets/img/Home/close.svg";
-import chick from "../../assets/img/Join/chick.svg";
 
 const System = styled.div`
   width: 100%;
@@ -71,18 +67,6 @@ const EnrollRule = styled.div`
   font-weight: 600;
   line-height: 24px;
 `;
-const Club = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8.53vh;
-  margin-bottom: 2.36vh;
-`;
-const Post = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8.53vh;
-  margin-botton: 2.36vh;
-`;
 const ShowReviewBox = styled.div`
     width: 100%:
     height: 86px;
@@ -109,8 +93,30 @@ const MoreSecurityTxt = styled.div`
   font-weight: 500;
   line-height: 18px;
 `;
+const PopularPostBox = styled.div`
+  display: flex;
+  height: 48px;
+  width: 100%;
+  padding: 4px 1.02vw;
+  border-radius: 12px;
+  background: #F7F7F7;
+`;
+const PopularPostText = styled.div`
+  width: calc(100%/2);
+  background-color: ${(props)=>props.isWeeklyPost && '#FFF'};
+  color: ${(props)=>props.isWeeklyPost ? '#1A1A1A' : '#949494'};
+  font-weight: ${(props)=>props.isWeeklyPost ? '600' : '500'};
+  border-radius: ${(props)=>props.isWeeklyPost && '8px'};
+  box-shadow: ${(props)=>props.isWeeklyPost && '2px 2px 4px 0px rgba(0, 0, 0, 0.04)'};
+
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 const Home = () => {
   const [isShowReview, setIsSHowReiew] = useState(true);
+  const [isWeeklyPost, setIsWeeklyPost] = useState('live');
   const navigate = useNavigate();
   const handlePage = () => {
     navigate("/liverule");
@@ -143,11 +149,11 @@ const Home = () => {
               </Icons>
             </a>
           </System>
-          <FindRoommateBox name={`은진`}>
+          <HomeBox name={`은진님과 딱 맞는\n룸메이트를 찾아드려요`} marginTop={`3.79vh`} marginBottom={`1.42vh`} height={`45.49vh`}>
             {/* 이미지 삽입 */}
             <FindRoommateTxt>{`생활 습관을 등록하고\n나와 딱 맞는 룸메이트를 찾아보세요!`}</FindRoommateTxt>
-            <EnrollRule>{`생활습관 등록하기`}</EnrollRule>
-          </FindRoommateBox>
+            <EnrollRule onClick={()=>navigate('/lifestyle')}>{`생활습관 등록하기`}</EnrollRule>
+          </HomeBox>
           {isShowReview && (
             <ShowReviewBox>
               <c.SpaceBetween>
@@ -157,21 +163,12 @@ const Home = () => {
               <MoreSecurityTxt>{`더 멋지게 보완해서 찾아올게요`}</MoreSecurityTxt>
             </ShowReviewBox>
           )}
-          <Club>
-            <SubTitle subtitle={`현재 가장 인기있는 모임이에요`} />
-            <img src={forwardArrow} />
-          </Club>
-          <ClubCategory clubCategory={`배달`}></ClubCategory>
-          <ClubBox
-            profileImg={chick}
-            nickName={`이소윤`}
-            clubTitle={`같이 신전떡볶이 시키실 분 구해요`}
-            JoinPerson={`8명`}
-          />
-          <Post>
-            <SubTitle subtitle={`이런 글은 어떠세요?`} />
-            <img src={forwardArrow} />
-          </Post>
+          <HomeBox name={`이런 글은 어떠세요?`}  marginTop={`2.84vh`} marginBottom={`3.31vh`} height={`48.31vh`}>
+            <PopularPostBox>
+              <PopularPostText isWeeklyPost={isWeeklyPost === 'live'} onClick={()=>setIsWeeklyPost('live')}>{`실시간 인기글`}</PopularPostText>
+              <PopularPostText isWeeklyPost={isWeeklyPost === 'weekly'} onClick={()=>setIsWeeklyPost('weekly')}>{`주간 인기글`}</PopularPostText>
+            </PopularPostBox>
+          </HomeBox>
         </c.SubScreen>
       </c.ScreenComponent>
       <NavigationBar type={`home`} />
