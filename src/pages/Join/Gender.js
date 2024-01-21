@@ -7,6 +7,10 @@ import Header from "../../components/Join/Header";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
 import GenderBox from "../../components/Join/GenderBox";
+import Girl from "../../assets/img/Join/girl.svg";
+import SelectGirl from "../../assets/img/Join/selectGirl.svg";
+import Boy from "../../assets/img/Join/man.svg";
+import SelectBoy from "../../assets/img/Join/selectMan.svg";
 
 const GenderTotal = styled.div`
   display: flex;
@@ -14,7 +18,6 @@ const GenderTotal = styled.div`
     margin-right: 8px;
   }
 `;
-
 const Gender = () => {
   const [isSelected, setIsSelected] = useState(false);
   const [isgirl, setIsgirl] = useState(false);
@@ -65,12 +68,14 @@ const Gender = () => {
             gender={"남자"}
             onClick={() => SelectGender("남자")}
             isSelected={isboy}
-          ></GenderBox>
+            GenderImg={Boy}
+            SelectGender={SelectBoy}/>
           <GenderBox
             gender={"여자"}
             onClick={() => SelectGender("여자")}
             isSelected={isgirl}
-          ></GenderBox>
+            GenderImg={Girl}
+            SelectGender={SelectGirl}/>         
         </GenderTotal>
         <JoinButton
           btnName={"다음"}
