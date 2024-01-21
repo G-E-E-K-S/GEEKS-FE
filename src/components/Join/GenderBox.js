@@ -21,6 +21,12 @@ const GenderImg = styled.img`
   height: 148px;
   width: 148px;
 `;
+const GenderTotal = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
 const Gender = styled.div`
     font-size: 24px;
     font-style: normal;
@@ -33,7 +39,9 @@ const GenderBox = (props) => {
                 <Gender>{props.gender}</Gender>
                 {props.isSelected ? <img src={genderCheck}/> : null}
             </GenderCheck>
-            <GenderImg src={props.isSelected ? props.SelectGender : props.GenderImg}/>
+            <GenderTotal>
+                <GenderImg src={props.isSelected ? props.SelectGender : props.GenderImg}/>
+            </GenderTotal>
         </GenderTotalBox>
     )
 }

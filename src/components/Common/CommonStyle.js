@@ -10,20 +10,21 @@ export const Totalframe = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  background: ${(props) => props.main ? '#FAFAFA' : '#fff'}
+  background: ${(props) => props.main ? '#FAFAFA' : '#fff'};
 `;
 
 export const ScreenComponent = styled.div`
   padding: 0px 5.12vw;
-`;
-
-export const SubScreen = styled.div`
+  touch-action: none;
   overflow-y: auto;
-  overflow-x: hidden;
-  height: calc(100vh - 11.84vh);
   &::-webkit-scrollbar{
     display:none;
   }
+  height: calc(100vh - 11.84vh);
+`;
+
+export const SubScreen = styled.div`
+  height: calc(100vh - 11.84vh);
 `;
 
 export const ScreenJoin = styled.div`

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const TotalBr = styled.div`
@@ -12,6 +12,8 @@ const TotalBr = styled.div`
 `;
 
 const Br = (props) => {
-  return <TotalBr marginTop={props.marginTop} marginBottom={props.marginBottom}/>;
+  return (
+    <TotalBr marginTop={props.marginTop} marginBottom={props.marginBottom}/>
+  )
 };
 export default Br;

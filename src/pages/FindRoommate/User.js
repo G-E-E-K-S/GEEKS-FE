@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { Chart } from 'react-chartjs-2';
+import 'chart.js/auto';
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
+import Br from "../../components/Common/Br";
 import HeaderMenu from "../../components/Common/HeaderMenu";
-import 'chart.js/auto';
-import { Chart } from 'react-chartjs-2';
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import ChatImg from "../../assets/img/Roommate/chat.svg";
 import Info from "../../assets/img/Roommate/info.svg";
 import SaveBtn from "../../assets/img/MyPage/save.svg";
+import Dots from "../../assets/img/Community/dots.svg";
 
 const TopProfile = styled.div`
   margin-top: 4.26vh;
@@ -64,6 +66,7 @@ const UserMessageBox = styled.div`
   background: #faf6f1;
   padding: 14px;
   margin-top: 10px;
+  margin-bottom: 2.84vh;
   &::before {
     content: "";
     position: absolute;
@@ -149,8 +152,8 @@ const MatchBox = styled.div`
   padding: 2.36vh 5.12vw;
 `;
 const CharContainer = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 140px;
+  height: 140px;
   margin: 0 auto;
 `;
 const User = () => {
@@ -198,7 +201,9 @@ const User = () => {
       <c.ScreenComponent>
         <c.SubScreen>
           <c.SpaceBetween>
-            <HeaderMenu />
+            <HeaderMenu>
+              <img src={Dots}/>
+            </HeaderMenu>
           </c.SpaceBetween>
           <TopProfile>
             <c.SpaceBetween>
@@ -218,6 +223,7 @@ const User = () => {
                 <InfoMessage>{`밤샘 작업이 잦아요! 새벽에 주무시는 분들 찾아요 저도\n늦게잡니다!`}</InfoMessage>
               </c.Flex>
             </UserMessageBox>
+            <Br/>
             {/* match score */}
             <MatchText>
               서로

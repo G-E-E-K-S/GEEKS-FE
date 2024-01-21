@@ -3,19 +3,16 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import JoinButton from "../../components/Join/JoinButton";
-import GeeksLogo from "../../assets/img/Join/geeksLogo.svg";
 import House from "../../assets/gif/house.gif";
 
-const TopLogo = styled.img`
-  margin-top: 6.63vh;
-  margin-bottom: 4.73vh;
-`;
-
 const StartMent = styled.div`
+  margin-top: 15.16vh;
   color: #333;
   font-size: 1.75rem;
   font-weight: 700;
   white-space: pre-wrap;
+  font-family: Pretendard;
+  text-align: center;
 `;
 
 const SubMent = styled.div`
@@ -24,14 +21,17 @@ const SubMent = styled.div`
   font-style: normal;
   font-weight: 500;
   margin-top: 1.89vh;
+  text-align: center;
 `;
-
-const TopImg = styled.img`
-  width: 89.74vw;
-  height: 41.46vh;
+const TotalImg = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+const TopImg = styled.img`
+  width: 350px;
+  height: 350px;
 `;
 const LoginButton = styled.div`
   width: 89.74vw;
@@ -60,10 +60,11 @@ const Welcome = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <TopLogo src={GeeksLogo} />
         <StartMent>{`기숙사 생활 걱정 끝,\n긱스에 오신 걸 환영해요!`}</StartMent>
         <SubMent>{`이메일 가입으로 바로 시작해보세요`}</SubMent>
-        <TopImg src={House}>{/* Input img */}</TopImg>
+        <TotalImg>
+          <TopImg src={House}/>
+        </TotalImg>
         <LoginButton onClick={() => navigator("/login")}>로그인</LoginButton>
         <JoinButton
           btnName={"이메일 회원가입"}
