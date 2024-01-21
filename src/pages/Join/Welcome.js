@@ -4,6 +4,7 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import JoinButton from "../../components/Join/JoinButton";
 import GeeksLogo from "../../assets/img/Join/geeksLogo.svg";
+import House from "../../assets/gif/house.gif";
 
 const TopLogo = styled.img`
   margin-top: 6.63vh;
@@ -25,8 +26,9 @@ const SubMent = styled.div`
   margin-top: 1.89vh;
 `;
 
-const TopImg = styled.div`
-  width: 100%;
+const TopImg = styled.img`
+  width: 89.74vw;
+  height: 41.46vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,7 +63,7 @@ const Welcome = () => {
         <TopLogo src={GeeksLogo} />
         <StartMent>{`기숙사 생활 걱정 끝,\n긱스에 오신 걸 환영해요!`}</StartMent>
         <SubMent>{`이메일 가입으로 바로 시작해보세요`}</SubMent>
-        <TopImg>{/* Input img */}</TopImg>
+        <TopImg src={House}>{/* Input img */}</TopImg>
         <LoginButton onClick={() => navigator("/login")}>로그인</LoginButton>
         <JoinButton
           btnName={"이메일 회원가입"}
