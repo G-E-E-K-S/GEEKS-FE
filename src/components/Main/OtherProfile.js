@@ -84,7 +84,7 @@ const OtherProfile = (props) => {
     isFill(!fill)
   }
   return (
-    <TotalProfile activeCheck={props.activeCheck}>
+    <TotalProfile activeCheck={props.activeCheck} onClick={props.onClick}>
       <c.SpaceBetween>
         <c.Flex>
           <UserProfile src={props.userprofile} />

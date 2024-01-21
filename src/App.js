@@ -6,6 +6,7 @@ import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ
 import { FindRoommate , User, ApplyConfirm } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
 import { WritePost, Post, Community } from './pages/Community/Index';
+import './index.css';
 function App() {
   return (
     <div>

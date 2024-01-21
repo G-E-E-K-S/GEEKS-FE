@@ -40,6 +40,7 @@ const ResetImg = styled.img`
 `;
 const FindRoommate = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <c.Totalframe main={true}>
@@ -62,6 +63,7 @@ const FindRoommate = () => {
             major={`스마트정보통신`}
             id={`19학번`}
             score={`90`}
+            onClick={()=>navigate('/user')}
           />
         </c.SubScreen>
       </c.ScreenComponent>
