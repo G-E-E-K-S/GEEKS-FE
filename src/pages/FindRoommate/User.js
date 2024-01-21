@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Common/GoBack";
-import UserLifeStyle from "../../components/Roommate/UserLifeStyle";
+import HeaderMenu from "../../components/Common/HeaderMenu";
+import 'chart.js/auto';
+import { Chart } from 'react-chartjs-2';
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import ChatImg from "../../assets/img/Roommate/chat.svg";
 import Info from "../../assets/img/Roommate/info.svg";
@@ -29,7 +30,7 @@ const Major = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
-  margin-bottom: px;
+  margin-bottom: 4px;
 `;
 const Chat = styled.div`
   display: flex;
@@ -60,18 +61,18 @@ const UserMessageBox = styled.div`
   width: 100%;
   height: max-content;
   border-radius: 12px;
-  background: #FAF6F1;
-  padding: 20px;
+  background: #faf6f1;
+  padding: 14px;
   margin-top: 10px;
   &::before {
     content: "";
     position: absolute;
     top: 0;
-    left: 2px;
+    left: 12px;
     border: 23px solid transparent;
-    border-bottom-color: #FAF6F1;
+    border-bottom-color: #faf6f1;
     border-top: 0;
-    margin-top: -10px;
+    margin-top: -15px;
   }
 `;
 const InfoImg = styled.img`
@@ -81,7 +82,6 @@ const InfoImg = styled.img`
 `;
 const InfoMessage = styled.div`
   margin-left: 1.53vw;
-  margin-bottom: 1.11vh;
   color: #665d4f;
   font-size: 0.875rem;
   font-style: normal;
@@ -90,6 +90,7 @@ const InfoMessage = styled.div`
 `;
 const MatchText = styled.div`
   margin-top: 4.72vh;
+  margin-bottom: 3.31vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -108,8 +109,8 @@ const BottomEnroll = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0px 20px;
-  border-top: 1px solid #EFEFEF;
-  padding-top: 2.38vh; 
+  border-top: 1px solid #efefef;
+  padding-top: 2.38vh;
 `;
 const SaveImg = styled.img`
   margin-top: 4px;
@@ -117,7 +118,7 @@ const SaveImg = styled.img`
   height: 28px;
 `;
 const SaveTxt = styled.div`
-  color: #B7B7B7;
+  color: #b7b7b7;
   text-align: center;
   font-size: 12px;
   font-style: normal;
@@ -143,17 +144,61 @@ const EnrollTxt = styled.div`
 const MatchBox = styled.div`
   width: 100%;
   border-radius: 16px;
-  background: #FAFAFA;
+  background: #fafafa;
   height: max-content;
   padding: 2.36vh 5.12vw;
 `;
+const CharContainer = styled.div`
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+`;
 const User = () => {
+  const textCenter = {
+    id:'textCenter',
+    beforeDatasetsDraw(chart,args,pluginOptions){
+      const {ctx} = chart;
+
+      ctx.save();
+      ctx.font = '700 1.75rem Pretendard';
+      ctx.fontWeight = '700';
+      ctx.fillStyle = '#D68D00';
+      ctx.textAlign= 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(Data.datasets[0].data[0]+'점',chart.getDatasetMeta(0).data[0].x,chart.getDatasetMeta(0).data[0].y);
+    }
+  }
+  const Data = {
+    datasets: [
+      {
+        data: [80,15],
+        borderColor: ['#FFD540','#EFEFEF'],
+        backgroundColor: ['#FFD540','#EFEFEF'],
+        cutout: "80%",
+        borderWidth: 0,
+        borderRadius: [30,-30],
+        options:{
+          responsive: false,
+          plugins:{
+            legend: {
+              display: false,
+              tooltip: {
+                enabled: false,
+              },
+            },
+          },
+          hover: { mode: null },
+        },
+      },
+    ],
+  };
+
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
           <c.SpaceBetween>
-            <GoBack />
+            <HeaderMenu />
           </c.SpaceBetween>
           <TopProfile>
             <c.SpaceBetween>
@@ -170,16 +215,7 @@ const User = () => {
             <UserMessageBox>
               <c.Flex>
                 <InfoImg src={Info} />
-                <InfoMessage>
-                  밤샘 작업이 잦아요! 새벽에 주무시는 분들 찾아요 저도
-                  늦게잡니다!
-                </InfoMessage>
-              </c.Flex>
-              <c.Flex>
-                <InfoImg src={Info} />
-                <InfoMessage>
-                  잠버릇 심하신 분들 정중히 사양합니다 ㅠㅠ
-                </InfoMessage>
+                <InfoMessage>{`밤샘 작업이 잦아요! 새벽에 주무시는 분들 찾아요 저도\n늦게잡니다!`}</InfoMessage>
               </c.Flex>
             </UserMessageBox>
             {/* match score */}
@@ -188,9 +224,10 @@ const User = () => {
               <MatchColorText>맞춰가면 좋아요</MatchColorText>
             </MatchText>
             {/* Match Text */}
-            <MatchBox>
-              <UserLifeStyle lifeStyleTitle={`잠버릇`} isRight={`일치`} lifestyle={`잠버릇 있어요`} myLifeStyle={`잠버릇 없어요`}/>
-            </MatchBox>
+            {/* <DounetChart></DounetChart> */}
+            <CharContainer>
+              <Chart type='doughnut' data={Data} plugins={[textCenter]}/>
+            </CharContainer>
           </TopProfile>
         </c.SubScreen>
       </c.ScreenComponent>
