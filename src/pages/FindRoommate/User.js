@@ -6,11 +6,14 @@ import * as c from "../../components/Common/CommonStyle";
 import Br from "../../components/Common/Br";
 import HeaderMenu from "../../components/Common/HeaderMenu";
 import LifeStyle from "../../components/Roommate/LifeStyle";
+import ApplyCancelBottomSheet from "../../components/Common/ApplyCancleBottomSheet";
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import ChatImg from "../../assets/img/Roommate/chat.svg";
 import Info from "../../assets/img/Roommate/info.svg";
 import SaveBtn from "../../assets/img/MyPage/save.svg";
 import Dots from "../../assets/img/Community/dots.svg";
+import ApplyRoommateIcon from "../../assets/img/Roommate/applyRoommate.svg";
+import CloseModal from "../../assets/img/Join/closeModal.svg";
 
 const TopProfile = styled.div`
   margin-top: 4.26vh;
@@ -172,7 +175,9 @@ const Other = styled.div`
   margin-right: 28.45vw;
 `;
 const Me = styled.div``;
+
 const User = () => {
+  const [applyRoommate, setApplyRommate] = useState(false);
   const textCenter = {
     id:'textCenter',
     beforeDatasetsDraw(chart,args,pluginOptions){
@@ -263,8 +268,18 @@ const User = () => {
           <SaveTxt>저장</SaveTxt>
         </div>
         <EnrollBtn>
-          <EnrollTxt>룸메이트 신청하기</EnrollTxt>
+          <EnrollTxt onClick={()=>setApplyRommate(true)}>룸메이트 신청하기</EnrollTxt>
         </EnrollBtn>
+        
+        {applyRoommate &&
+          <ApplyCancelBottomSheet
+            height={`393px`}
+            padding={`24px 20px 85px 20px`}
+            Icon={ApplyRoommateIcon}
+            message={`이소윤 님께\n룸메이트를 신청할까요?`}
+            subMessage={`상대방이 수락하기 전까지는\n언제든지 취소 가능해요`}
+            btnName={`신청하기`}
+            applyRoommate={()=>setApplyRommate(false)}/>}
       </BottomEnroll>
     </c.Totalframe>
   );
