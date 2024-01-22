@@ -11,6 +11,7 @@ import stayOut from "../../assets/img/Home/stayOut.svg";
 import dormiNoti from "../../assets/img/Home/dormiNoti.svg";
 import forwardArrow from "../../assets/img/Home/forwardArrow.svg";
 import Close from "../../assets/img/Home/close.svg";
+import Find from "../../assets/gif/find.gif";
 
 const System = styled.div`
   width: 100%;
@@ -114,6 +115,18 @@ const PopularPostText = styled.div`
   align-items: center;
   justify-content: center;
 `;
+const IconBox = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const FindIcon = styled.img`
+  width: 120px;
+  height: 120px;
+  
+`;
 const Home = () => {
   const [isShowReview, setIsSHowReiew] = useState(true);
   const [isWeeklyPost, setIsWeeklyPost] = useState('live');
@@ -141,16 +154,17 @@ const Home = () => {
             </Icons>
             <a
               href={"https://www.smu.ac.kr/dormi2/board/notice.do"}
-              target="_blank"
-            >
+              target="_blank">
               <Icons>
                 <Icon src={dormiNoti} />
                 <IconText>기숙사 공지</IconText>
               </Icons>
             </a>
           </System>
-          <HomeBox name={`은진님과 딱 맞는\n룸메이트를 찾아드려요`} marginTop={`3.79vh`} marginBottom={`1.42vh`} height={`45.49vh`}>
-            {/* 이미지 삽입 */}
+          <HomeBox name={`은진님과 딱 맞는\n룸메이트를 찾아드려요`} marginTop={`3.79vh`} marginBottom={`1.42vh`} height={`max-content`}>
+            <IconBox>
+              <FindIcon src={Find}/>
+            </IconBox>
             <FindRoommateTxt>{`생활 습관을 등록하고\n나와 딱 맞는 룸메이트를 찾아보세요!`}</FindRoommateTxt>
             <EnrollRule onClick={()=>navigate('/lifestyle')}>{`생활습관 등록하기`}</EnrollRule>
           </HomeBox>
