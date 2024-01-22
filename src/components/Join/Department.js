@@ -16,10 +16,10 @@ const DepartmentTxt = styled.div`
 `;
 const Department = (props) => {
   return (
-    <DepartmentBox>
+    <DepartmentBox onClick={props.onClick}>
       <c.SpaceBetween>
         <DepartmentTxt>{props.department}</DepartmentTxt>
-        <img src={ForwardArrow} />
+        {props.isDepartment && <img src={ForwardArrow}/>}
       </c.SpaceBetween>
     </DepartmentBox>
   );
