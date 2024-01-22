@@ -20,7 +20,7 @@ const MajorTotal = styled.div`
 `;
 
 const MajorText = styled.div`
-  color: #d0d0d0;
+  color: ${(props)=>props.major ? "#d0d0d0" : '#333333'};
   font-size: 1.5rem;
   font-style: normal;
   font-weight: 600;
@@ -60,11 +60,31 @@ const CloseImg = styled.img`
   width: 28px;
   height: 28px;
 `;
+const BottomBtn = styled.div`
+  height: 17.29vh;
+`;
+const SelectDone = styled.div`
+  height: 60px;
+  width: 100%;
+  border-radius: 12px;
+  background: #F7F7F7;
+  color: #B7B7B7;
+  text-align: center;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const Major = () => {
   const [isSelected, setIsSelected] = useState(false);
+  const [isNextPage, setIsNextPage] = useState(false);
   const [isMajorOpen, setIsMajorOpen] = useState(false);
-
-  const navigator = useNavigate();
+  const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
+  const [department,setDepartment] = useState('');
+  const [major,setMajor] = useState(null);
 
   const handleStudentId = (state) => {
     setIsSelected(state);
@@ -73,20 +93,31 @@ const Major = () => {
     setIsMajorOpen(!isMajorOpen);
   };
 
-  const DepartmentList = [
-    "글로벌인문학부대학",
-    "디자인대학",
-    "예술대학",
-    "융합기술대학",
-    "공과대학",
-  ];
+  const DepartmentList = ["글로벌인문학부대학","디자인대학","예술대학","융합기술대학","공과대학"];
+  const DepartmentMajors = {
+    "글로벌인문학부대학": ["글로벌지역학부", "한국언어문화전공", "일본어권지역학전공", "중국어권지역학전공","영어권지역학전공","프랑스어권지역학전공","독일어권지역학전공","러시아어권지역학전공"],
+    "디자인대학": ["디자인학부", "커뮤니케이션디자인전공", "패션디자인전공", "텍스타일디자인전공", "스페이스디자인전공","세라믹디자인전공","인더스트리얼디자인전공","AR·VR미디어디자인전공"],
+    "예술대학" : ["영화영상전공","연극전공","무대미술전공","사진영상미디어전공","디지털만화영상전공","문화예술경영전공","디지털콘텐츠전공"],
+    "융합기술대학" : ["글로벌금융경영학부","식물식품공학과","그린스마트시티학과","간호학과","스포츠경영전공","사회체육전공"],
+    "공과대학" : ["전자공학과","소프트웨어학과","스마트정보통신공학과","경영공학과","그린화학공학과","건설시스템공학과","정보보안공학과","시스템반도체공학과","휴먼지능로봇공학과","지능형로봇학과"],
+  }; 
+  const openBottomSheet = (department) => {
+    setIsMajorOpen(!isMajorOpen);
+    setIsDepartmentOpen(!isDepartmentOpen);
+    setDepartment(department);
+  };
+  const handleMajor = (major) =>{
+    setMajor(major);
+    setIsDepartmentOpen(!department);
+  }
+
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header />
         <MainText maintitle={`전공 학과와 학번을 알려주세요`} />
         <MajorTotal onClick={() => handleBottomSheet()}>
-          <MajorText>학과/전공</MajorText>
+          <MajorText major={major === null}>{major === null ? '학과/전공' : major}</MajorText>
           <img src={UnderArrow} />
         </MajorTotal>
         {/* open Major Bottom Sheet */}
@@ -97,20 +128,36 @@ const Major = () => {
               <CloseImg src={Close} onClick={() => handleBottomSheet()} />
             </c.SpaceBetween>
             {DepartmentList.map((department) => (
-              <Department department={department} />
+              <Department
+                department={department}
+                onClick={()=>openBottomSheet(department)}
+                isDepartment={true}/>
             ))}
+          </BottomSheet>
+        )}
+        {isDepartmentOpen && (
+          <BottomSheet height={`630px`} padding={`24px 5.12vw 0px 5.12vw`}>
+            <c.SpaceBetween>
+              <MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
+              <CloseImg src={Close} onClick={() => setIsDepartmentOpen(!isDepartmentOpen)} />
+            </c.SpaceBetween>
+            {DepartmentMajors[department].map((major) => (
+              <Department department={major} onClick={() => handleMajor(major)}/>
+            ))}
+            <BottomBtn>
+              <SelectDone>{`선택 완료`}</SelectDone>
+            </BottomBtn>
           </BottomSheet>
         )}
         <StudentIdTotal
           onFocus={() => handleStudentId(true)}
           onBlur={() => handleStudentId(false)}
-          isSelected={isSelected}
-        >
-          <InputStudentId placeholder="학번 입력" />
+          isSelected={isSelected}>
+          <InputStudentId placeholder="학번 입력" onChange={(e)=>setIsNextPage(e.target.value.trim() !== '')}/>
         </StudentIdTotal>
         {/* open StudentId Bottom Sheet */}
 
-        <JoinButton btnName={"다음"} />
+        <JoinButton btnName={"다음"} isNextPage={isNextPage}/>
       </c.ScreenComponent>
     </c.Totalframe>
   );
