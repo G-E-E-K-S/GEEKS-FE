@@ -5,6 +5,7 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Br from "../../components/Common/Br";
 import HeaderMenu from "../../components/Common/HeaderMenu";
+import LifeStyle from "../../components/Roommate/LifeStyle";
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import ChatImg from "../../assets/img/Roommate/chat.svg";
 import Info from "../../assets/img/Roommate/info.svg";
@@ -156,6 +157,21 @@ const CharContainer = styled.div`
   height: 140px;
   margin: 0 auto;
 `;
+const OtherAndMeTxt = styled.div`
+  display: flex;
+  margin-top: 6.63vh;
+  margin-bottom: 2.36vh;
+  color: #707070;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+`;
+const Other = styled.div`
+  margin-left: 28.46vw;
+  margin-right: 28.45vw;
+`;
+const Me = styled.div``;
 const User = () => {
   const textCenter = {
     id:'textCenter',
@@ -230,10 +246,14 @@ const User = () => {
               <MatchColorText>맞춰가면 좋아요</MatchColorText>
             </MatchText>
             {/* Match Text */}
-            {/* <DounetChart></DounetChart> */}
             <CharContainer>
               <Chart type='doughnut' data={Data} plugins={[textCenter]}/>
             </CharContainer>
+            <OtherAndMeTxt>
+              <Other>{`상대방`}</Other>
+              <Me>{`나`}</Me>
+            </OtherAndMeTxt>
+            <LifeStyle lifeStyle={`잠버릇`}/>
           </TopProfile>
         </c.SubScreen>
       </c.ScreenComponent>
