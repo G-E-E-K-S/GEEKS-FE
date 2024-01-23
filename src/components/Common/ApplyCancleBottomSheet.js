@@ -59,7 +59,6 @@ const BottomSheetBtn = styled.div`
   cursor: pointer;
 `;
 const ApplyCancelBottomSheet = (props) => {
-  const [isShow, setIsShow] = useState(true);
   return (
     <>
       {props.applyRoommate && (

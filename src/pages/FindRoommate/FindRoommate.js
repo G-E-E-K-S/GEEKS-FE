@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -9,6 +9,7 @@ import NavigationBar from "../../components/Main/NavigationBar";
 import BottomSheet from "../../components/Roommate/BottomSheet";
 import basicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import reset from '../../assets/img/MyPage/reset.svg';
+import axios from "axios";
 
 const TitleText = styled.div`
   margin-top: 3.31vh;
@@ -40,7 +41,20 @@ const ResetImg = styled.img`
 `;
 const FindRoommate = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [userdata, setUserData] = useState([]);
   const navigate = useNavigate();
+  useEffect(()=>{
+    async function fetchUserData() {
+      try{
+        axios.defaults.withCredentials = true;
+        const res = await axios.get("http://localhost:8080/point/find");
+        setUserData(res.data);
+      }catch(e) {
+        console.log(e);
+      }
+    }
+    fetchUserData();
+  },[]);
 
   return (
     <c.Totalframe main={true}>
@@ -57,14 +71,15 @@ const FindRoommate = () => {
             <Condition condition={`장소`} />
             <Condition condition={`성향`} />
           </ConditionScroll>
-          <OtherProfile
-            userprofile={basicProfile}
-            nickName={`눈누난나`}
-            major={`스마트정보통신`}
-            id={`19학번`}
-            score={`90`}
-            onClick={()=>navigate('/user')}
-          />
+          {userdata.map((user)=>(
+            <OtherProfile
+              userprofile={basicProfile}
+              nickName={user.nickname}
+              major={user.major}
+              id={user.studentID}
+              score={user.point}
+              onClick={()=>navigate('/user')}/>
+          ))}
         </c.SubScreen>
       </c.ScreenComponent>
       {isOpen ? <BottomSheet close={()=>setIsOpen(false)}/> : <NavigationBar type={`rommate`} />}
