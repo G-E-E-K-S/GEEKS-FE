@@ -5,11 +5,13 @@ import * as c from "../../components/Common/CommonStyle";
 import GoBack from "../../components/Common/GoBack";
 import SubTitle from "../../components/Main/SubTitle";
 import OtherProfileApply from "../../components/MyPage/OtherProfileApply";
+import { UserNickName } from "../../recoil/UserNickName";
 import Popup from "../../components/Common/Popup";
 import BottomSheet from "../../components/Common/BottomSheet";
 import Dots from "../../assets/img/Home/edit.svg";
 import Colse from "../../assets/img/MyPage/close.svg";
 import CancelRoommate from "../../assets/img/MyPage/cancleRoommate.svg";
+import { useRecoilValue } from 'recoil';
 
 const ApplyTop = styled.div`
   display: flex;
@@ -138,6 +140,7 @@ const RoommateApply = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [sentApply, setSentApply] = useState('');
   const [receivedApply, setReceiveApply] = useState('');
+  const content = useRecoilValue(UserNickName);
 
   useState(()=>{
     async function fetchApply() {
@@ -163,6 +166,15 @@ const RoommateApply = () => {
   const handleCancle = () => {
     setIsBtsShow(false);
     setShowPopup(true);
+    async function fetchDeleteAply() {
+      try{
+        axios.defaults.withCredentials = true;
+        const res = await axios.get("http://localhost:8080/roommate/sent?yournickname=");
+      }catch(e) {
+        console.log(e);
+      } 
+    }
+    fetchDeleteAply();
   };
   return (
     <c.Totalframe>
@@ -170,7 +182,7 @@ const RoommateApply = () => {
         <ApplyTop>
           <c.Flex>
             <GoBack />
-            <SubTitle subtitle={`신청 목록`} />
+            <SubTitle subtitle={`신청 목록 `} />
           </c.Flex>
           <DotsIcon src={Dots} />
         </ApplyTop>
