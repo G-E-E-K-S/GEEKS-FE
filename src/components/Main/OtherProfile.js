@@ -91,7 +91,7 @@ const OtherProfile = (props) => {
           <div>
             <NickName>{props.nickName}</NickName>
             <Major>
-              {props.major} · {props.id}
+              {props.major} · {props.id}'학번'
             </Major>
           </div>
         </c.Flex>

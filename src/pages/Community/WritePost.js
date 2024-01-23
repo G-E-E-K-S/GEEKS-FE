@@ -124,6 +124,19 @@ const Community = () => {
     }
     fetch();
   }
+  const getPoint = () =>{
+    async function fetchPoint() {
+      try {
+        axios.defaults.withCredentials = true;
+        const res = await axios.post("http://localhost:8080/detail/point");
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchPoint();
+  }
+
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -142,6 +155,7 @@ const Community = () => {
           
             {/* <ShowImg src={uploadImg} /> */}
             <button onClick={()=>getCookies()}>get coo</button>
+            <button onClick={()=>getPoint()}>getPoint</button>
           </c.Flex>
         </c.SubScreen>
       </c.ScreenComponent>
