@@ -18,6 +18,9 @@ import notice from "../../assets/img/MyPage/notice.svg";
 import announce from "../../assets/img/MyPage/announce.svg";
 import question from "../../assets/img/MyPage/question.svg";
 import inquiry from "../../assets/img/MyPage/inquiry.svg";
+import { useSetRecoilState } from 'recoil';
+import { UserNickName } from '../../recoil/UserNickName';
+
 
 const UserInfoTop = styled.div`
   margin-top: 4.5vh;
@@ -105,6 +108,9 @@ const WelcomeKit = styled.div`
 const MyPage = () => {
   const [toggle, setToggle] = useState(false);
   const [userInfo, setUserInfo] = useState('');
+
+  const setContent = useSetRecoilState(UserNickName);
+  
   const clickedToggle = () => {
     setToggle((prev) => !prev);
   };
@@ -116,6 +122,7 @@ const MyPage = () => {
           axios.defaults.withCredentials=true; // allow cookies
           const res = await axios.get("http://localhost:8080/member/myPage");
           setUserInfo(res.data);
+          setContent(res.data.nickname);
           navigate('/mypage');
       }catch(error){
         console.error(error);

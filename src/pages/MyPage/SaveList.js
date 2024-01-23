@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/MyPage/Header";
@@ -46,6 +47,7 @@ const LifeStyles = () => {
   const [activeEdit, setActiveEdit] = useState(false);
   const [activeCheck, setActiveCheck] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [saveList, setSaveList] = useState([]);
 
   const handleEdit = () => {
     setActiveEdit(true);
@@ -57,6 +59,18 @@ const LifeStyles = () => {
       setActiveCheck(false);
     }
   }
+  useEffect(()=>{
+    async function fetchSaveList() {
+      try{
+        axios.defaults.withCredentials = true;
+        const res = await axios.get("http://localhost:8080/roommate/savelist");
+        setSaveList(res.data)
+      }catch(e) {
+        console.log(e);
+      } 
+    }
+    fetchSaveList();
+  },[]);
 
   return (
     <c.Totalframe>
@@ -73,11 +87,13 @@ const LifeStyles = () => {
           {/* total save list */}
           <TotalSaveNum>총 3명</TotalSaveNum>
           <c.Flex>
-            {activeEdit ? <CheckImg src={activeCheck ? Check : NoCheck} onClick={()=>setActiveCheck(!activeCheck)}/> : null }
-            <OtherProfile score={90} userprofile={Profile} nickName={`너굴너굴`} major={`인더스트리얼디자인`} id={`19학번`} activeCheck={activeCheck}/>
+            {activeEdit && <CheckImg src={activeCheck ? Check : NoCheck} onClick={()=>setActiveCheck(!activeCheck)}/>}
+            {saveList.map((userData)=>(
+              <OtherProfile score={userData.point} userprofile={Profile} nickName={userData.nickname} major={userData.major} id={userData.studentID} activeCheck={activeCheck}/>
+            ))}
           </c.Flex>
           <JoinButton btnName={`삭제하기`} isNextPage={activeCheck} handleClick={() => handleBtn()} />
-          {showPopup ? <Popup bottom={`18.24vh`} setShowPopup={setShowPopup} message={`‘~~...’님이 삭제되었습니다`}/> : null}
+          {showPopup && <Popup bottom={`18.24vh`} setShowPopup={setShowPopup} message={`‘~~...’님이 삭제되었습니다`}/> }
         </c.SubScreen>
       </c.ScreenComponent>
     </c.Totalframe>
