@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import fillSave from '../../assets/img/MyPage/fillSave.svg';
@@ -80,8 +81,9 @@ const SaveImg = styled.img`
 const OtherProfile = (props) => {
   const [fill,isFill] = useState(false);
 
-  const handleFill = () => {
-    isFill(!fill)
+  const handleFill = (e) => {
+    isFill(!fill);
+    e.stopPropagation();
   }
   return (
     <TotalProfile activeCheck={props.activeCheck} onClick={props.onClick}>
@@ -91,7 +93,7 @@ const OtherProfile = (props) => {
           <div>
             <NickName>{props.nickName}</NickName>
             <Major>
-              {props.major} · {props.id}'학번'
+              {props.major} · {props.id}학번
             </Major>
           </div>
         </c.Flex>
@@ -104,7 +106,7 @@ const OtherProfile = (props) => {
       {/* intro self */}
       <IntroSelf>
         <Intro>외출이 잦아요! 기숙사는 가끔 들어와요</Intro>
-        <SaveImg src={fill? fillSave : save} onClick={()=>handleFill()}/>
+        <SaveImg src={fill? fillSave : save} onClick={(e)=>handleFill(e)}/>
       </IntroSelf>
     </TotalProfile>
   );
