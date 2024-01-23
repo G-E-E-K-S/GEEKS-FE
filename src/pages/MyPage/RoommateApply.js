@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import GoBack from "../../components/Common/GoBack";
@@ -73,7 +74,7 @@ const ReceiveBtn = styled.div`
   width: calc((100% - 2.05vw) / 2);
   height: 56px;
   border-radius: 12px;
-  border: ${(props) => (props.isAccept ? "" : "1px solid #e2e2e2")};
+  border: ${(props) => (!props.isAccept && "1px solid #e2e2e2")};
   background: ${(props) => (props.isAccept ? "#FFC700" : "#fff")};
   display: flex;
   justify-content: center;
@@ -135,7 +136,30 @@ const RoommateApply = () => {
   const [isChoose, setIsChoose] = useState("send");
   const [isBtsShow, setIsBtsShow] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [sentApply, setSentApply] = useState('');
+  const [receivedApply, setReceiveApply] = useState('');
 
+  useState(()=>{
+    async function fetchApply() {
+      try{
+        axios.defaults.withCredentials = true;
+        const res = await axios.get("http://localhost:8080/roommate/received");
+        setSentApply(res.data);
+      }catch(e) {
+        console.log(e);
+      }
+    }
+    async function fetchApply() {
+      try{
+        axios.defaults.withCredentials = true;
+        const res = await axios.get("http://localhost:8080/roommate/sent");
+        setReceiveApply(res.data);
+      }catch(e) {
+        console.log(e);
+      } 
+    }
+    fetchApply();
+  },[]);
   const handleCancle = () => {
     setIsBtsShow(false);
     setShowPopup(true);
@@ -162,6 +186,7 @@ const RoommateApply = () => {
             받은 신청
           </ApplyList>
         </c.Flex>
+        {/* axios add  */}
         {isChoose === "send" && (
           <div>
             <Semester>{`3학년 2학기`}</Semester>
@@ -169,10 +194,10 @@ const RoommateApply = () => {
               <ApplyDate>{`10.01`}</ApplyDate>
               <c.SpaceBetween>
                 <OtherProfileApply
-                  nickName={`닉네임여덟글자만`}
-                  major={`커뮤니케이션디자인`}
-                  id={`20학번`}
-                />
+                  nickName={sentApply.nickname}
+                  major={sentApply.major}
+                  id={sentApply.studentID}
+                  userprofile={sentApply.photoName}/>
                 <CancleBtn onClick={() => setIsBtsShow(true)}>취소</CancleBtn>
               </c.SpaceBetween>
             </ApplyTotalInfo>
@@ -184,10 +209,10 @@ const RoommateApply = () => {
             <ApplyTotalInfo>
               <ApplyDate>{`10.01`}</ApplyDate>
               <OtherProfileApply
-                nickName={`닉네임여덟글자만`}
-                major={`커뮤니케이션디자인`}
-                id={`20학번`}
-              />
+                nickName={receivedApply.nickname}
+                major={receivedApply.major}
+                id={receivedApply.studentID}
+                userprofile={receivedApply.photoName}/>
               <c.Flex>
                 <ReceiveBtn isAccept={false}>{`거절하기`}</ReceiveBtn>
                 <ReceiveBtn isAccept={true}>{`수락하기`}</ReceiveBtn>
