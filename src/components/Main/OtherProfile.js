@@ -81,9 +81,18 @@ const SaveImg = styled.img`
 const OtherProfile = (props) => {
   const [fill,isFill] = useState(false);
 
-  const handleFill = (e) => {
+  const handleFill = (e,yournickname) => {
     isFill(!fill);
     e.stopPropagation();
+    async function fetchSaveUser() {
+      try{
+        axios.defaults.withCredentials = true;
+        const res = await axios.get("http://localhost:8080/roommate/save?yournickname="+ yournickname);
+      }catch(e) {
+        console.log(e);
+      }
+    }
+    fetchSaveUser();
   }
   return (
     <TotalProfile activeCheck={props.activeCheck} onClick={props.onClick}>
@@ -106,7 +115,7 @@ const OtherProfile = (props) => {
       {/* intro self */}
       <IntroSelf>
         <Intro>외출이 잦아요! 기숙사는 가끔 들어와요</Intro>
-        <SaveImg src={fill? fillSave : save} onClick={(e)=>handleFill(e)}/>
+        <SaveImg src={fill? fillSave : save} onClick={(e)=>handleFill(e,props.nickName)}/>
       </IntroSelf>
     </TotalProfile>
   );
