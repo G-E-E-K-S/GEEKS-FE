@@ -18,6 +18,7 @@ const GroupPromotionBox = styled.div`
   padding: 11px 5.12vw;
   margin-top: 16px;
   margin-bottom: 24px;
+  position: relative;
 `;
 const GroupAttendTxt = styled.div`
   color: #333;
@@ -37,8 +38,8 @@ const GroupImg = styled.img`
   width: 102px;
   height: 102px;
   position: absolute;
-  top: 87px;
-  right: 15.3vw;
+  right: 10.3vw;
+  bottom: 5px;
 `;
 const Community = () => {
   const [post, setPost] = useState([]);
