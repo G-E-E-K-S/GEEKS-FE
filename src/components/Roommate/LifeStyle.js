@@ -17,6 +17,11 @@ const SameLifeStyle = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: 24px;
+  color: #707070;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
 `;
 const DiffrentLifeStlye = styled(SameLifeStyle)`
   background: linear-gradient(
