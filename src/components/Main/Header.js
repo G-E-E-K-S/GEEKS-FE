@@ -5,6 +5,7 @@ import downArrow from '../../assets/img/Home/downArrow.svg';
 import search from '../../assets/img/Home/search.svg';
 // import noti from '../../assets/img/Home/noti.svg';
 import edit from '../../assets/img/Home/edit.svg';
+import GeeksLogo from "../../assets/img/Common/geeksLogo.svg";
 
 const TotalHeader = styled.div`
     display: flex;
@@ -66,7 +67,7 @@ const Header = () => {
     const [modalOpen, setModalOpen] = useState(false)
     return(
         <TotalHeader>
-            <DormitoryKind onClick={()=>setModalOpen(true)}>
+            {/* <DormitoryKind onClick={()=>setModalOpen(true)}>
                 <DormitoryText>신관</DormitoryText>
                 <Modal isOpen={modalOpen} onRequestClose={() => setModalOpen(false)} ariaHideApp={false} style={modalStyle}>
                     <DormitoryKinds>구관</DormitoryKinds>
@@ -74,7 +75,8 @@ const Header = () => {
                     <DormitoryKinds>행복기숙사</DormitoryKinds>
                 </Modal>
                 <img src={downArrow}/>
-            </DormitoryKind>
+            </DormitoryKind> */}
+            <img src={GeeksLogo}/>
             <Icon>
                 <img src={search}/>
                 {/* <img src={noti}/> */}

@@ -38,20 +38,14 @@ const Score = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;  
-  color: #2B75CB;
+  color: ${(props)=>props.score >= '70' ? '#2B75CB' : props.score >= '40' && props.score <='60' ? '#D68D00' : '#7B7161'};
   font-size: 1.5rem;
   font-style: normal;
   font-weight: 700;
   line-height: 32px; /* 133.333% */
 `;
-const ScoreUnit = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #2B75CB;
-  text-align: center;
+const ScoreUnit = styled(Score)`
   font-size: 1rem;
-  font-style: normal;
   font-weight: 600;
   line-height: 24px; /* 150% */
   margin-left: 2px;
@@ -107,8 +101,8 @@ const OtherProfile = (props) => {
           </div>
         </c.Flex>
         <c.Flex>
-          <Score>{props.score}</Score>
-          <ScoreUnit>점</ScoreUnit>
+          <Score score={props.score}>{props.score}</Score>
+          <ScoreUnit score={props.score}>점</ScoreUnit>
         </c.Flex>
 
       </c.SpaceBetween>
