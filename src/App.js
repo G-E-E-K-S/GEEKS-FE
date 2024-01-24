@@ -5,7 +5,7 @@ import LiveRule from "./pages/Main/LiveRule";
 import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply } from './pages/MyPage/Index';
 import { FindRoommate , User, ApplyConfirm } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
-import { WritePost, Post, Community } from './pages/Community/Index';
+import { WritePost, Post, Community, MyCommunity } from './pages/Community/Index';
 import './index.css';
 function App() {
   return (
@@ -43,6 +43,7 @@ function App() {
           <Route path="/writepost" element={<WritePost/>} />
           <Route path="/post/:postId" element={<Post/>} />
           <Route path="/community" element={<Community/>} />
+          <Route path="/myCommunity" element={<MyCommunity/>} />
         </Routes>
       </Router>
     </div>
