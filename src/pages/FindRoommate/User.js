@@ -276,10 +276,19 @@ const User = () => {
               <Other>{`상대방`}</Other>
               <Me>{`나`}</Me>
             </OtherAndMeTxt>
-            <LifeStyle 
+            {/* <LifeStyle 
               lifeStyle={`흡연`}
-              sameLifeStyle={otherLifeStyle[0]?.smoking === otherLifeStyle[1]?.smoking && '흡연자에요' }/>
-
+              isSame={true}
+              sameLifeStyle={otherLifeStyle[0]?.smoking === otherLifeStyle[1]?.smoking && '흡연자에요' }/> */}
+              <LifeStyle 
+              lifeStyle={`흡연`}
+              isSame={true}
+              sameLifeStyle={'잠버릇 없어요'}/>
+              <LifeStyle 
+              lifeStyle={`잠귀`}
+              isDiff={true}
+              diffrentLifeStyle={'귀 밝아요'}
+              diffrentMyLifeStyle={`귀 어두워요`}/>
            
           </TopProfile>
         </c.SubScreen>
