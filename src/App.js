@@ -35,7 +35,7 @@ function App() {
           <Route path="/faq" element={<FAQ/>} />
           <Route path="/faq/rommate" element={<FaqRommate/>} />
           <Route path="/roommate" element={<FindRoommate/>} />
-          <Route path="/user" element={<User/>} />
+          <Route path="/detail/details/:userId" element={<User/>} />
           <Route path="/applyconfirm" element={<ApplyConfirm/>} />
           <Route path="/chat" element={<Chat/>} />
           <Route path="/chat/chatroom" element={<ChatRoom/>} />

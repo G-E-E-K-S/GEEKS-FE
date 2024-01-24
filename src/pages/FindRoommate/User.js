@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import { Chart } from 'react-chartjs-2';
 import 'chart.js/auto';
 import styled from "styled-components";
@@ -178,6 +180,22 @@ const Me = styled.div``;
 
 const User = () => {
   const [applyRoommate, setApplyRommate] = useState(false);
+  const [otherLifeStyle, setOtherLifeStyle] = useState([]);
+  let { userId } = useParams();
+
+  useEffect(()=>{
+    async function fetchUserData() {
+      try{
+        axios.defaults.withCredentials = true;
+        const res = await axios.get("http://localhost:8080/detail/details?id="+userId);
+        setOtherLifeStyle(res.data);
+        console.log(res.data)
+      }catch(e) {
+        console.log(e);
+      }
+    }
+    fetchUserData();
+  },[]);
   const textCenter = {
     id:'textCenter',
     beforeDatasetsDraw(chart,args,pluginOptions){
@@ -258,7 +276,11 @@ const User = () => {
               <Other>{`상대방`}</Other>
               <Me>{`나`}</Me>
             </OtherAndMeTxt>
-            <LifeStyle lifeStyle={`잠버릇`}/>
+            <LifeStyle 
+              lifeStyle={`흡연`}
+              sameLifeStyle={otherLifeStyle[0]?.smoking === otherLifeStyle[1]?.smoking && '흡연자에요' }/>
+
+           
           </TopProfile>
         </c.SubScreen>
       </c.ScreenComponent>

@@ -78,7 +78,7 @@ const FindRoommate = () => {
               major={user.major}
               id={user.studentID}
               score={user.point}
-              onClick={()=>navigate('/user')}/>
+              onClick={()=>navigate('/detail/details/'+user.userId)}/>
           ))}
         </c.SubScreen>
       </c.ScreenComponent>
