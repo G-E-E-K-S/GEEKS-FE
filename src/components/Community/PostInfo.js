@@ -6,6 +6,7 @@ import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 const TotalUserInfo = styled.div`
     display: flex;
     margin-top: 16px;
+    align-items: center;
 `;
 const UserProfile = styled.img`
   width: 20px;
