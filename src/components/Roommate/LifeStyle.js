@@ -11,7 +11,7 @@ const LifeStyleBox = styled.div`
 const LifeStyleTxt = styled.div`
   width: 17.94vw;
   display: flex;
-  align-items :center;
+  align-items: center;
 `;
 const TotalStyle = styled.div`
   width: 100%;
@@ -40,12 +40,12 @@ const DiffrentLifeStlye = styled(SameLifeStyle)`
       rgba(255, 184, 184, 0.2) 100%
     ),
     #fcede8;
-    max-width: 34.1vw;
-    word-break: keep-all;
-    text-align: center;
+  max-width: 34.1vw;
+  word-break: keep-all;
+  text-align: center;
 `;
 const DiffrentMyLifeStlye = styled(DiffrentLifeStlye)`
-    background: #FCEDE8
+  background: #fcede8;
 `;
 
 const LifeStyle = (props) => {
@@ -53,16 +53,15 @@ const LifeStyle = (props) => {
     <LifeStyleBox>
       <LifeStyleTxt>{props.lifeStyle}</LifeStyleTxt>
       <TotalStyle>
-      {props.isSame &&
-      <SameLifeStyle>{props.sameLifeStyle}</SameLifeStyle>
-        
-      }
-      {props.isDiff &&
-      <c.SpaceBetween>
-        <DiffrentLifeStlye>{props.diffrentLifeStyle}</DiffrentLifeStlye>
-      <DiffrentMyLifeStlye>{props.diffrentMyLifeStyle}</DiffrentMyLifeStlye>
-      </c.SpaceBetween>
-}
+        {props.isSame && <SameLifeStyle>{props.sameLifeStyle}</SameLifeStyle>}
+        {props.isDiff && (
+          <c.SpaceBetween>
+            <DiffrentLifeStlye>{props.diffrentLifeStyle}</DiffrentLifeStlye>
+            <DiffrentMyLifeStlye>
+              {props.diffrentMyLifeStyle}
+            </DiffrentMyLifeStlye>
+          </c.SpaceBetween>
+        )}
       </TotalStyle>
     </LifeStyleBox>
   );
