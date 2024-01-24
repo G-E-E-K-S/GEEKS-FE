@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import JoinButton from "../../components/Join/JoinButton";
-import Home from "../../assets/img/Join/joinFinalPage.svg";
+import BedIcon from "../../assets/gif/bed.gif";
 
 const WelcomeText = styled.div`
   margin-top: 14.21vh;
@@ -30,18 +30,19 @@ const TopImg = styled.div`
 `;
 
 const MainImg = styled.img`
-  margin-top: 8.29vh;
+  width: 354px;
+  height: 354px;
 `;
 const FinalPage = () => {
   const navigate = useNavigate();
 
   return (
-    <c.Totalframe>
+    <c.Totalframe background={`linear-gradient(180deg, rgba(255, 199, 0, 0.10) 0%, rgba(250, 250, 250, 0.10) 100%)`}>
       <c.ScreenComponent>
         <WelcomeText>환영합니다!</WelcomeText>
         <SubText>{`이제부터 긱스와 함께\n행복한 기숙사 생활 해봐요`}</SubText>
         <TopImg>
-          <MainImg src={Home} />
+          <MainImg src={BedIcon} />
         </TopImg>
         <JoinButton
           btnName={"룸메이트 찾으러 가기"}

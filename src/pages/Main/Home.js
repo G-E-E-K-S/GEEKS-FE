@@ -135,7 +135,7 @@ const Home = () => {
     navigate("/liverule");
   };
   return (
-    <c.Totalframe main={true}>
+    <c.Totalframe background={`#FAFAFA`}>
       <c.ScreenComponent>
         <c.SubScreen>
           <Header />

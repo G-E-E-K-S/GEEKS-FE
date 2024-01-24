@@ -57,7 +57,7 @@ const FindRoommate = () => {
   },[]);
 
   return (
-    <c.Totalframe main={true}>
+    <c.Totalframe background={`linear-gradient(180deg, #FFF 0%, #F7F7F7 71%)`}>
       <c.ScreenComponent>
         <c.SubScreen>
           <Header />

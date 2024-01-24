@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Common/GoBack";
-import SubTitle from "../../components/Main/SubTitle";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import LifeStyle from "../../components/Main/LifeStyle";
 import reset from '../../assets/img/MyPage/reset.svg';
 
-const SubTitleBox = styled.div`
-    margin-top: 2.36vh;
-    margin-bottom: 4.26vh;
+const SubTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 32px;
+  white-space: pre-wrap;
 `;
 const BottomMenues = styled.div`
   display: flex;
@@ -134,10 +138,9 @@ const LifeStyles = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
-            <GoBack marginTop={`7.58vh`}/>
-            <SubTitleBox>
-                <SubTitle subtitle={`나의 생활 습관을\n등록해 보세요`}/>
-            </SubTitleBox>
+            <HeaderMenu>
+              <SubTitle>{`나의 생활 습관을\n등록해 보세요`}</SubTitle>
+            </HeaderMenu>
             <LifeStyle lifeStyleText={`흡연 여부`} lifeStyle={[{'흡연자에요': true},{'비흡연자에요': false}]} lifeStyleSection={setIsSmoke} isState={isSmoke}/>
             <LifeStyle lifeStyleText={`잠버릇`} lifeStyle={[{'잠버릇 있어요' : true},{'잠버릇 없어요' : false}]} lifeStyleSection={setIsHabit} isState={isHabit}/>
             <LifeStyle lifeStyleText={`잠귀`} lifeStyle={[{'귀 밝아요' : 'BRIGHT'},{'귀 어두워요' : 'DARK'}]} lifeStyleSection={setIsEar} isState={isEar}/>

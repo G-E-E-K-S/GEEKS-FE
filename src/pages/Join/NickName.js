@@ -15,7 +15,7 @@ const InputNickName = styled.input`
   height: 48px;
   padding: 0px 0px 0.94vh 0px;
   border-bottom: 2px solid
-    ${(props) => (props.isSelected ? "#707070" : "#EFEFEF")};
+    ${(props) => (props.isSelected ? "#ECAA00" : "#EFEFEF")};
   margin-top: 6.16vh;
   font-style: normal;
   font-size: 24px;
