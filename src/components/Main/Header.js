@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Modal from 'react-modal';
 import downArrow from '../../assets/img/Home/downArrow.svg';
 import search from '../../assets/img/Home/search.svg';
-import noti from '../../assets/img/Home/noti.svg';
+// import noti from '../../assets/img/Home/noti.svg';
 import edit from '../../assets/img/Home/edit.svg';
 
 const TotalHeader = styled.div`
@@ -77,7 +77,7 @@ const Header = () => {
             </DormitoryKind>
             <Icon>
                 <img src={search}/>
-                <img src={noti}/>
+                {/* <img src={noti}/> */}
                 <img src={edit}/>
             </Icon>
         </TotalHeader>

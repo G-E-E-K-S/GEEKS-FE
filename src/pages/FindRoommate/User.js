@@ -218,7 +218,6 @@ const User = () => {
         backgroundColor: ['#FFD540','#EFEFEF'],
         cutout: "80%",
         borderWidth: 0,
-        borderRadius: [30,-30],
         options:{
           responsive: false,
           plugins:{

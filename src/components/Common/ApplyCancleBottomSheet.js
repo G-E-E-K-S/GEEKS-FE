@@ -36,7 +36,8 @@ const SubMessage = styled(Message)`
   font-weight: 500;
   font-size: 1rem;
   font-weight: 500;
-  margin-top: 8px;
+  margin-top: 12px;
+  line-height: 22px;
 `;
 const CloseIcon = styled.img`
   width: 28px;
