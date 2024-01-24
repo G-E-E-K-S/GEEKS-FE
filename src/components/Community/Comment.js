@@ -28,6 +28,10 @@ const CommentText = styled.div`
   line-height: 24px;
   margin-top: 9px;
 `;
+const Icons = styled.div`
+  display: flex;
+  align-items: flex-end;
+`;
 const Comment = (props) => {
   return (
     <CommentBox paddingLeft={props.paddingLeft} isRecomment={props.recomment}>
@@ -37,10 +41,10 @@ const Comment = (props) => {
           username={props.postInfo.username}
           uploadtime={props.postInfo.uploadtime}
         />
-        <c.FlexCenter>
+        <Icons>
           <CommentImg src={CommentIcon} onClick={props.wirteChild}/>
           <ThreeDots src={Dots} />
-        </c.FlexCenter>
+        </Icons>
       </c.SpaceBetween>
       <CommentText>{props.comment}</CommentText>
     </CommentBox>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import moment from "moment";
+import 'moment/locale/ko';
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -84,7 +86,10 @@ const Post = () => {
     }
     fetchPost();
   }
-
+  const caclTime = (uploadTime) => {
+    moment.locale("ko"); // 언어를 한국어로 설정
+    return moment(uploadTime).fromNow(`A`)+'전'; // 지금으로부터 계산
+  }  
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -103,21 +108,20 @@ const Post = () => {
             <LikeAndStarBtn icon={Like}></LikeAndStarBtn>
             <LikeAndStarBtn icon={Star} text={`스크랩`} marginLeft={`2.05vw`}></LikeAndStarBtn>
           </c.Flex>
-          {/* 구분선 */}
           <Br/>
 
           {/* 댓글 부분 */}
-          <CommentCnt number={`3`}/>
+          <CommentCnt number={postInfo.commentCount}/>
           {postInfo.comments?.map((comment)=>(
             <div>
               <Comment
-                postInfo={{ username: comment.writer, uploadtime: comment.createdDate }}
+                postInfo={{ username: comment.writer, uploadtime: caclTime(comment.createdDate)}}
                 comment={comment.content}/>
                 {comment.children?.map((child)=>(
                   <Comment
                   paddingLeft={`8.17vw`}
                   recomment={true}
-                  postInfo={{ username: child.writer, uploadtime: child.createdDate }}
+                  postInfo={{ username: child.writer, uploadtime: caclTime(comment.createdDate) }}
                   comment={child.content}/>
                 ))}
             </div>
