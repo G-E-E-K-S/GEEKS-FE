@@ -8,7 +8,6 @@ import OtherProfile from "../../components/Main/OtherProfile";
 import NavigationBar from "../../components/Main/NavigationBar";
 import BottomSheet from "../../components/Roommate/BottomSheet";
 import basicProfile from "../../assets/img/MyPage/basicProfile.svg";
-import reset from '../../assets/img/MyPage/reset.svg';
 import axios from "axios";
 
 const TitleText = styled.div`
@@ -43,6 +42,7 @@ const FindRoommate = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userdata, setUserData] = useState([]);
   const navigate = useNavigate();
+  
   useEffect(()=>{
     async function fetchUserData() {
       try{
