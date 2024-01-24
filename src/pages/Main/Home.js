@@ -5,11 +5,11 @@ import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Main/Header";
 import NavigationBar from "../../components/Main/NavigationBar";
 import HomeBox from "../../components/Main/HomeBox";
+import Popup from "../../components/Common/Popup";
 import checklist from "../../assets/img/Home/checkList.svg";
 import rule from "../../assets/img/Home/Rule.svg";
 import stayOut from "../../assets/img/Home/stayOut.svg";
 import dormiNoti from "../../assets/img/Home/dormiNoti.svg";
-import forwardArrow from "../../assets/img/Home/forwardArrow.svg";
 import Close from "../../assets/img/Home/close.svg";
 import Find from "../../assets/gif/find.gif";
 
@@ -130,17 +130,20 @@ const FindIcon = styled.img`
 const Home = () => {
   const [isShowReview, setIsSHowReiew] = useState(true);
   const [isWeeklyPost, setIsWeeklyPost] = useState('live');
+  const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
   const handlePage = () => {
     navigate("/liverule");
   };
+
   return (
     <c.Totalframe background={`#FAFAFA`}>
       <c.ScreenComponent>
         <c.SubScreen>
           <Header />
+          {showPopup && <Popup message={`곧 만날 수 있으니 조금만 기다려 주세요!`} setShowPopup={setShowPopup} top={`9.5vh`}/>}
           <System>
-            <Icons>
+            <Icons onClick={()=>setShowPopup(true)}>
               <Icon src={checklist} />
               <IconText>체크리스트</IconText>
             </Icons>

@@ -5,13 +5,14 @@ const TotalBox = styled.div`
   width: 100%;
 `;
 const PopupBox = styled.div`
-  width: calc(100% - 10.25vw);
+  width: calc(100% - 12.25vw);
   height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
   bottom: ${(props) => props.bottom};
+  top: ${(props)=>props.top};
   border-radius: 12px;
   background: #525252;
 
@@ -30,7 +31,7 @@ const Popup = (props) => {
   }, [props.setShowPopup]);
   return (
     <TotalBox>
-      <PopupBox bottom={props.bottom}>{props.message}</PopupBox>
+      <PopupBox bottom={props.bottom} top={props.top}>{props.message}</PopupBox>
     </TotalBox>
   );
 };
