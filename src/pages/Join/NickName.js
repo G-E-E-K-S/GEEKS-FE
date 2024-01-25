@@ -7,6 +7,7 @@ import Header from "../../components/Join/Header";
 import TopNumber from "../../components/Join/TopNumber";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
+import ErrorPopup from "../../components/Common/ErrorPopup";
 
 const InputNickName = styled.input`
   width: 100%;
@@ -39,6 +40,7 @@ const NickName = () => {
   const [inputNickName, setInputNickName] = useState("");
   const [valuableName, setValuableName] = useState('');
   const [isNextPage, setIsNextPage] = useState(false);
+  const [isPopup, setIsPopup] = useState(false);
   const letterCnt = useRef(0);
   const navigator = useNavigate();
 
@@ -85,6 +87,7 @@ const NickName = () => {
         );
         console.log(res.data)
         setValuableName(res.data);
+        res.data ==='duplicate' && setIsPopup(true);
       } catch (error) {
         console.error(error);
       }
@@ -108,6 +111,8 @@ const NickName = () => {
         <LetterLen>
           {letterCnt.current}/{8}
         </LetterLen>
+
+        {isPopup && <ErrorPopup message={`이미 사용 중인 닉네임이에요`} setShowPopup={setIsPopup} bottom={'18.72vh'}/>}
         <JoinButton
           btnName={"다음"}
           handleClick={() => handleNickName()}
