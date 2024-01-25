@@ -15,7 +15,6 @@ const UserProfile = styled.img`
 `;
 const UserName = styled.div`
   color: #707070;
-
   font-size: 0.875;
   font-weight: 500;
   line-height: 18px; /* 128.571% */

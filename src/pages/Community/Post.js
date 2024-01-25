@@ -14,7 +14,9 @@ import CommentCnt from "../../components/Community/CommentCnt";
 import Comment from "../../components/Community/Comment";
 import Dot from "../../assets/img/Community/dots.svg";
 import Like from "../../assets/img/Community/like.svg";
+import FillLike from "../../assets/img/Community/fillLike.svg";
 import Star from "../../assets/img/Community/star.svg";
+import FillStar from "../../assets/img/Community/fillStar.svg";
 import Send from "../../assets/img/Chat/send.svg";
 
 const InputCommentBox = styled.div`
@@ -54,6 +56,8 @@ const PostImg = styled.img`
 `;
 const Post = () => {
   const [postInfo, setPostInfo] = useState("");
+  const [isLike, setIsLike] = useState(false);
+  const [isStar, setIsStar] = useState(false);
   const commentRef = useRef();
   let { postId } = useParams();
 
@@ -63,6 +67,7 @@ const Post = () => {
         axios.defaults.withCredentials = true; // allow cookies
         const res = await axios.get("http://localhost:8080/post/show?postId=" + postId);
         setPostInfo(res.data);
+        // setIsLike(res.data.heartState);
       } catch (error) {
         console.error(error);
       }
@@ -73,7 +78,7 @@ const Post = () => {
   const UploadComment = () => {    
     async function fetchPost() {
       try {
-        axios.defaults.withCredentials = true; // allow cookies
+        axios.defaults.withCredentials = true;
         const res = await axios.post("http://localhost:8080/post/comment",{
           postId: postId,
           parentId: null,
@@ -89,7 +94,58 @@ const Post = () => {
   const caclTime = (uploadTime) => {
     moment.locale("ko"); // 언어를 한국어로 설정
     return moment(uploadTime).fromNow(`A`)+'전'; // 지금으로부터 계산
-  }  
+  }
+  const handleLike = () =>{
+    if(isLike === false){
+      async function fetchLikeState() {
+        try {
+          axios.defaults.withCredentials = true;
+          const res = await axios.get("http://localhost:8080/post/heart/insert?postId=" + postId);
+          setIsLike(true);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      fetchLikeState();
+    }if(isLike === true){
+      async function fetchDeleteLikeState() {
+        try {
+          axios.defaults.withCredentials = true;
+          const res = await axios.get("http://localhost:8080/post/heart/delete?postId=" + postId);
+          setIsLike(false);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      fetchDeleteLikeState();
+    }
+  };
+
+  const handleScrap = () => {
+    if(isStar === false){
+      async function fetchScrapState() {
+        try {
+          axios.defaults.withCredentials = true;
+          const res = await axios.get("http://localhost:8080/post/scrap/insert?postId=" + postId);
+          setIsStar(true);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      fetchScrapState();
+    }if(isStar === true){
+      async function fetchDeleteScrapState() {
+        try {
+          axios.defaults.withCredentials = true;
+          const res = await axios.get("http://localhost:8080/post/scrap/delete?postId=" + postId);
+          setIsStar(false);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      fetchDeleteScrapState();
+    }
+  }
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -105,8 +161,8 @@ const Post = () => {
             <PostImg src={'https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/'+ photo} />
           ))}
           <c.Flex>
-            <LikeAndStarBtn icon={Like}></LikeAndStarBtn>
-            <LikeAndStarBtn icon={Star} text={`스크랩`} marginLeft={`2.05vw`}></LikeAndStarBtn>
+            <LikeAndStarBtn icon={isLike? FillLike : Like} text={isLike && 1} isLike={isLike} onClick={()=>handleLike()}/>
+            <LikeAndStarBtn icon={isStar? FillStar : Star} text={'스크랩'} marginLeft={`2.05vw`} isStar={isStar} onClick={()=>handleScrap()}/>
           </c.Flex>
           <Br/>
 

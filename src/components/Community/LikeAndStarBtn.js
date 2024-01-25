@@ -10,20 +10,20 @@ const GrayBox = styled.div`
   margin-top: 2.36vh;
   border-radius: 8px;
   background: #f7f7f7;
-  
 `;
 const Icon = styled.img`
   width: 16px;
   height: 16px;
 `;
 const IconText = styled.div`
-  margin-left: 4px;
+  margin-left: ${(props)=>props.text && '4px'};
+  color: ${(props)=>props.isStar ? '#D68D00' : props.isLike ? '#D8384B':'#707070'};
 `;
 const LikeAndStarBtn = (props) => {
   return (
-    <GrayBox marginLeft={props.marginLeft}>
+    <GrayBox marginLeft={props.marginLeft} onClick={props.onClick}>
       <Icon src={props.icon} />
-      <IconText>{props.text}</IconText>
+      <IconText text={props.text} isStar={props.isStar} isLike={props.isLike}>{props.text}</IconText>
     </GrayBox>
   );
 };
