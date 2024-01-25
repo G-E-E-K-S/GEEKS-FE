@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import API from "../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -25,11 +27,26 @@ const DormitoryBoxChoice = styled.div`
 
 const Dormitory = () => {
   const [dormiVal, setDormiVal] = useState("");
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const SelectDormitory = (dormitory) => {
     setDormiVal(dormitory);
   };
+
+  const sendDormitory = () => {
+    let type = dormiVal === '신관' ? 'NEW' : dormiVal === '구관' ? 'OLD' : 'HAPPY';
+    async function fetchDormitory() {
+      try{
+        axios.defaults.withCredentials = true;
+        const res = await API.get("/member/type?type=" + type);
+        res.data === 'success' && navigate('/finalpage')
+        console.log(res);
+      }catch(e) {
+        console.log(e);
+      }
+    }
+    fetchDormitory();
+  }
 
   return (
     <c.Totalframe>
@@ -47,16 +64,14 @@ const Dormitory = () => {
             disable={localStorage.getItem("mode") == 1}
             dormitory={"구관"}
             onClick={() => SelectDormitory("구관")}
-            isSelected={dormiVal == "구관"}
-          />
+            isSelected={dormiVal == "구관"}/>
           <DormitoryBox
             disable={false}
             dormitory={"천안 행복기숙사"}
             onClick={() => SelectDormitory("천안 행복기숙사")}
-            isSelected={dormiVal == "천안 행복기숙사"}
-          />
+            isSelected={dormiVal == "천안 행복기숙사"}/>
         </DormitoryTotal>
-        <JoinButton btnName={"다음"} />
+        <JoinButton btnName={"다음"} handleClick={()=>sendDormitory()} isNextPage={dormiVal}/>
       </c.ScreenComponent>
     </c.Totalframe>
   );

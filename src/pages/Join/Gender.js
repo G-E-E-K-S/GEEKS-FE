@@ -81,8 +81,7 @@ const Gender = () => {
         <JoinButton
           btnName={"다음"}
           handleClick={() => checkGender()}
-          isNextPage={isNextPage}
-        />
+          isNextPage={isNextPage}/>
       </c.ScreenComponent>
     </c.Totalframe>
   );
