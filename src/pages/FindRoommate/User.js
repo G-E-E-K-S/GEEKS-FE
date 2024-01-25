@@ -13,10 +13,10 @@ import ApplyCancelBottomSheet from "../../components/Common/ApplyCancleBottomShe
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import ChatImg from "../../assets/img/Roommate/chat.svg";
 import Info from "../../assets/img/Roommate/info.svg";
-import SaveBtn from "../../assets/img/MyPage/save.svg";
+import Save from "../../assets/img/MyPage/save.svg";
+import FillSave from "../../assets/img/MyPage/fillSave.svg";
 import Dots from "../../assets/img/Community/dots.svg";
 import ApplyRoommateIcon from "../../assets/img/Roommate/applyRoommate.svg";
-import CloseModal from "../../assets/img/Join/closeModal.svg";
 
 const TopProfile = styled.div`
   margin-top: 4.26vh;
@@ -180,6 +180,7 @@ const Other = styled.div`
 const Me = styled.div``;
 
 const User = () => {
+  const [isSave, setIsSave] = useState(false);
   const [applyRoommate, setApplyRommate] = useState(false);
   const [opponentUser, setOpponentUser] = useState(null);
   const [otherLifeStyle, setOtherLifeStyle] = useState([]);
@@ -187,6 +188,7 @@ const User = () => {
 
   let { userId } = useParams();
   let navigate = useNavigate();
+
   useEffect(()=>{
     async function fetchUserData() {
       try{
@@ -194,7 +196,7 @@ const User = () => {
         setOpponentUser(res.data);
         setMyLifeStyle(res.data.details[0]);
         setOtherLifeStyle(res.data.datails[1]);
-        console.log(res.data)
+        setIsSave(res.data.details[0].saved);
       }catch(e) {
         console.log(e);
       }
@@ -212,6 +214,19 @@ const User = () => {
       }
     }
     fetchChatRoom();
+  }
+
+  const saveOther = () => {
+    setIsSave(!isSave);
+    async function fetchSave() {
+      try{
+        const res = await API.get("/roommate/save?yourNickname="+opponentUser.nickname);
+        console.log(res);
+      }catch(e) {
+        console.log(e);
+      }
+    }
+    fetchSave();
   }
 
   const textCenter = {
@@ -313,8 +328,8 @@ const User = () => {
         </c.SubScreen>
       </c.ScreenComponent>
       <BottomEnroll>
-        <div>
-          <SaveImg src={SaveBtn} />
+        <div onClick={()=>saveOther()}>
+          <SaveImg src={isSave ? FillSave : Save} />
           <SaveTxt>저장</SaveTxt>
         </div>
         <EnrollBtn>
