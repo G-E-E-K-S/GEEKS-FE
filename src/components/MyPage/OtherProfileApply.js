@@ -36,11 +36,11 @@ const OtherProfileApply = (props) => {
     <TotalProfile activeCheck={props.activeCheck}>
       <c.SpaceBetween>
         <c.Flex>
-          <UserProfile src={props.userprofile} />
+          <UserProfile src={props.userprofile === null ? BasicrProfile : 'https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/'+props.userprofile} />
           <div>
             <NickName>{props.nickName}</NickName>
             <Major>
-              {props.major} · {props.id}
+              {props.major} · {props.id}학번
             </Major>
           </div>
         </c.Flex>
