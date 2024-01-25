@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API from "../../axios/BaseUrl";
 import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -146,7 +147,7 @@ const RoommateApply = () => {
     async function fetchApply() {
       try{
         axios.defaults.withCredentials = true;
-        const res = await axios.get("http://localhost:8080/roommate/received");
+        const res = await API.get("/roommate/received");
         setSentApply(res.data);
       }catch(e) {
         console.log(e);
@@ -155,7 +156,7 @@ const RoommateApply = () => {
     async function fetchApply() {
       try{
         axios.defaults.withCredentials = true;
-        const res = await axios.get("http://localhost:8080/roommate/sent");
+        const res = await API.get("/roommate/sent");
         setReceiveApply(res.data);
       }catch(e) {
         console.log(e);
@@ -169,7 +170,7 @@ const RoommateApply = () => {
     async function fetchDeleteAply() {
       try{
         axios.defaults.withCredentials = true;
-        const res = await axios.get("http://localhost:8080/roommate/sent?yournickname=");
+        const res = await API.get("/roommate/sent?yournickname=");
       }catch(e) {
         console.log(e);
       } 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import API from "../../axios/BaseUrl";
 import axios from "axios";
 import moment from "moment";
 import 'moment/locale/ko';
@@ -65,7 +66,7 @@ const Post = () => {
     async function fetchPost() {
       try {
         axios.defaults.withCredentials = true; // allow cookies
-        const res = await axios.get("http://localhost:8080/post/show?postId=" + postId);
+        const res = await API.get("/post/show?postId=" + postId);
         setPostInfo(res.data);
         // setIsLike(res.data.heartState);
       } catch (error) {
@@ -79,7 +80,7 @@ const Post = () => {
     async function fetchPost() {
       try {
         axios.defaults.withCredentials = true;
-        const res = await axios.post("http://localhost:8080/post/comment",{
+        const res = await API.post("/post/comment",{
           postId: postId,
           parentId: null,
           content: commentRef.current.value
@@ -100,7 +101,7 @@ const Post = () => {
       async function fetchLikeState() {
         try {
           axios.defaults.withCredentials = true;
-          const res = await axios.get("http://localhost:8080/post/heart/insert?postId=" + postId);
+          const res = await API.get("/post/heart/insert?postId=" + postId);
           setIsLike(true);
         } catch (error) {
           console.error(error);
@@ -111,7 +112,7 @@ const Post = () => {
       async function fetchDeleteLikeState() {
         try {
           axios.defaults.withCredentials = true;
-          const res = await axios.get("http://localhost:8080/post/heart/delete?postId=" + postId);
+          const res = await API.get("/post/heart/delete?postId=" + postId);
           setIsLike(false);
         } catch (error) {
           console.error(error);
@@ -126,7 +127,7 @@ const Post = () => {
       async function fetchScrapState() {
         try {
           axios.defaults.withCredentials = true;
-          const res = await axios.get("http://localhost:8080/post/scrap/insert?postId=" + postId);
+          const res = await API.get("/post/scrap/insert?postId=" + postId);
           setIsStar(true);
         } catch (error) {
           console.error(error);
@@ -137,7 +138,7 @@ const Post = () => {
       async function fetchDeleteScrapState() {
         try {
           axios.defaults.withCredentials = true;
-          const res = await axios.get("http://localhost:8080/post/scrap/delete?postId=" + postId);
+          const res = await API.get("/post/scrap/delete?postId=" + postId);
           setIsStar(false);
         } catch (error) {
           console.error(error);

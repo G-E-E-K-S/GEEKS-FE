@@ -1,5 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import API from "../../axios/BaseUrl";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Main/Header";
@@ -8,7 +10,6 @@ import OtherProfile from "../../components/Main/OtherProfile";
 import NavigationBar from "../../components/Main/NavigationBar";
 import BottomSheet from "../../components/Roommate/BottomSheet";
 import basicProfile from "../../assets/img/MyPage/basicProfile.svg";
-import axios from "axios";
 
 const TitleText = styled.div`
   margin-top: 3.31vh;
@@ -47,7 +48,7 @@ const FindRoommate = () => {
     async function fetchUserData() {
       try{
         axios.defaults.withCredentials = true;
-        const res = await axios.get("http://localhost:8080/point/find");
+        const res = await API.get("/point/find");
         setUserData(res.data);
       }catch(e) {
         console.log(e);

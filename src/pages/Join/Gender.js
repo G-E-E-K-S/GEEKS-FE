@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API from "../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -47,8 +48,8 @@ const Gender = () => {
     async function fetchGenderPage() {
       try {
         axios.defaults.withCredentials = true; // allow cookies
-        const res = await axios.get(
-          "http://localhost:8080/member/gender?gender=" + CurGender
+        const res = await API.get(
+          "/member/gender?gender=" + CurGender
         );
         console.log(res);
       } catch (error) {

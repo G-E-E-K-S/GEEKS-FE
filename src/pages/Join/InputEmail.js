@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import API from "../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -63,8 +64,8 @@ const InputEmail = () => {
     async function fetchEmailPage() {
       try {
         axios.defaults.withCredentials = true; // allow cookies
-        const res = await axios.get(
-          "http://localhost:8080/mail/send?email=" +
+        const res = await API.get(
+          "/mail/send?email=" +
             emailVal.current.value +
             "@sangmyung.kr"
         );

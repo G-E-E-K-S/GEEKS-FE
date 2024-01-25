@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/MyPage/Header";

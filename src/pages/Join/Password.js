@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../../axios/BaseUrl";
 import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -111,7 +112,7 @@ const Password = () => {
   const checkPassword = () => {
     async function fetchPassword() {
       try {
-        const res = await axios.post("http://127.0.0.1:8080/member/password", {
+        const res = await API.post("http://127.0.0.1:8080/member/password", {
           password: inputval,
         });
         console.log(res);

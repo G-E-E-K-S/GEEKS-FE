@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import API from "../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -97,8 +98,8 @@ const InputCode = () => {
     async function fetchCode() {
       try {
         axios.defaults.withCredentials = true; // allow cookies
-        const res = await axios.get(
-          "http://localhost:8080/mail/auth?code=" + code
+        const res = await API.get(
+          "/mail/auth?code=" + code
         );
       } catch (error) {
         console.error(error);
