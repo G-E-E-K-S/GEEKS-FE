@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -14,8 +14,7 @@ const InputNickName = styled.input`
   outline: none;
   height: 48px;
   padding: 0px 0px 0.94vh 0px;
-  border-bottom: 2px solid
-    ${(props) => (props.isSelected ? "#ECAA00" : "#EFEFEF")};
+  border-bottom: 2px solid ${(props) => (!props.isSelected ? "#EFEFEF" : props.valuableName === "duplicate" ? "#CB3D0B" : "#ECAA00")};
   margin-top: 6.16vh;
   font-style: normal;
   font-size: 24px;
@@ -38,6 +37,7 @@ const LetterLen = styled.div`
 const NickName = () => {
   const [isSelected, setIsSelected] = useState(false);
   const [inputNickName, setInputNickName] = useState("");
+  const [valuableName, setValuableName] = useState('');
   const [isNextPage, setIsNextPage] = useState(false);
   const letterCnt = useRef(0);
   const navigator = useNavigate();
@@ -70,6 +70,27 @@ const NickName = () => {
     fetchNickName();
   };
 
+  useEffect(() => {
+    const timeId = setTimeout(()=>{
+      fetchCheckNickName();
+    }, 800);
+    return () => {
+      clearTimeout(timeId);
+    }
+    async function fetchCheckNickName() {
+      try {
+        axios.defaults.withCredentials = true; // allow cookies
+        const res = await axios.get(
+          "http://localhost:8080/member/check/nickname?nickname=" + inputNickName
+        );
+        console.log(res.data)
+        setValuableName(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, [inputNickName]);
+  
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -82,6 +103,7 @@ const NickName = () => {
           value={inputNickName}
           onChange={handleInputChange}
           maxLength={8}
+          valuableName={valuableName}
         />
         <LetterLen>
           {letterCnt.current}/{8}
