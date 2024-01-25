@@ -229,6 +229,18 @@ const User = () => {
     fetchSave();
   }
 
+  const ApplyRoommate = () => {
+    async function fetchApplyRoommate() {
+      try{
+        const res = await API.get("/roommate/request?yourNickname="+opponentUser.nickname);
+        console.log(res);
+      }catch(e) {
+        console.log(e);
+      }
+    }
+    fetchApplyRoommate();
+  }
+
   const textCenter = {
     id:'textCenter',
     beforeDatasetsDraw(chart,args,pluginOptions){
@@ -341,9 +353,10 @@ const User = () => {
             height={`393px`}
             padding={`24px 20px 85px 20px`}
             Icon={ApplyRoommateIcon}
-            message={`이소윤 님께\n룸메이트를 신청할까요?`}
+            message={opponentUser?.nickname+`님께\n룸메이트를 신청할까요?`}
             subMessage={`상대방이 수락하기 전까지는\n언제든지 취소 가능해요`}
             btnName={`신청하기`}
+            onClick={()=>ApplyRoommate()}
             applyRoommate={()=>setApplyRommate(false)}/>}
       </BottomEnroll>
     </c.Totalframe>

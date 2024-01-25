@@ -12,7 +12,7 @@ import GroupIcon from "../../assets/gif/group.gif";
 import RightArrow from "../../assets/img/Community/rightArrow.svg";
 import MyPageIcon from "../../assets/img/Community/myPage.svg";
 import moment from "moment";
-import 'moment/locale/ko'
+import 'moment/locale/ko';
 import FetchMore from "../../components/Community/FetchMore";
 
 const GroupPromotionBox = styled.div`

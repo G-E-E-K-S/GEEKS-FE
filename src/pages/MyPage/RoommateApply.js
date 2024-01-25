@@ -13,6 +13,9 @@ import Dots from "../../assets/img/Home/edit.svg";
 import Colse from "../../assets/img/MyPage/close.svg";
 import CancelRoommate from "../../assets/img/MyPage/cancleRoommate.svg";
 import { useRecoilValue } from 'recoil';
+import moment from "moment";
+import 'moment/locale/ko';
+import { setAppElement } from "react-modal";
 
 const ApplyTop = styled.div`
   display: flex;
@@ -139,44 +142,40 @@ const RoommateApply = () => {
   const [isChoose, setIsChoose] = useState("send");
   const [isBtsShow, setIsBtsShow] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [sentApply, setSentApply] = useState('');
+  const [sentApply, setSentApply] = useState([]);
   const [receivedApply, setReceiveApply] = useState('');
+  const [opponentNickName, setOpponentNickName] = useState('');
   const content = useRecoilValue(UserNickName);
 
   useState(()=>{
-    async function fetchApply() {
+    async function fetchSentApply() {
       try{
-        
-        const res = await API.get("/roommate/received");
+        const res = await API.get("/roommate/sent");
         setSentApply(res.data);
       }catch(e) {
         console.log(e);
       }
     }
-    async function fetchApply() {
-      try{
-        
-        const res = await API.get("/roommate/sent");
-        setReceiveApply(res.data);
-      }catch(e) {
-        console.log(e);
-      } 
-    }
-    fetchApply();
+    fetchSentApply();
   },[]);
+
   const handleCancle = () => {
     setIsBtsShow(false);
     setShowPopup(true);
     async function fetchDeleteAply() {
       try{
-        
-        const res = await API.get("/roommate/sent?yournickname=");
+        const res = await API.get("/roommate/remove?yournickname="+ opponentNickName);
+        setSentApply(sentApply.filter((data)=>data.nickname !== opponentNickName));
       }catch(e) {
         console.log(e);
       } 
     }
     fetchDeleteAply();
   };
+  const handleBtsShow = (opponent) => {
+    setIsBtsShow(!isBtsShow);
+    setOpponentNickName(opponent);
+  }
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -201,20 +200,22 @@ const RoommateApply = () => {
         </c.Flex>
         {/* axios add  */}
         {isChoose === "send" && (
-          <div>
-            <Semester>{`3학년 2학기`}</Semester>
+          sentApply.map((userData)=>(
+            <div>
+            <Semester>{`2024년도 2학기`}</Semester>
             <ApplyTotalInfo>
-              <ApplyDate>{`10.01`}</ApplyDate>
+              <ApplyDate>{moment(userData.createdDate).format("M월 d일")}</ApplyDate>
               <c.SpaceBetween>
                 <OtherProfileApply
-                  nickName={sentApply.nickname}
-                  major={sentApply.major}
-                  id={sentApply.studentID}
-                  userprofile={sentApply.photoName}/>
-                <CancleBtn onClick={() => setIsBtsShow(true)}>취소</CancleBtn>
+                  nickName={userData.nickname}
+                  major={userData.major}
+                  id={userData.studentID}
+                  userprofile={userData.photoName.length !==0 ? userData.photoName : null}/>
+                <CancleBtn onClick={() => handleBtsShow(userData.nickname)}>취소</CancleBtn>
               </c.SpaceBetween>
             </ApplyTotalInfo>
           </div>
+          ))
         )}
         {isChoose === "receive" && (
           <div>
@@ -239,7 +240,7 @@ const RoommateApply = () => {
               <ContainBottom>
                 <DeleteContent>
                   <DeletMainIcon src={CancelRoommate} />
-                  <DeleteMsg>{`닉네임여덟글자만 님께\n전송한 룸메이트 신청을 취소할까요?`}</DeleteMsg>
+                  <DeleteMsg>{opponentNickName+`님께\n전송한 룸메이트 신청을 취소할까요?`}</DeleteMsg>
                 </DeleteContent>
                 <CloseIcon src={Colse} onClick={() => setIsBtsShow(false)}/>
               </ContainBottom>
