@@ -55,7 +55,7 @@ const Community = () => {
 
   async function fetchAllPost() {
     try {
-      axios.defaults.withCredentials = true; // allow cookies
+       // allow cookies
       const res = await API.get("/post/main?cursor=" + cursor);
 
       console.log(res.data);

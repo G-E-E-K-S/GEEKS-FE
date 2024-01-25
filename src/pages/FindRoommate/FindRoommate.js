@@ -47,7 +47,7 @@ const FindRoommate = () => {
   useEffect(()=>{
     async function fetchUserData() {
       try{
-        axios.defaults.withCredentials = true;
+        
         const res = await API.get("/point/find");
         setUserData(res.data);
       }catch(e) {

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import API from "../../axios/BaseUrl";
+import axios from "axios";
 import * as c from "../../components/Common/CommonStyle";
 import NavigationBar from "../../components/Main/NavigationBar";
 import ChatList from "../../components/Chat/ChatList";
@@ -40,20 +42,54 @@ const InnerBox = styled.div`
 `;
 const Chat = () => {
   const [isSelectMenu, setIsSelectMenu] = useState("findroommate");
+  const [chatList , setChatList] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getChatRooms();
+  },[])
+
+  const getChatRooms = () => {
+
+    async function fetchChatRooms() {
+      try {
+        const res = await API.get("/chat/main");
+        setChatList(res.data);
+        console.log(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchChatRooms();
+  }
+
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
           <Title>{`대화`}</Title>
           <TotalMenu>
-            <InnerBox isSelect = {isSelectMenu === 'findroommate'} onClick={()=>setIsSelectMenu('findroommate')}>룸메찾기</InnerBox>
-            <InnerBox isSelect = {isSelectMenu === 'group'} onClick={()=>setIsSelectMenu('group')}>모임</InnerBox>
+            <InnerBox isSelect={isSelectMenu === 'findroommate'} onClick={() => setIsSelectMenu('findroommate')}>룸메찾기</InnerBox>
+            <InnerBox isSelect={isSelectMenu === 'group'} onClick={() => setIsSelectMenu('group')}>모임</InnerBox>
           </TotalMenu>
-          {isSelectMenu === 'findroommate' && <ChatList chatprofile={basicProfile} name={`이소윤`} prevDate={`1일 전`} chat={`안녕하세요. 룸메 구하셨나요?`} noneReadCnt={`2`}/>}
-          {isSelectMenu === 'group' && <ChatList chatprofile={basicProfile} name={`같이 신전떡볶이 주문하신분`} prevDate={`1일 전`} chat={`안녕하세요. 룸메 구하셨나요?요를레히힣힣넘어가는지확인하는중입니다.`} noneReadCnt={`2`}/>}
+          {isSelectMenu === 'findroommate' && chatList.map((room) => (
+            <ChatList
+            roomId={room.roomId} 
+            chatprofile={basicProfile} 
+            name={room.opponentUser} 
+            prevDate={`1일 전`} 
+            chat={room.histories.length != 0 ? room.histories.at(-1).message : ''}  
+            noneReadCnt={
+              room.histories.length != 0 && 
+              room.histories.at(-1).sender != room.user && 
+              room.histories.at(-1).readCount >= 1 ? 'N' : null}
+            onClick={() => navigate(`/chat/chatRoom/${room.roomId}`)} />
+          ))}
+          {isSelectMenu === 'group' && <ChatList chatprofile={basicProfile} name={`같이 신전떡볶이 주문하신분`} prevDate={`1일 전`} chat={`안녕하세요. 룸메 구하셨나요?요를레히힣힣넘어가는지확인하는중입니다.`} noneReadCnt={`2`} />}
         </c.SubScreen>
       </c.ScreenComponent>
-      <NavigationBar type={`chat`}/>
+      <NavigationBar type={`chat`} />
     </c.Totalframe>
   );
 };

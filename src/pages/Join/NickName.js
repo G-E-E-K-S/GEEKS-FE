@@ -61,7 +61,7 @@ const NickName = () => {
   const handleNickName = () => {
     async function fetchNickName() {
       try {
-        axios.defaults.withCredentials = true; // allow cookies
+         // allow cookies
         const res = await API.get("/member/nickname?nickname=" + inputNickName);
         console.log(res);
       } catch (error) {
@@ -80,7 +80,7 @@ const NickName = () => {
     }
     async function fetchCheckNickName() {
       try {
-        axios.defaults.withCredentials = true; // allow cookies
+         // allow cookies
         const res = await API.get("/member/check/nickname?nickname=" + inputNickName);
         console.log(res.data)
         setValuableName(res.data);

@@ -37,7 +37,7 @@ const Dormitory = () => {
     let type = dormiVal === '신관' ? 'NEW' : dormiVal === '구관' ? 'OLD' : 'HAPPY';
     async function fetchDormitory() {
       try{
-        axios.defaults.withCredentials = true;
+        
         const res = await API.get("/member/type?type=" + type);
         res.data === 'success' && navigate('/finalpage')
         console.log(res);

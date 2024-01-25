@@ -116,7 +116,7 @@ const LifeStyles = () => {
     if ( isSmoke !== null && isHabit !== null && isEar !== null && isSleep !== null && isWakeUp !== null && isOut !== null && isCleaning !== null &&isTendency !== null){
       async function fetchLifeStyle() {
         try {
-          axios.defaults.withCredentials = true;
+          
           const res = await API.post("/detail/register", {
             'smoking': isSmoke,
             'habit': isHabit,

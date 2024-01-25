@@ -63,7 +63,7 @@ const LifeStyles = () => {
   useEffect(()=>{
     async function fetchSaveList() {
       try{
-        axios.defaults.withCredentials = true;
+        
         const res = await API.get("/roommate/savelist");
         setSaveList(res.data)
       }catch(e) {
