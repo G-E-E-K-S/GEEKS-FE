@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API from "../../axios/BaseUrl";
 import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -81,7 +82,7 @@ const OtherProfile = (props) => {
     async function fetchSaveUser() {
       try{
         axios.defaults.withCredentials = true;
-        const res = await axios.get("http://localhost:8080/roommate/save?yournickname="+ yournickname);
+        const res = await API.get("/roommate/save?yournickname="+ yournickname);
       }catch(e) {
         console.log(e);
       }

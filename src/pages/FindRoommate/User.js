@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API from "../../axios/BaseUrl";
 import { useParams } from "react-router-dom";
 import { Chart } from 'react-chartjs-2';
 import 'chart.js/auto';
@@ -187,7 +188,7 @@ const User = () => {
     async function fetchUserData() {
       try{
         axios.defaults.withCredentials = true;
-        const res = await axios.get("http://localhost:8080/detail/details?id="+userId);
+        const res = await API.get("/detail/details?id="+userId);
         setOtherLifeStyle(res.data);
         console.log(res.data)
       }catch(e) {

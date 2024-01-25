@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API from "../../axios/BaseUrl";
 import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -86,7 +87,7 @@ const LifeStyles = () => {
     async function fetchReceiveData(){
       try{
           axios.defaults.withCredentials=true; // allow cookies
-          const res = await axios.get("http://localhost:8080/detail/send");
+          const res = await API.get("/detail/send");
           setReceiveData(res.data);
       }catch(error){
         console.error(error);
@@ -116,7 +117,7 @@ const LifeStyles = () => {
       async function fetchLifeStyle() {
         try {
           axios.defaults.withCredentials = true;
-          const res = await axios.post("http://localhost:8080/detail/register", {
+          const res = await API.post("/detail/register", {
             'smoking': isSmoke,
             'habit': isHabit,
             'ear': isEar,

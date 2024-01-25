@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import API from "../../axios/BaseUrl";
 import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -100,7 +101,7 @@ const Community = () => {
         async function fetchPost() {
           try {
             axios.defaults.withCredentials = true;
-            const res = await axios.post("http://localhost:8080/post/create", formData,{
+            const res = await API.post("/post/create", formData,{
                 headers:{
                     'Content-Type': `multipart/form-data`
                 }
@@ -116,7 +117,7 @@ const Community = () => {
     async function fetch() {
       try {
         axios.defaults.withCredentials = true;
-        const res = await axios.get("http://localhost:8080/member/admin");
+        const res = await API.get("/member/admin");
         console.log(res);
       } catch (e) {
         console.log(e);
@@ -128,7 +129,7 @@ const Community = () => {
     async function fetchPoint() {
       try {
         axios.defaults.withCredentials = true;
-        const res = await axios.post("http://localhost:8080/detail/point");
+        const res = await API.post("/detail/point");
         console.log(res);
       } catch (e) {
         console.log(e);

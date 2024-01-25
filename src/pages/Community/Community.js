@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {useNavigate} from 'react-router-dom';
+import API from "../../axios/BaseUrl";
 import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -49,7 +50,7 @@ const Community = () => {
     async function fetchAllPost() {
       try {
         axios.defaults.withCredentials = true; // allow cookies
-        const res = await axios.get("http://localhost:8080/post/showAll");
+        const res = await API.get("/post/showAll");
         setPost(res.data);
       } catch (error) {
         console.error(error);

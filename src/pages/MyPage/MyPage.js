@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API from "../../axios/BaseUrl";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import PageName from "../../components/Main/PageName";
@@ -120,7 +121,7 @@ const MyPage = () => {
     async function fetchUserInfo(){
       try{
           axios.defaults.withCredentials=true; // allow cookies
-          const res = await axios.get("http://localhost:8080/member/myPage");
+          const res = await API.get("/member/myPage");
           setUserInfo(res.data);
           setContent(res.data.nickname);
           navigate('/mypage');

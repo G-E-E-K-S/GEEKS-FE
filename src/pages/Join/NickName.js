@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API from "../../axios/BaseUrl";
+import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Join/Header";
@@ -61,9 +62,7 @@ const NickName = () => {
     async function fetchNickName() {
       try {
         axios.defaults.withCredentials = true; // allow cookies
-        const res = await axios.get(
-          "http://localhost:8080/member/nickname?nickname=" + inputNickName
-        );
+        const res = await API.get("/member/nickname?nickname=" + inputNickName);
         console.log(res);
       } catch (error) {
         console.error(error);
@@ -82,9 +81,7 @@ const NickName = () => {
     async function fetchCheckNickName() {
       try {
         axios.defaults.withCredentials = true; // allow cookies
-        const res = await axios.get(
-          "http://localhost:8080/member/check/nickname?nickname=" + inputNickName
-        );
+        const res = await API.get("/member/check/nickname?nickname=" + inputNickName);
         console.log(res.data)
         setValuableName(res.data);
         res.data ==='duplicate' && setIsPopup(true);

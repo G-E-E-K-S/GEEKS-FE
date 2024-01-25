@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API from "../../axios/BaseUrl";
 import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -63,7 +64,7 @@ const LifeStyles = () => {
     async function fetchSaveList() {
       try{
         axios.defaults.withCredentials = true;
-        const res = await axios.get("http://localhost:8080/roommate/savelist");
+        const res = await API.get("/roommate/savelist");
         setSaveList(res.data)
       }catch(e) {
         console.log(e);
