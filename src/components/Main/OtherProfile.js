@@ -81,7 +81,7 @@ const OtherProfile = (props) => {
     e.stopPropagation();
     async function fetchSaveUser() {
       try{
-        axios.defaults.withCredentials = true;
+        
         const res = await API.get("/roommate/save?yournickname="+ yournickname);
       }catch(e) {
         console.log(e);

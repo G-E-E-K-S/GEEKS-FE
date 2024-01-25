@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import API from "../../axios/BaseUrl";
+import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import NavigationBar from "../../components/Main/NavigationBar";
@@ -15,6 +17,10 @@ import Video from "../../assets/img/Chat/video.svg";
 import Camera from "../../assets/img/Chat/camera.svg";
 import Rule from "../../assets/img/Chat/liveRule.svg";
 import ChatBottomMenu from "../../components/Chat/ChatBottomMenu";
+import SockJS from "sockjs-client";
+import * as StompJs from '@stomp/stompjs';
+import moment from "moment";
+import 'moment/locale/ko'
 
 const ChatHeader = styled.div`
   width: 100%;
@@ -53,7 +59,7 @@ const Date = styled.div`
 const ChatBottom = styled.div`
   position: fixed;
   width: 100%;
-  bottom: ${(props)=>props.isBottomOpen ?'28.19vh' : '17.06vh'};
+  bottom: ${(props) => props.isBottomOpen ? '28.19vh' : '17.06vh'};
   padding: 14px 5.12vw 0 5.12vw;
   border-top: 1px solid #efefef;
 `;
@@ -98,11 +104,85 @@ const PlusMenu = styled.div`
 `;
 const ChatRoom = () => {
   const [isChatBottomClick, setIsChatBottomClick] = useState(false);
-  
+
   const handleChatBottom = () => {
     setIsChatBottomClick(!isChatBottomClick);
   }
 
+  const client = useRef();
+  const content = useRef();
+
+  let { roomId } = useParams();
+
+  const [roomInfo, setRoomInfo] = useState(null);
+  const [chatList, setChatList] = useState([]);
+  
+  useEffect(() => {
+    async function fetchChatRoom() {
+      try {
+        const res = await API.get("/chat/find?roomId=" + roomId);
+        setRoomInfo(res.data);
+        setChatList(res.data.histories);
+        console.log(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchChatRoom();
+  }, []);
+
+  useEffect(() => {
+    connect();
+
+    return () => disconnect();
+  }, [roomInfo])
+
+  const connect = () => {
+    client.current = new StompJs.Client({
+      brokerURL: 'ws://localhost:8080/stomp',
+      onConnect: () => {
+        subscribe();
+      }
+    });
+
+    client.current.webSocketFactory = function () {
+      return new SockJS("http://localhost:8080/stomp");
+    };
+
+    client.current.activate();
+  };
+
+  const publish = () => {
+    if (!client.current.connected || content.current.value.length === 0) return;
+
+    client.current.publish({
+      destination: '/app/message',
+      body: JSON.stringify({
+        roomid: roomId,
+        user: roomInfo.user,
+        content: content.current.value,
+        createAt: null
+      }),
+    });
+
+    content.current.value = '';
+  };
+
+  const subscribe = () => {
+    console.log("subscribe: " +  client.current.connected);
+    client.current.subscribe(`/subscribe/notice/${roomId}`, (body) => {
+      const json_body = JSON.parse(body.body);
+      console.log(body);
+      setChatList((_chat_list) => [
+        ..._chat_list, json_body
+      ]);
+    });
+  };
+
+  const disconnect = () => {
+    client.current.deactivate();
+  };
 
   return (
     <c.Totalframe>
@@ -111,36 +191,42 @@ const ChatRoom = () => {
           <ChatHeader>
             <GoBack />
             <c.DirectionCol>
-              <Name>{`이소윤`}</Name>
-              <Major>{`인더스트리얼디자인 · 19학번`}</Major>
+              <Name>{roomInfo?.opponentUser}</Name>
+              <Major>{roomInfo?.major + ' · ' + roomInfo?.studentID + '학번'}</Major>
             </c.DirectionCol>
             <DotsImg src={Dots} />
           </ChatHeader>
           {/* chat */}
           <Date>8월 25일</Date>
-          <OtherChat profileImg={BasicProfile} time={`오후 05:26`} chat={`안녕하세요. 룸메 구하셨나요?`}/>
-          <MyChat time={`오후 05:26`}chat={`네 안녕하세요! 아직 구하고 있는 중입니다`}/>
+          {chatList?.map((chat) => (
+            <div>
+              {roomInfo?.user == chat?.sender ?
+                <MyChat time={moment(chat.createdAt).format('A h:mm')} chat={chat.message} /> :
+                <OtherChat profileImg={BasicProfile} time={moment(chat.createdAt).format('A h:mm')} chat={chat.message} />}
+            </div>
+          ))}
+
         </c.SubScreen>
       </c.ScreenComponent>
       <ChatBottom isBottomOpen={isChatBottomClick}>
         <c.Flex>
-          <Add src={Plus} onClick={()=>setIsChatBottomClick(true)}/>
+          <Add src={Plus} onClick={() => setIsChatBottomClick(true)} />
           <InputMsgBox>
             <c.Flex>
-              <InputMsg />
-              <SendImg src={Send} />
+              <InputMsg ref={content} />
+              <SendImg src={Send} onClick={publish} />
             </c.Flex>
           </InputMsgBox>
         </c.Flex>
         {isChatBottomClick ? <c.Flex>
           <PlusMenu>
-            <ChatBottomMenu icon={Photo} iconText={`사진`}/>
-            <ChatBottomMenu icon={Video} iconText={`동영상`}/>
-            <ChatBottomMenu icon={Camera} iconText={`카메라`}/>
-            <ChatBottomMenu icon={Rule} iconText={`생활 규칙`}/>
+            <ChatBottomMenu icon={Photo} iconText={`사진`} />
+            <ChatBottomMenu icon={Video} iconText={`동영상`} />
+            <ChatBottomMenu icon={Camera} iconText={`카메라`} />
+            <ChatBottomMenu icon={Rule} iconText={`생활 규칙`} />
           </PlusMenu>
-            
-          </c.Flex> : null}
+
+        </c.Flex> : null}
       </ChatBottom>
     </c.Totalframe>
   );

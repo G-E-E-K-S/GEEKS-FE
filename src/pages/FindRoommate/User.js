@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import API from "../../axios/BaseUrl";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Chart } from 'react-chartjs-2';
 import 'chart.js/auto';
 import styled from "styled-components";
@@ -181,15 +181,19 @@ const Me = styled.div``;
 
 const User = () => {
   const [applyRoommate, setApplyRommate] = useState(false);
+  const [opponentUser, setOpponentUser] = useState(null);
   const [otherLifeStyle, setOtherLifeStyle] = useState([]);
-  let { userId } = useParams();
+  const [myLifeStyle, setMyLifeStyle] = useState([]);
 
+  let { userId } = useParams();
+  let navigate = useNavigate();
   useEffect(()=>{
     async function fetchUserData() {
       try{
-        axios.defaults.withCredentials = true;
         const res = await API.get("/detail/details?id="+userId);
-        setOtherLifeStyle(res.data);
+        setOpponentUser(res.data);
+        setMyLifeStyle(res.data.details[0]);
+        setOtherLifeStyle(res.data.datails[1]);
         console.log(res.data)
       }catch(e) {
         console.log(e);
@@ -197,6 +201,19 @@ const User = () => {
     }
     fetchUserData();
   },[]);
+
+  const startChat = () => {
+    async function fetchChatRoom() {
+      try{
+        const res = await API.get("/chat/room?yournickname="+opponentUser.nickname);
+        navigate(`/chat/chatroom/${res.data}`);
+      }catch(e) {
+        console.log(e);
+      }
+    }
+    fetchChatRoom();
+  }
+
   const textCenter = {
     id:'textCenter',
     beforeDatasetsDraw(chart,args,pluginOptions){
@@ -235,6 +252,8 @@ const User = () => {
     ],
   };
 
+  
+
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -248,18 +267,18 @@ const User = () => {
             <c.SpaceBetween>
               <div>
                 <Profile src={BasicProfile} />
-                <NickName>이소윤</NickName>
-                <Major>인더스트리얼디자인 · 19학번</Major>
+                <NickName>{opponentUser?.nickname}</NickName>
+                <Major>{opponentUser?.major} · {opponentUser?.studentID}</Major>
               </div>
               <Chat>
                 <ChatImage src={ChatImg} />
-                <ChatText>대화하기</ChatText>
+                <ChatText onClick={()=>startChat()}>대화하기</ChatText>
               </Chat>
             </c.SpaceBetween>
             <UserMessageBox>
               <c.Flex>
-                <InfoImg src={Info} />
-                <InfoMessage>{`밤샘 작업이 잦아요! 새벽에 주무시는 분들 찾아요 저도\n늦게잡니다!`}</InfoMessage>
+                <InfoImg src={Info}/>
+                <InfoMessage>{opponentUser?.introduction}</InfoMessage>
               </c.Flex>
             </UserMessageBox>
             <Br/>

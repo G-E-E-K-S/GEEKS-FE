@@ -67,7 +67,7 @@ const Num = styled.div`
 `;
 const ChatList = (props) => {
   return (
-    <TotalChat>
+    <TotalChat onClick={props.onClick}>
       <c.Flex>
         <ChatProfile src={props.chatprofile} />
         <ChatContent>
@@ -77,7 +77,7 @@ const ChatList = (props) => {
           </c.Flex>
           <c.SpaceBetween>
             <FinalChat>{props.chat}</FinalChat>
-            <Num>{props.noneReadCnt}</Num>
+            {props.noneReadCnt != null ? <Num>{props.noneReadCnt}</Num> : null}
           </c.SpaceBetween>
         </ChatContent>
       </c.Flex>

@@ -63,7 +63,7 @@ const InputEmail = () => {
   const handleEmail = () => {
     async function fetchEmailPage() {
       try {
-        axios.defaults.withCredentials = true; // allow cookies
+         // allow cookies
         const res = await API.get(
           "/mail/send?email=" +
             emailVal.current.value +

@@ -146,7 +146,7 @@ const RoommateApply = () => {
   useState(()=>{
     async function fetchApply() {
       try{
-        axios.defaults.withCredentials = true;
+        
         const res = await API.get("/roommate/received");
         setSentApply(res.data);
       }catch(e) {
@@ -155,7 +155,7 @@ const RoommateApply = () => {
     }
     async function fetchApply() {
       try{
-        axios.defaults.withCredentials = true;
+        
         const res = await API.get("/roommate/sent");
         setReceiveApply(res.data);
       }catch(e) {
@@ -169,7 +169,7 @@ const RoommateApply = () => {
     setShowPopup(true);
     async function fetchDeleteAply() {
       try{
-        axios.defaults.withCredentials = true;
+        
         const res = await API.get("/roommate/sent?yournickname=");
       }catch(e) {
         console.log(e);

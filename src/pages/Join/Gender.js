@@ -47,7 +47,7 @@ const Gender = () => {
     const CurGender = isgirl ? 2 : 1;
     async function fetchGenderPage() {
       try {
-        axios.defaults.withCredentials = true; // allow cookies
+         // allow cookies
         const res = await API.get(
           "/member/gender?gender=" + CurGender
         );

@@ -65,7 +65,7 @@ const Post = () => {
   useEffect(() => {
     async function fetchPost() {
       try {
-        axios.defaults.withCredentials = true; // allow cookies
+         // allow cookies
         const res = await API.get("/post/show?postId=" + postId);
         setPostInfo(res.data);
         // setIsLike(res.data.heartState);
@@ -79,7 +79,7 @@ const Post = () => {
   const UploadComment = () => {    
     async function fetchPost() {
       try {
-        axios.defaults.withCredentials = true;
+        
         const res = await API.post("/post/comment",{
           postId: postId,
           parentId: null,
@@ -100,7 +100,7 @@ const Post = () => {
     if(isLike === false){
       async function fetchLikeState() {
         try {
-          axios.defaults.withCredentials = true;
+          
           const res = await API.get("/post/heart/insert?postId=" + postId);
           setIsLike(true);
         } catch (error) {
@@ -111,7 +111,7 @@ const Post = () => {
     }if(isLike === true){
       async function fetchDeleteLikeState() {
         try {
-          axios.defaults.withCredentials = true;
+          
           const res = await API.get("/post/heart/delete?postId=" + postId);
           setIsLike(false);
         } catch (error) {
@@ -126,7 +126,7 @@ const Post = () => {
     if(isStar === false){
       async function fetchScrapState() {
         try {
-          axios.defaults.withCredentials = true;
+          
           const res = await API.get("/post/scrap/insert?postId=" + postId);
           setIsStar(true);
         } catch (error) {
@@ -137,7 +137,7 @@ const Post = () => {
     }if(isStar === true){
       async function fetchDeleteScrapState() {
         try {
-          axios.defaults.withCredentials = true;
+          
           const res = await API.get("/post/scrap/delete?postId=" + postId);
           setIsStar(false);
         } catch (error) {

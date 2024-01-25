@@ -100,7 +100,7 @@ const Community = () => {
       }
         async function fetchPost() {
           try {
-            axios.defaults.withCredentials = true;
+            
             const res = await API.post("/post/create", formData,{
                 headers:{
                     'Content-Type': `multipart/form-data`
@@ -116,7 +116,7 @@ const Community = () => {
   const getCookies = () => {
     async function fetch() {
       try {
-        axios.defaults.withCredentials = true;
+        
         const res = await API.get("/member/admin");
         console.log(res);
       } catch (e) {
@@ -128,7 +128,7 @@ const Community = () => {
   const getPoint = () =>{
     async function fetchPoint() {
       try {
-        axios.defaults.withCredentials = true;
+        
         const res = await API.post("/detail/point");
         console.log(res);
       } catch (e) {

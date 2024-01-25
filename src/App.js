@@ -38,7 +38,7 @@ function App() {
           <Route path="/detail/details/:userId" element={<User/>} />
           <Route path="/applyconfirm" element={<ApplyConfirm/>} />
           <Route path="/chat" element={<Chat/>} />
-          <Route path="/chat/chatroom" element={<ChatRoom/>} />
+          <Route path="/chat/chatroom/:roomId" element={<ChatRoom/>} />
           <Route path="/roommate/apply" element={<RoommateApply/>} />
           <Route path="/writepost" element={<WritePost/>} />
           <Route path="/post/:postId" element={<Post/>} />
