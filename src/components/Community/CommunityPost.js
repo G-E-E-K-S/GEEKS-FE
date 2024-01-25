@@ -69,7 +69,7 @@ const CommunityPost = (props) => {
             {props.writeTime} · {props.userName}
           </UserInfo>
         </div>
-        <PostImg src={'https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/'+ props.postImg} />
+        {props.postImg == null ? null : <PostImg src={'https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/'+ props.postImg} />}
       </c.SpaceBetween>
       <Line />
     </ShowTotalPost>
