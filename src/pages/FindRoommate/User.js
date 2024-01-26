@@ -112,8 +112,9 @@ const MatchText = styled.div`
   line-height: 32px;
 `;
 const MatchColorText = styled.div`
-  color: #d68d00;
+  color: ${(props)=>props.isFit >= 70 ? '#2B75CB' : props.isFit <=60 && props.isFit >=40 ? '#D68D00' : '#7B7161'};
   text-align: center;
+  margin-left: 7px;
 `;
 const BottomEnroll = styled.div`
   display: flex;
@@ -183,8 +184,19 @@ const User = () => {
   const [isSave, setIsSave] = useState(false);
   const [applyRoommate, setApplyRommate] = useState(false);
   const [opponentUser, setOpponentUser] = useState(null);
-  const [otherLifeStyle, setOtherLifeStyle] = useState([]);
-  const [myLifeStyle, setMyLifeStyle] = useState([]);
+  const [lifeStyles, setLifeStyles] = useState([]);
+  const [lifeStyleList, setLifeStyleList] = useState([
+    {name : '흡연', key : 'smoking' , true : '흡연자', false : '비흡연자'},
+    {name : '잠귀', key : 'ear', BRIGHT : '귀 밝아요', DARK : '귀 어두워요'},
+    {name : '취침', key : 'sleep', EARLY : '일찍 자요', LATE : '늦게 자요', RANDOM : '때때로 달라요'},
+    {name : '기상', key : 'wakeup', EARLY: '일찍 일어나요', LATE : '늦게 일어나요', RANDOM : '때마다 달라요'},
+    {name : '외출', key : 'out', HOME : '집순이에요', OUT : '밖순이에요', PROMISE : '약속이 있으면 나가요'},
+    {name : '청소', key : 'cleaning', CLEAN : '주기적으로 청소해요', DIRTY : '더러워지면 청소해요', OPPONENT : '상대에게 맞춰요'},
+    {name : '성향', key : 'tendency', ALONE : '혼자 조용히 지내요', TOGETHER : '함께 놀고 싶어요', OPPONENT : '상대에게 맞춰요'}
+  ]);
+
+  const [textCenter, setTextCenter] = useState(null);
+  const [data, setData] = useState(null);
 
   let { userId } = useParams();
   let navigate = useNavigate();
@@ -194,9 +206,44 @@ const User = () => {
       try{
         const res = await API.get("/detail/details?id="+userId);
         setOpponentUser(res.data);
-        setMyLifeStyle(res.data.details[0]);
-        setOtherLifeStyle(res.data.datails[1]);
-        setIsSave(res.data.details[0].saved);
+        setLifeStyles(res.data.details);
+        setData({
+          datasets: [
+            {
+              data: [res.data.point, 100 - res.data.point],
+              borderColor: [res.data.point >=70 ? '#2B75CB' : (res.data.point <=60 && res.data.point>=40) ? '#FFD540' : '#B5AA99','#EFEFEF'],
+              backgroundColor: [res.data.point >=70 ? '#2B75CB' : (res.data.point <=60 && res.data.point>=40) ? '#FFD540' : '#B5AA99','#EFEFEF'],
+              cutout: "80%",
+              borderWidth: 0,
+              options:{
+                responsive: false,
+                plugins:{
+                  legend: {
+                    display: false,
+                    tooltip: {
+                      enabled: false,
+                    },
+                  },
+                },
+                hover: { mode: null },
+              },
+            },
+          ],
+        })
+        setTextCenter({
+          id:'textCenter',
+          afterDatasetsDraw(chart){
+            const {ctx} = chart;
+      
+            ctx.save();
+            ctx.font = '700 1.75rem Pretendard';
+            ctx.fontWeight = '700';
+            ctx.fillStyle = res.data.point >=70 ? '#2B75CB' : (res.data.point <=60 && res.data.point>=40) ? '#D68D00' : '#B5AA99';
+            ctx.textAlign= 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(res.data.point+'점',chart.getDatasetMeta(0).data[0].x,chart.getDatasetMeta(0).data[0].y);
+          }
+        })
       }catch(e) {
         console.log(e);
       }
@@ -241,46 +288,8 @@ const User = () => {
     fetchApplyRoommate();
   }
 
-  const textCenter = {
-    id:'textCenter',
-    beforeDatasetsDraw(chart,args,pluginOptions){
-      const {ctx} = chart;
-
-      ctx.save();
-      ctx.font = '700 1.75rem Pretendard';
-      ctx.fontWeight = '700';
-      ctx.fillStyle = '#D68D00';
-      ctx.textAlign= 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(Data.datasets[0].data[0]+'점',chart.getDatasetMeta(0).data[0].x,chart.getDatasetMeta(0).data[0].y);
-    }
-  }
-  const Data = {
-    datasets: [
-      {
-        data: [80,15],
-        borderColor: ['#FFD540','#EFEFEF'],
-        backgroundColor: ['#FFD540','#EFEFEF'],
-        cutout: "80%",
-        borderWidth: 0,
-        options:{
-          responsive: false,
-          plugins:{
-            legend: {
-              display: false,
-              tooltip: {
-                enabled: false,
-              },
-            },
-          },
-          hover: { mode: null },
-        },
-      },
-    ],
-  };
-
   
-
+  
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -311,31 +320,24 @@ const User = () => {
             <Br/>
             {/* match score */}
             <MatchText>
-              서로
-              <MatchColorText>맞춰가면 좋아요</MatchColorText>
+              <div>{opponentUser?.point >= 40 && opponentUser?.point <= 60 ? '서로' : '나와'}</div>
+              <MatchColorText isFit={opponentUser?.point}>{opponentUser?.point >= 70 ? '잘 맞아요!' : opponentUser?.point >= 40 && opponentUser?.point <= 60 ? '맞춰가면 좋아요!' : '잘 맞지 않아요'}</MatchColorText>
             </MatchText>
             {/* Match Text */}
             <CharContainer>
-              <Chart type='doughnut' data={Data} plugins={[textCenter]}/>
+              {data !== null && textCenter !== null && <Chart type='doughnut' data={data} plugins={[textCenter]}/>}
             </CharContainer>
             <OtherAndMeTxt>
               <Other>{`상대방`}</Other>
               <Me>{`나`}</Me>
             </OtherAndMeTxt>
-            {/* <LifeStyle 
-              lifeStyle={`흡연`}
-              isSame={true}
-              sameLifeStyle={otherLifeStyle[0]?.smoking === otherLifeStyle[1]?.smoking && '흡연자에요' }/> */}
-              <LifeStyle 
-              lifeStyle={`흡연`}
-              isSame={true}
-              sameLifeStyle={'잠버릇 없어요'}/>
-              <LifeStyle 
-              lifeStyle={`잠귀`}
-              isDiff={true}
-              diffrentLifeStyle={'귀 밝아요'}
-              diffrentMyLifeStyle={`귀 어두워요`}/>
-           
+              {lifeStyles.length !== 0 && lifeStyleList?.map((list)=>(
+                <LifeStyle
+                  lifeStyle={list.name}
+                  isSame={lifeStyles[0][`${list.key}`] === lifeStyles[1][`${list.key}`]}
+                  opponentLifeStyle={list[`${lifeStyles[1][`${list.key}`]}`]}
+                  myLifeStyle={list[`${lifeStyles[0][`${list.key}`]}`]}/>          
+              ))} 
           </TopProfile>
         </c.SubScreen>
       </c.ScreenComponent>
