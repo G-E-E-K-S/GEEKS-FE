@@ -1,7 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import {Intro, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage} from './pages/Join/Index';
-import Home from './pages/Main/Home';
-import LiveRule from "./pages/Main/LiveRule";
+import { LiveRule, Home, Search } from './pages/Main/Index';
 import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply } from './pages/MyPage/Index';
 import { FindRoommate , User, ApplyConfirm } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
@@ -26,6 +25,7 @@ function App() {
           <Route path="/dormitory" element={<Dormitory/>} />
           <Route path="/home" element={<Home/>} />
           <Route path="/liverule" element={<LiveRule/>} />
+          <Route path="/search" element={<Search/>} />
           <Route path="/mypage" element={<MyPage/>} />
           <Route path="/lifestyle" element={<LifeStyles/>} />
           <Route path="/editprofile" element={<EditProfile/>} />

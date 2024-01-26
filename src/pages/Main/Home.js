@@ -140,7 +140,7 @@ const Home = () => {
     <c.Totalframe background={`#FAFAFA`}>
       <c.ScreenComponent>
         <c.SubScreen>
-          <Header />
+          <Header onClick={()=>navigate('/search')}/>
           {showPopup && <Popup message={`곧 만날 수 있으니 조금만 기다려 주세요!`} setShowPopup={setShowPopup} top={`9.5vh`}/>}
           <System>
             <Icons onClick={()=>setShowPopup(true)}>

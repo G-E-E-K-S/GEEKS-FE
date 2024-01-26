@@ -63,7 +63,7 @@ const Icon = styled.div`
     gap: 16px;
     cursor: pointer;
 `;
-const Header = () => {
+const Header = (props) => {
     const [modalOpen, setModalOpen] = useState(false)
     return(
         <TotalHeader>
@@ -78,7 +78,7 @@ const Header = () => {
             </DormitoryKind> */}
             <img src={GeeksLogo}/>
             <Icon>
-                <img src={search}/>
+                <img src={search}onClick={props.onClick}/>
                 {/* <img src={noti}/> */}
                 <img src={edit}/>
             </Icon>
