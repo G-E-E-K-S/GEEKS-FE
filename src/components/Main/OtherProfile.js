@@ -66,7 +66,7 @@ const Intro = styled.div`
   border-radius: 8px;
   background: #F7F7F7;
   padding: 8px 3.07vw;
-  width: 64.61vw;
+  width: 100%;
 `;
 const SaveImg = styled.img`
   height: 24px;
@@ -110,7 +110,7 @@ const OtherProfile = (props) => {
       {/* intro self */}
       <IntroSelf>
         <Intro>외출이 잦아요! 기숙사는 가끔 들어와요</Intro>
-        <SaveImg src={fill? fillSave : save} onClick={(e)=>handleFill(e,props.nickName)}/>
+        {/* <SaveImg src={fill? fillSave : save} onClick={(e)=>handleFill(e,props.nickName)}/> */}
       </IntroSelf>
     </TotalProfile>
   );
