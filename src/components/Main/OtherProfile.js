@@ -5,6 +5,7 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import fillSave from '../../assets/img/MyPage/fillSave.svg';
 import save from '../../assets/img/MyPage/save.svg';
+import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 
 const TotalProfile = styled.div`
   width: 100%;
@@ -81,7 +82,6 @@ const OtherProfile = (props) => {
     e.stopPropagation();
     async function fetchSaveUser() {
       try{
-        
         const res = await API.get("/roommate/save?yournickname="+ yournickname);
       }catch(e) {
         console.log(e);
@@ -109,7 +109,7 @@ const OtherProfile = (props) => {
       </c.SpaceBetween>
       {/* intro self */}
       <IntroSelf>
-        <Intro>외출이 잦아요! 기숙사는 가끔 들어와요</Intro>
+        <Intro>{props.intro}</Intro>
         {/* <SaveImg src={fill? fillSave : save} onClick={(e)=>handleFill(e,props.nickName)}/> */}
       </IntroSelf>
     </TotalProfile>

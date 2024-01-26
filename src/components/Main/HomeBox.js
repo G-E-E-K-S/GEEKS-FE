@@ -27,7 +27,7 @@ const HomeBox = (props) => {
   return (
     <Box height={props.height} marginTop={props.marginTop}>
       <c.SpaceBetween>
-        <ContentName marginBottom={props.marginBottom}>{props.name}</ContentName>
+        <ContentName marginBottom={props.marginBottom} onClick={()=>props.onClick()}>{props.name}</ContentName>
         <ArrowImg src={ForwardArrow} />
       </c.SpaceBetween>
       {props.children}
