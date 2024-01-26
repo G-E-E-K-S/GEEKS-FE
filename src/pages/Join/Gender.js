@@ -24,7 +24,7 @@ const Gender = () => {
   const [isgirl, setIsgirl] = useState(false);
   const [isboy, setIsboy] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const ChangeColor = () => {
     setIsSelected(true);
@@ -44,14 +44,11 @@ const Gender = () => {
   };
 
   const checkGender = () => {
-    const CurGender = isgirl ? 2 : 1;
+    const CurGender = isgirl ? 'FEMALE' : 'MALE';
     async function fetchGenderPage() {
       try {
-         // allow cookies
-        const res = await API.get(
-          "/member/gender?gender=" + CurGender
-        );
-        console.log(res);
+        const res = await API.get("/member/gender?gender=" + CurGender);
+        if(res.data === 'success') navigate('/dormitory');
       } catch (error) {
         console.error(error);
       }

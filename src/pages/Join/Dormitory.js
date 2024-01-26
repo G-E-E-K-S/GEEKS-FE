@@ -37,10 +37,8 @@ const Dormitory = () => {
     let type = dormiVal === '신관' ? 'NEW' : dormiVal === '구관' ? 'OLD' : 'HAPPY';
     async function fetchDormitory() {
       try{
-        
         const res = await API.get("/member/type?type=" + type);
         res.data === 'success' && navigate('/finalpage')
-        console.log(res);
       }catch(e) {
         console.log(e);
       }

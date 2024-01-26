@@ -69,13 +69,10 @@ const InputCode = () => {
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
   const [isSelected, setIsSelected] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
-  const navigator = useNavigate();
-  let code = "";
+  const navigate = useNavigate();
 
   const handleInputChange = (index, event) => {
     const nextIndex = index + 1;
-
-    code += event.target.value;
 
     if (event.target.value.length === 1 && nextIndex < inputRefs.length) {
       inputRefs[nextIndex].current.focus();
@@ -95,12 +92,16 @@ const InputCode = () => {
   };
 
   const checkCode = () => {
+    let code= "";
+    for(let i = 0 ; i < 4 ; i++){
+      code += inputRefs[i].current.value;
+    }
     async function fetchCode() {
       try {
-         // allow cookies
-        const res = await API.get(
-          "/mail/auth?code=" + code
-        );
+        const res = await API.get("/mail/auth?code=" + code);
+        if(res.data === 'success!'){
+          navigate('/password')
+        }
       } catch (error) {
         console.error(error);
       }

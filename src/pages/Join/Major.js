@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../../axios/BaseUrl";
+import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Join/Header";
@@ -85,7 +87,7 @@ const Major = () => {
   const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
   const [department,setDepartment] = useState('');
   const [major,setMajor] = useState(null);
-
+  const navigate = useNavigate();
   const handleStudentId = (state) => {
     setIsSelected(state);
   };
@@ -109,6 +111,17 @@ const Major = () => {
   const handleMajor = (major) =>{
     setMajor(major);
     setIsDepartmentOpen(!department);
+  }
+  const sendData = () => {
+    async function fetchMjor() {
+      try {
+        const res = await API.get("/member/major?major=" + '스마트정보통신공학과' + "&studentID=" + '19');
+        if(res.data === 'success') navigate('/gender');
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchMjor();
   }
 
   return (
@@ -155,9 +168,8 @@ const Major = () => {
           isSelected={isSelected}>
           <InputStudentId placeholder="학번 입력" onChange={(e)=>setIsNextPage(e.target.value.trim() !== '')}/>
         </StudentIdTotal>
-        {/* open StudentId Bottom Sheet */}
 
-        <JoinButton btnName={"다음"} isNextPage={isNextPage}/>
+        <JoinButton btnName={"다음"} isNextPage={isNextPage} handleClick={()=>sendData()}/>
       </c.ScreenComponent>
     </c.Totalframe>
   );

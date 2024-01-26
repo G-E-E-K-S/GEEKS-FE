@@ -43,7 +43,7 @@ const NickName = () => {
   const [isNextPage, setIsNextPage] = useState(false);
   const [isPopup, setIsPopup] = useState(false);
   const letterCnt = useRef(0);
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const ChangeBarColor = () => {
     setIsSelected(true);
@@ -59,11 +59,11 @@ const NickName = () => {
   };
 
   const handleNickName = () => {
+    if(!isNextPage){return};
     async function fetchNickName() {
       try {
-         // allow cookies
         const res = await API.get("/member/nickname?nickname=" + inputNickName);
-        console.log(res);
+        if(res.data === 'success') navigate('/questiontext', {state : {inputNickName}});
       } catch (error) {
         console.error(error);
       }
@@ -80,11 +80,12 @@ const NickName = () => {
     }
     async function fetchCheckNickName() {
       try {
-         // allow cookies
         const res = await API.get("/member/check/nickname?nickname=" + inputNickName);
-        console.log(res.data)
         setValuableName(res.data);
-        res.data ==='duplicate' && setIsPopup(true);
+        if(res.data ==='duplicate'){
+          setIsNextPage(false);
+          setIsPopup(true);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -113,8 +114,7 @@ const NickName = () => {
         <JoinButton
           btnName={"다음"}
           handleClick={() => handleNickName()}
-          isNextPage={isNextPage}
-        />
+          isNextPage={isNextPage}/>
       </c.ScreenComponent>
     </c.Totalframe>
   );
