@@ -33,7 +33,7 @@ const SameLifeStyle = styled.div`
   margin: 0 auto;
   width: max-content;
 `;
-const DiffrentLifeStlye = styled(SameLifeStyle)`
+const OpponentLifeStyle = styled(SameLifeStyle)`
   background: linear-gradient(
       0deg,
       rgba(255, 184, 184, 0.2) 0%,
@@ -44,7 +44,7 @@ const DiffrentLifeStlye = styled(SameLifeStyle)`
   word-break: keep-all;
   text-align: center;
 `;
-const DiffrentMyLifeStlye = styled(DiffrentLifeStlye)`
+const MyLifeStlye = styled(OpponentLifeStyle)`
   background: #fcede8;
 `;
 
@@ -53,13 +53,14 @@ const LifeStyle = (props) => {
     <LifeStyleBox>
       <LifeStyleTxt>{props.lifeStyle}</LifeStyleTxt>
       <TotalStyle>
-        {props.isSame && <SameLifeStyle>{props.sameLifeStyle}</SameLifeStyle>}
-        {props.isDiff && (
+        {props.isSame ? (
+          <SameLifeStyle>{props.myLifeStyle}</SameLifeStyle>
+        ) : (
           <c.SpaceBetween>
-            <DiffrentLifeStlye>{props.diffrentLifeStyle}</DiffrentLifeStlye>
-            <DiffrentMyLifeStlye>
-              {props.diffrentMyLifeStyle}
-            </DiffrentMyLifeStlye>
+            <OpponentLifeStyle>{props.opponentLifeStyle}</OpponentLifeStyle>
+            <MyLifeStlye>
+              {props.myLifeStyle}
+            </MyLifeStlye>
           </c.SpaceBetween>
         )}
       </TotalStyle>
