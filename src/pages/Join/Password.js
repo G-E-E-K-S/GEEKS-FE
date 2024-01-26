@@ -65,7 +65,7 @@ const Password = () => {
   const [pwdSame, setpwdSame] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const ChangeBarColor = () => {
     setIsSelected(true);
@@ -112,10 +112,10 @@ const Password = () => {
   const checkPassword = () => {
     async function fetchPassword() {
       try {
-        const res = await API.post("http://127.0.0.1:8080/member/password", {
+        const res = await API.post("/member/password", {
           password: inputval,
         });
-        console.log(res);
+        if(res.data === 'success') navigate('/nickname');
       } catch (error) {
         console.error(error);
       }

@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Join/Header";
@@ -20,17 +21,18 @@ const QuestionIcon = styled.img`
 `;
 
 const QuesText = () => {
-  const navigator = useNavigate();
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header />
-        <MainText maintitle={`은진 님 반가워요!\n\n기숙사 생활을 위한\n몇 가지만 여쭤볼게요`}/>
+        <MainText maintitle={`${location.state.inputNickName}님 반가워요!\n\n기숙사 생활을 위한\n몇 가지만 여쭤볼게요`}/>
         <Icon>
           <QuestionIcon src={Question}/>
         </Icon>          
-        <JoinButton btnName={"다음"} isNextPage={true} />
+        <JoinButton btnName={"다음"} isNextPage={true} handleClick={()=>navigate('/major')}/>
       </c.ScreenComponent>
     </c.Totalframe>
   );
