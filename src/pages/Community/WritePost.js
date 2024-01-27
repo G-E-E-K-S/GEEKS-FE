@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import API from "../../axios/BaseUrl";
 import axios from "axios";
 import styled from "styled-components";
@@ -42,22 +42,19 @@ const Line = styled.div`
   width: 100%;
   margin-bottom: 20px;
 `;
-const InputContent = styled.input`
+const InputContent = styled.textarea`
   outline: none;
   border: none;
   font-weight: 500;
   font-size: 1rem;
   width: 100%;
-  height: 216px;
-  vertical-align: top;
-  margin-bottom: ${(props) =>
-    props.contentHeight > 216 ? "clac(60px + contentHeight - 168px)" : "60px"};
+  height: ${(props)=>props.height};
+  margin-bottom: ${(props) =>props.contentHeight > 216 ? "clac(60px + contentHeight - 168px)" : "60px"};
   color: #525252;
   &::-webkit-input-placeholder {
     color: #d0d0d0;
     font-size: 1rem;
     font-weight: 700;
-    line-height: 32px; /* 133.333% */
   }
 `;
 const InputFile = styled.input`
@@ -73,7 +70,8 @@ const Community = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [file, setFile] = useState(null);
-
+    const [height, setHeight] = useState('216px');
+    const contentRef = useRef();
     const handleFile = (event) => {
         // const selectedFile = event.target.files[0];
         setFile(event.target.files);
@@ -137,6 +135,10 @@ const Community = () => {
     }
     fetchPoint();
   }
+  const handleResizeHeight = useCallback(() => {
+    let scrollHeight = contentRef.current.scrollHeight +'px';
+    scrollHeight > height ? setHeight(scrollHeight) : setHeight('216px');
+  }, [contentRef]);
 
   return (
     <c.Totalframe>
@@ -147,7 +149,7 @@ const Community = () => {
           </HeaderMenu>
           <InputTitle placeholder={`글 제목을 입력하세요`} onChange={(event)=>setTitle(event.target.value)}></InputTitle>
           <Line />
-          <InputContent placeholder={`내용을 입력하세요`} onChange={(event)=>setContent(event.target.value)}></InputContent>
+          <InputContent placeholder={`내용을 입력하세요`} onChange={(event)=>setContent(event.target.value)} ref={contentRef} onInput={handleResizeHeight} height={height}></InputContent>
           <c.Flex>
             <label>
                 <img src={AddPhoto} />
