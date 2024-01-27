@@ -95,9 +95,9 @@ const Major = () => {
   const handleBottomSheet = () => {
     setIsMajorOpen(!isMajorOpen);
   };
-  const handleStudentId = (studentID) => {
-    setIsNextPage(studentID.trim() !== '');
-    setStudentID(studentID);
+  const handleStudentId = (ID) => {
+    setIsNextPage(ID.trim() !== '');
+    setStudentID(ID);
   }
 
   const DepartmentList = ["글로벌인문학부대학","디자인대학","예술대학","융합기술대학","공과대학"];
