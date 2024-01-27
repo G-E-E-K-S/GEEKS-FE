@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../axios/BaseUrl";
 import axios from "axios";
+import moment from "moment";
+import 'moment/locale/ko';
+import FetchMore from "../../components/Community/FetchMore";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import NavigationBar from "../../components/Main/NavigationBar";
@@ -11,9 +14,7 @@ import CommunityPost from "../../components/Community/CommunityPost";
 import GroupIcon from "../../assets/gif/group.gif";
 import RightArrow from "../../assets/img/Community/rightArrow.svg";
 import MyPageIcon from "../../assets/img/Community/myPage.svg";
-import moment from "moment";
-import 'moment/locale/ko';
-import FetchMore from "../../components/Community/FetchMore";
+import WritePost from "../../assets/img/Community/edit.svg";
 
 const GroupPromotionBox = styled.div`
   width: 100%;
@@ -45,6 +46,30 @@ const GroupImg = styled.img`
   right: 10.3vw;
   bottom: 5px;
 `;
+const WritePostBox = styled.div`
+  display: flex;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid #E2E2E2;
+  background: #FFF;
+  box-shadow: 2px 2px 12px 0px rgba(0, 0, 0, 0.04);
+  position: fixed;
+  bottom: 14.69vh;
+  right: 16px;
+  padding: 14px 20px;
+`;
+const WritePostIcon = styled.img`
+  height: 24px;
+  width: 24px;
+`;
+const WriteTxt = styled.div`
+  color: #333;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 24px;
+  margin-left: 8px;
+`;
 const Community = () => {
   const [post, setPost] = useState([]);
   const [cursor, setCursor] = useState(0);
@@ -55,10 +80,7 @@ const Community = () => {
 
   async function fetchAllPost() {
     try {
-       // allow cookies
       const res = await API.get("/post/main?cursor=" + cursor);
-
-      console.log(res.data);
       setLoading(false);
       setHasNext(res.data.hasNextPage);
       setPost((prev) => [...prev, ...res.data.posts]);
@@ -105,6 +127,10 @@ const Community = () => {
             />
           ))}
           <FetchMore items={post} setCursor={setCursor}/>
+          <WritePostBox onClick={()=>navigate('/writepost')}>
+            <WritePostIcon src={WritePost}/>
+            <WriteTxt>{`글쓰기`}</WriteTxt>
+          </WritePostBox>
         </c.SubScreen>
       </c.ScreenComponent>
       <NavigationBar type={`community`} />
