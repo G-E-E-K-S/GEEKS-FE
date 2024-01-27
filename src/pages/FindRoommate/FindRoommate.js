@@ -47,9 +47,8 @@ const FindRoommate = () => {
   useEffect(()=>{
     async function fetchUserData() {
       try{
-        
         const res = await API.get("/point/find");
-        setUserData(res.data);
+        setUserData(res.data.points);
       }catch(e) {
         console.log(e);
       }
