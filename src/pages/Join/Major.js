@@ -87,13 +87,18 @@ const Major = () => {
   const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
   const [department,setDepartment] = useState('');
   const [major,setMajor] = useState(null);
+  const [studentID,setStudentID] = useState(null);
   const navigate = useNavigate();
-  const handleStudentId = (state) => {
+  const handleFocus = (state) => {
     setIsSelected(state);
   };
   const handleBottomSheet = () => {
     setIsMajorOpen(!isMajorOpen);
   };
+  const handleStudentId = (studentID) => {
+    setIsNextPage(studentID.trim() !== '');
+    setStudentID(studentID);
+  }
 
   const DepartmentList = ["글로벌인문학부대학","디자인대학","예술대학","융합기술대학","공과대학"];
   const DepartmentMajors = {
@@ -115,7 +120,7 @@ const Major = () => {
   const sendData = () => {
     async function fetchMjor() {
       try {
-        const res = await API.get("/member/major?major=" + '스마트정보통신공학과' + "&studentID=" + '19');
+        const res = await API.get("/member/major?major=" + `${major}` + "&studentID=" + `${studentID}`);
         if(res.data === 'success') navigate('/gender');
       } catch (error) {
         console.error(error);
@@ -163,10 +168,10 @@ const Major = () => {
           </BottomSheet>
         )}
         <StudentIdTotal
-          onFocus={() => handleStudentId(true)}
-          onBlur={() => handleStudentId(false)}
+          onFocus={() => handleFocus(true)}
+          onBlur={() => handleFocus(false)}
           isSelected={isSelected}>
-          <InputStudentId placeholder="학번 입력" onChange={(e)=>setIsNextPage(e.target.value.trim() !== '')}/>
+          <InputStudentId placeholder="학번 입력" onChange={(e)=>handleStudentId(e.target.value)} maxlength={'2'}/>
         </StudentIdTotal>
 
         <JoinButton btnName={"다음"} isNextPage={isNextPage} handleClick={()=>sendData()}/>
