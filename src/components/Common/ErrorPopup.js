@@ -11,12 +11,12 @@ const ErrorIcon = styled.img`
   margin-right: 8px;
 `;
 const PopupBox = styled.div`
-  width: calc(100% - 12.25vw);
+  width: 89.74vw;
   height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
+  position: absolute;
   bottom: ${(props) => props.bottom};
   top: ${(props) => props.top};
   border-radius: 12px;
