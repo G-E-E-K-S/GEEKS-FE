@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Join/Header";
-import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
+import ErrorPopup from "../../components/Common/ErrorPopup";
 import ForgetPwdImg from "../../assets/img/Join/forgetPwd.svg";
 
 const InputInfos = styled.div`
@@ -14,8 +14,7 @@ const InputInfos = styled.div`
   margin-top: ${(props) => (props.isPwd ? "0" : "6.27vh")};
   margin-bottom: 18px;
   padding: 7px 0px 8px 0px;
-  border-bottom: 2px solid
-    ${(props) => (props.isSelected ? "#ECAA00" : "#EFEFEF")};
+  border-bottom: 2px solid ${(props) => (props.isSelected)};
   color: #c4c7c7;
   font-size: 1.5rem;
   font-weight: 600;
@@ -46,10 +45,29 @@ const ForgetPwdTxt = styled.div`
   line-height: 18px;
   margin-right: 4px;
 `;
+const JoinButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 30.45vh;
+  width: 89.74vw;
+  height: 60px;
+  background-color: ${(props) => (props.isNextPage ? '#FFC700' : '#F7F7F7')};
+  border-radius: 12px;
+
+  color: ${(props)=> (props.isNextPage ? '#333' : '#B7B7B7')};
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 24px;
+  cursor: pointer;
+`;
 const InputEmail = () => {
-  const [isEmailSelected, setIsEmailSelected] = useState(false);
-  const [isPwdSelected, setIsPwdSelected] = useState(false);
+  const [isEmailSelected, setIsEmailSelected] = useState('false');
+  const [isPwdSelected, setIsPwdSelected] = useState('false');
   const [isNextPage, setIsNextPage] = useState(false);
+  const [isErrorPopup, setIsErrorPopUp] = useState(false);
   const emailVal = useRef();
   const passwordVal = useRef();
   const navigate = useNavigate();
@@ -62,55 +80,58 @@ const InputEmail = () => {
 
   //axios
   const handleEmail = () => {
-    async function fetchEmailPage() {
+    async function fetchLogin() {
       try {
-         // allow cookies
-        const res = await API.get(
-          "/mail/send?email=" +
-            emailVal.current.value +
-            "@sangmyung.kr"
-        );
-        res.data == "duplicate" ? alert("중복") : navigate("/inputcode");
+        const res = await API.post("/login/login", {
+          email: emailVal.current.value +"@sangmyung.kr",
+          password: passwordVal.current.value,
+        });
+        if(res.data === 'success') navigate('/home');
+        else{
+          setIsPwdSelected('error');
+          setIsEmailSelected('error');
+          setIsErrorPopUp(true);
+        }
       } catch (error) {
         console.error(error);
       }
     }
-    fetchEmailPage();
+    fetchLogin();
   };
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header />
         <MainText maintitle={`학교 이메일 주소로\n로그인 해주세요`} />
-        <InputInfos isSelected={isEmailSelected}>
+        <InputInfos isSelected={isEmailSelected === 'error' ? '#CB3D0B' : isEmailSelected === 'false' ? '#EFEFEF' : '#ECAA00'}>
           <Input
             maxLength={9}
             placeholder="학번"
-            onFocus={() => setIsEmailSelected(true)}
-            onBlur={() => setIsEmailSelected(false)}
+            onFocus={() => setIsEmailSelected('true')}
+            onBlur={() => setIsEmailSelected('false')}
             ref={emailVal}
             onChange={() => handleEmailVal()}
           />
           <Univ>@sangmyung.kr</Univ>
         </InputInfos>
-        <InputInfos isSelected={isPwdSelected} isPwd={true}>
+        <InputInfos isSelected={isPwdSelected === 'error' ? '#CB3D0B' : isPwdSelected === 'false' ? '#EFEFEF' : '#ECAA00'} isPwd={true}>
           <Input
+            type="password"
             placeholder="비밀번호"
-            onFocus={() => setIsPwdSelected(true)}
-            onBlur={() => setIsPwdSelected(false)}
+            onFocus={() => setIsPwdSelected('true')}
+            onBlur={() => setIsPwdSelected('false')}
             ref={passwordVal}
             onChange={() => handleEmailVal()}
           />
         </InputInfos>
-        <JoinButton
-          btnName={"로그인"}
-          handleClick={() => handleEmail()}
-          isNextPage={isNextPage}
-        />
         <c.Flex>
           <ForgetPwdTxt>{`비밀번호를 잊어버리셨나요?`}</ForgetPwdTxt>
           <img src={ForgetPwdImg}></img>
         </c.Flex>
+        <JoinButton
+          onClick={() => handleEmail()}
+          isNextPage={isNextPage}>{`로그인`}</JoinButton>
+        {isErrorPopup&&<ErrorPopup message={`위 이메일로 가입된 정보가 없어요`} bottom={`38.98vh`} setShowPopup={setIsErrorPopUp}/>}
       </c.ScreenComponent>
     </c.Totalframe>
   );
