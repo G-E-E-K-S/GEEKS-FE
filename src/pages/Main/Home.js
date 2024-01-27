@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import API from "../../axios/BaseUrl";
@@ -136,9 +136,10 @@ const Home = () => {
   const [isShowReview, setIsSHowReiew] = useState(true);
   const [isWeeklyPost, setIsWeeklyPost] = useState("live");
   const [showPopup, setShowPopup] = useState(false);
-  const [isExist, setIsExist] = useState(null);
+  const [isExist, setIsExist] = useState(true);
   const [point, setPoint] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const handlePage = () => {
@@ -152,6 +153,7 @@ const Home = () => {
     async function fetchEmailPage() {
       try {
         const res = await API.get("/home/main");
+        setLoading(false);
         setIsExist(res.data.exist);
         setPoint(res.data.points);
         setPosts(res.data.posts);
@@ -162,7 +164,7 @@ const Home = () => {
     fetchEmailPage();
   }, []);
 
-  return (
+  return !loading && (
     <c.Totalframe background={`#FAFAFA`}>
       <c.ScreenComponent>
         <c.SubScreen>
