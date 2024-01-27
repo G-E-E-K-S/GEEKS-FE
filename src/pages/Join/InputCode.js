@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import axios from "axios";
 import API from "../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -8,6 +7,7 @@ import Header from "../../components/Join/Header";
 import TopNumber from "../../components/Join/TopNumber";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
+import ErrorPopup from "../../components/Common/ErrorPopup";
 
 const TotalSendMail = styled.div`
   display: flex;
@@ -69,6 +69,7 @@ const InputCode = () => {
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
   const [isSelected, setIsSelected] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
+  const [isErrorPopup, setIsErrorPopup] = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (index, event) => {
@@ -101,6 +102,8 @@ const InputCode = () => {
         const res = await API.get("/mail/auth?code=" + code);
         if(res.data === 'success!'){
           navigate('/password')
+        }else{
+          setIsErrorPopup(true);
         }
       } catch (error) {
         console.error(error);
@@ -139,6 +142,7 @@ const InputCode = () => {
             />
           ))}
         </InputNumber>
+        {isErrorPopup && <ErrorPopup message={`코드가 일치하지 않아요`} bottom={`18.72vh`} setShowPopup={setIsErrorPopup}/>}
         <JoinButton
           btnName={"코드 확인하기"}
           select={() => ChangeBarColor()}
