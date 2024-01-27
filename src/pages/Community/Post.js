@@ -75,6 +75,7 @@ const Post = () => {
     }
     fetchPost();
   }, []);
+  
 
   const UploadComment = () => {    
     async function fetchPost() {
