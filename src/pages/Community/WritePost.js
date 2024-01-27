@@ -66,6 +66,22 @@ const ShowImg = styled.img`
   border-radius: 8px;
   margin-left: 12px;
 `;
+const Anonymous = styled.div`
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+`;
+const CheckBox = styled.input`
+  margin: 0;
+  color: #D0D0D0;
+`;
+const AnonymousTxt = styled.div`
+  color: #D0D0D0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 24px;
+  margin-left: 5px;
+`;
 const Community = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -150,6 +166,12 @@ const Community = () => {
           <InputTitle placeholder={`글 제목을 입력하세요`} onChange={(event)=>setTitle(event.target.value)}></InputTitle>
           <Line />
           <InputContent placeholder={`내용을 입력하세요`} onChange={(event)=>setContent(event.target.value)} ref={contentRef} onInput={handleResizeHeight} height={height}></InputContent>
+          <label>
+            <Anonymous>
+              <CheckBox type='checkbox'/>
+              <AnonymousTxt>{`익명`}</AnonymousTxt>
+            </Anonymous>
+          </label>
           <c.Flex>
             <label>
                 <img src={AddPhoto} />
