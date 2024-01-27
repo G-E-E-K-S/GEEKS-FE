@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import API from "../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -35,7 +36,17 @@ const MainImg = styled.img`
 `;
 const FinalPage = () => {
   const navigate = useNavigate();
-
+  const sendEveryInfo = () => {
+    async function fetchUserRegist(){
+      try{
+          const res = await API.get("/member/register");
+          if(res.status == '200') navigate("/home");
+      }catch(error){
+        console.error(error);
+      }
+  }
+  fetchUserRegist();
+}
   return (
     <c.Totalframe background={`linear-gradient(180deg, rgba(255, 199, 0, 0.10) 0%, rgba(250, 250, 250, 0.10) 100%)`}>
       <c.ScreenComponent>
@@ -47,8 +58,7 @@ const FinalPage = () => {
         <JoinButton
           btnName={"룸메이트 찾으러 가기"}
           isNextPage={true}
-          handleClick={() => navigate("/home")}
-        />
+          handleClick={() => sendEveryInfo()}/>
       </c.ScreenComponent>
     </c.Totalframe>
   );
