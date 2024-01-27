@@ -89,7 +89,7 @@ const LifeStyles = () => {
           <TotalSaveNum>총 {saveList.length}명</TotalSaveNum>
           {activeEdit && <CheckImg src={activeCheck ? Check : NoCheck} onClick={()=>setActiveCheck(!activeCheck)}/>}
           {saveList.map((userData)=>(
-            <OtherProfile score={userData.point} userprofile={Profile} nickName={userData.nickname} major={userData.major} id={userData.studentID} activeCheck={activeCheck}/>
+            <OtherProfile score={userData.point} userprofile={Profile} nickName={userData.nickname} major={userData.major} id={userData.studentID} intro={userData.introduction} activeCheck={activeCheck} />
           ))}
           <JoinButton btnName={`삭제하기`} isNextPage={activeCheck} handleClick={() => handleBtn()} />
           {showPopup && <Popup bottom={`18.24vh`} setShowPopup={setShowPopup} message={`‘~~...’님이 삭제되었습니다`}/> }
