@@ -1,6 +1,7 @@
 import React, { useRef, useState, useCallback } from "react";
 import API from "../../axios/BaseUrl";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import HeaderMenu from "../../components/Common/HeaderMenu";
@@ -57,6 +58,11 @@ const InputContent = styled.textarea`
     font-weight: 700;
   }
 `;
+const PhotoList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+`;
 const InputFile = styled.input`
   display: none;
 `;
@@ -65,6 +71,7 @@ const ShowImg = styled.img`
   height: 72px;
   border-radius: 8px;
   margin-left: 12px;
+  object-fit: scale-down;
 `;
 const Anonymous = styled.div`
   margin-bottom: 16px;
@@ -86,16 +93,21 @@ const Community = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [file, setFile] = useState(null);
+    const [showImages,setShowImages] = useState([]);
     const [height, setHeight] = useState('216px');
     const contentRef = useRef();
+    const navigate = useNavigate();
+    
     const handleFile = (event) => {
-        // const selectedFile = event.target.files[0];
-        setFile(event.target.files);
-        // const reader = new FileReader();
-        // reader.onloadend = () => {
-        //     setUploadImg(reader.result);
-        // };
-        // reader.readAsDataURL(selectedFile);
+      setFile(event.target.files);
+      const imageLists = event.target.files;
+      let imageUrlLists = [...showImages];
+
+      for(let i = 0 ; i < imageLists.length ; i++){
+        const currentImageUrl = URL.createObjectURL(imageLists[i]);
+        imageUrlLists.push(currentImageUrl);
+      }
+      setShowImages(imageUrlLists);
     }
     const UploadPost = () => {
       const postData = {
@@ -114,12 +126,12 @@ const Community = () => {
       }
         async function fetchPost() {
           try {
-            
             const res = await API.post("/post/create", formData,{
                 headers:{
                     'Content-Type': `multipart/form-data`
                 }
             });
+            if(res.data === 'success') navigate('/community');
             console.log(res);
           } catch (error) {
             console.error(error);
@@ -172,16 +184,15 @@ const Community = () => {
               <AnonymousTxt>{`익명`}</AnonymousTxt>
             </Anonymous>
           </label>
-          <c.Flex>
-            <label>
+          <PhotoList>
+            <label onChange={handleFile}>
                 <img src={AddPhoto} />
-                <InputFile type="file" accept="image/*" multiple="multiple" onChange={handleFile.bind(this)} />
+                <InputFile type="file" accept="image/*" multiple="multiple"/>
             </label>
-          
-            {/* <ShowImg src={uploadImg} /> */}
-            <button onClick={()=>getCookies()}>get coo</button>
-            <button onClick={()=>getPoint()}>getPoint</button>
-          </c.Flex>
+            {showImages.map((url,id)=>(
+              <ShowImg src={url} key={id}/>)
+            )}
+          </PhotoList>
         </c.SubScreen>
       </c.ScreenComponent>
     </c.Totalframe>
