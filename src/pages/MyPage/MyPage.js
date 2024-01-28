@@ -120,9 +120,7 @@ const MyPage = () => {
     
     async function fetchUserInfo(){
       try{
-          console.log(process.env.REACT_APP_BASEURL);
           const res = await API.get("/member/myPage");
-          
           setUserInfo(res.data);
           setContent(res.data.nickname);
           navigate('/mypage');
@@ -146,7 +144,9 @@ const MyPage = () => {
               enrollLifeStyle={!userInfo.exist}
             />
           </UserInfoTop>
-          <SelfIntro>{userInfo.introduction}</SelfIntro>
+          {userInfo.introduction?.length !== 0 && 
+            <SelfIntro>{userInfo.introduction}</SelfIntro>
+          }
           <ShowMyProfile>
             <div>
               <ShowProfileTxt>내 프로필 노출하기</ShowProfileTxt>
