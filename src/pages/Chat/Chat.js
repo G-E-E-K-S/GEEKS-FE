@@ -69,10 +69,10 @@ const Chat = () => {
       <c.ScreenComponent>
         <c.SubScreen>
           <Title>{`대화`}</Title>
-          <TotalMenu>
+          {/* <TotalMenu>
             <InnerBox isSelect={isSelectMenu === 'findroommate'} onClick={() => setIsSelectMenu('findroommate')}>룸메찾기</InnerBox>
             <InnerBox isSelect={isSelectMenu === 'group'} onClick={() => setIsSelectMenu('group')}>모임</InnerBox>
-          </TotalMenu>
+          </TotalMenu> */}
           {isSelectMenu === 'findroommate' && chatList.map((room) => (
             <ChatList
             roomId={room.roomId} 
