@@ -44,6 +44,7 @@ const BlurIcon = styled.img`
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   position: relative;
+  opacity: 0.7;
 `;
 const EnrollLifeStyle = styled.div`
   width: 100%;
