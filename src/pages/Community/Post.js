@@ -13,6 +13,7 @@ import LikeAndStarBtn from "../../components/Community/LikeAndStarBtn";
 import CommentCnt from "../../components/Community/CommentCnt";
 import Comment from "../../components/Community/Comment";
 import Modal from "../../components/Common/Modal";
+import BottomSheet from "../../components/Common/BottomSheet";
 import Dot from "../../assets/img/Community/dots.svg";
 import Like from "../../assets/img/Community/like.svg";
 import FillLike from "../../assets/img/Community/fillLike.svg";
@@ -34,6 +35,27 @@ const TotalInput = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+`;
+const MenuBox = styled.div`
+  padding: 20px 0;
+  color: ${(props)=>props.Report ? '#CB3D0B' : '#525252'};
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+`;
+const CloseBtn = styled.div`
+  padding: 16px 0;
+  border-radius: 12px;
+  border: 1px solid #E2E2E2;
+  background: #FFF;
+  text-align: center;
+  color: #333;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 24px;
+  margin-top: 20px;
+  margin-bottom: 94px;
 `;
 const Anonymous = styled.div`
   display: flex;
@@ -104,17 +126,13 @@ const YesBtn = styled(NoBtn)`
   color: #333;
   margin-left: 0px;
 `;
-{/* <ModalTxt>{`‘익명’님께 답글을 달까요?`}</ModalTxt>
-            <ModalBtn>
-              <NoBtn>{`아니요`}</NoBtn>
-              <YesBtn>{`네`}</YesBtn>
-            </ModalBtn> */}
 const Post = () => {
   const [postInfo, setPostInfo] = useState("");
   const [isLike, setIsLike] = useState(false);
   const [isStar, setIsStar] = useState(false);
   const [parentId, setParentId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBtsOpen, setIsBtsOpen] = useState(false);
   const commentRef = useRef();
   let { postId } = useParams();
 
@@ -123,7 +141,6 @@ const Post = () => {
       try {
         const res = await API.get("/post/show?postId=" + postId);
         setPostInfo(res.data);
-        console.log(res.data)
         setIsLike(res.data.heartState);
         setIsStar(res.data.scrapState);
       } catch (error) {
@@ -209,8 +226,15 @@ const Post = () => {
       <c.ScreenComponent>
         <c.SubScreen>
           <HeaderMenu>
-            <img src={Dot} />
+            <img src={Dot} onClick={()=>setIsBtsOpen(true)} />
           </HeaderMenu>
+          {isBtsOpen && <BottomSheet height={`max-content`} padding={`12px 20px 0 20px`}>
+            {postInfo?.writerState ?  <>
+              <MenuBox>{`글 삭제하기`}</MenuBox>
+              <MenuBox>{`글 수정하기`}</MenuBox>
+            </> : <MenuBox Report={true}>{`신고하기`}</MenuBox>}
+              <CloseBtn onClick={()=>setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
+            </BottomSheet>}
           <PostInfo username={postInfo.writer === null ? '익명' : postInfo.writer} uploadtime={caclTime(postInfo.createdDate)}></PostInfo>
           <PostContent
             title={postInfo.title}
@@ -253,11 +277,12 @@ const Post = () => {
           <img src={Send} onClick={()=>UploadComment()}/>
           {isModalOpen && <Modal padding={`22px 20px`}>
             <ModalTxt>{`‘익명’님께 답글을 달까요?`}</ModalTxt>
-            <ModalBtn>
-              <NoBtn onClick={()=>AddReComment(null,false)}>{`아니요`}</NoBtn>
-              <YesBtn onClick={()=>setIsModalOpen(false)}>{`네`}</YesBtn>
-            </ModalBtn>
-            </Modal>}
+              <ModalBtn>
+                <NoBtn onClick={()=>AddReComment(null,false)}>{`아니요`}</NoBtn>
+                <YesBtn onClick={()=>setIsModalOpen(false)}>{`네`}</YesBtn>
+              </ModalBtn>
+            </Modal>
+          }
         </TotalInput>
       </InputCommentBox>
     </c.Totalframe>
