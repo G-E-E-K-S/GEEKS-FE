@@ -10,6 +10,7 @@ const Box = styled.div`
   background-color: #fff;
   border-radius: 20px;
   margin-top: ${(props)=>props.marginTop};
+  margin-bottom: ${(props)=>props.marginBottom};
 `;
 const ContentName = styled.div`
   white-space: pre-wrap;
@@ -25,7 +26,7 @@ const ArrowImg = styled.img`
 `;
 const HomeBox = (props) => {
   return (
-    <Box height={props.height} marginTop={props.marginTop}>
+    <Box height={props.height} marginTop={props.marginTop} marginBottom={props.marginBottom}>
       <c.SpaceBetween>
         <ContentName marginBottom={props.marginBottom} onClick={()=>props.onClick()}>{props.name}</ContentName>
         <ArrowImg src={ForwardArrow} />
