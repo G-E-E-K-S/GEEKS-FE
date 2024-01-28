@@ -81,6 +81,7 @@ const Community = () => {
   async function fetchAllPost() {
     try {
       const res = await API.get("/post/main?cursor=" + cursor);
+      console.log(res.data);
       setLoading(false);
       setHasNext(res.data.hasNextPage);
       setPost((prev) => [...prev, ...res.data.posts]);
@@ -93,9 +94,13 @@ const Community = () => {
     if (!hasNext) {
       return;
     }
-
     fetchAllPost();
   }, [cursor]);
+
+  const caclTime = (uploadTime) => {
+    moment.locale("ko"); // 언어를 한국어로 설정
+    return moment(uploadTime).fromNow(`A`)+'전'; // 지금으로부터 계산
+  }
 
   return loading ? null : (
     <c.Totalframe>
@@ -113,15 +118,15 @@ const Community = () => {
             <img src={RightArrow} />
           </c.SpaceBetween>
         </GroupPromotionBox>
-        <Br />
+        <Br marginBottom={`20px`}/>
         <c.SubScreen>
           {post.map((data) => (
             <CommunityPost
               postName={data.title}
               commentNum={data.commentCount}
               postContent={data.content}
-              writeTime={moment(data.createdDate).format("M월 d일 A h:mm")}
-              userName={data.anonymity ? "익명" : "닉네임"}
+              writeTime={caclTime(data.createdDate)}
+              userName={data.anonymity ? "익명" : data.writer}
               postImg={data.photoName}
               onClick={() => navigate(`/post/${data.postId}`)}
             />
