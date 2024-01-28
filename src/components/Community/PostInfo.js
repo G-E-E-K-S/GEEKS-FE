@@ -4,9 +4,9 @@ import styled from "styled-components";
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 
 const TotalUserInfo = styled.div`
-    display: flex;
-    margin-top: 16px;
-    align-items: center;
+  display: flex;
+  margin-top: 16px;
+  align-items: center;
 `;
 const UserProfile = styled.img`
   width: 20px;
@@ -15,9 +15,8 @@ const UserProfile = styled.img`
 `;
 const UserName = styled.div`
   color: #707070;
-  font-size: 0.875;
+  font-size: 0.875rem;
   font-weight: 500;
-  line-height: 18px; /* 128.571% */
   margin-left: 4px;
 `;
 const PostInfo = (props) => {
