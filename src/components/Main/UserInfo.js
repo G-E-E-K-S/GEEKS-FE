@@ -52,7 +52,7 @@ const UserInfo = (props) => {
           <UserName>{props.userName}</UserName>
           <>
             <UserMajorId>
-              {props.userMajor}·{props.UserId}
+              {props.userMajor} · {props.UserId}
             </UserMajorId>
           </>
         </UserInfos>
