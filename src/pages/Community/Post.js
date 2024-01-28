@@ -65,10 +65,11 @@ const Post = () => {
   useEffect(() => {
     async function fetchPost() {
       try {
-         // allow cookies
         const res = await API.get("/post/show?postId=" + postId);
         setPostInfo(res.data);
-        // setIsLike(res.data.heartState);
+        console.log(res.data)
+        setIsLike(res.data.heartState);
+        setIsStar(res.data.scrapState);
       } catch (error) {
         console.error(error);
       }
@@ -80,7 +81,6 @@ const Post = () => {
   const UploadComment = () => {    
     async function fetchPost() {
       try {
-        
         const res = await API.post("/post/comment",{
           postId: postId,
           parentId: null,
@@ -101,7 +101,6 @@ const Post = () => {
     if(isLike === false){
       async function fetchLikeState() {
         try {
-          
           const res = await API.get("/post/heart/insert?postId=" + postId);
           setIsLike(true);
         } catch (error) {
@@ -127,7 +126,6 @@ const Post = () => {
     if(isStar === false){
       async function fetchScrapState() {
         try {
-          
           const res = await API.get("/post/scrap/insert?postId=" + postId);
           setIsStar(true);
         } catch (error) {
@@ -138,7 +136,6 @@ const Post = () => {
     }if(isStar === true){
       async function fetchDeleteScrapState() {
         try {
-          
           const res = await API.get("/post/scrap/delete?postId=" + postId);
           setIsStar(false);
         } catch (error) {
@@ -155,7 +152,7 @@ const Post = () => {
           <HeaderMenu>
             <img src={Dot} />
           </HeaderMenu>
-          <PostInfo username={`test`} uploadtime={`10분전`}></PostInfo>
+          <PostInfo username={postInfo.writer === null ? '익명' : postInfo.writer} uploadtime={caclTime(postInfo.createdDate)}></PostInfo>
           <PostContent
             title={postInfo.title}
             content={postInfo.content}></PostContent>
