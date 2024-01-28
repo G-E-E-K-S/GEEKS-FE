@@ -85,7 +85,7 @@ const Major = () => {
   const [isNextPage, setIsNextPage] = useState(false);
   const [isMajorOpen, setIsMajorOpen] = useState(false);
   const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
-  const [department,setDepartment] = useState('');
+  const [department,setDepartment] = useState('디자인대학');
   const [major,setMajor] = useState(null);
   const [studentID,setStudentID] = useState(null);
   const navigate = useNavigate();
@@ -139,7 +139,7 @@ const Major = () => {
           <img src={UnderArrow} />
         </MajorTotal>
         {/* open Major Bottom Sheet */}
-        {isMajorOpen && (
+        {/* {isMajorOpen && (
           <BottomSheet height={`487px`} padding={`24px 5.12vw 0px 5.12vw`}>
             <c.SpaceBetween>
               <MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
@@ -152,9 +152,23 @@ const Major = () => {
                 isDepartment={true}/>
             ))}
           </BottomSheet>
-        )}
-        {isDepartmentOpen && (
-          <BottomSheet height={`630px`} padding={`24px 5.12vw 0px 5.12vw`}>
+        )} */}
+
+        <BottomSheet height={`487px`} padding={`24px 5.12vw 0px 5.12vw`} isOpen={isMajorOpen} interaction={true}>
+            <c.SpaceBetween>
+              <MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
+              <CloseImg src={Close} onClick={() => handleBottomSheet()} />
+            </c.SpaceBetween>
+            {DepartmentList.map((department) => (
+              <Department
+                department={department}
+                onClick={()=>openBottomSheet(department)}
+                isDepartment={true}/>
+            ))}
+          </BottomSheet>
+
+          {isDepartmentOpen && 
+          <BottomSheet height={`630px`} padding={`24px 5.12vw 0px 5.12vw`} isOpen={isDepartmentOpen} interaction={false}>
             <c.SpaceBetween>
               <MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
               <CloseImg src={Close} onClick={() => setIsDepartmentOpen(!isDepartmentOpen)} />
@@ -165,8 +179,8 @@ const Major = () => {
             <BottomBtn>
               <SelectDone>{`선택 완료`}</SelectDone>
             </BottomBtn>
-          </BottomSheet>
-        )}
+          </BottomSheet>}
+
         <StudentIdTotal
           onFocus={() => handleFocus(true)}
           onBlur={() => handleFocus(false)}
