@@ -63,6 +63,10 @@ const JoinButton = styled.div`
   line-height: 24px;
   cursor: pointer;
 `;
+const ForgetPwdIcon = styled.img`
+  width: 16px;
+  height: 16px;
+`;
 const InputEmail = () => {
   const [isEmailSelected, setIsEmailSelected] = useState('false');
   const [isPwdSelected, setIsPwdSelected] = useState('false');
@@ -80,6 +84,7 @@ const InputEmail = () => {
 
   //axios
   const handleEmail = () => {
+    console.log(emailVal.current.value +"@sangmyung.kr",passwordVal.current.value)
     async function fetchLogin() {
       try {
         const res = await API.post("/login/login", {
@@ -126,7 +131,7 @@ const InputEmail = () => {
         </InputInfos>
         <c.Flex>
           <ForgetPwdTxt>{`비밀번호를 잊어버리셨나요?`}</ForgetPwdTxt>
-          <img src={ForgetPwdImg}></img>
+          <ForgetPwdIcon src={ForgetPwdImg}/>
         </c.Flex>
         <JoinButton
           onClick={() => handleEmail()}
