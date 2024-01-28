@@ -10,6 +10,7 @@ import OtherProfile from "../../components/Main/OtherProfile";
 import NavigationBar from "../../components/Main/NavigationBar";
 import BottomSheet from "../../components/Roommate/BottomSheet";
 import basicProfile from "../../assets/img/MyPage/basicProfile.svg";
+import BlurImg from "../../assets/img/Roommate/blurImg.svg";
 
 const TitleText = styled.div`
   margin-top: 3.31vh;
@@ -39,9 +40,45 @@ const ResetImg = styled.img`
   height: 20px;
   margin-right: 4px;
 `;
+const BlurIcon = styled.img`
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  position: relative;
+`;
+const EnrollLifeStyle = styled.div`
+  width: 100%;
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+`;
+const EnrollLifeStyleTxt = styled.div`
+  text-align: center;
+  white-space: pre-wrap;
+  color: #333;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+`;
+const EnroolLifeStyleBtn = styled.div`
+  width: max-content;
+  padding: 16px 14.23vw;
+  border-radius: 12px;
+  background: #FFC700;
+  color: #333;
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 24px;
+  margin: 0 auto;
+  margin-top: 16px;
+`;
 const FindRoommate = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userdata, setUserData] = useState([]);
+  const [isExist, setIsExist] = useState(false);
   const navigate = useNavigate();
   
   useEffect(()=>{
@@ -49,6 +86,7 @@ const FindRoommate = () => {
       try{
         const res = await API.get("/point/find");
         setUserData(res.data.points);
+        setIsExist(res.data.exist);
       }catch(e) {
         console.log(e);
       }
@@ -71,16 +109,24 @@ const FindRoommate = () => {
             <Condition condition={`장소`} />
             <Condition condition={`성향`} />
           </ConditionScroll>
-          {userdata.map((user)=>(
-            <OtherProfile
-              userprofile={basicProfile}
-              nickName={user.nickname}
-              major={user.major}
-              id={user.studentID}
-              score={user.point}
-              intro={user.introduction}
-              onClick={()=>navigate('/detail/details/'+user.userId)}/>
-          ))}
+          {isExist ?
+            userdata.map((user)=>(
+              <OtherProfile
+                userprofile={basicProfile}
+                nickName={user.nickname}
+                major={user.major}
+                id={user.studentID}
+                score={user.point}
+                intro={user.introduction}
+                onClick={()=>navigate('/detail/details/'+user.userId)}/>
+            )) : <>
+            <BlurIcon src={BlurImg}/>
+            <EnrollLifeStyle>
+              <EnrollLifeStyleTxt>{`생활 습관을 등록하면\n나와 맞는 룸메이트를 찾을 수 있어요`}</EnrollLifeStyleTxt>
+              <EnroolLifeStyleBtn onClick={()=>navigate('/lifestyle')}>{`생활 습관 등록하러 가기`}</EnroolLifeStyleBtn>
+            </EnrollLifeStyle>
+            </>
+          }
         </c.SubScreen>
       </c.ScreenComponent>
       {isOpen ? <BottomSheet close={()=>setIsOpen(false)}/> : <NavigationBar type={`rommate`} />}
