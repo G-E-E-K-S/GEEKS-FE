@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import API from "../../axios/BaseUrl";
-import axios from "axios";
 import moment from "moment";
 import 'moment/locale/ko';
 import { useParams } from "react-router-dom";
@@ -13,6 +12,7 @@ import PostContent from "../../components/Community/PostContent";
 import LikeAndStarBtn from "../../components/Community/LikeAndStarBtn";
 import CommentCnt from "../../components/Community/CommentCnt";
 import Comment from "../../components/Community/Comment";
+import Modal from "../../components/Common/Modal";
 import Dot from "../../assets/img/Community/dots.svg";
 import Like from "../../assets/img/Community/like.svg";
 import FillLike from "../../assets/img/Community/fillLike.svg";
@@ -35,6 +35,27 @@ const TotalInput = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+const Anonymous = styled.div`
+  display: flex;
+`;
+const AnonymousBox = styled.input`
+  width: 18px;
+  height: 18px;
+  border: 1px solid #949494;
+  &:checked {
+    background-color: lightgreen;
+    border: 1px solid green;
+  }
+`;
+const AnonymousTxt = styled.div`
+  color: #707070;
+  font-size: 1rem;  
+  font-weight: 500;
+  margin-top: 3px;
+  margin-left: 3px;
+  margin-right: 3.07vw;
+  width: max-content;
+`;
 const InputComment = styled.input`
   outline: none;
   border: none;
@@ -50,15 +71,50 @@ const InputComment = styled.input`
 const PostImg = styled.img`
   border-radius: 16px;
   width: 100%;
-  height: 245px;
   overflow: hidden;
-  object-fit: cover;
+  object-fit: contain;
   margin-top: 20px;
 `;
+const ModalTxt = styled.div`
+  color: #333;
+  text-align: center;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 700;
+`;
+const ModalBtn = styled.div`
+  display: flex;
+  margin-top: 20px;
+`;
+const NoBtn = styled.div`
+  padding: 16px 0px;
+  color: #707070;
+  text-align: center;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  border-radius: 12px;
+  background: #F7F7F7;
+  width: 134px;
+  margin-right: 11px;
+`;
+const YesBtn = styled(NoBtn)`
+  border-radius: 12px;
+  background: #FFC700;
+  color: #333;
+  margin-left: 0px;
+`;
+{/* <ModalTxt>{`‘익명’님께 답글을 달까요?`}</ModalTxt>
+            <ModalBtn>
+              <NoBtn>{`아니요`}</NoBtn>
+              <YesBtn>{`네`}</YesBtn>
+            </ModalBtn> */}
 const Post = () => {
   const [postInfo, setPostInfo] = useState("");
   const [isLike, setIsLike] = useState(false);
   const [isStar, setIsStar] = useState(false);
+  const [parentId, setParentId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const commentRef = useRef();
   let { postId } = useParams();
 
@@ -83,7 +139,7 @@ const Post = () => {
       try {
         const res = await API.post("/post/comment",{
           postId: postId,
-          parentId: null,
+          parentId: parentId,
           content: commentRef.current.value
         });
         window.location.reload();
@@ -111,7 +167,6 @@ const Post = () => {
     }if(isLike === true){
       async function fetchDeleteLikeState() {
         try {
-          
           const res = await API.get("/post/heart/delete?postId=" + postId);
           setIsLike(false);
         } catch (error) {
@@ -145,6 +200,10 @@ const Post = () => {
       fetchDeleteScrapState();
     }
   }
+  const AddReComment = (commentId,modalState) => {
+    setIsModalOpen(modalState);
+    setParentId(commentId);
+  }
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -171,10 +230,11 @@ const Post = () => {
             <div>
               <Comment
                 postInfo={{ username: comment.writer, uploadtime: caclTime(comment.createdDate)}}
-                comment={comment.content}/>
+                comment={comment.content} wirteChild={()=>AddReComment(comment.commentId,true)}/>
                 {comment.children?.map((child)=>(
                   <Comment
                   paddingLeft={`8.17vw`}
+                  paddingRight={`5.12vw`}
                   recomment={true}
                   postInfo={{ username: child.writer, uploadtime: caclTime(comment.createdDate) }}
                   comment={child.content}/>
@@ -185,8 +245,19 @@ const Post = () => {
       </c.ScreenComponent>
       <InputCommentBox>
         <TotalInput>
+          <Anonymous>
+            <AnonymousBox type='checkbox'/>
+            <AnonymousTxt>{`익명`}</AnonymousTxt>
+          </Anonymous>
           <InputComment placeholder="댓글을 입력하세요" ref={commentRef}/>
           <img src={Send} onClick={()=>UploadComment()}/>
+          {isModalOpen && <Modal padding={`22px 20px`}>
+            <ModalTxt>{`‘익명’님께 답글을 달까요?`}</ModalTxt>
+            <ModalBtn>
+              <NoBtn onClick={()=>AddReComment(null,false)}>{`아니요`}</NoBtn>
+              <YesBtn onClick={()=>setIsModalOpen(false)}>{`네`}</YesBtn>
+            </ModalBtn>
+            </Modal>}
         </TotalInput>
       </InputCommentBox>
     </c.Totalframe>
