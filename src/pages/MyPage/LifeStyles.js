@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../../axios/BaseUrl";
 import axios from "axios";
 import styled from "styled-components";
@@ -71,7 +72,7 @@ const LifeStyles = () => {
   const [isCleaning, setIsCleaning] = useState(null);
   const [isTendency, setIsTendency] = useState(null);
   const [receiveData, setReceiveData] = useState(null);
-
+  const navigate = useNavigate();
   const handleReset = () => {
     setIsSmoke(null);
     setIsHabit(null);
@@ -116,7 +117,6 @@ const LifeStyles = () => {
     if ( isSmoke !== null && isHabit !== null && isEar !== null && isSleep !== null && isWakeUp !== null && isOut !== null && isCleaning !== null &&isTendency !== null){
       async function fetchLifeStyle() {
         try {
-          
           const res = await API.post("/detail/register", {
             'smoking': isSmoke,
             'habit': isHabit,
@@ -127,7 +127,7 @@ const LifeStyles = () => {
             'cleaning': isCleaning,
             'tendency': isTendency,
           });
-          console.log(res);
+          if(res.data === "success") navigate('/mypage');
         } catch (error) {
           console.error(error);
         }
