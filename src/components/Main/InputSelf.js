@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import * as c from "../../components/Common/CommonStyle";
 import styled from "styled-components";
 
@@ -54,12 +54,21 @@ const InputSelf = (props) => {
   const [borderColor, setBorderColor] = useState(false);
   const letterCnt = useRef(0);
 
+  // useEffect(() => {
+  //   if(props.value?.length === 0) return;
+
+  //   console.log(props.value);
+  //   letterCnt.current = props.value?.length;
+  // },[props.value])
+
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setInputVal(value);
-    const length = value.length;
-    letterCnt.current = length;
+    props.changeValue(value);
+
+    // const length = value.length;
+    // letterCnt.current = length;
   };
+
   const handleBorderColor = (state) => {
     setBorderColor(state);
   };
@@ -68,18 +77,18 @@ const InputSelf = (props) => {
     <div>
       <Flex borderColor={borderColor}>
         <InputNickName
-          value={inputVal}
+          defaultValue={props.value}
           onChange={handleInputChange}
           maxLength={props.totalLen}
           placeholder={props.placeholder}
           onFocus={()=>handleBorderColor(true)}
           onBlur={()=>handleBorderColor(false)}
         />
-        {props.isrepresent ? <Represent>대표</Represent> : null}
+        {/* {props.isrepresent ? <Represent>대표</Represent> : null} */}
       </Flex>
 
       <LetterLen>
-        {letterCnt.current}/{props.totalLen}
+        {props.value?.length}/{props.totalLen}
       </LetterLen>
     </div>
   );
