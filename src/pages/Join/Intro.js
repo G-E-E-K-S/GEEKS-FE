@@ -16,7 +16,7 @@ const Intro = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigation('/welcome'); // 경로에 시작 슬래시 추가
+            navigation('/accessright'); // 경로에 시작 슬래시 추가
         }, 2000);
 
         return () => clearTimeout(timer);
