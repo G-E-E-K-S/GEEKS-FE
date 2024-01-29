@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API from "../../axios/BaseUrl";
-import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import NavigationBar from "../../components/Main/NavigationBar";
 import GoBack from "../../components/Common/GoBack";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import MyChat from "../../components/Chat/MyChat";
 import OtherChat from "../../components/Chat/OtherChat";
 import Dots from "../../assets/img/Home/edit.svg";
@@ -32,7 +32,7 @@ const Name = styled.div`
   text-align: center;
   font-size: 1rem;
   font-weight: 600;
-  margin-top: 6.51vh;
+  margin-top: 55px;
 `;
 const Major = styled.div`
   color: #707070;
@@ -40,7 +40,7 @@ const Major = styled.div`
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 16px;
-  margin-top: 1.02vh;
+  margin-top: 4px;
 `;
 const DotsImg = styled.img`
   margin-top: 7.58vh;
@@ -75,7 +75,6 @@ const InputMsgBox = styled.div`
   padding: 1.18vh 3.07vw 1.18vh 4.1vw;
   border-radius: 24px;
   background: #f7f7f7;
-  margin-left: 3.07vw;
 `;
 const InputMsg = styled.input`
   outline: none;
@@ -88,6 +87,11 @@ const InputMsg = styled.input`
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
+  &::placeholder{
+    color: #B7B7B7;
+    font-size: 1rem
+    font-weight: 500;
+  }
 `;
 const SendImg = styled.img`
   float: right;
@@ -189,7 +193,7 @@ const ChatRoom = () => {
       <c.ScreenComponent>
         <c.SubScreen>
           <ChatHeader>
-            <GoBack />
+            <GoBack/>
             <c.DirectionCol>
               <Name>{roomInfo?.opponentUser}</Name>
               <Major>{roomInfo?.major + ' · ' + roomInfo?.studentID + '학번'}</Major>
@@ -210,15 +214,15 @@ const ChatRoom = () => {
       </c.ScreenComponent>
       <ChatBottom isBottomOpen={isChatBottomClick}>
         <c.Flex>
-          <Add src={Plus} onClick={() => setIsChatBottomClick(true)} />
+          {/* <Add src={Plus} onClick={() => setIsChatBottomClick(true)} /> */}
           <InputMsgBox>
             <c.Flex>
-              <InputMsg ref={content} />
+              <InputMsg ref={content} placeholder="메시지 입력하기"/>
               <SendImg src={Send} onClick={publish} />
             </c.Flex>
           </InputMsgBox>
         </c.Flex>
-        {isChatBottomClick ? <c.Flex>
+        {/* {isChatBottomClick ? <c.Flex>
           <PlusMenu>
             <ChatBottomMenu icon={Photo} iconText={`사진`} />
             <ChatBottomMenu icon={Video} iconText={`동영상`} />
@@ -226,7 +230,7 @@ const ChatRoom = () => {
             <ChatBottomMenu icon={Rule} iconText={`생활 규칙`} />
           </PlusMenu>
 
-        </c.Flex> : null}
+        </c.Flex> : null} */}
       </ChatBottom>
     </c.Totalframe>
   );
