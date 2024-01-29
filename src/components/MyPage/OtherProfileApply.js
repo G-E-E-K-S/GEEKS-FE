@@ -10,6 +10,11 @@ const TotalProfile = styled.div`
   border: 1px solid ${(props)=>props.activeCheck ? '#ECAA00' : '#FFFBEE'};
   margin-bottom: 2.36vh;
 `;
+const UserProfiles = styled.div`
+  display: flex;
+  justify-content:center;
+  align-items: center;
+`;
 const UserProfile = styled.img`
   width: 48px;
   height: 48px;
@@ -35,7 +40,7 @@ const OtherProfileApply = (props) => {
   return (
     <TotalProfile activeCheck={props.activeCheck}>
       <c.SpaceBetween>
-        <c.Flex>
+        <UserProfiles>
           <UserProfile src={props.userprofile === null ? BasicrProfile : 'https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/'+props.userprofile} />
           <div>
             <NickName>{props.nickName}</NickName>
@@ -43,7 +48,7 @@ const OtherProfileApply = (props) => {
               {props.major} · {props.id}학번
             </Major>
           </div>
-        </c.Flex>
+        </UserProfiles>
       </c.SpaceBetween>
     </TotalProfile>
   );

@@ -4,7 +4,7 @@ import API from "../../axios/BaseUrl";
 import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import HeaderMenu from "../../components/Common/HeaderMenu";
+import ColHeaderMenu from "../../components/Common/ColHeaderMenu";
 import LifeStyle from "../../components/Main/LifeStyle";
 import reset from '../../assets/img/MyPage/reset.svg';
 
@@ -16,6 +16,8 @@ const SubTitle = styled.div`
   font-weight: 700;
   line-height: 32px;
   white-space: pre-wrap;
+  margin-top: 20px;
+  margin-bottom: 36px;
 `;
 const BottomMenues = styled.div`
   display: flex;
@@ -139,9 +141,9 @@ const LifeStyles = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
-            <HeaderMenu>
+            <ColHeaderMenu>
               <SubTitle>{`나의 생활 습관을\n등록해 보세요`}</SubTitle>
-            </HeaderMenu>
+            </ColHeaderMenu>
             <LifeStyle lifeStyleText={`흡연 여부`} lifeStyle={[{'흡연자에요': true},{'비흡연자에요': false}]} lifeStyleSection={setIsSmoke} isState={isSmoke}/>
             <LifeStyle lifeStyleText={`잠버릇`} lifeStyle={[{'잠버릇 있어요' : true},{'잠버릇 없어요' : false}]} lifeStyleSection={setIsHabit} isState={isHabit}/>
             <LifeStyle lifeStyleText={`잠귀`} lifeStyle={[{'귀 밝아요' : 'BRIGHT'},{'귀 어두워요' : 'DARK'}]} lifeStyleSection={setIsEar} isState={isEar}/>
