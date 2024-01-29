@@ -39,6 +39,9 @@ const InputPassword = styled.input`
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
+  &::placeholder{
+		color: #D0D0D0;
+	}
 `;
 
 const PwdCondition = styled.div`
@@ -132,7 +135,7 @@ const Password = () => {
         <SubText>로그인 아이디는 이메일 주소를 입력하면 돼요</SubText>
         <InputPasswordTotal isSelected={isSelected}>
           <InputPassword
-            placeholder="비밀번호"
+            placeholder="비밀번호 입력"
             type={showPwd ? "text" : "password"}
             onClick={ChangeBarColor}
             value={inputval}
