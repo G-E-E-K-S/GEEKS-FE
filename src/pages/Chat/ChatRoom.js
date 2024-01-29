@@ -3,9 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import API from "../../axios/BaseUrl";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import NavigationBar from "../../components/Main/NavigationBar";
 import GoBack from "../../components/Common/GoBack";
-import HeaderMenu from "../../components/Common/HeaderMenu";
 import MyChat from "../../components/Chat/MyChat";
 import OtherChat from "../../components/Chat/OtherChat";
 import Dots from "../../assets/img/Home/edit.svg";
@@ -26,13 +24,14 @@ const ChatHeader = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-top: 7.58vh;
 `;
 const Name = styled.div`
   color: #333;
   text-align: center;
   font-size: 1rem;
   font-weight: 600;
-  margin-top: 55px;
 `;
 const Major = styled.div`
   color: #707070;
@@ -43,7 +42,8 @@ const Major = styled.div`
   margin-top: 4px;
 `;
 const DotsImg = styled.img`
-  margin-top: 7.58vh;
+  width: 28px;
+  height: 28px;
 `;
 const Date = styled.div`
   color: #949494;
@@ -59,7 +59,7 @@ const Date = styled.div`
 const ChatBottom = styled.div`
   position: fixed;
   width: 100%;
-  bottom: ${(props) => props.isBottomOpen ? '28.19vh' : '17.06vh'};
+  bottom: 86px;
   padding: 14px 5.12vw 0 5.12vw;
   border-top: 1px solid #efefef;
 `;
