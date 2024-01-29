@@ -12,7 +12,7 @@ const MyCommunity = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <Header subtitle={`마이 커뮤니티`}/>
-        <MyCommunityList icon={ListIcon} listText={`커뮤니티 작성 내역`}/>
+        <MyCommunityList icon={ListIcon} listText={`커뮤니티 작성 내역`} onClick={()=>navigate('/communitywrite')}/>
         <MyCommunityList icon={StarIcon} listText={`스크랩한 글`} onClick={()=>navigate('/scrappost')}/>
       </c.ScreenComponent>
     </c.Totalframe>
