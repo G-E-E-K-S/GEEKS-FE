@@ -4,12 +4,10 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/MyPage/Header";
 
-const NoticeTop = styled.div`
-    display: flex;
-    margin-bottom: 5.68vh;
+const NoticeBox = styled.div`
+  padding: 20px 0px;
 `;
 const NoticeText = styled.div`
-
   color: #333;
   font-size: 1rem;
   font-style: normal;
@@ -25,20 +23,23 @@ const NoticeDate = styled.div`
   margin-top: 4px;
 `;
 const Br = styled.div`
-    height:1px;
-    background-color: #EFEFEF;
-    margin: 2.36vh 0;
+  height: 1px;
+  background-color: #efefef;
 `;
 const Notice = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header subtitle={`공지사항`}/>
-        <NoticeText>{`편리한 채팅을 위한 새로운 기능이 생겼어요 두줄은 이렇게 써져요`}</NoticeText>
-        <NoticeDate>{`2023.09.25`}</NoticeDate>
-        <Br/>
-        <NoticeText>{`이제 00대학교도 긱스를 사용할 수 있어요`}</NoticeText>
-        <NoticeDate>{`2023.09.25`}</NoticeDate>
+        <Header subtitle={`공지사항`} />
+        <NoticeBox isFirst={true}>
+          <NoticeText>{`편리한 채팅을 위한 새로운 기능이 생겼어요 두줄은 이렇게 써져요`}</NoticeText>
+          <NoticeDate>{`2023.09.25`}</NoticeDate>
+        </NoticeBox>
+        <Br />
+        <NoticeBox>
+          <NoticeText>{`이제 00대학교도 긱스를 사용할 수 있어요`}</NoticeText>
+          <NoticeDate>{`2023.09.25`}</NoticeDate>
+        </NoticeBox>
       </c.ScreenComponent>
     </c.Totalframe>
   );

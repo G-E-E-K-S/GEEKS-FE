@@ -9,7 +9,7 @@ const LifeStyleBox = styled.div`
   padding-bottom: 2.36vh;
 `;
 const LifeStyleTxt = styled.div`
-  width: 17.94vw;
+  width: 70px;
   display: flex;
   align-items: center;
 `;
@@ -43,9 +43,13 @@ const OpponentLifeStyle = styled(SameLifeStyle)`
   max-width: 34.1vw;
   word-break: keep-all;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const MyLifeStlye = styled(OpponentLifeStyle)`
   background: #fcede8;
+  height: max-content;
 `;
 
 const LifeStyle = (props) => {

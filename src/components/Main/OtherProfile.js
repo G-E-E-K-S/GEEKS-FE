@@ -16,6 +16,11 @@ const TotalProfile = styled.div`
   margin-bottom: 16px;
   overflow-x: auto;
 `;
+const Profiles = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const UserProfile = styled.img`
   width: 48px;
   height: 48px;
@@ -92,7 +97,7 @@ const OtherProfile = (props) => {
   return (
     <TotalProfile activeCheck={props.activeCheck} onClick={props.onClick}>
       <c.SpaceBetween>
-        <c.Flex>
+        <Profiles>
           <UserProfile src={props.userprofile} />
           <div>
             <NickName>{props.nickName}</NickName>
@@ -100,7 +105,7 @@ const OtherProfile = (props) => {
               {props.major} · {props.id}학번
             </Major>
           </div>
-        </c.Flex>
+        </Profiles>
         <c.Flex>
           <Score score={props.score}>{props.score}</Score>
           <ScoreUnit score={props.score}>점</ScoreUnit>

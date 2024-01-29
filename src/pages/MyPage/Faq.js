@@ -19,7 +19,8 @@ const SearchBox = styled.div`
   padding: 10px 3.07vw;
   border-radius: 8px;
   background: #f7f7f7;
-  margin-bottom: 3.9vh;
+  margin-bottom: 28px;
+  margin-top: 20px;
 `;
 const SearchInput = styled.input`
   margin-left: 2.05vw;

@@ -4,8 +4,8 @@ import GoBack from "../Common/GoBack";
 import SubTitle from "../Main/SubTitle";
 
 const TotalHeader = styled.div`
-  height: 52px;
   margin-top: 6.16vh;
+  margin-bottom: 16px;
   display: flex;
 `;
 const Header = (props) => {

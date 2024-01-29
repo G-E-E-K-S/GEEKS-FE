@@ -5,7 +5,6 @@ import CommentNumImg from "../../assets/img/Community/commentNum.svg";
 
 const ShowTotalPost = styled.div`
   width: 100%;
-  padding-top: 20px;
   padding-bottom: 20px;
   cursor: pointer;
 `;
@@ -13,21 +12,19 @@ const PostName = styled.div`
   color: #333;
   font-size: 1.125rem;
   font-weight: 600;
-  line-height: 24px;
   margin-right: 3.07vw;
 `;
 const CommentNumIcon = styled.img`
   width: 16px;
   height: 16px;
-  margin: auto 0;
+  margin-top: 1px;
 `;
 const CommentNum = styled.div`
   color: #2b75cb;
-  font-size: 0.875;
+  font-size: 0.875rem;
   font-weight: 500;
-  line-height: 18px;
-  margin: auto 0;
   margin-left: 3px;
+  margin-top: 1px;
 `;
 const PostContent = styled.div`
   color: #525252;

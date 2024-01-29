@@ -15,12 +15,25 @@ import GroupIcon from "../../assets/gif/group.gif";
 import RightArrow from "../../assets/img/Community/rightArrow.svg";
 import MyPageIcon from "../../assets/img/Community/myPage.svg";
 import WritePost from "../../assets/img/Community/edit.svg";
-
+import GeeksLogo from "../../assets/img/Common/geeksLogo.svg";
+import Search from "../../assets/img/Home/search.svg";
+const TotalHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 52px;
+    padding: 12px 0;
+`;
+const Icon = styled.div`
+    display: flex;
+    gap: 16px;
+    cursor: pointer;
+`;
 const GroupPromotionBox = styled.div`
   width: 100%;
   border-radius: 12px;
   background: #effae7;
-  padding: 11px 5.12vw;
+  padding: 15px 3.12vw 15px 5.12vw;
   margin-top: 16px;
   margin-bottom: 24px;
   position: relative;
@@ -43,8 +56,8 @@ const GroupImg = styled.img`
   width: 102px;
   height: 102px;
   position: absolute;
-  right: 10.3vw;
-  bottom: 5px;
+  right: 7.13vw;
+  bottom: 0px;
 `;
 const WritePostBox = styled.div`
   display: flex;
@@ -105,9 +118,13 @@ const Community = () => {
   return loading ? null : (
     <c.Totalframe>
       <c.ScreenComponent>
-        <HeaderMenu>
-          <img src={MyPageIcon} onClick={() => navigate("/myCommunity")} />
-        </HeaderMenu>
+        <TotalHeader>
+          <img src={GeeksLogo}/>
+          <Icon>
+            <img src={Search}/>
+            <img src={MyPageIcon} onClick={() => navigate("/myCommunity")}/>
+          </Icon>
+        </TotalHeader>
         <GroupPromotionBox>
           <c.SpaceBetween>
             <div>
