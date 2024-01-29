@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import API from "../../axios/BaseUrl";
 import { useParams, useNavigate } from "react-router-dom";
 import { Chart } from 'react-chartjs-2';
@@ -118,9 +117,12 @@ const MatchColorText = styled.div`
 const BottomEnroll = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0px 20px;
+  padding: 20.17px 5.12vw 75.83px 5.12vw;
   border-top: 1px solid #efefef;
-  padding-top: 2.38vh;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  background-color: #fff;
 `;
 const SaveImg = styled.img`
   margin-top: 4px;
@@ -206,6 +208,7 @@ const User = () => {
       try{
         const res = await API.get("/detail/details?id="+userId);
         setOpponentUser(res.data);
+        setIsSave(res.data.details[0].saved);
         setLifeStyles(res.data.details);
         setData({
           datasets: [
@@ -282,6 +285,7 @@ const User = () => {
         const res = await API.get("/roommate/request?yourNickname="+opponentUser.nickname);
         console.log(res);
         setApplyRommate(false);
+        if(res.status === 200) navigate('/roommatesendtxt',{ state: {OpponentUser:opponentUser?.nickname} });
       }catch(e) {
         console.log(e);
       }

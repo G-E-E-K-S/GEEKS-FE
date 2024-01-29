@@ -28,6 +28,9 @@ const InputCommentBox = styled.div`
   padding: 14px 2.36vw;
   border-top: 1px solid #efefef;
   background: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 `;
 const TotalInput = styled.div`
   border-radius: 24px;

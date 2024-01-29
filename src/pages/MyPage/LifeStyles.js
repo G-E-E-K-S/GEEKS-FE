@@ -22,8 +22,11 @@ const SubTitle = styled.div`
 const BottomMenues = styled.div`
   display: flex;
   width: 100%;
-  padding: 2.38vh; 5.12vw 0px 5.12vw;
+  padding: 20.17px 5.12vw 75.83px 5.12vw;
   border-top: 1px solid #EFEFEF;
+  position: fixed;
+  bottom: 0;
+  background-color:#FFF;
 `;
 const Reset = styled.div`
   display: flex;
