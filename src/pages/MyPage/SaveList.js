@@ -27,7 +27,7 @@ const DoneBtn = styled.div`
   font-weight: 600;
 `;
 const EditImg = styled.img`
-  margin-top: 6.64vh;
+  margin-top: 6.16vh;
   cursor: pointer;
 `;
 const TotalSaveNum = styled.div`

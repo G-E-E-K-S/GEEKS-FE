@@ -73,7 +73,7 @@ const SettingUserInfo = () => {
           <AccountTitle>인증 학교</AccountTitle>
           <AccountInfo>상명대학교 천안캠퍼스</AccountInfo>
         </AccountInfoBox>
-        <AccountBtn>재인증하기</AccountBtn>
+        {/* <AccountBtn>재인증하기</AccountBtn> */}
       </c.ScreenComponent>
     </c.Totalframe>
   );

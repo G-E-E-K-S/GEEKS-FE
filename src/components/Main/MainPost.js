@@ -26,11 +26,12 @@ const PostContent = styled.div`
 `;
 const Icons = styled.div`
   display: flex;
-  margin-left: ${(props)=>props.isComment ? '3.07vw' : '1.53vw'}
+  margin-left: ${(props)=>props.isComment ? '3.07vw' : '1.53vw'};
 `;
 const Icon = styled.img`
   width: 14px;
   height: 14px;
+  margin-top: 1px;
 `;
 const IconTxt = styled.div`
   color: ${(props)=>props.isComment ? '#EC5062' : '#2B75CB'};

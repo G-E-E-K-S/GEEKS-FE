@@ -4,7 +4,7 @@ import * as c from "../Common/CommonStyle";
 
 const LifeStyleTxt = styled.div`
   color: #b7b7b7;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
   margin-bottom: 8px;
@@ -19,18 +19,20 @@ const InputRadio = styled.input`
 `;
 const SubLifeStyle = styled.div`
   display: flex;
-  white-space: nowrap;
-  padding: 8px 16px;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
+  padding: 8px 16px;
   border-radius: 20px;
   background: ${(props)=> props.checked ? '#FFC700' : '#efefef'};
   cursor: pointer;
 
   color: ${(props)=> props.checked ? '#333' : '#707070'};
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 600;
+  text-align: center;
+  line-height: 24px;
 `;
 const Line = styled.div`
   width: 350px;

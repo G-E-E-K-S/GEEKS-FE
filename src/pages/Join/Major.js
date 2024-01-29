@@ -62,24 +62,6 @@ const CloseImg = styled.img`
   width: 28px;
   height: 28px;
 `;
-const BottomBtn = styled.div`
-  height: 17.29vh;
-`;
-const SelectDone = styled.div`
-  height: 60px;
-  width: 100%;
-  border-radius: 12px;
-  background: #F7F7F7;
-  color: #B7B7B7;
-  text-align: center;
-  font-size: 1.125rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const Major = () => {
   const [isSelected, setIsSelected] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
@@ -139,21 +121,6 @@ const Major = () => {
           <img src={UnderArrow} />
         </MajorTotal>
         {/* open Major Bottom Sheet */}
-        {/* {isMajorOpen && (
-          <BottomSheet height={`487px`} padding={`24px 5.12vw 0px 5.12vw`}>
-            <c.SpaceBetween>
-              <MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
-              <CloseImg src={Close} onClick={() => handleBottomSheet()} />
-            </c.SpaceBetween>
-            {DepartmentList.map((department) => (
-              <Department
-                department={department}
-                onClick={()=>openBottomSheet(department)}
-                isDepartment={true}/>
-            ))}
-          </BottomSheet>
-        )} */}
-
         <BottomSheet height={`487px`} padding={`24px 5.12vw 0px 5.12vw`} isOpen={isMajorOpen} interaction={true}>
             <c.SpaceBetween>
               <MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
@@ -166,7 +133,6 @@ const Major = () => {
                 isDepartment={true}/>
             ))}
           </BottomSheet>
-
           {isDepartmentOpen && 
           <BottomSheet height={`630px`} padding={`24px 5.12vw 0px 5.12vw`} isOpen={isDepartmentOpen} interaction={false}>
             <c.SpaceBetween>
@@ -176,9 +142,6 @@ const Major = () => {
             {DepartmentMajors[department].map((major) => (
               <Department department={major} onClick={() => handleMajor(major)}/>
             ))}
-            <BottomBtn>
-              <SelectDone>{`선택 완료`}</SelectDone>
-            </BottomBtn>
           </BottomSheet>}
 
         <StudentIdTotal

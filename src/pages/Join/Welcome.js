@@ -11,7 +11,6 @@ const StartMent = styled.div`
   font-size: 1.75rem;
   font-weight: 700;
   white-space: pre-wrap;
-  font-family: Pretendard;
   text-align: center;
 `;
 

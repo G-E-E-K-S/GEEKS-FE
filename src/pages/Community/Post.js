@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import API from "../../axios/BaseUrl";
 import moment from "moment";
-import 'moment/locale/ko';
+import "moment/locale/ko";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -20,6 +20,8 @@ import FillLike from "../../assets/img/Community/fillLike.svg";
 import Star from "../../assets/img/Community/star.svg";
 import FillStar from "../../assets/img/Community/fillStar.svg";
 import Send from "../../assets/img/Chat/send.svg";
+import CheckBox from "../../assets/img/Community/checkBox.svg";
+import FillCheckBox from "../../assets/img/Community/fillCheckPost.svg"
 
 const InputCommentBox = styled.div`
   height: 144px;
@@ -38,7 +40,7 @@ const TotalInput = styled.div`
 `;
 const MenuBox = styled.div`
   padding: 20px 0;
-  color: ${(props)=>props.Report ? '#CB3D0B' : '#525252'};
+  color: ${(props) => (props.Report ? "#CB3D0B" : "#525252")};
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 600;
@@ -47,8 +49,8 @@ const MenuBox = styled.div`
 const CloseBtn = styled.div`
   padding: 16px 0;
   border-radius: 12px;
-  border: 1px solid #E2E2E2;
-  background: #FFF;
+  border: 1px solid #e2e2e2;
+  background: #fff;
   text-align: center;
   color: #333;
   font-size: 1.125rem;
@@ -59,21 +61,17 @@ const CloseBtn = styled.div`
 `;
 const Anonymous = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
 `;
-const AnonymousBox = styled.input`
+const AnonymousBox = styled.img`
   width: 18px;
   height: 18px;
-  border: 1px solid #949494;
-  &:checked {
-    background-color: lightgreen;
-    border: 1px solid green;
-  }
 `;
 const AnonymousTxt = styled.div`
   color: #707070;
-  font-size: 1rem;  
+  font-size: 1rem;
   font-weight: 500;
-  margin-top: 3px;
   margin-left: 3px;
   margin-right: 3.07vw;
   width: max-content;
@@ -112,20 +110,21 @@ const NoBtn = styled.div`
   padding: 16px 0px;
   color: #707070;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 600;
   border-radius: 12px;
-  background: #F7F7F7;
+  background: #f7f7f7;
   width: 134px;
   margin-right: 11px;
 `;
 const YesBtn = styled(NoBtn)`
   border-radius: 12px;
-  background: #FFC700;
+  background: #ffc700;
   color: #333;
   margin-left: 0px;
 `;
+
 const Post = () => {
   const [postInfo, setPostInfo] = useState("");
   const [isLike, setIsLike] = useState(false);
@@ -133,6 +132,9 @@ const Post = () => {
   const [parentId, setParentId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBtsOpen, setIsBtsOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isActive, setIsActive] = useState(false);
+  const [isSelect, setIsSelect] = useState(false);
   const commentRef = useRef();
   let { postId } = useParams();
 
@@ -140,6 +142,8 @@ const Post = () => {
     async function fetchPost() {
       try {
         const res = await API.get("/post/show?postId=" + postId);
+        setLoading(false);
+        setIsActive(true);
         setPostInfo(res.data);
         setIsLike(res.data.heartState);
         setIsStar(res.data.scrapState);
@@ -149,15 +153,14 @@ const Post = () => {
     }
     fetchPost();
   }, []);
-  
 
-  const UploadComment = () => {    
+  const UploadComment = () => {
     async function fetchPost() {
       try {
-        const res = await API.post("/post/comment",{
+        const res = await API.post("/post/comment", {
           postId: postId,
           parentId: parentId,
-          content: commentRef.current.value
+          content: commentRef.current.value,
         });
         window.location.reload();
       } catch (error) {
@@ -165,13 +168,13 @@ const Post = () => {
       }
     }
     fetchPost();
-  }
+  };
   const caclTime = (uploadTime) => {
     moment.locale("ko"); // 언어를 한국어로 설정
-    return moment(uploadTime).fromNow(`A`)+'전'; // 지금으로부터 계산
-  }
-  const handleLike = () =>{
-    if(isLike === false){
+    return moment(uploadTime).fromNow(`A`) + "전"; // 지금으로부터 계산
+  };
+  const handleLike = () => {
+    if (isLike === false) {
       async function fetchLikeState() {
         try {
           const res = await API.get("/post/heart/insert?postId=" + postId);
@@ -181,7 +184,8 @@ const Post = () => {
         }
       }
       fetchLikeState();
-    }if(isLike === true){
+    }
+    if (isLike === true) {
       async function fetchDeleteLikeState() {
         try {
           const res = await API.get("/post/heart/delete?postId=" + postId);
@@ -195,7 +199,7 @@ const Post = () => {
   };
 
   const handleScrap = () => {
-    if(isStar === false){
+    if (isStar === false) {
       async function fetchScrapState() {
         try {
           const res = await API.get("/post/scrap/insert?postId=" + postId);
@@ -205,7 +209,8 @@ const Post = () => {
         }
       }
       fetchScrapState();
-    }if(isStar === true){
+    }
+    if (isStar === true) {
       async function fetchDeleteScrapState() {
         try {
           const res = await API.get("/post/scrap/delete?postId=" + postId);
@@ -216,76 +221,111 @@ const Post = () => {
       }
       fetchDeleteScrapState();
     }
-  }
-  const AddReComment = (commentId,modalState) => {
+  };
+  const AddReComment = (commentId, modalState) => {
     setIsModalOpen(modalState);
     setParentId(commentId);
-  }
+  };
   return (
     <c.Totalframe>
-      <c.ScreenComponent>
-        <c.SubScreen>
-          <HeaderMenu>
-            <img src={Dot} onClick={()=>setIsBtsOpen(true)} />
-          </HeaderMenu>
-          {isBtsOpen && <BottomSheet height={`max-content`} padding={`12px 20px 0 20px`}>
-            {postInfo?.writerState ?  <>
-              <MenuBox>{`글 삭제하기`}</MenuBox>
-              <MenuBox>{`글 수정하기`}</MenuBox>
-            </> : <MenuBox Report={true}>{`신고하기`}</MenuBox>}
-              <CloseBtn onClick={()=>setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
-            </BottomSheet>}
-          <PostInfo username={postInfo.writer === null ? '익명' : postInfo.writer} uploadtime={caclTime(postInfo.createdDate)}></PostInfo>
-          <PostContent
-            title={postInfo.title}
-            content={postInfo.content}></PostContent>
-            {postInfo.photoNames?.map((photo)=>(
-            <PostImg src={'https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/'+ photo} />
-          ))}
-          <c.Flex>
-            <LikeAndStarBtn icon={isLike? FillLike : Like} text={isLike && 1} isLike={isLike} onClick={()=>handleLike()}/>
-            <LikeAndStarBtn icon={isStar? FillStar : Star} text={'스크랩'} marginLeft={`2.05vw`} isStar={isStar} onClick={()=>handleScrap()}/>
-          </c.Flex>
-          <Br/>
+        <c.ScreenComponent>
+          <c.SubScreen>
+            <HeaderMenu>
+              <img src={Dot} onClick={() => setIsBtsOpen(true)} />
+            </HeaderMenu>
+            <BottomSheet height={`max-content`} padding={`12px 20px 0 20px`} isOpen={isBtsOpen} interaction={true}>
+                {postInfo?.writerState ? (
+                  <>
+                    <MenuBox>{`글 삭제하기`}</MenuBox>
+                    <MenuBox>{`글 수정하기`}</MenuBox>
+                  </>
+                ) : (
+                  <MenuBox Report={true}>{`신고하기`}</MenuBox>
+                )}
+                <CloseBtn onClick={() => setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
+              </BottomSheet>
+            <PostInfo
+              username={postInfo.writer === null ? "익명" : postInfo.writer}
+              uploadtime={caclTime(postInfo.createdDate)}
+            ></PostInfo>
+            <PostContent
+              title={postInfo.title}
+              content={postInfo.content}
+            ></PostContent>
+            {postInfo.photoNames?.map((photo) => (
+              <PostImg
+                src={
+                  "https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/" +
+                  photo
+                }
+              />
+            ))}
+            <c.Flex>
+              <LikeAndStarBtn
+                icon={isLike ? FillLike : Like}
+                text={isLike && 1}
+                isLike={isLike}
+                onClick={() => handleLike()}
+              />
+              <LikeAndStarBtn
+                icon={isStar ? FillStar : Star}
+                text={"스크랩"}
+                marginLeft={`2.05vw`}
+                isStar={isStar}
+                onClick={() => handleScrap()}
+              />
+            </c.Flex>
+            <Br />
 
-          {/* 댓글 부분 */}
-          <CommentCnt number={postInfo.commentCount}/>
-          {postInfo.comments?.map((comment)=>(
-            <div>
-              <Comment
-                postInfo={{ username: comment.writer, uploadtime: caclTime(comment.createdDate)}}
-                comment={comment.content} wirteChild={()=>AddReComment(comment.commentId,true)}/>
-                {comment.children?.map((child)=>(
+            {/* 댓글 부분 */}
+            <CommentCnt number={postInfo.commentCount} />
+            {postInfo.comments?.map((comment) => (
+              <div>
+                <Comment
+                  postInfo={{
+                    username: comment.writer,
+                    uploadtime: caclTime(comment.createdDate),
+                  }}
+                  comment={comment.content}
+                  wirteChild={() => AddReComment(comment.commentId, true)}
+                />
+                {comment.children?.map((child) => (
                   <Comment
-                  paddingLeft={`8.17vw`}
-                  paddingRight={`5.12vw`}
-                  recomment={true}
-                  postInfo={{ username: child.writer, uploadtime: caclTime(comment.createdDate) }}
-                  comment={child.content}/>
+                    paddingLeft={`8.17vw`}
+                    paddingRight={`5.12vw`}
+                    recomment={true}
+                    postInfo={{
+                      username: child.writer,
+                      uploadtime: caclTime(comment.createdDate),
+                    }}
+                    wirteChild={() => AddReComment(comment.commentId, true)}
+                    comment={child.content}
+                  />
                 ))}
-            </div>
-          ))}
-        </c.SubScreen>
-      </c.ScreenComponent>
-      <InputCommentBox>
-        <TotalInput>
-          <Anonymous>
-            <AnonymousBox type='checkbox'/>
-            <AnonymousTxt>{`익명`}</AnonymousTxt>
-          </Anonymous>
-          <InputComment placeholder="댓글을 입력하세요" ref={commentRef}/>
-          <img src={Send} onClick={()=>UploadComment()}/>
-          {isModalOpen && <Modal padding={`22px 20px`}>
-            <ModalTxt>{`‘익명’님께 답글을 달까요?`}</ModalTxt>
-              <ModalBtn>
-                <NoBtn onClick={()=>AddReComment(null,false)}>{`아니요`}</NoBtn>
-                <YesBtn onClick={()=>setIsModalOpen(false)}>{`네`}</YesBtn>
-              </ModalBtn>
-            </Modal>
-          }
-        </TotalInput>
-      </InputCommentBox>
-    </c.Totalframe>
+              </div>
+            ))}
+          </c.SubScreen>
+        </c.ScreenComponent>
+        <InputCommentBox>
+          <TotalInput>
+            <Anonymous onClick={()=>setIsSelect(!isSelect)}>
+              <AnonymousBox src={ isSelect ? FillCheckBox : CheckBox} />
+              <AnonymousTxt>{`익명`}</AnonymousTxt>
+            </Anonymous>
+            <InputComment placeholder="댓글을 입력하세요" ref={commentRef} />
+            <img src={Send} onClick={() => UploadComment()} />
+            {isModalOpen && (
+              <Modal padding={`22px 20px`}>
+                <ModalTxt>{`‘익명’님께 답글을 달까요?`}</ModalTxt>
+                <ModalBtn>
+                  <NoBtn onClick={() => AddReComment(null, false)}>{`아니요`}</NoBtn>
+                  <YesBtn onClick={() => setIsModalOpen(false)}>{`네`}</YesBtn>
+                </ModalBtn>
+              </Modal>
+            )}
+          </TotalInput>
+        </InputCommentBox>
+      </c.Totalframe>
   );
 };
 

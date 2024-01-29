@@ -8,7 +8,7 @@ import Dots from "../../assets/img/Community/grayDots.svg";
 const CommentBox = styled.div`
   height: max-content;
   width: ${(props)=>props.isRecomment ? `100vw` : `100%`};
-  padding-top: 16px;
+  padding-top: 8px;
   padding-bottom: 16px;
   padding-left: ${(props)=>props.paddingLeft};
   padding-right: ${(props)=>props.paddingRight};

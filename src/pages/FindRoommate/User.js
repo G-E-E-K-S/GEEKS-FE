@@ -19,7 +19,7 @@ import Dots from "../../assets/img/Community/dots.svg";
 import ApplyRoommateIcon from "../../assets/img/Roommate/applyRoommate.svg";
 
 const TopProfile = styled.div`
-  margin-top: 4.26vh;
+  margin-top: 20px;
 `;
 const Profile = styled.img`
   width: 72px;
@@ -30,8 +30,8 @@ const NickName = styled.div`
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 28px;
-  margin-top: 2.13vh;
-  margin-bottom: 0.23vh;
+  margin-top: 10px;
+  margin-bottom: 2px;
 `;
 const Major = styled.div`
   color: #707070;
@@ -43,9 +43,9 @@ const Major = styled.div`
 `;
 const Chat = styled.div`
   display: flex;
-  width: 30.76vw;
-  height: 6.16vh;
-  padding: 1.65vh 4.1vw;
+  width: 120px;
+  height: 52px;
+  padding: 14px 16px;
   border-radius: 12px;
   border: 1px solid #e2e2e2;
   background: #fff;
@@ -57,7 +57,6 @@ const ChatImage = styled.img`
 const ChatText = styled.div`
   color: #333;
   text-align: center;
-  font-family: Pretendard;
   font-size: 1rem;
   font-style: normal;
   font-weight: 600;
@@ -82,7 +81,7 @@ const UserMessageBox = styled.div`
     border: 23px solid transparent;
     border-bottom-color: #faf6f1;
     border-top: 0;
-    margin-top: -15px;
+    margin-top: -10px;
   }
 `;
 const InfoImg = styled.img`
@@ -166,17 +165,17 @@ const CharContainer = styled.div`
 `;
 const OtherAndMeTxt = styled.div`
   display: flex;
-  margin-top: 6.63vh;
-  margin-bottom: 2.36vh;
+  width: 100%;
   color: #707070;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: 24px;
+  margin-top: 56.75px;
 `;
 const Other = styled.div`
   margin-left: 28.46vw;
-  margin-right: 28.45vw;
+  margin-right: 32.45vw;
 `;
 const Me = styled.div``;
 
@@ -187,6 +186,7 @@ const User = () => {
   const [lifeStyles, setLifeStyles] = useState([]);
   const [lifeStyleList, setLifeStyleList] = useState([
     {name : '흡연', key : 'smoking' , true : '흡연자', false : '비흡연자'},
+    {name : '잠버릇', key : 'habit' , true : '잠버릇 있어요', false : '잠버릇 없어요'},
     {name : '잠귀', key : 'ear', BRIGHT : '귀 밝아요', DARK : '귀 어두워요'},
     {name : '취침', key : 'sleep', EARLY : '일찍 자요', LATE : '늦게 자요', RANDOM : '때때로 달라요'},
     {name : '기상', key : 'wakeup', EARLY: '일찍 일어나요', LATE : '늦게 일어나요', RANDOM : '때마다 달라요'},
@@ -281,14 +281,13 @@ const User = () => {
       try{
         const res = await API.get("/roommate/request?yourNickname="+opponentUser.nickname);
         console.log(res);
+        setApplyRommate(false);
       }catch(e) {
         console.log(e);
       }
     }
     fetchApplyRoommate();
   }
-
-  
   
   return (
     <c.Totalframe>
@@ -349,18 +348,17 @@ const User = () => {
         <EnrollBtn>
           <EnrollTxt onClick={()=>setApplyRommate(true)}>룸메이트 신청하기</EnrollTxt>
         </EnrollBtn>
-        
-        {applyRoommate &&
-          <ApplyCancelBottomSheet
+      </BottomEnroll>
+      <ApplyCancelBottomSheet
             height={`393px`}
             padding={`24px 20px 85px 20px`}
             Icon={ApplyRoommateIcon}
             message={opponentUser?.nickname+`님께\n룸메이트를 신청할까요?`}
             subMessage={`상대방이 수락하기 전까지는\n언제든지 취소 가능해요`}
             btnName={`신청하기`}
+            isOpen={applyRoommate}
             onClick={()=>ApplyRoommate()}
-            applyRoommate={()=>setApplyRommate(false)}/>}
-      </BottomEnroll>
+            applyRoommate={()=>setApplyRommate(false)}/>
     </c.Totalframe>
   );
 };

@@ -108,6 +108,7 @@ const WelcomeKit = styled.div`
 const MyPage = () => {
   const [toggle, setToggle] = useState(false);
   const [userInfo, setUserInfo] = useState('');
+  const [userMajor , setUserMajor] = useState('');
 
   const setContent = useSetRecoilState(UserNickName);
   
@@ -117,7 +118,6 @@ const MyPage = () => {
   const navigate = useNavigate();
 
   useEffect(()=>{
-    
     async function fetchUserInfo(){
       try{
           const res = await API.get("/member/myPage");
@@ -183,8 +183,7 @@ const MyPage = () => {
           <MyPageMenu
             menuImg={userInfoImg}
             menuName={`회원 정보 설정`}
-            onClick={() => navigate("/settinguserinfo")}
-          />
+            onClick={() => navigate("/settinguserinfo")}/>
           <MyPageMenu menuImg={notice} menuName={`알림 설정`} />
           <MyPageMenu
             menuImg={announce}
