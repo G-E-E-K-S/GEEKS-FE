@@ -21,7 +21,7 @@ import Star from "../../assets/img/Community/star.svg";
 import FillStar from "../../assets/img/Community/fillStar.svg";
 import Send from "../../assets/img/Chat/send.svg";
 import CheckBox from "../../assets/img/Community/checkBox.svg";
-import FillCheckBox from "../../assets/img/Community/fillCheckPost.svg"
+import FillCheckBox from "../../assets/img/Community/fillCheckPost.svg";
 
 const InputCommentBox = styled.div`
   height: 144px;
@@ -131,6 +131,10 @@ const Post = () => {
   const [isStar, setIsStar] = useState(false);
   const [parentId, setParentId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [recommentUserName, setRecommentUserName] = useState(''); 
+  const [commentId, setCommentId] = useState('');
+  const [isCommentBts, setIsCommentBts] = useState(false);
   const [isBtsOpen, setIsBtsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isActive, setIsActive] = useState(false);
@@ -222,9 +226,10 @@ const Post = () => {
       fetchDeleteScrapState();
     }
   };
-  const AddReComment = (commentId, modalState) => {
+  const AddReComment = (commentId, commentUserName,modalState) => {
     setIsModalOpen(modalState);
     setParentId(commentId);
+    setRecommentUserName(commentUserName);
   };
   const DeletePost = () => {
     async function fetchDeletePost() {
@@ -238,9 +243,25 @@ const Post = () => {
     }
     fetchDeletePost();
   }
+  const DeleteCommentBts = (commentId) => {
+    setIsCommentBts(true);
+    setCommentId(commentId);
+  }
+  const DeleteComment = () => {
+    async function fetchDeleteComment() {
+      try {
+        const res = await API.post("/post/delete/comment/" + commentId);
+        console.log(res);
+        setIsCommentBts(false);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchDeleteComment();
+  }
   return (
     <c.Totalframe>
-        <c.ScreenComponent>
+        <c.ScreenComponent navigation={true}>
           <c.SubScreen>
             <HeaderMenu>
               <img src={Dot} onClick={() => setIsBtsOpen(true)} />
@@ -255,37 +276,30 @@ const Post = () => {
                   <MenuBox Report={true}>{`신고하기`}</MenuBox>
                 )}
                 <CloseBtn onClick={() => setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
-              </BottomSheet>
+            </BottomSheet>
             <PostInfo
               username={postInfo.writer === null ? "익명" : postInfo.writer}
-              uploadtime={caclTime(postInfo.createdDate)}
-            ></PostInfo>
+              uploadtime={caclTime(postInfo.createdDate)}></PostInfo>
             <PostContent
               title={postInfo.title}
-              content={postInfo.content}
-            ></PostContent>
+              content={postInfo.content}></PostContent>
             {postInfo.photoNames?.map((photo) => (
               <PostImg
                 src={
-                  "https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/" +
-                  photo
-                }
-              />
+                  "https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/" + photo}/>
             ))}
             <c.Flex>
               <LikeAndStarBtn
                 icon={isLike ? FillLike : Like}
                 text={isLike && 1}
                 isLike={isLike}
-                onClick={() => handleLike()}
-              />
+                onClick={() => handleLike()}/>
               <LikeAndStarBtn
                 icon={isStar ? FillStar : Star}
                 text={"스크랩"}
                 marginLeft={`2.05vw`}
                 isStar={isStar}
-                onClick={() => handleScrap()}
-              />
+                onClick={() => handleScrap()}/>
             </c.Flex>
             <Br />
 
@@ -299,8 +313,8 @@ const Post = () => {
                     uploadtime: caclTime(comment.createdDate),
                   }}
                   comment={comment.content}
-                  wirteChild={() => AddReComment(comment.commentId, true)}
-                />
+                  wirteChild={() => AddReComment(comment.commentId, comment.writer, true)}
+                  deleteComment={()=> DeleteCommentBts(comment.commentId)}/>
                 {comment.children?.map((child) => (
                   <Comment
                     paddingLeft={`8.17vw`}
@@ -311,11 +325,20 @@ const Post = () => {
                       uploadtime: caclTime(comment.createdDate),
                     }}
                     wirteChild={() => AddReComment(comment.commentId, true)}
+                    deleteComment={()=> DeleteCommentBts(comment.commentId)}
                     comment={child.content}
                   />
                 ))}
               </div>
             ))}
+            <BottomSheet height={`max-content`} padding={`12px 20px 0 20px`} isOpen={isCommentBts} interaction={true}>
+                {postInfo?.writerState ? (
+                  <MenuBox onClick={()=>DeleteComment()}>{`댓글 삭제하기`}</MenuBox>
+                ) : (
+                  <MenuBox Report={true}>{`신고하기`}</MenuBox>
+                )}
+                <CloseBtn onClick={() => setIsCommentBts(false)}>{`닫기`}</CloseBtn>
+            </BottomSheet>
           </c.SubScreen>
         </c.ScreenComponent>
         <InputCommentBox>
@@ -328,10 +351,19 @@ const Post = () => {
             <img src={Send} onClick={() => UploadComment()} />
             {isModalOpen && (
               <Modal padding={`22px 20px`}>
-                <ModalTxt>{`‘익명’님께 답글을 달까요?`}</ModalTxt>
+                <ModalTxt>{recommentUserName}{`님께 답글을 달까요?`}</ModalTxt>
                 <ModalBtn>
                   <NoBtn onClick={() => AddReComment(null, false)}>{`아니요`}</NoBtn>
                   <YesBtn onClick={() => setIsModalOpen(false)}>{`네`}</YesBtn>
+                </ModalBtn>
+              </Modal>
+            )}
+            {isDeleteModalOpen && (
+              <Modal padding={`22px 20px`}>
+                <ModalTxt>{`댓글을 삭제할까요?`}</ModalTxt>
+                <ModalBtn>
+                  <NoBtn onClick={() => setIsDeleteModalOpen(false)}>{`아니요`}</NoBtn>
+                  <YesBtn onClick={() => DeleteComment(false)}>{`네`}</YesBtn>
                 </ModalBtn>
               </Modal>
             )}

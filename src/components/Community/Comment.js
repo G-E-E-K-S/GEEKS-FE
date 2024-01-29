@@ -3,6 +3,7 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import PostInfo from "./PostInfo";
 import CommentIcon from "../../assets/img/Community/comment.svg";
+import DeleteComment from "../../assets/img/Community/deleteComment.svg";
 import Dots from "../../assets/img/Community/grayDots.svg";
 
 const CommentBox = styled.div`
@@ -18,9 +19,12 @@ const CommentBox = styled.div`
 const ThreeDots = styled.img`
   width: 16px;
   height: 16px;
+  margin-left: 1.535vw;
 `;
-const CommentImg = styled(ThreeDots)`
-  margin-right: 3.07vw;
+const CommentImg = styled.img`
+  width: 16px;
+  height: 16px;
+  margin-right: 1.535vw;
 `;
 const CommentText = styled.div`
   color: #333;
@@ -43,8 +47,8 @@ const Comment = (props) => {
           username={props.postInfo.username}
           uploadtime={props.postInfo.uploadtime}/>
         <Icons>
-          <CommentImg src={CommentIcon} onClick={props.wirteChild}/>
-          <ThreeDots src={Dots} />
+          <CommentImg src={props.isDelete ? DeleteComment : CommentIcon} onClick={props.wirteChild}/>
+          <ThreeDots src={Dots} onClick={props.deleteComment}/>
         </Icons>
       </c.SpaceBetween>
       <CommentText>{props.comment}</CommentText>
