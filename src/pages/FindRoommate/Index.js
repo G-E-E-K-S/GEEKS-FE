@@ -1,5 +1,5 @@
 import FindRoommate from "./FindRoommate";
 import User from "./User";
-import ApplyConfirm from "./ApplyConfirm";
+import RoommateSendTxt from "./RoommateSendTxt";
 
-export { FindRoommate, User, ApplyConfirm };
+export { FindRoommate, User, RoommateSendTxt };
