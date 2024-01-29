@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import API from "../../axios/BaseUrl";
 import moment from "moment";
 import "moment/locale/ko";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import HeaderMenu from "../../components/Common/HeaderMenu";
@@ -137,7 +137,7 @@ const Post = () => {
   const [isSelect, setIsSelect] = useState(false);
   const commentRef = useRef();
   let { postId } = useParams();
-
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchPost() {
       try {
@@ -226,6 +226,18 @@ const Post = () => {
     setIsModalOpen(modalState);
     setParentId(commentId);
   };
+  const DeletePost = () => {
+    async function fetchDeletePost() {
+      try {
+        const res = await API.post("/post/delete/" + postId);
+        console.log(res)
+        if(res.data == 'success') navigate('/community');
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchDeletePost();
+  }
   return (
     <c.Totalframe>
         <c.ScreenComponent>
@@ -236,7 +248,7 @@ const Post = () => {
             <BottomSheet height={`max-content`} padding={`12px 20px 0 20px`} isOpen={isBtsOpen} interaction={true}>
                 {postInfo?.writerState ? (
                   <>
-                    <MenuBox>{`글 삭제하기`}</MenuBox>
+                    <MenuBox onClick={()=>DeletePost()}>{`글 삭제하기`}</MenuBox>
                     <MenuBox>{`글 수정하기`}</MenuBox>
                   </>
                 ) : (
