@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
+import ColHeaderMenu from "../../components/Common/ColHeaderMenu";
 import GoBack from "../../components/Common/GoBack";
 import SubTitle from "../../components/Main/SubTitle";
 import LiveRuleCategory from "../../components/Main/LiveRuleCategory";
@@ -13,18 +14,23 @@ import Sleep from "../../assets/img/Home/sleep.svg";
 import Call from "../../assets/img/Home/call.svg";
 import Phone from "../../assets/img/Home/phone.svg";
 
-const SubTitles = styled.div`
-  margin-top: 2.36vh;
-  margin-bottom: 4.38vh;
+const RecommendLifeStyle = styled.div`
+  color: #333;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+  white-space: pre-wrap;
+  margin-top: 20px;
+  margin-bottom: 4.62vh;
 `;
 const LiveRule = () => {
   return (
     <c.Totalframe main={true}>
       <c.ScreenComponent>
-        <GoBack />
-        <SubTitles>
-          <SubTitle subtitle={`긱스가 추천하는\n기숙사 생활 규칙이에요`} />
-        </SubTitles>
+        <ColHeaderMenu>
+          <RecommendLifeStyle>{`긱스가 추천하는\n기숙사 생활 규칙이에요`}</RecommendLifeStyle>
+        </ColHeaderMenu>
         <LiveRuleCategory
           ruleImg={Window}
           ruleText={`환기는`}
