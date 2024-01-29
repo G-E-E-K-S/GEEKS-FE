@@ -6,6 +6,8 @@ export const Totalframe = styled.div`
   height: 100vh;
   margin: 0 auto;
   overflow-y: auto;
+  margin-top: env(safe-area-inset-top);
+  margin-bottom: env(safe-area-inset-bottom);
   &::-webkit-scrollbar {
     display: none;
   }
@@ -19,7 +21,7 @@ export const ScreenComponent = styled.div`
   &::-webkit-scrollbar{
     display:none;
   }
-  height: calc(100vh - 11.84vh);
+  height: ${(props)=>props.navigation ? 'calc(100vh - 11.84vh)' : '100vh'};
 `;
 
 export const SubScreen = styled.div`

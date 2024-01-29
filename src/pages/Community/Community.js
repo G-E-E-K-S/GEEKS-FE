@@ -117,7 +117,7 @@ const Community = () => {
 
   return loading ? null : (
     <c.Totalframe>
-      <c.ScreenComponent>
+      <c.ScreenComponent navigation={true}>
         <TotalHeader>
           <img src={GeeksLogo}/>
           <Icon>

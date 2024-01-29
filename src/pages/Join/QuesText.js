@@ -28,7 +28,7 @@ const QuesText = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <Header />
-        <MainText maintitle={`${location.state.inputNickName}님 반가워요!\n\n기숙사 생활을 위한\n몇 가지만 여쭤볼게요`}/>
+        <MainText maintitle={`${location.state?.inputNickName}님 반가워요!\n\n기숙사 생활을 위한\n몇 가지만 여쭤볼게요`}/>
         <Icon>
           <QuestionIcon src={Question}/>
         </Icon>          

@@ -163,6 +163,7 @@ const Home = () => {
   const [isShowReview, setIsSHowReiew] = useState(true);
   const [isWeeklyPost, setIsWeeklyPost] = useState("live");
   const [showPopup, setShowPopup] = useState(false);
+  const [userName, setUserName] = useState('');
   const [isExist, setIsExist] = useState(true);
   const [point, setPoint] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -185,6 +186,7 @@ const Home = () => {
         setIsExist(res.data.exist);
         setPoint(res.data.points);
         setPosts(res.data.posts);
+        setUserName(res.data.nickname);
       } catch (error) {
         console.error(error);
       }
@@ -211,7 +213,7 @@ const Home = () => {
   return (
     !loading && (
       <c.Totalframe background={`#FAFAFA`}>
-        <c.ScreenComponent>
+        <c.ScreenComponent navigation={true}>
           <c.SubScreen>
             <Header onClick={() => navigate("/search")} />
             {showPopup && (
@@ -245,7 +247,7 @@ const Home = () => {
               </a>
             </System>
             <HomeBox
-              name={`은진님과 딱 맞는\n룸메이트를 찾아드려요`}
+              name={userName+` 님과 딱 맞는\n룸메이트를 찾아드려요`}
               marginTop={`3.79vh`}
               marginBottom={isExist ? `4.73vh` : `1.42vh`}
               height={`max-content`}
@@ -292,21 +294,12 @@ const Home = () => {
               name={`이런 글은 어떠세요?`}
               marginTop={`2.84vh`}
               marginBottom={`3.31vh`}
-              height={`max-content`}
-            >
-              {/* <PopularPostBox>
-              <PopularPostText
-                isWeeklyPost={isWeeklyPost === "live"}
-                onClick={() => setIsWeeklyPost("live")}>{`실시간 인기글`}</PopularPostText>
-              <PopularPostText
-                isWeeklyPost={isWeeklyPost === "weekly"}
-                onClick={() => setIsWeeklyPost("weekly")}>{`주간 인기글`}</PopularPostText>
-            </PopularPostBox> */}
+              height={`max-content`}>
               <PopularPostBox>
-                <PopularPostText onClick={() => setIsWeeklyPost("live")}>
+                <PopularPostText isWeeklyPost={isWeeklyPost === "live"} onClick={() => setIsWeeklyPost("live")}>
                 {`실시간 인기글`}
                 </PopularPostText>
-                <PopularPostText onClick={() => setIsWeeklyPost("weekly")}>
+                <PopularPostText isWeeklyPost={isWeeklyPost === "weekly"} onClick={() => setIsWeeklyPost("weekly")}>
                   {`주간 인기글`}
                 </PopularPostText>
                 <PopularPostText 
