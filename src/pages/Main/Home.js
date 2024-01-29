@@ -1,6 +1,7 @@
 import React, { useEffect, useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import moment from "moment";
+import "moment/locale/ko";
 import API from "../../axios/BaseUrl";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -107,20 +108,46 @@ const PopularPostBox = styled.div`
   border-radius: 12px;
   background: #f7f7f7;
   margin-bottom: 20px;
+  position: relative;
 `;
 const PopularPostText = styled.div`
   width: calc(100% / 2);
-  background-color: ${(props) => props.isWeeklyPost && "#FFF"};
-  color: ${(props) => (props.isWeeklyPost ? "#1A1A1A" : "#949494")};
-  font-weight: ${(props) => (props.isWeeklyPost ? "600" : "500")};
-  border-radius: ${(props) => props.isWeeklyPost && "8px"};
-  box-shadow: ${(props) => props.isWeeklyPost && "2px 2px 4px 0px rgba(0, 0, 0, 0.04)"};
-
   height: 100%;
+  ${(props) => props.toggle && "position: absolute; left: 0; top: 0"};
+  background-color: ${(props) => props.toggle && "#FFF"};
+  color: ${(props) => (props.toggle ? "#1A1A1A" : "#949494")};
+  font-weight: ${(props) => (props.toggle ? "600" : "500")};
+  border-radius: ${(props) => props.toggle && "8px"};
+  box-shadow: ${(props) => props.toggle && "2px 2px 4px 0px rgba(0, 0, 0, 0.04)"};
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  ${(props) => props.toggle && "transition: transform 0.5s ease, opacity 0.5s ease"};
+  
+  transform: ${(props) => (props.toggle ? (props.isWeeklyPost ? "translateX(100%)" : "translateX(0%)") : null)};
+
 `;
+
+// transition: transform 0.5s ease; /* Added transition property */
+
+//   transform: ${(props) => (!props.isWeeklyPost ? "translateX(100%)" : "translateX(-100%)")};
+// const PopularPostText = styled.div`
+//   width: calc(100% / 2);
+//   height: 100%;
+//   ${(props) => props.toggle && "position: absolute; top: 1px; left: 0;"}
+//   background-color: ${(props) => props.toggle && "#FFF"};
+//   color: ${(props) => (props.toggle ? "#1A1A1A" : "#949494")};
+//   font-weight: ${(props) => (props.isWeeklyPost ? "600" : "500")};
+//   border-radius: ${(props) => props.toggle && "8px"};
+//   box-shadow: ${(props) =>
+//     props.toggle && "2px 2px 4px 0px rgba(0, 0, 0, 0.04)"};
+//   text-align: center;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;
 const IconBox = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -140,13 +167,14 @@ const Home = () => {
   const [point, setPoint] = useState([]);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [active, setActive] = useState(false);
   const navigate = useNavigate();
 
   const handlePage = () => {
     navigate("/liverule");
   };
   const isNavigate = () => {
-    isExist && navigate('/roommate');
+    isExist && navigate("/roommate");
   };
 
   useEffect(() => {
@@ -164,100 +192,159 @@ const Home = () => {
     fetchEmailPage();
   }, []);
 
-  return !loading && (
-    <c.Totalframe background={`#FAFAFA`}>
-      <c.ScreenComponent>
-        <c.SubScreen>
-          <Header onClick={() => navigate("/search")} />
-          {showPopup && (
-            <Popup
-              message={`곧 만날 수 있으니 조금만 기다려 주세요!`}
-              setShowPopup={setShowPopup}
-              top={`9.5vh`}/>
-          )}
-          <System>
-            <Icons onClick={() => setShowPopup(true)}>
-              <Icon src={checklist} />
-              <IconText>체크리스트</IconText>
-            </Icons>
-            <Icons onClick={() => handlePage()}>
-              <Icon src={rule} />
-              <IconText>생활 규칙</IconText>
-            </Icons>
-            <Icons>
-              <Icon src={stayOut} />
-              <IconText>외박 신청</IconText>
-            </Icons>
-            <a href={"https://www.smu.ac.kr/dormi2/board/notice.do"} target="_blank">
-              <Icons>
-                <Icon src={dormiNoti} />
-                <IconText>기숙사 공지</IconText>
-              </Icons>
-            </a>
-          </System>
-          <HomeBox
-            name={`은진님과 딱 맞는\n룸메이트를 찾아드려요`}
-            marginTop={`3.79vh`}
-            marginBottom={isExist? `4.73vh` :`1.42vh`}
-            height={`max-content`}
-            onClick={()=> isNavigate()}>
-            {isExist ? (
-              point.map((opponent,index) => (
-                <MainOtherProfile
-                  nickName={opponent.nickname}
-                  userprofile={opponent.photoName.length === 0 ? BasicProfile : opponent.photoName}
-                  major={opponent.major}
-                  id={opponent.studentID}
-                  score={opponent.point}
-                  smoke={opponent.smoke}
-                  marginBottom={point.length === index+1 ? '0px' : '36px'}/>
-              ))
-            ) : (
-              <div>
-                <IconBox>
-                  <FindIcon src={Find} />
-                </IconBox>
-                <FindRoommateTxt>{`생활 습관을 등록하고\n나와 딱 맞는 룸메이트를 찾아보세요!`}</FindRoommateTxt>
-                <EnrollRule onClick={() => navigate("/lifestyle")}>{`생활습관 등록하기`}</EnrollRule>
-              </div>
+  // useEffect(() => {
+  //   setActive(true);
+
+  //   const timeId = setTimeout(() => {
+  //     setActive(false);
+  //   }, 2000);
+
+  //   return () => {
+  //     clearTimeout(timeId);
+  //   };
+  // }, [isWeeklyPost])
+
+  const caclTime = (uploadTime) => {
+    moment.locale("ko"); // 언어를 한국어로 설정
+    return moment(uploadTime).fromNow(`A`) + "전"; // 지금으로부터 계산
+  };
+  return (
+    !loading && (
+      <c.Totalframe background={`#FAFAFA`}>
+        <c.ScreenComponent>
+          <c.SubScreen>
+            <Header onClick={() => navigate("/search")} />
+            {showPopup && (
+              <Popup
+                message={`곧 만날 수 있으니 조금만 기다려 주세요!`}
+                setShowPopup={setShowPopup}
+                top={`9.5vh`}
+              />
             )}
-          </HomeBox>
-          {isShowReview && (
-            <ShowReviewBox>
-              <c.SpaceBetween>
-                <ReviewTxt>{`긱스 이용 후기를 남겨주세요!`}</ReviewTxt>
-                <CloseImg src={Close} onClick={() => setIsSHowReiew(false)} />
-              </c.SpaceBetween>
-              <MoreSecurityTxt>{`더 멋지게 보완해서 찾아올게요`}</MoreSecurityTxt>
-            </ShowReviewBox>
-          )}
-          <HomeBox
-            name={`이런 글은 어떠세요?`}
-            marginTop={`2.84vh`}
-            marginBottom={`3.31vh`}
-            height={`48.31vh`}>
-            <PopularPostBox>
+            <System>
+              <Icons onClick={() => setShowPopup(true)}>
+                <Icon src={checklist} />
+                <IconText>체크리스트</IconText>
+              </Icons>
+              <Icons onClick={() => handlePage()}>
+                <Icon src={rule} />
+                <IconText>생활 규칙</IconText>
+              </Icons>
+              <Icons>
+                <Icon src={stayOut} />
+                <IconText>외박 신청</IconText>
+              </Icons>
+              <a
+                href={"https://www.smu.ac.kr/dormi2/board/notice.do"}
+                target="_blank"
+              >
+                <Icons>
+                  <Icon src={dormiNoti} />
+                  <IconText>기숙사 공지</IconText>
+                </Icons>
+              </a>
+            </System>
+            <HomeBox
+              name={`은진님과 딱 맞는\n룸메이트를 찾아드려요`}
+              marginTop={`3.79vh`}
+              marginBottom={isExist ? `4.73vh` : `1.42vh`}
+              height={`max-content`}
+              onClick={() => isNavigate()}
+            >
+              {isExist ? (
+                point.map((opponent, index) => (
+                  <MainOtherProfile
+                    nickName={opponent.nickname}
+                    userprofile={
+                      opponent.photoName.length === 0
+                        ? BasicProfile
+                        : opponent.photoName
+                    }
+                    major={opponent.major}
+                    id={opponent.studentID}
+                    score={opponent.point}
+                    smoke={opponent.smoke}
+                    marginBottom={point.length === index + 1 ? "0px" : "36px"}
+                  />
+                ))
+              ) : (
+                <div>
+                  <IconBox>
+                    <FindIcon src={Find} />
+                  </IconBox>
+                  <FindRoommateTxt>{`생활 습관을 등록하고\n나와 딱 맞는 룸메이트를 찾아보세요!`}</FindRoommateTxt>
+                  <EnrollRule
+                    onClick={() => navigate("/lifestyle")}
+                  >{`생활습관 등록하기`}</EnrollRule>
+                </div>
+              )}
+            </HomeBox>
+            {isShowReview && (
+              <ShowReviewBox>
+                <c.SpaceBetween>
+                  <ReviewTxt>{`긱스 이용 후기를 남겨주세요!`}</ReviewTxt>
+                  <CloseImg src={Close} onClick={() => setIsSHowReiew(false)} />
+                </c.SpaceBetween>
+                <MoreSecurityTxt>{`더 멋지게 보완해서 찾아올게요`}</MoreSecurityTxt>
+              </ShowReviewBox>
+            )}
+            <HomeBox
+              name={`이런 글은 어떠세요?`}
+              marginTop={`2.84vh`}
+              marginBottom={`3.31vh`}
+              height={`max-content`}
+            >
+              {/* <PopularPostBox>
               <PopularPostText
                 isWeeklyPost={isWeeklyPost === "live"}
                 onClick={() => setIsWeeklyPost("live")}>{`실시간 인기글`}</PopularPostText>
               <PopularPostText
                 isWeeklyPost={isWeeklyPost === "weekly"}
                 onClick={() => setIsWeeklyPost("weekly")}>{`주간 인기글`}</PopularPostText>
-            </PopularPostBox>
-            {isWeeklyPost === "live" && 
-              posts.map((post,index)=> (
-                <MainPost text={post.title}
-                  comment={post.commentCount}
-                  likeCnt={post.likeCount}
-                  postContent={post.content}
-                  UploadTime={post.createdDate}
-                  marginBottom={posts.length === index+1 ? '0px' : '24px'}/>
-              ))}
-          </HomeBox>
-        </c.SubScreen>
-      </c.ScreenComponent>
-      <NavigationBar type={`home`} />
-    </c.Totalframe>
+            </PopularPostBox> */}
+              <PopularPostBox>
+                <PopularPostText onClick={() => setIsWeeklyPost("live")}>
+                {`실시간 인기글`}
+                </PopularPostText>
+                <PopularPostText onClick={() => setIsWeeklyPost("weekly")}>
+                  {`주간 인기글`}
+                </PopularPostText>
+                <PopularPostText 
+                toggle={true} 
+                isWeeklyPost={isWeeklyPost === 'weekly'}
+                className={active ? 'active' : ''}
+                >
+                  {isWeeklyPost === "weekly"? '주간 인기글' : '실시간 인기글'}
+                </PopularPostText>
+              </PopularPostBox>
+              {isWeeklyPost === "live" &&
+                posts.map((post, index) => (
+                  <MainPost
+                    text={post.title}
+                    comment={post.commentCount}
+                    likeCnt={post.likeCount}
+                    postContent={post.content}
+                    UploadTime={caclTime(post.createdDate)}
+                    marginBottom={posts.length === index + 1 ? "0px" : "24px"}
+                  />
+                ))}
+                {isWeeklyPost === "weekly" &&
+                posts.map((post, index) => (
+                  <MainPost
+                    text={post.title}
+                    comment={post.commentCount}
+                    likeCnt={post.likeCount}
+                    postContent={post.content}
+                    UploadTime={caclTime(post.createdDate)}
+                    marginBottom={posts.length === index + 1 ? "0px" : "24px"}
+                  />
+                ))}
+            </HomeBox>
+          </c.SubScreen>
+        </c.ScreenComponent>
+        <NavigationBar type={`home`} />
+      </c.Totalframe>
+    )
   );
 };
 export default Home;

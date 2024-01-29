@@ -62,8 +62,8 @@ const BottomSheetBtn = styled.div`
 const ApplyCancelBottomSheet = (props) => {
   return (
     <>
-      {props.applyRoommate && (
-        <BottomSheet height={props.height} padding={props.padding}>
+      <BottomSheet height={props.height} padding={props.padding} 
+      isOpen={props.isOpen} interaction={true}>
           <ContainBottom>
             <Content>
               <MainIcon src={props.Icon} />
@@ -76,7 +76,6 @@ const ApplyCancelBottomSheet = (props) => {
             {props.btnName}
           </BottomSheetBtn>
         </BottomSheet>
-      )}
     </>
   );
 };

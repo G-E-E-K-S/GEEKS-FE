@@ -133,10 +133,15 @@ const InputEmail = () => {
           <ForgetPwdTxt>{`비밀번호를 잊어버리셨나요?`}</ForgetPwdTxt>
           <ForgetPwdIcon src={ForgetPwdImg}/>
         </c.Flex>
+        <ErrorPopup 
+        message={`위 이메일로 가입된 정보가 없어요`} 
+        bottom={`38.98`} 
+        setShowPopup={setIsErrorPopUp}
+        isShowPopup={isErrorPopup}/>
         <JoinButton
           onClick={() => handleEmail()}
           isNextPage={isNextPage}>{`로그인`}</JoinButton>
-        {isErrorPopup&&<ErrorPopup message={`위 이메일로 가입된 정보가 없어요`} bottom={`38.98vh`} setShowPopup={setIsErrorPopUp}/>}
+        
       </c.ScreenComponent>
     </c.Totalframe>
   );

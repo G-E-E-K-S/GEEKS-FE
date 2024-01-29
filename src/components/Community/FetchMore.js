@@ -1,4 +1,9 @@
 import React, { useRef, useEffect } from "react";
+import styled from "styled-components";
+
+const Box = styled.div`
+  height: 1px
+`;
 
 const FetchMore = ({ items, setCursor }) => {
     const fetchMoreTrigger = useRef(null);
@@ -18,7 +23,7 @@ const FetchMore = ({ items, setCursor }) => {
         };
     }, [items]);
 
-    return <div ref={fetchMoreTrigger}/>;
+    return <Box ref={fetchMoreTrigger}/>;
 };
 
 export default FetchMore;

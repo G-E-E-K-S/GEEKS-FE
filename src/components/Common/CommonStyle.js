@@ -6,7 +6,6 @@ export const Totalframe = styled.div`
   height: 100vh;
   margin: 0 auto;
   overflow-y: auto;
-  overflow-y: hidden;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -24,7 +23,7 @@ export const ScreenComponent = styled.div`
 `;
 
 export const SubScreen = styled.div`
-  height: calc(100vh - 11.84vh);
+  // height: calc(100vh - 11.84vh);
 `;
 
 export const ScreenJoin = styled.div`
