@@ -32,7 +32,7 @@ const ArrowIcon = styled.img`
 `;
 const MyCommunityList = (props) => {
   return (
-    <MyCommunityListBox>
+    <MyCommunityListBox onClick={props.onClick}>
       <c.Flex>
         <ListIcon src={props.icon} />
         <ListText>{props.listText}</ListText>
