@@ -6,7 +6,7 @@ const Flex = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  border-bottom: 2px solid ${(props) => (props.borderColor ? '#ECAA00' : '#efefef')};
+  border-bottom: 2px solid ${(props)=> (props.borderColor)};
 `;
 const InputNickName = styled.input`
   width: 100%;
@@ -51,7 +51,7 @@ const Represent = styled.div`
 `;
 const InputSelf = (props) => {
   const [inputVal, setInputVal] = useState("");
-  const [borderColor, setBorderColor] = useState(false);
+  const [borderColor, setBorderColor] = useState('#EFEFEF');
   const letterCnt = useRef(0);
 
   // useEffect(() => {
@@ -81,9 +81,8 @@ const InputSelf = (props) => {
           onChange={handleInputChange}
           maxLength={props.totalLen}
           placeholder={props.placeholder}
-          onFocus={()=>handleBorderColor(true)}
-          onBlur={()=>handleBorderColor(false)}
-        />
+          onFocus={()=>handleBorderColor(props.isDuplicate ? '#CB3D0B' :'#ECAA00')}
+          onBlur={()=>handleBorderColor('#efefef')}/>
         {/* {props.isrepresent ? <Represent>대표</Represent> : null} */}
       </Flex>
 

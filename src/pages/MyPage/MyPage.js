@@ -132,7 +132,7 @@ const MyPage = () => {
   },[]);
   return (
     <c.Totalframe>
-      <c.ScreenComponent>
+      <c.ScreenComponent navigation={true}>
         <c.SubScreen>
           <PageName pageName={`마이`} />
           <UserInfoTop>

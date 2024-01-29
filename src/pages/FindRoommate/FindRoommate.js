@@ -97,7 +97,7 @@ const FindRoommate = () => {
 
   return (
     <c.Totalframe background={`linear-gradient(180deg, #FFF 0%, #F7F7F7 71%)`}>
-      <c.ScreenComponent>
+      <c.ScreenComponent navigation={true}>
         <c.SubScreen>
           <Header />
           <TitleText>{`내가 원하는 기준으로\n룸메이트를 찾아보세요`}</TitleText>

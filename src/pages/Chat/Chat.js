@@ -66,7 +66,7 @@ const Chat = () => {
 
   return (
     <c.Totalframe>
-      <c.ScreenComponent>
+      <c.ScreenComponent navigation={true}>
         <c.SubScreen>
           <Title>{`대화`}</Title>
           {/* <TotalMenu>
