@@ -2,5 +2,6 @@ import WritePost from "./WritePost";
 import Post from "./Post";
 import Community from "./Community";
 import MyCommunity from "./MyCommunity";
+import ScrapPost from "./ScrapPost";
 
-export { WritePost, Post, Community, MyCommunity };
+export { WritePost, Post, Community, MyCommunity, ScrapPost };
