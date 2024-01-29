@@ -4,7 +4,7 @@ import { LiveRule, Home, Search } from './pages/Main/Index';
 import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply } from './pages/MyPage/Index';
 import { FindRoommate , User, RoommateSendTxt } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
-import { WritePost, Post, Community, MyCommunity, ScrapPost } from './pages/Community/Index';
+import { WritePost, Post, Community, MyCommunity, ScrapPost, CommunityWrite } from './pages/Community/Index';
 import './index.css';
 
 function App() {
@@ -47,6 +47,7 @@ function App() {
           <Route path="/community" element={<Community/>} />
           <Route path="/myCommunity" element={<MyCommunity/>} />
           <Route path="/scrappost" element={<ScrapPost/>} />
+          <Route path="/communitywrite" element={<CommunityWrite/>} />
         </Routes>
       </Router>
     </div>
