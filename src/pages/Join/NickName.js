@@ -110,7 +110,11 @@ const NickName = () => {
           {letterCnt.current}/{8}
         </LetterLen>
 
-        {isPopup && <ErrorPopup message={`이미 사용 중인 닉네임이에요`} setShowPopup={setIsPopup} bottom={'18.72vh'}/>}
+        <ErrorPopup 
+        message={`이미 사용 중인 닉네임이에요`} 
+        setShowPopup={setIsPopup}
+        isShowPopup={isPopup} 
+        bottom={'18.72'}/>
         <JoinButton
           btnName={"다음"}
           handleClick={() => handleNickName()}

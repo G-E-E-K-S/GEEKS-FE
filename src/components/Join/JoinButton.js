@@ -17,7 +17,10 @@ const TotalButton = styled.div`
     font-weight: 600;
     line-height: 24px;
     cursor: pointer;
+    z-index: 0;
 `;
+
+
 const JoinButton = (props) => {
     return(
         <TotalButton onClick={props.handleClick} isNextPage={props.isNextPage}>{props.btnName}</TotalButton>
