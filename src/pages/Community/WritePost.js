@@ -9,6 +9,7 @@ import Br from "../../components/Common/Br";
 import AddPhoto from "../../assets/img/Community/addPhoto.svg";
 import checkBoxIcon from "../../assets/img/Community/checkBox.svg";
 import FillCheckBoxIcon from "../../assets/img/Community/fillCheckBox.svg";
+import DeletePhoto from "../../assets/img/Community/deletePhoto.svg";
 
 const DoneBtn = styled.div`
   border-radius: 8px;
@@ -68,12 +69,24 @@ const PhotoList = styled.div`
 const InputFile = styled.input`
   display: none;
 `;
+const ImgParent = styled.div`
+  position: relative;
+  width: 72px;
+  height: 72px;
+`;
 const ShowImg = styled.img`
   width: 72px;
   height: 72px;
   border-radius: 8px;
   object-fit: cover;
 `;
+const Delete = styled.img`
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: -5px;
+  top: -5px;
+`
 const Anonymous = styled.div`
   margin-bottom: 16px;
   display: flex;
@@ -148,11 +161,14 @@ const Community = () => {
         }
         fetchPost();
       };
-    const handleResizeHeight = useCallback(() => {
-      let scrollHeight = contentRef.current.scrollHeight +'px';
-      scrollHeight > height ? setHeight(scrollHeight) : setHeight('216px');
-    }, [contentRef]);
-
+      const handleDeleteImage = (id) => {
+        setShowImages(showImages.filter((_, index) => index !== id));
+      }
+      const handleResizeHeight = useCallback(() => {
+        let scrollHeight = contentRef.current.scrollHeight +'px';
+        scrollHeight > height ? setHeight(scrollHeight) : setHeight('216px');
+      }, [contentRef]);
+    
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -175,7 +191,10 @@ const Community = () => {
                 <InputFile type="file" accept="image/*" multiple="multiple"/>
             </label>
             {showImages.map((url,id)=>(
-              <ShowImg src={url} key={id}/>)
+              <ImgParent>
+                <ShowImg src={url} key={id}/>
+                <Delete src={DeletePhoto} onClick={()=>handleDeleteImage(id)}/>
+              </ImgParent>)
             )}
           </PhotoList>
         </c.SubScreen>
