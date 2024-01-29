@@ -7,6 +7,8 @@ import * as c from "../../components/Common/CommonStyle";
 import HeaderMenu from "../../components/Common/HeaderMenu";
 import Br from "../../components/Common/Br";
 import AddPhoto from "../../assets/img/Community/addPhoto.svg";
+import checkBoxIcon from "../../assets/img/Community/checkBox.svg";
+import FillCheckBoxIcon from "../../assets/img/Community/fillCheckBox.svg";
 
 const DoneBtn = styled.div`
   border-radius: 8px;
@@ -70,24 +72,24 @@ const ShowImg = styled.img`
   width: 72px;
   height: 72px;
   border-radius: 8px;
-  margin-left: 12px;
-  object-fit: scale-down;
+  object-fit: cover;
 `;
 const Anonymous = styled.div`
   margin-bottom: 16px;
   display: flex;
   align-items: center;
+  height: max-content;
 `;
-const CheckBox = styled.input`
-  margin: 0;
-  color: #D0D0D0;
+const CheckBox = styled.img`
+  width: 20px;
+  height: 20px;
 `;
 const AnonymousTxt = styled.div`
   color: #D0D0D0;
   font-size: 1rem;
   font-weight: 500;
-  line-height: 24px;
   margin-left: 5px;
+  margin-top: 3px;
 `;
 const Community = () => {
     const [title, setTitle] = useState('');
@@ -95,10 +97,13 @@ const Community = () => {
     const [file, setFile] = useState(null);
     const [showImages,setShowImages] = useState([]);
     const [height, setHeight] = useState('216px');
+    const [isAnonymity, setIsAnonymity] = useState(false);
+    const [isCheck, setIsCheck] = useState(false);
     const contentRef = useRef();
     const navigate = useNavigate();
     
     const handleFile = (event) => {
+      console.log(event.target.files);
       setFile(event.target.files);
       const imageLists = event.target.files;
       let imageUrlLists = [...showImages];
@@ -112,7 +117,8 @@ const Community = () => {
     const UploadPost = () => {
       const postData = {
         'title': title,
-        'content': content
+        'content': content,
+        'anonymity' : isAnonymity
       }
       const formData = new FormData();
 
@@ -122,7 +128,10 @@ const Community = () => {
       );
 
       if(file !== null){
-        Object.values(file).forEach((f)=> formData.append('files',f));
+        Object.values(file).forEach((f)=> {
+          formData.append('files',f);
+        });
+        
       }
         async function fetchPost() {
           try {
@@ -139,34 +148,10 @@ const Community = () => {
         }
         fetchPost();
       };
-  const getCookies = () => {
-    async function fetch() {
-      try {
-        
-        const res = await API.get("/member/admin");
-        console.log(res);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    fetch();
-  }
-  const getPoint = () =>{
-    async function fetchPoint() {
-      try {
-        
-        const res = await API.post("/detail/point");
-        console.log(res);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    fetchPoint();
-  }
-  const handleResizeHeight = useCallback(() => {
-    let scrollHeight = contentRef.current.scrollHeight +'px';
-    scrollHeight > height ? setHeight(scrollHeight) : setHeight('216px');
-  }, [contentRef]);
+    const handleResizeHeight = useCallback(() => {
+      let scrollHeight = contentRef.current.scrollHeight +'px';
+      scrollHeight > height ? setHeight(scrollHeight) : setHeight('216px');
+    }, [contentRef]);
 
   return (
     <c.Totalframe>
@@ -178,9 +163,9 @@ const Community = () => {
           <InputTitle placeholder={`글 제목을 입력하세요`} onChange={(event)=>setTitle(event.target.value)}></InputTitle>
           <Line />
           <InputContent placeholder={`내용을 입력하세요`} onChange={(event)=>setContent(event.target.value)} ref={contentRef} onInput={handleResizeHeight} height={height}></InputContent>
-          <label>
+          <label onClick={()=>setIsAnonymity(!isAnonymity)}>
             <Anonymous>
-              <CheckBox type='checkbox'/>
+              <CheckBox src={isCheck ? FillCheckBoxIcon : checkBoxIcon } onClick={()=>setIsCheck(!isCheck)}/>
               <AnonymousTxt>{`익명`}</AnonymousTxt>
             </Anonymous>
           </label>
