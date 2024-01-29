@@ -97,6 +97,9 @@ const InputCode = () => {
     for(let i = 0 ; i < 4 ; i++){
       code += inputRefs[i].current.value;
     }
+
+    //if(code.length !== 4) return;
+
     async function fetchCode() {
       try {
         const res = await API.get("/mail/auth?code=" + code);
@@ -107,6 +110,7 @@ const InputCode = () => {
         }
       } catch (error) {
         console.error(error);
+        setIsErrorPopup(true);
       }
     }
     fetchCode();
@@ -142,7 +146,12 @@ const InputCode = () => {
             />
           ))}
         </InputNumber>
-        {isErrorPopup && <ErrorPopup message={`코드가 일치하지 않아요`} bottom={`18.72vh`} setShowPopup={setIsErrorPopup}/>}
+        <ErrorPopup 
+        message={`코드가 일치하지 않아요`} 
+        bottom={`18.72`} 
+        setShowPopup={setIsErrorPopup}
+        isShowPopup={isErrorPopup}
+        />
         <JoinButton
           btnName={"코드 확인하기"}
           select={() => ChangeBarColor()}
