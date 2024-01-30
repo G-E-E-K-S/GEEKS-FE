@@ -38,7 +38,8 @@ const ApplyDetailTxt = styled.div`
   margin-bottom: 15.38vh;
 `;
 const ProcessContainer = styled.img`
-  width: 100%;
+  width: 289px;
+  height: 52px;
   display: flex;
   justify-content: center;
   align-items: center;
