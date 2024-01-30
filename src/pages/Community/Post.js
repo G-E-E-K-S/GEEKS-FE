@@ -24,7 +24,7 @@ import CheckBox from "../../assets/img/Community/checkBox.svg";
 import FillCheckBox from "../../assets/img/Community/fillCheckPost.svg";
 
 const InputCommentBox = styled.div`
-  height: 144px;
+  height: 11.84vh;
   padding: 14px 2.36vw;
   border-top: 1px solid #efefef;
   background: #fff;
@@ -137,6 +137,7 @@ const Post = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [recommentUserName, setRecommentUserName] = useState(''); 
   const [commentId, setCommentId] = useState('');
+  const [isAnonymity, setIsAnonymity] = useState(true);
   const [isCommentBts, setIsCommentBts] = useState(false);
   const [isBtsOpen, setIsBtsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -168,6 +169,7 @@ const Post = () => {
           postId: postId,
           parentId: parentId,
           content: commentRef.current.value,
+          anonymity : isAnonymity
         });
         window.location.reload();
       } catch (error) {
@@ -255,6 +257,7 @@ const Post = () => {
       try {
         const res = await API.post("/post/delete/comment/" + commentId);
         console.log(res);
+        if(res.data === 'success') window.location.reload();
         setIsCommentBts(false);
       } catch (error) {
         console.error(error);
@@ -312,11 +315,11 @@ const Post = () => {
               <div>
                 <Comment
                   postInfo={{
-                    username: comment.writer,
+                    username: comment.writer === null ? '익명' : comment.writer,
                     uploadtime: caclTime(comment.createdDate),
                   }}
                   comment={comment.content}
-                  wirteChild={() => AddReComment(comment.commentId, comment.writer, true)}
+                  wirteChild={() => AddReComment(comment.commentId, comment.writer, true, isAnonymity)}
                   deleteComment={()=> DeleteCommentBts(comment.commentId)}/>
                 {comment.children?.map((child) => (
                   <Comment
@@ -346,8 +349,8 @@ const Post = () => {
         </c.ScreenComponent>
         <InputCommentBox>
           <TotalInput>
-            <Anonymous onClick={()=>setIsSelect(!isSelect)}>
-              <AnonymousBox src={ isSelect ? FillCheckBox : CheckBox} />
+            <Anonymous onClick={()=>setIsAnonymity(!isAnonymity)}>
+              <AnonymousBox src={ isAnonymity ? FillCheckBox : CheckBox} />
               <AnonymousTxt>{`익명`}</AnonymousTxt>
             </Anonymous>
             <InputComment placeholder="댓글을 입력하세요" ref={commentRef} />
