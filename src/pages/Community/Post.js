@@ -231,7 +231,7 @@ const Post = () => {
       fetchDeleteScrapState();
     }
   };
-  const AddReComment = (commentId, commentUserName,modalState) => {
+  const  AddReComment = (commentId, commentUserName, modalState) => {
     setIsModalOpen(modalState);
     setParentId(commentId);
     setRecommentUserName(commentUserName);
@@ -318,21 +318,23 @@ const Post = () => {
                     username: comment.writer === null ? '익명' : comment.writer,
                     uploadtime: caclTime(comment.createdDate),
                   }}
-                  comment={comment.content}
-                  wirteChild={() => AddReComment(comment.commentId, comment.writer, true, isAnonymity)}
+                  comment={comment.deleted ? '삭제된 댓글입니다' : comment.content}
+                  deleted={comment.deleted}
+                  wirteChild={() => AddReComment(comment.commentId, comment.writer, true)}
                   deleteComment={()=> DeleteCommentBts(comment.commentId)}/>
                 {comment.children?.map((child) => (
                   <Comment
                     paddingLeft={`8.17vw`}
                     paddingRight={`5.12vw`}
                     recomment={true}
+                    deleted={child.deleted}
+                    comment={child.deleted ? '삭제된 댓글입니다' : child.content}
                     postInfo={{
-                      username: child.writer,
-                      uploadtime: caclTime(comment.createdDate),
+                      username: child.writer  === null ? '익명' : comment.writer,
+                      uploadtime: caclTime(child.createdDate),
                     }}
-                    wirteChild={() => AddReComment(comment.commentId, true)}
-                    deleteComment={()=> DeleteCommentBts(comment.commentId)}
-                    comment={child.content}
+                    wirteChild={() => AddReComment(child.commentId, child.writer, true)}
+                    deleteComment={()=> DeleteCommentBts(child.commentId)}
                   />
                 ))}
               </div>
@@ -357,7 +359,7 @@ const Post = () => {
             <img src={Send} onClick={() => UploadComment()} />
             {isModalOpen && (
               <Modal padding={`22px 20px`}>
-                <ModalTxt>{recommentUserName}{`님께 답글을 달까요?`}</ModalTxt>
+                <ModalTxt>{recommentUserName === null ? '익명' : recommentUserName}{`님께 답글을 달까요?`}</ModalTxt>
                 <ModalBtn>
                   <NoBtn onClick={() => AddReComment(null, false)}>{`아니요`}</NoBtn>
                   <YesBtn onClick={() => setIsModalOpen(false)}>{`네`}</YesBtn>

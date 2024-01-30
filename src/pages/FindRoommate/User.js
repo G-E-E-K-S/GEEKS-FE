@@ -117,7 +117,10 @@ const MatchColorText = styled.div`
 const BottomEnroll = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 20.17px 5.12vw 75.83px 5.12vw;
+  padding-top: 20.17px;
+  padding-right: 5.12vw;
+  padding-left: 5.12vw;
+  padding-bottom: calc(11.84vh - 56px - 20.17px);
   border-top: 1px solid #efefef;
   position: fixed;
   bottom: 0px;
@@ -295,7 +298,7 @@ const User = () => {
   
   return (
     <c.Totalframe>
-      <c.ScreenComponent>
+      <c.ScreenComponent navigation={true}>
         <c.SubScreen>
           <c.SpaceBetween>
             <HeaderMenu>
