@@ -64,9 +64,9 @@ const ToggleBtn = styled.button`
   height: 32px;
   border-radius: 24px;
   padding: 4px 5px;
-  border: 1px solid ${(props) => (props.toggle ? "#EFEFEF" : "#FEE384")};
+  border: 1px solid ${(props) => (props.toggle ? "#FEE384" : "#EFEFEF")};
   cursor: pointer;
-  background-color: ${(props) => (props.toggle ? "#EFEFEF" : "#FFF4CD")};
+  background-color: ${(props) => (props.toggle ? "#FFF4CD" : "#EFEFEF")};
   position: relative;
   display: flex;
   justify-content: center;
@@ -74,7 +74,7 @@ const ToggleBtn = styled.button`
   transition: all 0.5s ease-in-out;
 `;
 const Circle = styled.div`
-  background-color: ${(props) => (props.toggle ? "#949494" : "#FFC700")};
+  background-color: ${(props) => (props.toggle ? "#FFC700" : "#949494" )};
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -106,7 +106,7 @@ const WelcomeKit = styled.div`
   line-height: 18px; /* 128.571% */
 `;
 const MyPage = () => {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
   const [userInfo, setUserInfo] = useState('');
   const [userMajor , setUserMajor] = useState('');
 
@@ -114,6 +114,15 @@ const MyPage = () => {
   
   const clickedToggle = () => {
     setToggle((prev) => !prev);
+    async function fetchShowProfile() {
+      try {
+        const res = await API.get("/member/open?open=" + toggle);
+        console.log(res);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchShowProfile();
   };
   const navigate = useNavigate();
 
@@ -123,7 +132,6 @@ const MyPage = () => {
           const res = await API.get("/member/myPage");
           setUserInfo(res.data);
           setContent(res.data.nickname);
-          navigate('/mypage');
       }catch(error){
         console.error(error);
       }
@@ -137,7 +145,7 @@ const MyPage = () => {
           <PageName pageName={`마이`} />
           <UserInfoTop>
             <UserInfo
-              profileImg={basicProfile}
+              profileImg={userInfo.photoName?.length === 0 ? basicProfile : userInfo.photoName}
               userName={userInfo.nickname}
               userMajor={userInfo.major}
               UserId={userInfo.studentID}
