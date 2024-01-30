@@ -27,8 +27,10 @@ const DoneBtn = styled.div`
   font-weight: 600;
 `;
 const EditImg = styled.img`
-  margin-top: 6.16vh;
+  margin-top: calc( 6.16vh + 12px);
   cursor: pointer;
+  width: 28px;
+  height: 28px;
 `;
 const TotalSaveNum = styled.div`
   margin-top: 3.31vh;
@@ -47,6 +49,7 @@ const CheckImg = styled.img`
 const LifeStyles = () => {
   const [activeEdit, setActiveEdit] = useState(false);
   const [activeCheck, setActiveCheck] = useState(false);
+  const [checkIndex, setCheckIndex] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [saveList, setSaveList] = useState([]);
 
@@ -72,26 +75,38 @@ const LifeStyles = () => {
     }
     fetchSaveList();
   },[]);
-
+  const handleCheckIndex = (index) => {
+    setActiveCheck(!activeCheck);
+    setCheckIndex(value => [...value, index]);
+    if(checkIndex.includes(index)) setCheckIndex(checkIndex.filter(nowIndex => nowIndex !== index));
+  }
+  console.log(checkIndex)
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
           <c.SpaceBetween>
-            <Header subtitle={`저장 목록`} andleShow={activeEdit}/>
             {activeEdit ? (
-              <DoneBtn>완료</DoneBtn>
+              <>
+                <Header subtitle={`${checkIndex.length}명 선택됨`} andleShow={activeEdit} isCenter={true}/>
+                <DoneBtn>완료</DoneBtn>
+              </>
             ) : (
-              <EditImg src={Edit} onClick={() => handleEdit()} />
+              <>
+                <Header subtitle={`저장 목록`} andleShow={activeEdit}/>
+                <EditImg src={Edit} onClick={() => handleEdit()} />
+              </>
             )}
           </c.SpaceBetween>
           {/* total save list */}
           <TotalSaveNum>총 {saveList.length}명</TotalSaveNum>
-          {activeEdit && <CheckImg src={activeCheck ? Check : NoCheck} onClick={()=>setActiveCheck(!activeCheck)}/>}
-          {saveList.map((userData)=>(
-            <OtherProfile score={userData.point} userprofile={Profile} nickName={userData.nickname} major={userData.major} id={userData.studentID} intro={userData.introduction} activeCheck={activeCheck} />
-          ))}
-          <JoinButton btnName={`삭제하기`} isNextPage={activeCheck} handleClick={() => handleBtn()} />
+            {saveList.map((userData,index)=>(
+              <c.Flex onClick={() => handleCheckIndex(index)}>
+              {activeEdit && <CheckImg src={checkIndex.includes(index) ? Check : NoCheck} />}
+              <OtherProfile activeCheck={checkIndex.includes(index)} score={userData.point} userprofile={Profile} nickName={userData.nickname} major={userData.major} id={userData.studentID} intro={userData.introduction} />
+              </c.Flex>
+            ))}
+          <JoinButton btnName={`삭제하기`} isNextPage={checkIndex.length > 0} handleClick={() => handleBtn()} />
           {showPopup && <Popup bottom={`18.24vh`} setShowPopup={setShowPopup} message={`‘~~...’님이 삭제되었습니다`}/> }
         </c.SubScreen>
       </c.ScreenComponent>
