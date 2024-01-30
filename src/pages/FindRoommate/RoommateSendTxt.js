@@ -37,12 +37,16 @@ const ApplyDetailTxt = styled.div`
   line-height: 24px;
   margin-bottom: 15.38vh;
 `;
+const FullWidth = styled.div`
+  width: 100%;
+`;
 const ProcessContainer = styled.img`
   width: 289px;
   height: 52px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 `;
 const RoommateSendTxt = () => {
   const location = useLocation();
@@ -58,7 +62,9 @@ const RoommateSendTxt = () => {
           {` 님께\n룸메이트 신청을 보냈어요`}
         </UserNameApply>
         <ApplyDetailTxt>{`상대방이 수락하면 룸메이트가 맺어져요`}</ApplyDetailTxt>
-        <ProcessContainer src={sendRoommateApply} />
+        <FullWidth>
+          <ProcessContainer src={sendRoommateApply} />
+        </FullWidth>
         <sendRoommateApply />
         <Button
           isNextPage={true}
