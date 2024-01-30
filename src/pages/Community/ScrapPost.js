@@ -25,7 +25,7 @@ const ScrapPost = () => {
         <Header subtitle={`스크랩한 글`}/>
         {scrapPost.map((post) => (
           <CommunityPost
-            padding={'20px 0'}
+            padding={'10px 0'}
             postName={post.title}
             commentNum={post.commentCount}
             postContent={post.content}
