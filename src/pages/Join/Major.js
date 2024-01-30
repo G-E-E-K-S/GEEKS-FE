@@ -20,7 +20,23 @@ const MajorTotal = styled.div`
   width: 100%;
   border-bottom: 2px solid #efefef;
 `;
+const DepartmentBox = styled.div`
+  height: calc(630px - 53px - 230px);
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
+const BlurBackground = styled.div`
+  position: absolute;
+  height: 248px;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 36.94%);
+`;
 const MajorText = styled.div`
   color: ${(props)=>props.major ? "#d0d0d0" : '#333333'};
   font-size: 1.5rem;
@@ -139,9 +155,12 @@ const Major = () => {
               <MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
               <CloseImg src={Close} onClick={() => setIsDepartmentOpen(!isDepartmentOpen)} />
             </c.SpaceBetween>
-            {DepartmentMajors[department].map((major) => (
-              <Department department={major} onClick={() => handleMajor(major)}/>
-            ))}
+            <DepartmentBox>
+              {DepartmentMajors[department].map((major) => (
+                <Department department={major} onClick={() => handleMajor(major)}/>
+              ))}
+            </DepartmentBox>
+            <BlurBackground/>
           </BottomSheet>}
 
         <StudentIdTotal
