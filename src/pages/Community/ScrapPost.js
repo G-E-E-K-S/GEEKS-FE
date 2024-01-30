@@ -1,14 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as c from "../../components/Common/CommonStyle";
+import API from "../../axios/BaseUrl";
 import Header from "../../components/MyPage/Header";
-import styled from "styled-components";
-import 'moment/locale/ko';
+import CommunityPost from "../../components/Community/CommunityPost";
+import moment from "moment";
+import "moment/locale/ko";
 
 const ScrapPost = () => {
+  const [scrapPost, setScrapPost] = useState([]);
+  useEffect(() => {
+    async function fetchScrapPost() {
+      try {
+        const res = await API.get("/post/scrap/history");
+        setScrapPost(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchScrapPost();
+  }, []);
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-      <Header subtitle={`스크랩한 글`}/>
+        <Header subtitle={`스크랩한 글`}/>
+        {scrapPost.map((post) => (
+          <CommunityPost
+            padding={'20px 0'}
+            postName={post.title}
+            commentNum={post.commentCount}
+            postContent={post.content}
+            isLike={post.likeCount > 0 ? true : false}
+            likeNum={post.likeCount}
+            writeTime={moment(post.createdDate).format('MM.DD')}
+          />
+        ))}
       </c.ScreenComponent>
     </c.Totalframe>
   );

@@ -2,11 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import CommentNumImg from "../../assets/img/Community/commentNum.svg";
-
+import LikeIcon from "../../assets/img/Home/mainLike.svg";
 const ShowTotalPost = styled.div`
   width: 100%;
   padding-bottom: 20px;
   cursor: pointer;
+  padding: ${(props)=>props.padding};
 `;
 const PostName = styled.div`
   color: #333;
@@ -19,12 +20,18 @@ const CommentNumIcon = styled.img`
   height: 16px;
   margin-top: 1px;
 `;
+const LikeNumIcon = styled(CommentNumIcon)`
+  margin-left: 8px;
+`;
 const CommentNum = styled.div`
   color: #2b75cb;
   font-size: 0.875rem;
   font-weight: 500;
   margin-left: 3px;
   margin-top: 1px;
+`;
+const LikeNum = styled(CommentNum)`
+  color: #EC5062;
 `;
 const PostContent = styled.div`
   color: #525252;
@@ -53,18 +60,27 @@ const PostImg = styled.img`
 `;
 const CommunityPost = (props) => {
   return (
-    <ShowTotalPost onClick={props.onClick}>
+    <ShowTotalPost onClick={props.onClick} padding={props.padding}>
       <c.SpaceBetween>
         <div>
           <c.Flex>
             <PostName>{props.postName}</PostName>
             <CommentNumIcon src={CommentNumImg} />
             <CommentNum>{props.commentNum}</CommentNum>
+            {props.isLike &&
+              <>
+                <LikeNumIcon src={LikeIcon}/>
+                <LikeNum>{props.likeNum}</LikeNum>
+              </>
+            }
+            
           </c.Flex>
           <PostContent>{props.postContent}</PostContent>
-          <UserInfo>
-            {props.writeTime} · {props.userName}
-          </UserInfo>
+          <c.Flex>
+            <UserInfo>
+              {props.writeTime} · {props.userName}
+            </UserInfo>
+          </c.Flex>
         </div>
         {props.postImg == null ? null : <PostImg src={'https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/'+ props.postImg} />}
       </c.SpaceBetween>
