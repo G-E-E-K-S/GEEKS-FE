@@ -132,6 +132,9 @@ const MyPage = () => {
           const res = await API.get("/member/myPage");
           setUserInfo(res.data);
           setContent(res.data.nickname);
+          if(res.data.major.includes('공학과')) setUserMajor(res.data.major.replace('공학과',''));
+          else if(res.data.major.includes('학과')) setUserMajor(res.data.major.replace('학과',''));
+          else if(res.data.major.includes('전공')) setUserMajor(res.data.major.replace('전공',''));
       }catch(error){
         console.error(error);
       }
@@ -147,7 +150,7 @@ const MyPage = () => {
             <UserInfo
               profileImg={userInfo.photoName?.length === 0 ? basicProfile : userInfo.photoName}
               userName={userInfo.nickname}
-              userMajor={userInfo.major}
+              userMajor={userMajor}
               UserId={userInfo.studentID}
               enrollLifeStyle={!userInfo.exist}
             />
