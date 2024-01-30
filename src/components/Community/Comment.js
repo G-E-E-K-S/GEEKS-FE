@@ -5,12 +5,14 @@ import PostInfo from "./PostInfo";
 import CommentIcon from "../../assets/img/Community/comment.svg";
 import DeleteComment from "../../assets/img/Community/deleteComment.svg";
 import Dots from "../../assets/img/Community/grayDots.svg";
+import DeleteDots from "../../assets/img/Community/deleteThreeDot.svg";
 
 const CommentBox = styled.div`
   height: max-content;
   width: ${(props)=>props.isRecomment ? `100vw` : `100%`};
   padding-top: 8px;
   padding-bottom: 16px;
+  pointer-events: ${(props)=>props.deleted && 'none' };
   padding-left: ${(props)=>props.paddingLeft};
   padding-right: ${(props)=>props.paddingRight};
   background-color: ${(props)=>props.isRecomment ? '#F7F7F7' : '#fff'};
@@ -27,7 +29,7 @@ const CommentImg = styled.img`
   margin-right: 1.535vw;
 `;
 const CommentText = styled.div`
-  color: #333;
+  color: ${(props)=>props.deleted ? '#D0D0D0' : '#333'};
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
@@ -40,18 +42,19 @@ const Icons = styled.div`
 `;
 const Comment = (props) => {
   return (
-    <CommentBox paddingLeft={props.paddingLeft} isRecomment={props.recomment} paddingRight={props.paddingRight}>
+    <CommentBox deleted={props.deleted} paddingLeft={props.paddingLeft} isRecomment={props.recomment} paddingRight={props.paddingRight}>
       <c.SpaceBetween>
         <PostInfo
           profileImg={props.postInfo.profileImg}
           username={props.postInfo.username}
-          uploadtime={props.postInfo.uploadtime}/>
+          uploadtime={props.postInfo.uploadtime}
+          deleted={props.deleted}/>
         <Icons>
-          <CommentImg src={props.isDelete ? DeleteComment : CommentIcon} onClick={props.wirteChild}/>
-          <ThreeDots src={Dots} onClick={props.deleteComment}/>
+          <CommentImg src={props.deleted ? DeleteComment : CommentIcon} onClick={props.wirteChild}/>
+          <ThreeDots src={props.deleted ? DeleteDots : Dots} onClick={props.deleteComment}/>
         </Icons>
       </c.SpaceBetween>
-      <CommentText>{props.comment}</CommentText>
+      <CommentText deleted={props.deleted}>{props.comment}</CommentText>
     </CommentBox>
   );
 };
