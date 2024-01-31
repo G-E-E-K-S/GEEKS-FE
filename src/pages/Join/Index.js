@@ -11,5 +11,7 @@ import Major from './Major';
 import Gender from './Gender';
 import Dormitory from './Dormitory';
 import FinalPage from './FinalPage';
+import ForgetEmail from './ForgetEmail';
+import AlreadyRegist from './AlreadyRegist';
 
-export { Intro, AccessRight, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage};
+export { Intro, AccessRight, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage, ForgetEmail, AlreadyRegist};
