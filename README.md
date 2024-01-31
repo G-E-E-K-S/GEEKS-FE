@@ -4,11 +4,12 @@
 <img width="300" alt="Frame 1" src="https://github.com/leesoyuun/GEEKS-FE/assets/51051548/d626bdd7-1211-475c-b34c-2d92129f7b12">
 
 ## GEEKS
-> 상명대학교 기숙사 룸메이트 매칭 서비스 및 기숙사 커뮤니티 서비스
+> 상명대학교 기숙사 룸메이트 매칭 서비스 및 기숙사 커뮤니티 서비스 <br>
 > 개발기간 : 2023.12 ~ 2024.02
 
 ## 배포주소
 > 현 배포 진행중입니다.
+<br>
 
 ## 프로젝트 팀원 소개
 
@@ -26,10 +27,13 @@ GEEKS(긱스)는 상명대학교 기숙사생들을 위한 플랫폼입니다. �
 
 ## Stack
 ### Environment
-<img src="https://img.shields.io/badge/VISUALSTUDIOCODE-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=#007ACC"> <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=#F05032"> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=#181717">
+<img src="https://img.shields.io/badge/VISUALSTUDIOCODE-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=#007ACC"> <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=#fff"> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=#181717">
 
 ### Config
-<img src="https://img.shields.io/badge/NPM-CB3837?style=for-the-badge&logo=npm&logoColor=#CB3837">
+<img src="https://img.shields.io/badge/NPM-CB3837?style=for-the-badge&logo=npm&logoColor=#CB3837">
 
 ### Development
 #### Frontend
+<img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=react&logoColor=#007ACC"> <img src="https://img.shields.io/badge/JAVASCRIPT-F7DF1E?style=for-the-badge&logo=javascript&logoColor=#fff"> <img src="https://img.shields.io/badge/STYLED COMPONENTS-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=#007ACC"> 
+<img src="https://img.shields.io/badge/RECOIL-ffffff?style=for-the-badge&logo=recoil&logoColor=#ffffff"> 
+
