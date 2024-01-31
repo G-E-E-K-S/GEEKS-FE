@@ -4,18 +4,16 @@ import * as c from "../../components/Common/CommonStyle";
 import BottomSheet from "./BottomSheet";
 import Colse from "../../assets/img/MyPage/close.svg";
 
+const ContainBottom = styled.div`
+  width: 100%;
+  position: relative;
+`;
 const Content = styled.div`
   display: flex;
-  width: 65.64vw;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-`;
-const ContainBottom = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
 `;
 const MainIcon = styled.img`
   width: 64px;
@@ -43,7 +41,9 @@ const CloseIcon = styled.img`
   width: 28px;
   height: 28px;
   cursor: pointer;
-  margin-left: 2.17vw;
+  position: absolute;
+  top: 0;
+  right: 0;
 `;
 const BottomSheetBtn = styled.div`
   width: 100%;
