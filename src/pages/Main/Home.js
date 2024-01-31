@@ -110,6 +110,7 @@ const PopularPostBox = styled.div`
   margin-bottom: 20px;
   position: relative;
 `;
+
 const PopularPostText = styled.div`
   width: calc(100% / 2);
   height: 100%;
@@ -118,36 +119,53 @@ const PopularPostText = styled.div`
   color: ${(props) => (props.toggle ? "#1A1A1A" : "#949494")};
   font-weight: ${(props) => (props.toggle ? "600" : "500")};
   border-radius: ${(props) => props.toggle && "8px"};
-  box-shadow: ${(props) => props.toggle && "2px 2px 4px 0px rgba(0, 0, 0, 0.04)"};
+  box-shadow: ${(props) =>
+    props.toggle && "2px 2px 4px 0px rgba(0, 0, 0, 0.04)"};
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${(props) => !props.view && "opacity: 0"};
+
+  transition: ${(props) => props.toggle && "transform 0.5s ease,"}opacity 1s
+    ease;
+
+  transform: ${(props) =>
+    props.toggle
+      ? props.isWeeklyPost
+        ? "translateX(100%)"
+        : "translateX(0%)"
+      : null};
+
+  &.active {
+    opacity: 1;
+  }
+
+  &:not(.active) {
+    opacity: 0;
+  }
+`;
+
+const PopularPostTextInDiv = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  ${(props) => props.toggle && "transition: transform 0.5s ease, opacity 0.5s ease"};
-  
-  transform: ${(props) => (props.toggle ? (props.isWeeklyPost ? "translateX(100%)" : "translateX(0%)") : null)};
+  ${(props) => (props.isWeeklyPost ? "opacity: 1" : "opacity: 0")};
 
+  transition: opacity 0.6s ease;
+
+  &.active {
+    opacity: 1;
+  }
 `;
 
-// transition: transform 0.5s ease; /* Added transition property */
-
-//   transform: ${(props) => (!props.isWeeklyPost ? "translateX(100%)" : "translateX(-100%)")};
-// const PopularPostText = styled.div`
-//   width: calc(100% / 2);
-//   height: 100%;
-//   ${(props) => props.toggle && "position: absolute; top: 1px; left: 0;"}
-//   background-color: ${(props) => props.toggle && "#FFF"};
-//   color: ${(props) => (props.toggle ? "#1A1A1A" : "#949494")};
-//   font-weight: ${(props) => (props.isWeeklyPost ? "600" : "500")};
-//   border-radius: ${(props) => props.toggle && "8px"};
-//   box-shadow: ${(props) =>
-//     props.toggle && "2px 2px 4px 0px rgba(0, 0, 0, 0.04)"};
-//   text-align: center;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// `;
 const IconBox = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -160,13 +178,14 @@ const FindIcon = styled.img`
   height: 120px;
 `;
 const Home = () => {
-  const [isShowReview, setIsSHowReiew] = useState(true);
+  const [isShowReview, setIsShowReView] = useState(true);
   const [isWeeklyPost, setIsWeeklyPost] = useState("live");
   const [showPopup, setShowPopup] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
   const [isExist, setIsExist] = useState(true);
   const [point, setPoint] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [weeklyPost,setWeeklyPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState(false);
   const navigate = useNavigate();
@@ -179,6 +198,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    setIsShowReView(localStorage.getItem('show'));
     async function fetchEmailPage() {
       try {
         const res = await API.get("/home/main");
@@ -186,6 +206,7 @@ const Home = () => {
         setIsExist(res.data.exist);
         setPoint(res.data.points);
         setPosts(res.data.posts);
+        setWeeklyPost(res.data.weeklyPosts);
         setUserName(res.data.nickname);
       } catch (error) {
         console.error(error);
@@ -210,6 +231,10 @@ const Home = () => {
     moment.locale("ko"); // 언어를 한국어로 설정
     return moment(uploadTime).fromNow(`A`) + "전"; // 지금으로부터 계산
   };
+  const handleShowReview = () => {
+    setIsShowReView(false); 
+    localStorage.setItem('show', false);
+  }
   return (
     !loading && (
       <c.Totalframe background={`#FAFAFA`}>
@@ -220,8 +245,7 @@ const Home = () => {
               <Popup
                 message={`곧 만날 수 있으니 조금만 기다려 주세요!`}
                 setShowPopup={setShowPopup}
-                top={`9.5vh`}
-              />
+                top={`9.5vh`}/>
             )}
             <System>
               <Icons onClick={() => setShowPopup(true)}>
@@ -236,10 +260,7 @@ const Home = () => {
                 <Icon src={stayOut} />
                 <IconText>외박 신청</IconText>
               </Icons>
-              <a
-                href={"https://www.smu.ac.kr/dormi2/board/notice.do"}
-                target="_blank"
-              >
+              <a href={"https://www.smu.ac.kr/dormi2/board/notice.do"} target="_blank">
                 <Icons>
                   <Icon src={dormiNoti} />
                   <IconText>기숙사 공지</IconText>
@@ -247,27 +268,21 @@ const Home = () => {
               </a>
             </System>
             <HomeBox
-              name={userName+` 님과 딱 맞는\n룸메이트를 찾아드려요`}
+              name={userName + ` 님과 딱 맞는\n룸메이트를 찾아드려요`}
               marginTop={`3.79vh`}
               marginBottom={isExist ? `4.73vh` : `1.42vh`}
               height={`max-content`}
-              onClick={() => isNavigate()}
-            >
+              onClick={() => isNavigate()}>
               {isExist ? (
                 point.map((opponent, index) => (
                   <MainOtherProfile
                     nickName={opponent.nickname}
-                    userprofile={
-                      opponent.photoName.length === 0
-                        ? BasicProfile
-                        : opponent.photoName
-                    }
+                    userprofile={opponent.photoName.length === 0 ? BasicProfile : opponent.photoName}
                     major={opponent.major}
                     id={opponent.studentID}
                     score={opponent.point}
                     smoke={opponent.smoke}
-                    marginBottom={point.length === index + 1 ? "0px" : "36px"}
-                  />
+                    marginBottom={point.length === index + 1 ? "0px" : "36px"}/>
                 ))
               ) : (
                 <div>
@@ -275,9 +290,7 @@ const Home = () => {
                     <FindIcon src={Find} />
                   </IconBox>
                   <FindRoommateTxt>{`생활 습관을 등록하고\n나와 딱 맞는 룸메이트를 찾아보세요!`}</FindRoommateTxt>
-                  <EnrollRule
-                    onClick={() => navigate("/lifestyle")}
-                  >{`생활습관 등록하기`}</EnrollRule>
+                  <EnrollRule onClick={() => navigate("/lifestyle")}>{`생활습관 등록하기`}</EnrollRule>
                 </div>
               )}
             </HomeBox>
@@ -285,7 +298,7 @@ const Home = () => {
               <ShowReviewBox>
                 <c.SpaceBetween>
                   <ReviewTxt>{`긱스 이용 후기를 남겨주세요!`}</ReviewTxt>
-                  <CloseImg src={Close} onClick={() => setIsSHowReiew(false)} />
+                  <CloseImg src={Close} onClick={() => handleShowReview()} />
                 </c.SpaceBetween>
                 <MoreSecurityTxt>{`더 멋지게 보완해서 찾아올게요`}</MoreSecurityTxt>
               </ShowReviewBox>
@@ -296,18 +309,37 @@ const Home = () => {
               marginBottom={`3.31vh`}
               height={`max-content`}>
               <PopularPostBox>
-                <PopularPostText isWeeklyPost={isWeeklyPost === "live"} onClick={() => setIsWeeklyPost("live")}>
-                {`실시간 인기글`}
+                <PopularPostText
+                  view={isWeeklyPost === "weekly"}
+                  isWeeklyPost={isWeeklyPost === "live"}
+                  onClick={() => setIsWeeklyPost("live")}
+                  className={isWeeklyPost === "weekly" ? "active" : ""}>
+                  {`실시간 인기글`}
                 </PopularPostText>
-                <PopularPostText isWeeklyPost={isWeeklyPost === "weekly"} onClick={() => setIsWeeklyPost("weekly")}>
+
+                <PopularPostText
+                  view={isWeeklyPost === "live"}
+                  isWeeklyPost={isWeeklyPost === "weekly"}
+                  onClick={() => setIsWeeklyPost("weekly")}
+                  className={isWeeklyPost === "live" ? "active" : ""}>
                   {`주간 인기글`}
                 </PopularPostText>
-                <PopularPostText 
-                toggle={true} 
-                isWeeklyPost={isWeeklyPost === 'weekly'}
-                className={active ? 'active' : ''}
-                >
-                  {isWeeklyPost === "weekly"? '주간 인기글' : '실시간 인기글'}
+                
+                <PopularPostText
+                  toggle={true}
+                  view={true}
+                  isWeeklyPost={isWeeklyPost === "weekly"}
+                  className="active">
+                  <PopularPostTextInDiv
+                    isWeeklyPost={isWeeklyPost === "live"}
+                    className={isWeeklyPost === "live" ? "active" : ""}>
+                    실시간 인기글
+                  </PopularPostTextInDiv>
+                  <PopularPostTextInDiv
+                    isWeeklyPost={isWeeklyPost === "weekly"}
+                    className={isWeeklyPost === "weekly" ? "active" : ""}>
+                    주간 인기글
+                  </PopularPostTextInDiv>
                 </PopularPostText>
               </PopularPostBox>
               {isWeeklyPost === "live" &&
@@ -321,16 +353,15 @@ const Home = () => {
                     marginBottom={posts.length === index + 1 ? "0px" : "24px"}
                   />
                 ))}
-                {isWeeklyPost === "weekly" &&
-                posts.map((post, index) => (
+              {isWeeklyPost === "weekly" &&
+                weeklyPost?.map((post, index) => (
                   <MainPost
                     text={post.title}
                     comment={post.commentCount}
                     likeCnt={post.likeCount}
                     postContent={post.content}
                     UploadTime={caclTime(post.createdDate)}
-                    marginBottom={posts.length === index + 1 ? "0px" : "24px"}
-                  />
+                    marginBottom={posts.length === index + 1 ? "0px" : "24px"}/>
                 ))}
             </HomeBox>
           </c.SubScreen>
