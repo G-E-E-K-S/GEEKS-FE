@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../axios/BaseUrl";
-import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import ColHeaderMenu from "../../components/Common/ColHeaderMenu";
@@ -22,7 +21,7 @@ const SubTitle = styled.div`
 const BottomMenues = styled.div`
   display: flex;
   width: 100%;
-  padding: 20.17px 5.12vw 75.83px 5.12vw;
+  padding: 20.17px 5.12vw 26.5px 5.12vw;
   border-top: 1px solid #EFEFEF;
   position: fixed;
   bottom: 0;
@@ -92,7 +91,6 @@ const LifeStyles = () => {
   useEffect(()=>{
     async function fetchReceiveData(){
       try{
-          axios.defaults.withCredentials=true; // allow cookies
           const res = await API.get("/detail/send");
           setReceiveData(res.data);
       }catch(error){
@@ -122,7 +120,7 @@ const LifeStyles = () => {
     if ( isSmoke !== null && isHabit !== null && isEar !== null && isSleep !== null && isWakeUp !== null && isOut !== null && isCleaning !== null &&isTendency !== null){
       async function fetchLifeStyle() {
         try {
-          const res = await API.post("/detail/register", {
+          const res = await API.post("/detail/"+`${receiveData?.exist ? 'update' : 'register' }`, {
             'smoking': isSmoke,
             'habit': isHabit,
             'ear': isEar,
@@ -131,6 +129,7 @@ const LifeStyles = () => {
             'out': isOut,
             'cleaning': isCleaning,
             'tendency': isTendency,
+            'detailId': receiveData.detailId,
           });
           if(res.data === "success") navigate('/mypage');
         } catch (error) {
@@ -142,7 +141,7 @@ const LifeStyles = () => {
   }
   return (
     <c.Totalframe>
-      <c.ScreenComponent>
+      <c.ScreenComponent navigation={true}>
         <c.SubScreen>
             <ColHeaderMenu>
               <SubTitle>{`나의 생활 습관을\n등록해 보세요`}</SubTitle>
@@ -162,7 +161,7 @@ const LifeStyles = () => {
           <ResetImg src={reset}/>
           초기화
         </Reset>
-        <Enroll onClick={()=>handleButtonClick()} isClicked={isClicked}>등록하기</Enroll>
+        <Enroll onClick={()=>handleButtonClick()} isClicked={isClicked}>{receiveData?.exist ? '수정하기' : '등록하기' }</Enroll>
       </BottomMenues>
     </c.Totalframe>
   );
