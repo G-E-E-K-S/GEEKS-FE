@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import axios from "axios";
 import API from "../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -129,7 +128,7 @@ const InputEmail = () => {
             onChange={() => handleEmailVal()}
           />
         </InputInfos>
-        <c.Flex>
+        <c.Flex onClick={()=>navigate('/forgetemail')}>
           <ForgetPwdTxt>{`비밀번호를 잊어버리셨나요?`}</ForgetPwdTxt>
           <ForgetPwdIcon src={ForgetPwdImg}/>
         </c.Flex>
