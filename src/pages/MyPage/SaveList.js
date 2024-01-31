@@ -20,7 +20,7 @@ const DoneBtn = styled.div`
   margin-top: 5.7vh;
   padding: 0.94vh 3.07vw;
   border-radius: 8px;
-  background: #efefef;
+  background: ${(props)=>props.isDone ? '#FFC700' : '#efefef'};
 
   color: #949494;
   font-size: 16px;
@@ -48,25 +48,37 @@ const CheckImg = styled.img`
 `;
 const LifeStyles = () => {
   const [activeEdit, setActiveEdit] = useState(false);
-  const [activeCheck, setActiveCheck] = useState(false);
-  const [checkIndex, setCheckIndex] = useState([]);
+  const [checkUserName, setCheckUserName] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [saveList, setSaveList] = useState([]);
+  const [isDone, setIsDone] = useState(false);
 
   const handleEdit = () => {
     setActiveEdit(true);
   };
 
   const handleBtn = () => {
-    if (activeCheck) {
-      setShowPopup(true);
-      setActiveCheck(false);
+    if (checkUserName.length > 0) {
+      async function fetchDeleteSaveList() {
+        try{
+          const res = await API.get("/roommate/removesave?nickname="+checkUserName);
+          if(res.status == '200'){
+            setShowPopup(true);
+            setCheckUserName([]);
+            setIsDone(isDone);
+          }
+          console.log(res)
+        }catch(e) {
+          console.log(e);
+        } 
+      }
+      fetchDeleteSaveList();
     }
+    setSaveList(saveList.filter(list => list !== checkUserName));
   }
   useEffect(()=>{
     async function fetchSaveList() {
       try{
-        
         const res = await API.get("/roommate/savelist");
         setSaveList(res.data)
       }catch(e) {
@@ -75,12 +87,10 @@ const LifeStyles = () => {
     }
     fetchSaveList();
   },[]);
-  const handleCheckIndex = (index) => {
-    setActiveCheck(!activeCheck);
-    setCheckIndex(value => [...value, index]);
-    if(checkIndex.includes(index)) setCheckIndex(checkIndex.filter(nowIndex => nowIndex !== index));
+  const handleCheckIndex = (userName) => {
+    setCheckUserName(value => [...value, userName]);
+    if(checkUserName.includes(userName)) setCheckUserName(checkUserName.filter(nowName => nowName !== userName));
   }
-  console.log(checkIndex)
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -88,8 +98,8 @@ const LifeStyles = () => {
           <c.SpaceBetween>
             {activeEdit ? (
               <>
-                <Header subtitle={`${checkIndex.length}명 선택됨`} andleShow={activeEdit} isCenter={true}/>
-                <DoneBtn>완료</DoneBtn>
+                <Header subtitle={`${checkUserName.length}명 선택됨`} andleShow={activeEdit} isCenter={true}/>
+                <DoneBtn isDone={isDone}>완료</DoneBtn>
               </>
             ) : (
               <>
@@ -100,14 +110,14 @@ const LifeStyles = () => {
           </c.SpaceBetween>
           {/* total save list */}
           <TotalSaveNum>총 {saveList.length}명</TotalSaveNum>
-            {saveList.map((userData,index)=>(
-              <c.Flex onClick={() => handleCheckIndex(index)}>
-              {activeEdit && <CheckImg src={checkIndex.includes(index) ? Check : NoCheck} />}
-              <OtherProfile activeCheck={checkIndex.includes(index)} score={userData.point} userprofile={Profile} nickName={userData.nickname} major={userData.major} id={userData.studentID} intro={userData.introduction} />
+            {saveList.map((userData)=>(
+              <c.Flex onClick={() => handleCheckIndex(userData.nickname)}>
+              {activeEdit && <CheckImg src={checkUserName.includes(userData.nickname) ? Check : NoCheck} />}
+              <OtherProfile activeCheck={checkUserName.includes(userData.nickname)} score={userData.point} userprofile={Profile} nickName={userData.nickname} major={userData.major} id={userData.studentID} intro={userData.introduction} />
               </c.Flex>
             ))}
-          <JoinButton btnName={`삭제하기`} isNextPage={checkIndex.length > 0} handleClick={() => handleBtn()} />
-          {showPopup && <Popup bottom={`18.24vh`} setShowPopup={setShowPopup} message={`‘~~...’님이 삭제되었습니다`}/> }
+          <JoinButton btnName={`삭제하기`} isNextPage={checkUserName.length > 0} handleClick={() => handleBtn()} />
+          {showPopup && <Popup bottom={`18.24vh`} setShowPopup={setShowPopup} message={'성공적으로 삭제되었습니다'}/> }
         </c.SubScreen>
       </c.ScreenComponent>
     </c.Totalframe>
