@@ -17,12 +17,12 @@ const DoneBtn = styled.div`
   justify-content: center;
   align-items: center;
   height: 4.73vh;
-  margin-top: 5.7vh;
+  margin-top: 6.16vh;
   padding: 0.94vh 3.07vw;
   border-radius: 8px;
   background: ${(props)=>props.isDone ? '#FFC700' : '#efefef'};
 
-  color: #949494;
+  color: ${(props)=>props.isDone ? '#333' : '#949494'};
   font-size: 16px;
   font-weight: 600;
 `;
@@ -64,8 +64,9 @@ const LifeStyles = () => {
           const res = await API.get("/roommate/removesave?nickname="+checkUserName);
           if(res.status == '200'){
             setShowPopup(true);
+            setSaveList(saveList.filter((data)=> !checkUserName.includes(data.nickname)));
             setCheckUserName([]);
-            setIsDone(isDone);
+            setIsDone(!isDone);
           }
           console.log(res)
         }catch(e) {
