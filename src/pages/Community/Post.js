@@ -96,7 +96,7 @@ const PostImg = styled.img`
   width: 100%;
   overflow: hidden;
   object-fit: contain;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 const ModalTxt = styled.div`
   color: #333;
