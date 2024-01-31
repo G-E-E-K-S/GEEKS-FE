@@ -198,7 +198,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setIsShowReView(localStorage.getItem('show'));
     async function fetchEmailPage() {
       try {
         const res = await API.get("/home/main");
@@ -208,24 +207,13 @@ const Home = () => {
         setPosts(res.data.posts);
         setWeeklyPost(res.data.weeklyPosts);
         setUserName(res.data.nickname);
+        setIsShowReView(localStorage.getItem('show')!=='false');
       } catch (error) {
         console.error(error);
       }
     }
     fetchEmailPage();
   }, []);
-
-  // useEffect(() => {
-  //   setActive(true);
-
-  //   const timeId = setTimeout(() => {
-  //     setActive(false);
-  //   }, 2000);
-
-  //   return () => {
-  //     clearTimeout(timeId);
-  //   };
-  // }, [isWeeklyPost])
 
   const caclTime = (uploadTime) => {
     moment.locale("ko"); // 언어를 한국어로 설정
