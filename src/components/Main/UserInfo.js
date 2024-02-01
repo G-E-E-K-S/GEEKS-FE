@@ -11,6 +11,7 @@ const ProfileImg = styled.img`
   border-radius: 50%;
   width: 44px;
   height: 44px;
+  object-fit: cover;
 `;
 const UserInfos = styled.div`
   margin-left: 12px;
@@ -47,7 +48,7 @@ const UserInfo = (props) => {
   return (
     <Users>
       <c.Flex>
-        <ProfileImg src={props.profileImg}></ProfileImg>
+        <ProfileImg src={"https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/"+props.profileImg}></ProfileImg>
         <UserInfos>
           <UserName>{props.userName}</UserName>
           <>
