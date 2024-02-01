@@ -9,6 +9,7 @@ const TotalButton = styled.div`
     width: 89.74vw;
     height: 60px;
     background-color: ${(props) => (props.isNextPage ? '#FFC700' : '#F7F7F7')};
+    pointer-events : ${(props) => props.isNextPage ? 'auto' : 'none'};
     border-radius: 12px;
 
     color: ${(props)=> (props.isNextPage ? '#333' : '#B7B7B7')};
