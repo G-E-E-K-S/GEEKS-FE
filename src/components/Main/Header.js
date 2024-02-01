@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Modal from 'react-modal';
 import downArrow from '../../assets/img/Home/downArrow.svg';
 import search from '../../assets/img/Home/search.svg';
-// import noti from '../../assets/img/Home/noti.svg';
+import noti from '../../assets/img/Home/noti.svg';
 import edit from '../../assets/img/Home/edit.svg';
 import GeeksLogo from "../../assets/img/Common/geeksLogo.svg";
 
@@ -78,9 +78,9 @@ const Header = (props) => {
             </DormitoryKind> */}
             <img src={GeeksLogo}/>
             <Icon>
-                <img src={search}onClick={props.onClick}/>
-                {/* <img src={noti}/> */}
-                <img src={edit}/>
+                <img src={search} onClick={props.onClick}/>
+                {props.isNoti && <img src={noti}/>}
+                {props.isEdit && <img src={edit}/>}
             </Icon>
         </TotalHeader>
     );
