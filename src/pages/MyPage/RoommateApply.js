@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useRecoilValue } from 'recoil';
+import moment from "moment";
+import 'moment/locale/ko';
 import API from "../../axios/BaseUrl";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -9,10 +12,8 @@ import Popup from "../../components/Common/Popup";
 import BottomSheet from "../../components/Common/BottomSheet";
 import Colse from "../../assets/img/MyPage/close.svg";
 import CancelRoommate from "../../assets/img/MyPage/cancleRoommate.svg";
-import { useRecoilValue } from 'recoil';
-import moment from "moment";
-import 'moment/locale/ko';
-import { setAppElement } from "react-modal";
+import Roommate from "../../assets/img/MyPage/roommate.svg";
+import { useNavigate } from "react-router-dom";
 
 const ApplyTop = styled.div`
   display: flex;
@@ -35,6 +36,50 @@ const ApplyList = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+`;
+const Notice = styled.div`
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 18px;
+  color: #949494;
+  background-color: #FAFAFA;
+  padding: 14px 20px 14px 20px;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+`;
+const NoRoommate = styled.div`
+  margin-top: 4.5vh;
+`;
+const NoRoommateTxt = styled.div`
+  font-size: 1.125rem;
+  line-height: 24px;
+  align-items: center;
+  font-weight: 500;
+  color: #949494;
+  text-align: center;
+`;
+const FinRoommateBtn = styled.div`
+  border: 1px solid #E2E2E2;
+  padding: 14px 20px 14px 20px;
+  border-radius: 12px;
+  height: 52px;
+  width: max-content;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 20px;
+`;
+const FindRoommateIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+`;
+const FindRoommateTxt = styled.div`
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
 `;
 const Semester = styled.div`
   color: #949494;
@@ -139,7 +184,7 @@ const RoommateApply = () => {
   const [receivedApply, setReceivedApply] = useState([]);
   const [opponentNickName, setOpponentNickName] = useState('');
   const content = useRecoilValue(UserNickName);
-
+  const navigate = useNavigate();
   useState(()=>{
     async function fetchSentApply() {
       try{
@@ -195,9 +240,18 @@ const RoommateApply = () => {
             받은 신청
           </ApplyList>
         </c.Flex>
+        <Notice>{`룸메이트가 맺어지면, 다른 사람에게 보낸 받은 신청과 보낸 신청은 모두 사라져요`}</Notice>
         {/* axios add  */}
         {isChoose === "send" && (
-          sentApply.map((userData)=>(
+          sentApply.length === 0 ? 
+          <NoRoommate>
+            <NoRoommateTxt>{`보낸 룸메이트 신청이 없어요`}</NoRoommateTxt>
+            <FinRoommateBtn onClick={()=>navigate('/roommate')}>
+              <FindRoommateIcon src={Roommate}/>
+              <FindRoommateTxt>{`룸메이트 찾으러 가기`}</FindRoommateTxt>
+            </FinRoommateBtn>
+          </NoRoommate>
+          : sentApply.map((userData)=>(
             <div>
             <Semester>{`2024년도 2학기`}</Semester>
             <ApplyTotalInfo>
@@ -215,7 +269,15 @@ const RoommateApply = () => {
           ))
         )}
         {isChoose === "receive" && (
-          receivedApply.map((userData)=>(
+          receivedApply.length === 0 ? 
+          <NoRoommate>
+            <NoRoommateTxt>{`받은 룸메이트 신청이 없어요`}</NoRoommateTxt>
+            <FinRoommateBtn onClick={()=>navigate('./roommate')}>
+              <FindRoommateIcon src={Roommate}/>
+              <FindRoommateTxt>{`룸메이트 찾으러 가기`}</FindRoommateTxt>
+            </FinRoommateBtn>
+          </NoRoommate>
+          : receivedApply.map((userData)=>(
             <div>
               <Semester>{`3학년 2학기`}</Semester>
               <ApplyTotalInfo>
