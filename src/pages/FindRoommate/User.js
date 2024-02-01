@@ -17,6 +17,25 @@ import FillSave from "../../assets/img/MyPage/fillSave.svg";
 import Dots from "../../assets/img/Community/dots.svg";
 import ApplyRoommateIcon from "../../assets/img/Roommate/applyRoommate.svg";
 
+const MyRoommateNoti = styled.div`
+  background-color: #FFF4CD;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding: 12px 8px;
+  color: #865800;
+  text-align: center;
+`;
+const MyRoommateNotiTxt = styled.div`
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 18px;
+  margin-bottom: 2px;
+`;
+const EndRoommate = styled(MyRoommateNotiTxt)`
+  border-bottom: 1px solid #865800;
+  width: max-content;
+  margin: 0 auto;
+`;
 const TopProfile = styled.div`
   margin-top: 20px;
 `;
@@ -305,6 +324,10 @@ const User = () => {
               <img src={Dots}/>
             </HeaderMenu>
           </c.SpaceBetween>
+          <MyRoommateNoti>
+            <MyRoommateNotiTxt>{`현재 나의 룸메이트에요`}</MyRoommateNotiTxt>
+            <EndRoommate>{`룸메이트 끊기`}</EndRoommate>
+          </MyRoommateNoti>
           <TopProfile>
             <c.SpaceBetween>
               <div>
