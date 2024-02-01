@@ -140,6 +140,7 @@ const Community = () => {
           {post.map((data) => (
             <CommunityPost
               postName={data.title}
+              likeNum={data.likeCount}
               commentNum={data.commentCount}
               postContent={data.content}
               writeTime={caclTime(data.createdDate)}
