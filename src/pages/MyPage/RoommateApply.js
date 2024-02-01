@@ -272,7 +272,7 @@ const RoommateApply = () => {
           receivedApply.length === 0 ? 
           <NoRoommate>
             <NoRoommateTxt>{`받은 룸메이트 신청이 없어요`}</NoRoommateTxt>
-            <FinRoommateBtn onClick={()=>navigate('./roommate')}>
+            <FinRoommateBtn onClick={()=>navigate('/roommate')}>
               <FindRoommateIcon src={Roommate}/>
               <FindRoommateTxt>{`룸메이트 찾으러 가기`}</FindRoommateTxt>
             </FinRoommateBtn>

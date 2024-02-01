@@ -7,6 +7,7 @@ import Notice from './Notice';
 import FAQ from './Faq';
 import FaqRommate from './FaqRommate';
 import RoommateApply from './RoommateApply';
+import MyProfile from './MyProfile';
 
 
-export { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply };
+export { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply, MyProfile };
