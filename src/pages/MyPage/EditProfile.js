@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import API from "../../axios/BaseUrl";
 import * as c from "../../components/Common/CommonStyle";
@@ -73,6 +74,10 @@ const SubTitle = styled.div`
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
+`;
+const AlreadyUse = styled(SubTitle)`
+  color: #CB3D0B;
+  font-size: 0.75rem;
 `;
 const IntroOneLine = styled(SubTitle)`
   margin-top: 28px;
@@ -162,6 +167,8 @@ const EditProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [nickname, setNickname] = useState(null);
+  const [isDuplicate, setIsDuplicate] = useState(false);
+  const [isFocus, setIsFocus] = useState(false);
   const [prevNickname, setPrevNickname] = useState(null);
   const [introduction, setIntroduction] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
@@ -175,6 +182,7 @@ const EditProfile = () => {
   const [major,setMajor] = useState(null);
   const [isMajorOpen, setIsMajorOpen] = useState(false);
 
+  const navigate = useNavigate();
   const handleMajor = (major) =>{
     setMajor(major);
     setIsDepartmentOpen(!department);
@@ -225,7 +233,9 @@ const EditProfile = () => {
         );
 
         if (res.data === "duplicate") {
-          //setIsPopup(true);
+          setIsDuplicate(true);
+        } else{
+          setIsDuplicate(false);
         }
       } catch (error) {
         console.error(error);
@@ -243,8 +253,6 @@ const EditProfile = () => {
   }
 
   const hadleEditProfile = () => {
-    console.log(file);
-
     const formData = new FormData();
     
     const postData = {
@@ -275,13 +283,13 @@ const EditProfile = () => {
           });
 
           if(res.data === 'success') {
-            window.location.reload();
+            navigate('/mypage');
           }
         } catch (error) {
           console.error(error);
         }
       }
-      //fetchProfile();
+      fetchProfile();
   };
 
   const handleFocus = (state) => {
@@ -314,8 +322,15 @@ const EditProfile = () => {
           </CameraIcons>
         </UploadProfile>
         {/* input nickname */}
-        <SubTitle>닉네임</SubTitle>
-        {nickname !== null && <InputSelf
+        <c.SpaceBetween>
+          <SubTitle>닉네임</SubTitle>
+          {isDuplicate && <AlreadyUse>{`이미 사용 중인 닉네임이에요`}</AlreadyUse>}
+        </c.SpaceBetween>
+        {nickname !== null &&
+        <InputSelf
+          borderColor={isDuplicate ? '#CB3D0B' : nickname.length > 0 ? '#ECAA00' : '#EFEFEF'}
+          setIsDuplicate={setIsDuplicate}
+          isDuplicate={isDuplicate}
           totalLen={8}
           placeholder={`닉네임 입력`}
           value={nickname}
@@ -372,6 +387,7 @@ const EditProfile = () => {
           <ExampleBox />
         </c.Flex>
         <InputSelf
+          borderColor={isFocus ? '#ECAA00' : '#EFEFEF'}
           totalLen={25}
           placeholder={`나를 소개하는 한 줄을 써주세요`}
           isrepresent={true}

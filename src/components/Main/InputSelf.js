@@ -40,49 +40,21 @@ const LetterLen = styled.div`
   line-height: 16px; /* 133.333% */
   margin-top: 6px;
 `;
-const Represent = styled.div`
-  color: #ecaa00;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 24px; /* 150% */
-  white-space: nowrap;
-  margin: auto 0;
-`;
 const InputSelf = (props) => {
-  const [inputVal, setInputVal] = useState("");
-  const [borderColor, setBorderColor] = useState('#EFEFEF');
-  const letterCnt = useRef(0);
-
-  // useEffect(() => {
-  //   if(props.value?.length === 0) return;
-
-  //   console.log(props.value);
-  //   letterCnt.current = props.value?.length;
-  // },[props.value])
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    props.changeValue(value);
-
-    // const length = value.length;
-    // letterCnt.current = length;
-  };
-
-  const handleBorderColor = (state) => {
-    setBorderColor(state);
+    props.changeValue(value); 
   };
 
   return (
     <div>
-      <Flex borderColor={borderColor}>
+      <Flex borderColor={props.borderColor}>
         <InputNickName
           defaultValue={props.value}
-          onChange={handleInputChange}
+          onChange={(e)=>handleInputChange(e)}
           maxLength={props.totalLen}
-          placeholder={props.placeholder}
-          onFocus={()=>handleBorderColor(props.isDuplicate ? '#CB3D0B' :'#ECAA00')}
-          onBlur={()=>handleBorderColor('#efefef')}/>
+          placeholder={props.placeholder}/>
         {/* {props.isrepresent ? <Represent>대표</Represent> : null} */}
       </Flex>
 
