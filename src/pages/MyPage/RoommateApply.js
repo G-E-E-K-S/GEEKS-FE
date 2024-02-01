@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import API from "../../axios/BaseUrl";
-import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Common/GoBack";
-import SubTitle from "../../components/Main/SubTitle";
+import Header from "../../components/MyPage/Header";
 import OtherProfileApply from "../../components/MyPage/OtherProfileApply";
 import { UserNickName } from "../../recoil/UserNickName";
 import Popup from "../../components/Common/Popup";
 import BottomSheet from "../../components/Common/BottomSheet";
-import Dots from "../../assets/img/Home/edit.svg";
 import Colse from "../../assets/img/MyPage/close.svg";
 import CancelRoommate from "../../assets/img/MyPage/cancleRoommate.svg";
 import { useRecoilValue } from 'recoil';
@@ -24,10 +21,6 @@ const ApplyTop = styled.div`
   height: 52px;
   margin-top: 6.16vh;
   padding: 1.42vh 0;
-`;
-const DotsIcon = styled.img`
-  height: 28px;
-  width: 28px;
 `;
 const ApplyList = styled.div`
   width: calc(100% / 2);
@@ -189,13 +182,7 @@ const RoommateApply = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <ApplyTop>
-          <c.Flex>
-            <GoBack />
-            <SubTitle subtitle={`신청 목록 `} />
-          </c.Flex>
-          <DotsIcon src={Dots} />
-        </ApplyTop>
+        <Header subtitle={`신청 목록`} />
         <c.Flex>
           <ApplyList
             choose={isChoose === "send"}
