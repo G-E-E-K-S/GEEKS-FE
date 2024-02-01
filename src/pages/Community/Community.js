@@ -125,7 +125,7 @@ const Community = () => {
             <img src={MyPageIcon} onClick={() => navigate("/myCommunity")}/>
           </Icon>
         </TotalHeader>
-        <GroupPromotionBox>
+        <GroupPromotionBox onClick={() => navigate("/opengroup")}>
           <c.SpaceBetween>
             <div>
               <GroupAttendTxt>{`모임 참여하기`}</GroupAttendTxt>
