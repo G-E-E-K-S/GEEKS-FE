@@ -135,6 +135,7 @@ const MyPage = () => {
           if(res.data.major.includes('공학과')) setUserMajor(res.data.major.replace('공학과',''));
           else if(res.data.major.includes('학과')) setUserMajor(res.data.major.replace('학과',''));
           else if(res.data.major.includes('전공')) setUserMajor(res.data.major.replace('전공',''));
+          else setUserMajor(res.data.major);
       }catch(error){
         console.error(error);
       }

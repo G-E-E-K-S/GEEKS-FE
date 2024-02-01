@@ -16,8 +16,9 @@ export const Totalframe = styled.div`
 
 export const ScreenComponent = styled.div`
   padding: 0px 5.12vw;
-  touch-action: none;
   overflow-y: auto;
+  user-select:none;
+  touch-action: pan-y;
   &::-webkit-scrollbar{
     display:none;
   }

@@ -26,7 +26,7 @@ const RecommendLifeStyle = styled.div`
 `;
 const LiveRule = () => {
   return (
-    <c.Totalframe main={true}>
+    <c.Totalframe main={true} background={'#FAFAFA'}>
       <c.ScreenComponent>
         <ColHeaderMenu>
           <RecommendLifeStyle>{`긱스가 추천하는\n기숙사 생활 규칙이에요`}</RecommendLifeStyle>
