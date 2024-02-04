@@ -7,6 +7,8 @@ import Header from "../../components/Join/Header";
 import MainText from "../../components/Join/MainText";
 import ErrorPopup from "../../components/Common/ErrorPopup";
 import ForgetPwdImg from "../../assets/img/Join/forgetPwd.svg";
+import NoShowPwd from "../../assets/img/Join/NoShowPwd.svg";
+import ShowPwd from "../../assets/img/Join/ShowPwd.svg";
 
 const InputInfos = styled.div`
   display: flex;
@@ -72,6 +74,7 @@ const InputEmail = () => {
   const [isPwdSelected, setIsPwdSelected] = useState('false');
   const [isNextPage, setIsNextPage] = useState(false);
   const [isErrorPopup, setIsErrorPopUp] = useState(false);
+  const [showPwd, setShowPwd] = useState(false);
   const emailVal = useRef();
   const passwordVal = useRef();
   const navigate = useNavigate();
@@ -103,6 +106,9 @@ const InputEmail = () => {
     }
     fetchLogin();
   };
+  const handlePwd = () => {
+    setShowPwd(!showPwd);
+  };
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -121,13 +127,15 @@ const InputEmail = () => {
         </InputInfos>
         <InputInfos isSelected={isPwdSelected === 'error' ? '#CB3D0B' : isPwdSelected === 'false' ? '#EFEFEF' : '#ECAA00'} isPwd={true}>
           <Input
-            type="password"
+            type={showPwd ? "text" : "password"}
             placeholder="비밀번호"
+            maxLength={15}
             onFocus={() => setIsPwdSelected('true')}
             onBlur={() => setIsPwdSelected('false')}
             ref={passwordVal}
             onChange={() => handleEmailVal()}
           />
+          <img src={showPwd ? ShowPwd : NoShowPwd} onClick={handlePwd} />
         </InputInfos>
         <c.Flex onClick={()=>navigate('/forgetemail')}>
           <ForgetPwdTxt>{`비밀번호를 잊어버리셨나요?`}</ForgetPwdTxt>
