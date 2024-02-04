@@ -80,12 +80,15 @@ const FindRoommate = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userdata, setUserData] = useState([]);
   const [isExist, setIsExist] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
   
   useEffect(()=>{
     async function fetchUserData() {
       try{
         const res = await API.get("/point/find");
+        setLoading(false);
         setUserData(res.data.points);
         setIsExist(res.data.exist);
       }catch(e) {
@@ -96,10 +99,11 @@ const FindRoommate = () => {
   },[]);
 
   return (
-    <c.Totalframe background={`linear-gradient(180deg, #FFF 0%, #F7F7F7 71%)`}>
+    !loading && (
+      <c.Totalframe background={`linear-gradient(180deg, #FFF 0%, #F7F7F7 71%)`}>
       <c.ScreenComponent navigation={true}>
         <c.SubScreen>
-          <Header />
+          <Header isNoti={true} isEdit={false}/>
           <TitleText>{`내가 원하는 기준으로\n룸메이트를 찾아보세요`}</TitleText>
           <ConditionScroll onClick={()=>setIsOpen(true)}>
             <Condition condition={`전공`} />
@@ -132,6 +136,7 @@ const FindRoommate = () => {
       </c.ScreenComponent>
       {isOpen ? <BottomSheet close={()=>setIsOpen(false)}/> : <NavigationBar type={`rommate`} />}
     </c.Totalframe>
+    )
   );
 };
 export default FindRoommate;
