@@ -30,15 +30,15 @@ const System = styled.div`
 const Icons = styled.div`
   width: 16.41vw;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
   margin-right: 7.17vw;
   cursor: pointer;
-  &:last-child {
-    margin-right: 0;
-  }
 `;
 const Icon = styled.img`
+margin: auto;
+display: block;
   margin-bottom: 8px;
 `;
 const IconText = styled.div`
@@ -75,12 +75,11 @@ const EnrollRule = styled.div`
   line-height: 24px;
 `;
 const ShowReviewBox = styled.div`
-    width: 100%:
+    width: 100%;
     height: 86px;
     padding: 20px 5.12vw;
     border-radius: 20px;
     background: #FCEDE8;
-    margin-top: 24px;
 `;
 const ReviewTxt = styled.div`
   color: #1a1a1a;
@@ -107,7 +106,7 @@ const PopularPostBox = styled.div`
   padding: 4px 1.02vw;
   border-radius: 12px;
   background: #f7f7f7;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
   position: relative;
 `;
 
@@ -204,7 +203,7 @@ const Home = () => {
         setLoading(false);
         setIsExist(res.data.exist);
         setPoint(res.data.points);
-        setPosts(res.data.posts);
+        setPosts(res.data.livePosts);
         setWeeklyPost(res.data.weeklyPosts);
         setUserName(res.data.nickname);
         setIsShowReView(localStorage.getItem('show')!=='false');
@@ -228,7 +227,7 @@ const Home = () => {
       <c.Totalframe background={`#FAFAFA`}>
         <c.ScreenComponent navigation={true}>
           <c.SubScreen>
-            <Header onClick={() => navigate("/search")} />
+            <Header isNoti={true} onClick={() => navigate("/search")} />
             {showPopup && (
               <Popup
                 message={`곧 만날 수 있으니 조금만 기다려 주세요!`}
@@ -245,20 +244,22 @@ const Home = () => {
                 <IconText>생활 규칙</IconText>
               </Icons>
               <Icons>
-                <Icon src={stayOut} />
-                <IconText>외박 신청</IconText>
+                <a href={"https://smsso.smu.ac.kr/svc/tk/Auth.do?ac=Y&ifa=N&id=portal&"} target="_blank">
+                  <Icon src={stayOut} />
+                  <IconText>외박 신청</IconText>
+                </a>
               </Icons>
-              <a href={"https://www.smu.ac.kr/dormi2/board/notice.do"} target="_blank">
-                <Icons>
+              <Icons>
+                <a href={"https://www.smu.ac.kr/dormi2/board/notice.do"} target="_blank">
                   <Icon src={dormiNoti} />
                   <IconText>기숙사 공지</IconText>
-                </Icons>
-              </a>
+                </a>
+              </Icons>
             </System>
             <HomeBox
-              name={userName + ` 님과 딱 맞는\n룸메이트를 찾아드려요`}
+              name={ isExist ? `${userName} 님과 딱 맞는\n룸메이트를 찾았어요` : `${userName} 님과 딱 맞는\n룸메이트를 찾아드려요`}
               marginTop={`3.79vh`}
-              marginBottom={isExist ? `4.73vh` : `1.42vh`}
+              marginBottom={`24px`}
               height={`max-content`}
               onClick={() => isNavigate()}>
               {isExist ? (
@@ -293,9 +294,10 @@ const Home = () => {
             )}
             <HomeBox
               name={`이런 글은 어떠세요?`}
-              marginTop={`2.84vh`}
+              marginTop={`20px`}
               marginBottom={`3.31vh`}
-              height={`max-content`}>
+              height={`max-content`}
+              onClick={() => navigate('/community')}>
               <PopularPostBox>
                 <PopularPostText
                   view={isWeeklyPost === "weekly"}
@@ -333,6 +335,7 @@ const Home = () => {
               {isWeeklyPost === "live" &&
                 posts.map((post, index) => (
                   <MainPost
+                    // onClick={post}
                     text={post.title}
                     comment={post.commentCount}
                     likeCnt={post.likeCount}
