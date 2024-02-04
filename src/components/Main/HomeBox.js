@@ -27,8 +27,8 @@ const ArrowImg = styled.img`
 const HomeBox = (props) => {
   return (
     <Box height={props.height} marginTop={props.marginTop} marginBottom={props.marginBottom}>
-      <c.SpaceBetween>
-        <ContentName marginBottom={props.marginBottom} onClick={()=>props.onClick()}>{props.name}</ContentName>
+      <c.SpaceBetween onClick={()=>props.onClick()}>
+        <ContentName marginBottom={props.marginBottom}>{props.name}</ContentName>
         <ArrowImg src={ForwardArrow} />
       </c.SpaceBetween>
       {props.children}

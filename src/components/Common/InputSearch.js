@@ -5,7 +5,6 @@ import SearchIcon from "../../assets/img/Home/graySearch.svg";
 
 const SearchForm = styled.div`
   width: 100%;
-  margin-top: 52px;
   display: flex;
   padding: 12px 0px;
   justify-content: space-between;
@@ -34,6 +33,9 @@ const InpufForm = styled.input`
   font-weight: 500;
   line-height: 24px;
   margin-left: 8px;
+  &:placeholder-shown {
+    overflow: visible;
+  }
 `;
 const InputSearch = (props) => {
   return (
