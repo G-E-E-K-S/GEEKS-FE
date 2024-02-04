@@ -22,8 +22,7 @@ const SubText = styled.div`
 `;
 const InputPasswordTotal = styled.div`
   display: flex;
-  border-bottom: 2px solid
-    ${(props) => (props.isSelected ? "#ECAA00" : "#EFEFEF")};
+  border-bottom: 2px solid ${(props) => (props.isSelected ? "#ECAA00" : "#EFEFEF")};
   padding: 0px 0px 0.94vh 0px;
   margin-top: 6.16vh;
   margin-bottom: 3.9vh;
@@ -165,8 +164,7 @@ const Password = () => {
         <JoinButton
           btnName={"다음"}
           handleClick={() => checkPassword()}
-          isNextPage={isNextPage}
-        />
+          isNextPage={isNextPage}/>
       </c.ScreenComponent>
     </c.Totalframe>
   );
