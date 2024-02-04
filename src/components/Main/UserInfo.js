@@ -48,7 +48,7 @@ const UserInfo = (props) => {
   return (
     <Users>
       <c.Flex>
-        <ProfileImg src={"https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/"+props.profileImg}></ProfileImg>
+        <ProfileImg src={process.env.BUCKET_BASEURL+props.profileImg}></ProfileImg>
         <UserInfos>
           <UserName>{props.userName}</UserName>
           <>
@@ -58,8 +58,8 @@ const UserInfo = (props) => {
           </>
         </UserInfos>
       </c.Flex>
-      <Link to={'/editprofile'}>
-        <Edit>{`프로필 수정`}</Edit>
+      <Link to={'/myprofile'}>
+        <Edit>{`내 프로필`}</Edit>
       </Link>      
     </Users>
   );

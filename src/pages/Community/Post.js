@@ -292,7 +292,7 @@ const Post = () => {
             {postInfo.photoNames?.map((photo) => (
               <PostImg
                 src={
-                  "https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/" + photo}/>
+                  process.env.BUCKET_BASEURL + photo}/>
             ))}
             <c.Flex>
               <LikeAndStarBtn

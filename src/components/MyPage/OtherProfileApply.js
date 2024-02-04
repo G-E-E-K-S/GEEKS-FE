@@ -41,7 +41,7 @@ const OtherProfileApply = (props) => {
     <TotalProfile activeCheck={props.activeCheck}>
       <c.SpaceBetween>
         <UserProfiles>
-          <UserProfile src={props.userprofile === null ? BasicrProfile : 'https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/'+props.userprofile} />
+          <UserProfile src={props.userprofile === null ? BasicrProfile : process.env.BUCKET_BASEURL+props.userprofile} />
           <div>
             <NickName>{props.nickName}</NickName>
             <Major>
