@@ -109,6 +109,7 @@ const MyPage = () => {
   const [toggle, setToggle] = useState(true);
   const [userInfo, setUserInfo] = useState('');
   const [userMajor , setUserMajor] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const setContent = useSetRecoilState(UserNickName);
   
@@ -117,7 +118,6 @@ const MyPage = () => {
     async function fetchShowProfile() {
       try {
         const res = await API.get("/member/open?open=" + toggle);
-        console.log(res);
       } catch (error) {
         console.error(error);
       }
@@ -132,6 +132,7 @@ const MyPage = () => {
           const res = await API.get("/member/myPage");
           setUserInfo(res.data);
           setContent(res.data.nickname);
+          setLoading(false);
           if(res.data.major.includes('공학과')) setUserMajor(res.data.major.replace('공학과',''));
           else if(res.data.major.includes('학과')) setUserMajor(res.data.major.replace('학과',''));
           else if(res.data.major.includes('전공')) setUserMajor(res.data.major.replace('전공',''));
@@ -143,75 +144,77 @@ const MyPage = () => {
   fetchUserInfo();
   },[]);
   return (
-    <c.Totalframe>
-      <c.ScreenComponent navigation={true}>
-        <c.SubScreen>
-          <PageName pageName={`마이`} />
-          <UserInfoTop>
-            <UserInfo
-              profileImg={userInfo.photoName?.length === 0 ? basicProfile : userInfo.photoName}
-              userName={userInfo.nickname}
-              userMajor={userMajor}
-              UserId={userInfo.studentID}
+    !loading && (
+      <c.Totalframe>
+        <c.ScreenComponent navigation={true}>
+          <c.SubScreen>
+            <PageName pageName={`마이`} />
+            <UserInfoTop>
+              <UserInfo
+                profileImg={userInfo.photoName?.length === 0 ? basicProfile : userInfo.photoName}
+                userName={userInfo.nickname}
+                userMajor={userMajor}
+                UserId={userInfo.studentID}
+                enrollLifeStyle={!userInfo.exist}
+              />
+            </UserInfoTop>
+            {userInfo.introduction?.length !== 0 && 
+              <SelfIntro>{userInfo.introduction}</SelfIntro>
+            }
+            <ShowMyProfile>
+              <div>
+                <ShowProfileTxt>내 프로필 노출하기</ShowProfileTxt>
+                <ShowProfileSubtxt>
+                  룸메이트가 맺어지면 내 프로필이 숨겨져요
+                </ShowProfileSubtxt>
+              </div>
+              <ToggleBtn onClick={clickedToggle} toggle={toggle}>
+                <Circle toggle={toggle} />
+              </ToggleBtn>
+            </ShowMyProfile>
+            <Br />
+            <WelcomeKit>
+              {`긱스 사용 후기 작성하고\n기숙사 웰컴 키트 받아가세요!`}
+              <img src={rightArrow} />
+            </WelcomeKit>
+            <MyPageMenu
+              menuImg={enrollLifeStyle}
+              menuName={`생활 습관 등록하기`}
+              onClick={() => navigate("/lifestyle")}
               enrollLifeStyle={!userInfo.exist}
             />
-          </UserInfoTop>
-          {userInfo.introduction?.length !== 0 && 
-            <SelfIntro>{userInfo.introduction}</SelfIntro>
-          }
-          <ShowMyProfile>
-            <div>
-              <ShowProfileTxt>내 프로필 노출하기</ShowProfileTxt>
-              <ShowProfileSubtxt>
-                룸메이트가 맺어지면 내 프로필이 숨겨져요
-              </ShowProfileSubtxt>
-            </div>
-            <ToggleBtn onClick={clickedToggle} toggle={toggle}>
-              <Circle toggle={toggle} />
-            </ToggleBtn>
-          </ShowMyProfile>
-          <Br />
-          <WelcomeKit>
-            {`긱스 사용 후기 작성하고\n기숙사 웰컴 키트 받아가세요!`}
-            <img src={rightArrow} />
-          </WelcomeKit>
-          <MyPageMenu
-            menuImg={enrollLifeStyle}
-            menuName={`생활 습관 등록하기`}
-            onClick={() => navigate("/lifestyle")}
-            enrollLifeStyle={!userInfo.exist}
-          />
-          <MyPageMenu
-            menuImg={saveList}
-            menuName={`룸메이트 저장 목록`}
-            onClick={() => navigate("/savelist")}
-          />
-          <MyPageMenu
-            menuImg={roommateApply}
-            menuName={`룸메이트 신청 목록`}
-            onClick={() => navigate("/roommate/apply")}
-          />
-          <Br />
-          <MyPageMenu
-            menuImg={userInfoImg}
-            menuName={`회원 정보 설정`}
-            onClick={() => navigate("/settinguserinfo")}/>
-          <MyPageMenu menuImg={notice} menuName={`알림 설정`} />
-          <MyPageMenu
-            menuImg={announce}
-            menuName={`공지사항`}
-            onClick={() => navigate("/notice")}
-          />
-          <MyPageMenu
-            menuImg={question}
-            menuName={`자주 묻는 질문`}
-            onClick={() => navigate("/faq")}
-          />
-          <MyPageMenu menuImg={inquiry} menuName={`문의하기`} />
-        </c.SubScreen>
-      </c.ScreenComponent>
+            <MyPageMenu
+              menuImg={saveList}
+              menuName={`룸메이트 저장 목록`}
+              onClick={() => navigate("/savelist")}
+            />
+            <MyPageMenu
+              menuImg={roommateApply}
+              menuName={`룸메이트 신청 목록`}
+              onClick={() => navigate("/roommate/apply")}
+            />
+            <Br />
+            <MyPageMenu
+              menuImg={userInfoImg}
+              menuName={`회원 정보 설정`}
+              onClick={() => navigate("/settinguserinfo")}/>
+            <MyPageMenu menuImg={notice} menuName={`알림 설정`} />
+            <MyPageMenu
+              menuImg={announce}
+              menuName={`공지사항`}
+              onClick={() => navigate("/notice")}
+            />
+            <MyPageMenu
+              menuImg={question}
+              menuName={`자주 묻는 질문`}
+              onClick={() => navigate("/faq")}
+            />
+            <MyPageMenu menuImg={inquiry} menuName={`문의하기`} />
+          </c.SubScreen>
+        </c.ScreenComponent>
       <NavigationBar type={`mypage`} />
     </c.Totalframe>
+    )
   );
 };
 export default MyPage;
