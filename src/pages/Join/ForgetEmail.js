@@ -68,7 +68,7 @@ const Univ = styled.div`
   line-height: 28px;
 `;
 const ForgetEmail = () => {
-  const [isEmailSelected, setIsEmailSelected] = useState("false");
+  const [isEmailSelected, setIsEmailSelected] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
   const emailVal = useRef();
   const passwordVal = useRef();
@@ -86,10 +86,10 @@ const ForgetEmail = () => {
     );
     async function fetchLogin() {
       try {
-        const res = await API.post("/login/login", {
+        const res = await API.post("/member/edit/password", {
           email: emailVal.current.value + "@sangmyung.kr",
         });
-        if (res.data === "success") navigate("/home");
+        if (res.data === "success") navigate("/login");
       } catch (error) {
         console.error(error);
       }
