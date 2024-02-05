@@ -18,6 +18,8 @@ import notice from "../../assets/img/MyPage/notice.svg";
 import announce from "../../assets/img/MyPage/announce.svg";
 import question from "../../assets/img/MyPage/question.svg";
 import inquiry from "../../assets/img/MyPage/inquiry.svg";
+import secession from "../../assets/img/MyPage/secession.svg";
+import logout from "../../assets/img/MyPage/logout.svg";
 import { useSetRecoilState } from 'recoil';
 import { UserNickName } from '../../recoil/UserNickName';
 
@@ -143,6 +145,28 @@ const MyPage = () => {
   }
   fetchUserInfo();
   },[]);
+
+  const Logout = () => {
+    async function fetchLogOut(){
+      try{
+          const res = await API.get("/logout");
+          if(res.status == '200') navigate('/welcome');
+      }catch(error){
+        console.error(error);
+      }
+    }fetchLogOut();
+  }
+
+  const Secession = () => {
+    async function fetchSecession(){
+      try{
+          const res = await API.get("/member/withdrawal");
+          console.log(res)
+      }catch(error){
+        console.error(error);
+      }
+    }fetchSecession();
+  }
   return (
     !loading && (
       <c.Totalframe>
@@ -151,12 +175,11 @@ const MyPage = () => {
             <PageName pageName={`마이`} />
             <UserInfoTop>
               <UserInfo
-                profileImg={userInfo.photoName?.length === 0 ? basicProfile : userInfo.photoName}
+                profileImg={userInfo.photoName?.length === 0 ? basicProfile : process.env.REACT_APP_BUCKET_BASEURL + userInfo.photoName}
                 userName={userInfo.nickname}
                 userMajor={userMajor}
                 UserId={userInfo.studentID}
-                enrollLifeStyle={!userInfo.exist}
-              />
+                enrollLifeStyle={!userInfo.exist}/>
             </UserInfoTop>
             {userInfo.introduction?.length !== 0 && 
               <SelfIntro>{userInfo.introduction}</SelfIntro>
@@ -198,7 +221,7 @@ const MyPage = () => {
               menuImg={userInfoImg}
               menuName={`회원 정보 설정`}
               onClick={() => navigate("/settinguserinfo")}/>
-            <MyPageMenu menuImg={notice} menuName={`알림 설정`} />
+            <MyPageMenu menuImg={notice} menuName={`알림 설정`} isNotice={true}/>
             <MyPageMenu
               menuImg={announce}
               menuName={`공지사항`}
@@ -207,9 +230,9 @@ const MyPage = () => {
             <MyPageMenu
               menuImg={question}
               menuName={`자주 묻는 질문`}
-              onClick={() => navigate("/faq")}
-            />
-            <MyPageMenu menuImg={inquiry} menuName={`문의하기`} />
+              onClick={() => navigate("/faq")}/>
+            <MyPageMenu menuImg={logout} menuName={`로그아웃`} onClick={()=>Logout()}/>
+            <MyPageMenu menuImg={secession} menuName={`문의하기`} onClick={()=>Secession()}/>
           </c.SubScreen>
         </c.ScreenComponent>
       <NavigationBar type={`mypage`} />
