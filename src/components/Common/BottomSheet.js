@@ -40,18 +40,16 @@ const TotalBottomSheet = styled.div`
 `;
 const BottomSheet = (props) => {
   return (
-    props.isOpen && (
-      <div>
-        <ModalBackground />
-        <TotalBottomSheet
-          height={props.height}
-          padding={props.padding}
-          isOpen={props.isOpen}
-          interaction={props.interaction}>
-          {props.children}
-        </TotalBottomSheet>
-      </div>
-    )
+    <div>
+      {props.isOpen && <ModalBackground />}
+      <TotalBottomSheet
+        height={props.height}
+        padding={props.padding}
+        isOpen={props.isOpen}
+        interaction={props.interaction}>
+        {props.children}
+      </TotalBottomSheet>
+    </div>
   );
 };
 export default BottomSheet;
