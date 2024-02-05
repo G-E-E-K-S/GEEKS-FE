@@ -112,7 +112,7 @@ const LifeStyles = () => {
           {/* total save list */}
           <TotalSaveNum>총 {saveList.length}명</TotalSaveNum>
             {saveList.map((userData)=>(
-              <c.Flex onClick={() => handleCheckIndex(userData.nickname)}>
+              <c.Flex onClick={activeEdit? () => handleCheckIndex(userData.nickname) : null}>
               {activeEdit && <CheckImg src={checkUserName.includes(userData.nickname) ? Check : NoCheck} />}
               <OtherProfile activeCheck={checkUserName.includes(userData.nickname)} score={userData.point} userprofile={Profile} nickName={userData.nickname} major={userData.major} id={userData.studentID} intro={userData.introduction} />
               </c.Flex>
