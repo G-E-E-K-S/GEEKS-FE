@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../axios/BaseUrl";
 import * as c from "../../components/Common/CommonStyle";
@@ -26,6 +26,7 @@ const ProfileImg = styled.img`
   width: 72px;
   height: 72px;
   margin-right: 16px;
+  border-radius: 50%;
 `;
 const TotalUserInfo = styled.div`
   display: flex;
@@ -43,7 +44,6 @@ const Major = styled.div`
   font-size: 1rem;
   font-weight: 400;
   line-height: 24px;
-  text-align: center;
   color: #525252;
 `;
 const MyDormitory = styled.div`
@@ -83,35 +83,60 @@ const MyRommate = styled.div`
   color: #707070;
   margin-bottom: 12px;
 `;
+const NoApply = styled.div`
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+  color: #525252;
+  margin-top: 63.82px;
+`;
 const MyProfile = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [myProfile, setMyProfile] = useState('');
+  useEffect(()=>{
+    async function fetchMyProfile() {
+      try {
+        const res = await API.get("/member/profile");
+        console.log(res.data);
+        setMyProfile(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchMyProfile();
+  },[]);
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header />
         <Profile>
-          <ProfileImg src={BasicProfile} />
+          <ProfileImg src={myProfile.myPhotoName === null ? BasicProfile : process.env.REACT_APP_BUCKET_BASEURL + myProfile.myPhotoName} />
           <TotalUserInfo>
-            <UserName>{`은진`}</UserName>
-            <Major>{`커뮤니케이션디자인 · 20학번`}</Major>
+            <UserName>{myProfile.myNickname}</UserName>
+            <Major>{myProfile.myMajor} · {myProfile.myStudentID}</Major>
           </TotalUserInfo>
         </Profile>
         <EditProfile onClick={()=>navigate('/editprofile')}>{`프로필 수정하기`}</EditProfile>
         <Br />
-        <MyDormitory>{`나의 기숙사`}</MyDormitory>
-        <c.Flex>
-          <LiveYear>{`2024 - 1학기`}</LiveYear>
-          <LiveDormitory>{`신관 거주`}</LiveDormitory>
-        </c.Flex>
-        <RoommateBox>
-          <MyRommate>{`현재 나의 룸메이트`}</MyRommate>
-          <MainOtherProfile
-            myProfile={true}
-            userprofile={null}
-            nickName={`은진`}
-            major={`커뮤니케이션 디자인학과`}
-            id={`20`}/>
-        </RoommateBox>
+        {myProfile.nickname !== null ?
+          <>
+            <MyDormitory>{`나의 기숙사`}</MyDormitory>
+            <c.Flex>
+              <LiveYear>{`2024 - 1학기`}</LiveYear>
+              <LiveDormitory>{myProfile.type+`거주`}</LiveDormitory>
+            </c.Flex>
+            <RoommateBox>
+              <MyRommate>{`현재 나의 룸메이트`}</MyRommate>
+              <MainOtherProfile
+                myProfile={true}
+                userprofile={null}
+                nickName={`은진`}
+                major={`커뮤니케이션 디자인학과`}
+                id={`20`}/>
+            </RoommateBox>
+          </> : <NoApply>{`아직 룸메이트를 신청한 내역이 없어요`}</NoApply>
+        }
       </c.ScreenComponent>
     </c.Totalframe>
   );

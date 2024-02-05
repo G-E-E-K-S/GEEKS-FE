@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import API from "../../axios/BaseUrl";
@@ -6,9 +6,9 @@ import * as c from "../../components/Common/CommonStyle";
 import GoBack from "../../components/Common/GoBack";
 import InputSelf from "../../components/Main/InputSelf";
 import BottomSheet from "../../components/Common/BottomSheet";
-import ExampleBox from "../../components/MyPage/ExampleBox";
 import Br from "../../components/Common/Br";
 import Department from "../../components/Join/Department";
+import Modal from "../../components/Common/Modal";
 import Profile from "../../assets/img/MyPage/basicProfile.svg";
 import Camera from "../../assets/img/MyPage/camera.svg";
 import MiniQeustion from "../../assets/img/MyPage/miniQuestion.svg";
@@ -57,7 +57,7 @@ const CameraIcons = styled.div`
   position: absolute;
   bottom: -5px;
   right: 33.66vw;
-  z-index: 10;
+  z-index: 3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,6 +163,56 @@ const DormitroyBox = styled.div`
   font-weight: 600;
   line-height: 24px;
 `;
+const IntroMySelf = styled.div`
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 28px;
+  text-align: center;
+  white-space: pre-wrap;
+  margin-bottom: 8px;
+`;
+const IntroSub = styled.div`
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  white-space: pre-wrap;
+  color: #707070;
+  margin-bottom: 20px;
+`;
+const ExampleBox = styled.div`
+  width: 274px;
+  height: 134px;
+  padding: 20px 16px;
+  border-radius: 12px;
+  background: #FAFAFA;
+`;
+const BasicProfile = styled.img`
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+`;
+const ExNickName = styled.div`
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 18px;
+`;
+const ExMajor = styled(ExNickName)`
+  color: #949494;
+  margin-top: 4px;
+`;
+const ExSub = styled.div`
+  width: 100%;
+  height: 38px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #ECAA00;
+  background: linear-gradient(0deg, #FFFBEE, #FFFBEE);
+  margin-top: 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 18px;
+`;
 const EditProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
@@ -170,6 +220,7 @@ const EditProfile = () => {
   const [isDuplicate, setIsDuplicate] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
   const [prevNickname, setPrevNickname] = useState(null);
+  const [photo, setPhoto] = useState('');
   const [introduction, setIntroduction] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
   const [dormitory, setDormitory] = useState('');
@@ -203,6 +254,7 @@ const EditProfile = () => {
         setUserInfo(res.data);
         setNickname(res.data.nickname);
         setPrevNickname(res.data.nickname);
+        setPhoto(res.data.photoName);
         setIntroduction(res.data.introduction);
         setStudentID(res.data.studentID);
         setMajor(res.data.major);
@@ -315,7 +367,7 @@ const EditProfile = () => {
           <Finish onClick={hadleEditProfile}>{`수정`}</Finish>
         </c.SpaceBetween>
         <UploadProfile>
-          <ProfileImg key={1} src={fileUrl === null ? Profile : fileUrl} isProfile={fileUrl !== null} />
+          <ProfileImg key={1} src={fileUrl !== null ? fileUrl : photo.length !== 0 ? process.env.REACT_APP_BUCKET_BASEURL + photo : Profile} isProfile={fileUrl !== null}/>
           <HiddenFileInput type="file" accept="image/*" onChange={handleFile}/>
           <CameraIcons>
             <img src={Camera} />
@@ -384,7 +436,6 @@ const EditProfile = () => {
           <QuestionMark
             src={MiniQeustion}
             onClick={() => setIsModalOpen(true)}/>
-          <ExampleBox />
         </c.Flex>
         <InputSelf
           borderColor={isFocus ? '#ECAA00' : '#EFEFEF'}
@@ -392,9 +443,23 @@ const EditProfile = () => {
           placeholder={`나를 소개하는 한 줄을 써주세요`}
           isrepresent={true}
           value={introduction}
-          changeValue={setIntroduction}
-        />
-        <ExampleBox />
+          changeValue={setIntroduction}/>
+        {isModalOpen &&
+          <Modal padding={`20px`}>
+            <IntroMySelf>{`미래의 룸메이트에게\n나를 소개해 주세요!`}</IntroMySelf>
+            <IntroSub>{`내가 누군지, 어떤 습관을 가졌는지 등\n나에 대한 설명을 적으면\n더 빠르게 룸메이트를 찾을 수 있어요`}</IntroSub>
+            <ExampleBox>
+              <c.Flex>
+                <BasicProfile src={Profile}/>
+                <div>
+                  <ExNickName>{`긱스`}</ExNickName>
+                  <ExMajor>{`경영학과 · 20학번`}</ExMajor>
+                </div>
+              </c.Flex>
+              <ExSub>{`늦게 일어나는 편이에요~`}</ExSub>
+            </ExampleBox>
+          </Modal>
+        }
       </c.ScreenComponent>
     </c.Totalframe>
   );
