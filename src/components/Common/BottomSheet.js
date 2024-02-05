@@ -22,8 +22,12 @@ const TotalBottomSheet = styled.div`
   left: 50%;
   transform: translateX(-50%);
   bottom: ${(props) => (props.isOpen ? "0" : "-100%")};
-  ${(props) => (!props.interaction ? null : 
-    (props.isOpen ? "transition: bottom 0.5s ease" : "transition: bottom 1.2s ease"))};
+  ${(props) =>
+    !props.interaction
+      ? null
+      : props.isOpen
+      ? "transition: bottom 0.5s ease"
+      : "transition: bottom 1.2s ease"};
   height: ${(props) => props.height};
   border-radius: 20px 20px 0px 0px;
   padding: ${(props) => props.padding};
@@ -36,17 +40,18 @@ const TotalBottomSheet = styled.div`
 `;
 const BottomSheet = (props) => {
   return (
-    <div>
-      {props.isOpen && <ModalBackground />}
-      <TotalBottomSheet
-        height={props.height}
-        padding={props.padding}
-        isOpen={props.isOpen}
-        interaction={props.interaction}
-      >
-        {props.children}
-      </TotalBottomSheet>
-    </div>
+    props.isOpen && (
+      <div>
+        <ModalBackground />
+        <TotalBottomSheet
+          height={props.height}
+          padding={props.padding}
+          isOpen={props.isOpen}
+          interaction={props.interaction}>
+          {props.children}
+        </TotalBottomSheet>
+      </div>
+    )
   );
 };
 export default BottomSheet;

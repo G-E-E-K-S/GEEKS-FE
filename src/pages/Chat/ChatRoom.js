@@ -6,6 +6,7 @@ import * as c from "../../components/Common/CommonStyle";
 import GoBack from "../../components/Common/GoBack";
 import MyChat from "../../components/Chat/MyChat";
 import OtherChat from "../../components/Chat/OtherChat";
+import BottomSheet from "../../components/Common/BottomSheet";
 import Dots from "../../assets/img/Home/edit.svg";
 import Plus from "../../assets/img/Chat/add.svg";
 import Send from "../../assets/img/Chat/send.svg";
@@ -25,7 +26,6 @@ const ChatHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 7.58vh;
 `;
 const Name = styled.div`
   color: #333;
@@ -89,7 +89,7 @@ const InputMsg = styled.input`
   line-height: 24px;
   &::placeholder{
     color: #B7B7B7;
-    font-size: 1rem
+    font-size: 1rem;
     font-weight: 500;
   }
 `;
@@ -106,8 +106,30 @@ const PlusMenu = styled.div`
   margin: 20px 2.82vw 0 2.82vw;
   width: 100%;
 `;
+const MenuBox = styled.div`
+  padding: 20px 0;
+  color: ${(props) => (props.Report ? "#CB3D0B" : "#525252")};
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+`;
+const CloseBtn = styled.div`
+  padding: 16px 0;
+  border-radius: 12px;
+  border: 1px solid #e2e2e2;
+  background: #fff;
+  text-align: center;
+  color: #333;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 24px;
+  margin-top: 20px;
+  margin-bottom: 94px;
+`;
 const ChatRoom = () => {
   const [isChatBottomClick, setIsChatBottomClick] = useState(false);
+  const [isBtsOpen, setIsBtsOpen] = useState(false);
 
   const handleChatBottom = () => {
     setIsChatBottomClick(!isChatBottomClick);
@@ -198,8 +220,13 @@ const ChatRoom = () => {
               <Name>{roomInfo?.opponentUser}</Name>
               <Major>{roomInfo?.major + ' · ' + roomInfo?.studentID + '학번'}</Major>
             </c.DirectionCol>
-            <DotsImg src={Dots} />
+            <DotsImg src={Dots} onClick={() => setIsBtsOpen(true)}/>
           </ChatHeader>
+          <BottomSheet height={`max-content`} padding={`12px 20px 0 20px`} isOpen={isBtsOpen} interaction={true}>
+            <MenuBox>{`나가기`}</MenuBox>
+            <MenuBox>{`신고하기`}</MenuBox>
+            <CloseBtn onClick={() => setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
+          </BottomSheet>
           {/* chat */}
           <Date>8월 25일</Date>
           {chatList?.map((chat) => (
