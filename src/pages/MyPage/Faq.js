@@ -91,20 +91,24 @@ const FAQ = () => {
         <c.Flex>
           <TabMenu
             isLine={isSelect === "rommate"}
-            onClick={() => ChangePage("rommate")}
-          >{`룸메이트 찾기`}</TabMenu>
+            onClick={() => ChangePage("rommate")}>
+              {`룸메이트 찾기`}
+          </TabMenu>
           <TabMenu
             isLine={isSelect === "chat"}
-            onClick={() => ChangePage("chat")}
-          >{`채팅`}</TabMenu>
+            onClick={() => ChangePage("chat")}>
+              {`채팅`}
+          </TabMenu>
           <TabMenu
             isLine={isSelect === "notice"}
-            onClick={() => ChangePage("notice")}
-          >{`알림`}</TabMenu>
+            onClick={() => ChangePage("notice")}>
+              {`알림`}
+          </TabMenu>
           <TabMenu
             isLine={isSelect === "community"}
-            onClick={() => ChangePage("community")}
-          >{`커뮤니티`}</TabMenu>
+            onClick={() => ChangePage("community")}>
+              {`커뮤니티`}
+          </TabMenu>
         </c.Flex>
         {isSelect === "rommate" && (
           <FaqRommate faqtext={`룸메이트 신청을 취소하고 싶어요`} />

@@ -100,7 +100,7 @@ const LifeStyles = () => {
             {activeEdit ? (
               <>
                 <Header subtitle={`${checkUserName.length}명 선택됨`} andleShow={activeEdit} isCenter={true}/>
-                <DoneBtn isDone={isDone}>완료</DoneBtn>
+                <DoneBtn isDone={isDone} onClick={()=>setActiveEdit(false)}>완료</DoneBtn>
               </>
             ) : (
               <>
@@ -117,7 +117,7 @@ const LifeStyles = () => {
               <OtherProfile activeCheck={checkUserName.includes(userData.nickname)} score={userData.point} userprofile={Profile} nickName={userData.nickname} major={userData.major} id={userData.studentID} intro={userData.introduction} />
               </c.Flex>
             ))}
-          <JoinButton btnName={`삭제하기`} isNextPage={checkUserName.length > 0} handleClick={() => handleBtn()} />
+            {activeEdit && <JoinButton btnName={`삭제하기`} isNextPage={checkUserName.length > 0} handleClick={() => handleBtn()} />}
           {showPopup && <Popup bottom={`18.24vh`} setShowPopup={setShowPopup} message={'성공적으로 삭제되었습니다'}/> }
         </c.SubScreen>
       </c.ScreenComponent>
