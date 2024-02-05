@@ -47,8 +47,8 @@ const Code = styled.input`
   border: none;
   outline: none;
   width: 72px;
-  height: 48px;
-  padding: 7px 0px 8px 0px;
+  height: 50px;
+  padding-bottom: 15px;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
