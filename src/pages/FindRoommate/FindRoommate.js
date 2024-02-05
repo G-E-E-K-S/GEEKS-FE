@@ -105,7 +105,7 @@ const FindRoommate = () => {
         <c.SubScreen>
           <Header isNoti={true} isEdit={false}/>
           <TitleText>{`내가 원하는 기준으로\n룸메이트를 찾아보세요`}</TitleText>
-          <ConditionScroll onClick={()=>setIsOpen(true)}>
+          {/* <ConditionScroll onClick={()=>setIsOpen(true)}>
             <Condition condition={`전공`} />
             <Condition condition={`학번`} />
             <Condition condition={`흡연`} />
@@ -113,7 +113,7 @@ const FindRoommate = () => {
             <Condition condition={`외출`} />
             <Condition condition={`장소`} />
             <Condition condition={`성향`} />
-          </ConditionScroll>
+          </ConditionScroll> */}
           {isExist ?
             userdata.map((user)=>(
               <OtherProfile
