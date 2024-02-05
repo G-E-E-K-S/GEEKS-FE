@@ -5,7 +5,7 @@ const ChatBubble = styled.div`
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
-  margin-bottom: 2.36vh;
+  margin-bottom: 18px;
 `;
 const Time = styled.div`
   color: #b7b7b7;
