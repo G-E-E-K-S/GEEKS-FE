@@ -20,8 +20,8 @@ const MenuImg = styled.img`
 const MenuName = styled.div`
     display: flex;
     align-items: center;
-    color: #333;
-    font-size: 18px;
+    color: ${(props)=>props.isNotice ? '#D0D0D0' : '#333'};
+    font-size: 1.125rem;
     font-style: normal;
     font-weight: 600;
 `;
@@ -46,7 +46,7 @@ const MyPageMenu = (props) => {
         <TotalMenu onClick={props.onClick}>
             <c.Flex>
                 <MenuImg src={props.menuImg}></MenuImg>
-                <MenuName>{props.menuName}</MenuName>
+                <MenuName isNotice={props.isNotice}>{props.menuName}</MenuName>
             </c.Flex>
             <Arrows>
                 {props.enrollLifeStyle && <RedCircle/>}

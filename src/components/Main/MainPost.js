@@ -52,7 +52,7 @@ const UploadTime = styled.div`
 `;
 const MainPost = (props) => {
   return (
-    <MainPostTotal marginBottom={props.marginBottom}>
+    <MainPostTotal marginBottom={props.marginBottom} onClick={props.onClick}>
       <c.Flex>
         <PostText>{props.text}</PostText>
         <Icons isComment={true}>

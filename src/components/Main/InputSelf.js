@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import * as c from "../../components/Common/CommonStyle";
 import styled from "styled-components";
 
@@ -41,20 +41,24 @@ const LetterLen = styled.div`
   margin-top: 6px;
 `;
 const InputSelf = (props) => {
-
+  const [valid, setValid] = useState(true);
   const handleInputChange = (e) => {
     const value = e.target.value;
     props.changeValue(value); 
+    setValid(true);
   };
 
   return (
     <div>
-      <Flex borderColor={props.borderColor}>
+      <Flex borderColor={props.isFocus? '#ECAA00' : '#EFEFEF'}>
         <InputNickName
           defaultValue={props.value}
           onChange={(e)=>handleInputChange(e)}
           maxLength={props.totalLen}
-          placeholder={props.placeholder}/>
+          placeholder={props.placeholder}
+          onFocus={props.isFocus}
+          onBlur={props.isBlur}
+          valid={props.valid}/>
         {/* {props.isrepresent ? <Represent>대표</Represent> : null} */}
       </Flex>
 

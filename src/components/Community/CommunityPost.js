@@ -88,7 +88,7 @@ const CommunityPost = (props) => {
             </UserInfo>
           </c.Flex>
         </div>
-        {props.postImg == null ? null : <PostImg src={process.env.BUCKET_BASEURL+ props.postImg} />}
+        {props.postImg == null ? null : <PostImg src={process.env.REACT_APP_BUCKET_BASEURL+ props.postImg} />}
       </c.SpaceBetween>
       <Line />
     </ShowTotalPost>
