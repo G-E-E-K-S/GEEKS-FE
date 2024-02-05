@@ -301,7 +301,7 @@ const Post = () => {
             {postInfo.photoNames?.map((photo) => (
               <PostImg
                 src={
-                  process.env.BUCKET_BASEURL + photo}/>
+                  process.env.REACT_APP_BUCKET_BASEURL + photo}/>
             ))}
             <c.Flex>
               <LikeAndStarBtn

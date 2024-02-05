@@ -5,7 +5,7 @@ import * as c from "../../components/Common/CommonStyle";
 const TotalProfile = styled.div`
   width: 100%;
   border-radius: 12px;
-  background: ${(props) => (props.activeCheck ? "#FFFBEE" : "#fff")};
+  background: ${(props) => (props.activeCheck ? "#FFFBEE" : props.myProfile ? "#FAFAFA" :"#fff")};
   border: 1px solid ${(props) => (props.activeCheck ? "#ECAA00" : "#FFFBEE")};
   margin-bottom: ${(props)=> props.marginBottom};
   overflow-x: auto;
@@ -58,7 +58,7 @@ const ScoreUnit = styled(Score)`
 `;
 const MainOtherProfile = (props) => {
   return (
-    <TotalProfile activeCheck={props.activeCheck} onClick={props.onClick} marginBottom={props.marginBottom}>
+    <TotalProfile activeCheck={props.activeCheck} myProfile={props.myProfile} onClick={props.onClick} marginBottom={props.marginBottom}>
       <c.SpaceBetween>
         <c.Flex>
           <UserProfile src={props.userprofile} />
@@ -72,10 +72,12 @@ const MainOtherProfile = (props) => {
             </Major>
           </div>
         </c.Flex>
+        {props.score &&
         <c.Flex>
           <Score score={props.score}>{props.score}</Score>
           <ScoreUnit score={props.score}>점</ScoreUnit>
         </c.Flex>
+          }
       </c.SpaceBetween>
     </TotalProfile>
   );

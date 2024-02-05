@@ -48,7 +48,7 @@ const UserInfo = (props) => {
   return (
     <Users>
       <c.Flex>
-        <ProfileImg src={process.env.BUCKET_BASEURL+props.profileImg}></ProfileImg>
+        <ProfileImg src={props.profileImg}></ProfileImg>
         <UserInfos>
           <UserName>{props.userName}</UserName>
           <>
