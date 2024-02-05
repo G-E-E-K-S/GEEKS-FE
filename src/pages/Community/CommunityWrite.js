@@ -32,6 +32,7 @@ const CommunityWrite = () => {
     async function fetchCommunityWrite() {
       try {
         const res = await API.get("/post/community/history");
+        console.log(res.data)
         setPost(res.data.postHistories);
         setComment(res.data.commentHistories);
       } catch (error) {
@@ -55,7 +56,19 @@ const CommunityWrite = () => {
             postName={post.title}
             commentNum={post.commentCount}
             postContent={post.content}
+            likeNum={post.likeCount}
             writeTime={moment(post.createdDate).format('MM.DD')}/>
+          ))
+        )}
+        {selectMenu === 'comment' && (
+          comment.map((comment)=>(
+            <CommunityPost
+            isComment={true}
+            postName={comment.title}
+            likeNum={comment.likeCount}
+            commentNum={comment.commentCount}
+            postContent={comment.content}
+            writeTime={moment(comment.createdDate).format('MM.DD')}/>
           ))
         )}
       </c.ScreenComponent>

@@ -59,6 +59,7 @@ const InputContent = styled.textarea`
     color: #d0d0d0;
     font-size: 1rem;
     font-weight: 700;
+    font-style: medium;
   }
 `;
 const PhotoList = styled.div`

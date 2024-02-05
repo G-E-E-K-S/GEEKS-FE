@@ -165,13 +165,15 @@ const Post = () => {
   const UploadComment = () => {
     async function fetchPost() {
       try {
-        const res = await API.post("/post/comment", {
-          postId: postId,
-          parentId: parentId,
-          content: commentRef.current.value,
-          anonymity : isAnonymity
-        });
-        window.location.reload();
+        if(commentRef.current.value.length !== 0 ){
+          const res = await API.post("/post/comment", {
+            postId: postId,
+            parentId: parentId,
+            content: commentRef.current.value,
+            anonymity : isAnonymity
+          });
+          window.location.reload();
+        }
       } catch (error) {
         console.error(error);
       }
@@ -231,7 +233,7 @@ const Post = () => {
       fetchDeleteScrapState();
     }
   };
-  const  AddReComment = (commentId, commentUserName, modalState) => {
+  const AddReComment = (commentId, commentUserName, modalState) => {
     setIsModalOpen(modalState);
     setParentId(commentId);
     setRecommentUserName(commentUserName);
@@ -264,6 +266,13 @@ const Post = () => {
       }
     }
     fetchDeleteComment();
+  }
+  const EditComment = () => {
+    // edit comment axios add
+  }
+  const AddComment = () => {
+    setIsModalOpen(false);
+    commentRef.current.focus();
   }
   return (
     <c.Totalframe>
@@ -341,7 +350,10 @@ const Post = () => {
             ))}
             <BottomSheet height={`max-content`} padding={`12px 20px 0 20px`} isOpen={isCommentBts} interaction={true}>
                 {postInfo?.writerState ? (
-                  <MenuBox onClick={()=>DeleteComment()}>{`댓글 삭제하기`}</MenuBox>
+                  <>
+                    <MenuBox onClick={()=>DeleteComment()}>{`댓글 삭제하기`}</MenuBox>
+                    <MenuBox onClick={()=>EditComment()}>{`댓글 수정하기`}</MenuBox>
+                  </>
                 ) : (
                   <MenuBox Report={true}>{`신고하기`}</MenuBox>
                 )}
@@ -362,7 +374,7 @@ const Post = () => {
                 <ModalTxt>{recommentUserName === null ? '익명' : recommentUserName}{`님께 답글을 달까요?`}</ModalTxt>
                 <ModalBtn>
                   <NoBtn onClick={() => AddReComment(null, false)}>{`아니요`}</NoBtn>
-                  <YesBtn onClick={() => setIsModalOpen(false)}>{`네`}</YesBtn>
+                  <YesBtn onClick={() => AddComment(false)}>{`네`}</YesBtn>
                 </ModalBtn>
               </Modal>
             )}

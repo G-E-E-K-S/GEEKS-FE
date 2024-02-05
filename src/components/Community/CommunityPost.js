@@ -10,15 +10,18 @@ const ShowTotalPost = styled.div`
   padding: ${(props)=>props.padding};
 `;
 const PostName = styled.div`
-  color: #333;
-  font-size: 1.125rem;
-  font-weight: 600;
+  color: ${(props)=>props.isComment ? '#949494' : '#333'};
+  font-size: ${(props)=>props.isComment ? '1rem': '1.125rem'};
+  font-weight: ${(props)=>props.isComment ? '500' : '600'};
   margin-right: 3.07vw;
 `;
 const CommentNumIcon = styled.img`
   width: 16px;
   height: 16px;
   margin-top: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const LikeNumIcon = styled(CommentNumIcon)`
   margin-left: 8px;
@@ -34,10 +37,10 @@ const LikeNum = styled(CommentNum)`
   color: #EC5062;
 `;
 const PostContent = styled.div`
-  color: #525252;
-  font-size: 1rem;
+  color: ${(props)=>props.isComment ? '#333' : '#525252'};
+  font-size: ${(props)=>props.isComment ? '1.125rem' : '1rem'};
   font-style: normal;
-  font-weight: 500;
+  font-weight: ${(props)=>props.isComment ? '600' : '500'};
   line-height: 24px;
   margin-top: 1px;
 `;
@@ -64,18 +67,21 @@ const CommunityPost = (props) => {
       <c.SpaceBetween>
         <div>
           <c.Flex>
-            <PostName>{props.postName}</PostName>
-            <CommentNumIcon src={CommentNumImg} />
-            <CommentNum>{props.commentNum}</CommentNum>
-            {props.isLike &&
-              <>
+            <PostName isComment={props.isComment}>{props.postName}</PostName>
+            {props.commentNum!==0 &&
+            <c.FlexCenter>
+              <CommentNumIcon src={CommentNumImg} />
+              <CommentNum>{props.commentNum}</CommentNum>
+            </c.FlexCenter>
+            }
+            {props.likeNum!==0 &&
+              <c.FlexCenter>
                 <LikeNumIcon src={LikeIcon}/>
                 <LikeNum>{props.likeNum}</LikeNum>
-              </>
+              </c.FlexCenter>
             }
-            
           </c.Flex>
-          <PostContent>{props.postContent}</PostContent>
+          <PostContent isComment={props.isComment}>{props.postContent}</PostContent>
           <c.Flex>
             <UserInfo>
               {props.writeTime} · {props.userName}
