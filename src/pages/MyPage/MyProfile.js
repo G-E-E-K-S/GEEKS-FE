@@ -111,7 +111,7 @@ const MyProfile = () => {
       <c.ScreenComponent>
         <Header />
         <Profile>
-          <ProfileImg src={myProfile.myPhotoName === null ? BasicProfile : process.env.REACT_APP_BUCKET_BASEURL + myProfile.myPhotoName} />
+          <ProfileImg src={myProfile.myPhotoName?.length === 0 ? BasicProfile : process.env.REACT_APP_BUCKET_BASEURL + myProfile.myPhotoName} />
           <TotalUserInfo>
             <UserName>{myProfile.myNickname}</UserName>
             <Major>{myProfile.myMajor} · {myProfile.myStudentID}</Major>
