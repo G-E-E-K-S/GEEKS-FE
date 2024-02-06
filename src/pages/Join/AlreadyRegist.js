@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import API from "../../axios/BaseUrl";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Join/Header";
@@ -65,6 +65,7 @@ const AlreadyRegist = () => {
   const emailVal = useRef();
   const passwordVal = useRef();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleEmailVal = () => {
     let EmailLen = emailVal.current.value.length;
@@ -94,9 +95,9 @@ const AlreadyRegist = () => {
         <Header />
         <NoticeTitle>{`아래 이메일로\n이미 가입한 이력이 있어요`}</NoticeTitle>
         <EnrollDate>{`2023년 9월 23일 가입`}</EnrollDate>
-        <UserEmail>{`202020225@sangmyung.kr`}</UserEmail>
+        <UserEmail>{location.state?.userEmail + '@sangmyung.kr'}</UserEmail>
         <ForgetPWD>{`비밀번호를 잊어버리셨나요?`}</ForgetPWD>
-        <FindPWD>{`비밀번호 찾기`}</FindPWD>
+        <FindPWD onClick={()=>navigate('/forgetemail')}>{`비밀번호 찾기`}</FindPWD>
         <JoinButton onClick={() => handleEmail()} isNextPage={true} btnName={`메일 받기`}/>
       </c.ScreenComponent>
     </c.Totalframe>
