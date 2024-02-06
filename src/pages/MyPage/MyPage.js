@@ -232,7 +232,7 @@ const MyPage = () => {
               menuName={`자주 묻는 질문`}
               onClick={() => navigate("/faq")}/>
             <MyPageMenu menuImg={logout} menuName={`로그아웃`} onClick={()=>Logout()}/>
-            <MyPageMenu menuImg={secession} menuName={`문의하기`} onClick={()=>Secession()}/>
+            <MyPageMenu menuImg={secession} menuName={`탈퇴하기`} isSecession={true} onClick={()=>Secession()}/>
           </c.SubScreen>
         </c.ScreenComponent>
       <NavigationBar type={`mypage`} />
