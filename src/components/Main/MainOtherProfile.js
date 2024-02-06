@@ -6,7 +6,7 @@ const TotalProfile = styled.div`
   width: 100%;
   border-radius: 12px;
   background: ${(props) => (props.activeCheck ? "#FFFBEE" : props.myProfile ? "#FAFAFA" :"#fff")};
-  border: 1px solid ${(props) => (props.activeCheck ? "#ECAA00" : "#FFFBEE")};
+  border: 1px solid ${(props) => (props.activeCheck ? "#ECAA00" : "none")};
   margin-bottom: ${(props)=> props.marginBottom};
   overflow-x: auto;
 `;
