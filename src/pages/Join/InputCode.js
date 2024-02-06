@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import API from "../../axios/BaseUrl";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Join/Header";
@@ -23,16 +23,16 @@ const SendMailText = styled.div`
   line-height: 24px;
 `;
 
-const ReSnedBtn = styled.div`
+const ReSendBtn = styled.div`
   display: flex;
   padding: 4px 12px;
   justify-content: center;
   align-items: center;
-  color: #525252;
+  color: ${(props)=>props.isResend ? '#D0D0D0': '#525252'};
   border-radius: 6px;
-  background-color: #efefef;
+  background-color: ${(props)=>props.isResend ? '#F7F7F7': '#efefef'};
   cursor: pointer;
-
+  pointer-events : ${(props)=>props.isResend && 'none'};
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -70,7 +70,9 @@ const InputCode = () => {
   const [isSelected, setIsSelected] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
   const [isErrorPopup, setIsErrorPopup] = useState(false);
+  const [isResend, setIsResend] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleInputChange = (index, event) => {
     const nextIndex = index + 1;
@@ -120,6 +122,19 @@ const InputCode = () => {
     setIsSelected(true);
   };
 
+  const ReSendEmail = () => {
+    let UserEmail = location.state?.userEmail;
+    async function fetchCode() {
+      try {
+        const res = await API.get("/mail/send?email=" + UserEmail + "@sangmyung.kr");
+        if(res.status==200) setIsResend(true);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchCode();
+  }
+
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -130,7 +145,7 @@ const InputCode = () => {
         />
         <TotalSendMail>
           <SendMailText>메일이 도착하지 않았나요?</SendMailText>
-          <ReSnedBtn>인증 메일 재전송</ReSnedBtn>
+          <ReSendBtn onClick={()=>ReSendEmail()} isResend={isResend}>인증 메일 재전송</ReSendBtn>
         </TotalSendMail>
         <InputNumber>
           {inputRefs.map((ref, index) => (

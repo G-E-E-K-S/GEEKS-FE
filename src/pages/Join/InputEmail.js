@@ -64,12 +64,9 @@ const InputEmail = () => {
     async function fetchEmailPage() {
       try {
          // allow cookies
-        const res = await API.get(
-          "/mail/send?email=" +
-            emailVal.current.value +
-            "@sangmyung.kr"
-        );
-        res.data == "duplicate" ? alert("중복") : navigate("/inputcode");
+        const res = await API.get("/mail/send?email=" + emailVal.current.value + "@sangmyung.kr");
+        res.data == "duplicate" ? navigate("/alreadyregist",{state:{userEmail: emailVal.current.value}}) :
+        navigate("/inputcode",{state:{userEmail: emailVal.current.value}});
       } catch (error) {
         console.error(error);
       }
