@@ -30,7 +30,7 @@ const SearchInput = styled.input`
   &:focus {
     outline: none;
   }
-  &:placeholder {
+  &::placeholder {
     color: #b7b7b7;
     font-size: 1rem;
     font-style: normal;
@@ -39,7 +39,7 @@ const SearchInput = styled.input`
 `;
 const TabMenu = styled.div`
   padding: 12px 5.12vw;
-  color: ${(props) => (props.isLine ? "#333" : "#efefef")};
+  color: ${(props) => (props.isLine ? "#333" : "#B7B7B7")};
   text-align: center;
   font-size: 1rem;
   font-style: normal;
