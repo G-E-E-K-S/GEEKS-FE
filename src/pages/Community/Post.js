@@ -142,7 +142,8 @@ const Post = () => {
   const [isBtsOpen, setIsBtsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isActive, setIsActive] = useState(false);
-  const [isSelect, setIsSelect] = useState(false);
+  const [commentContent,setCommentContent] = useState('');
+  const [isEdit, setIsEdit] = useState(false);
   const [commentWriterState, setCommentWriterState] = useState(false);
 
   const commentRef = useRef();
@@ -252,10 +253,11 @@ const Post = () => {
     }
     fetchDeletePost();
   }
-  const DeleteCommentBts = (commentId, commentWriterState) => {
+  const DeleteCommentBts = (commentId, commentWriterState, commentContent) => {
     setCommentWriterState(commentWriterState);
     setIsCommentBts(true);
     setCommentId(commentId);
+    setCommentContent(commentContent);
   }
   const DeleteComment = () => {
     async function fetchDeleteComment() {
@@ -271,19 +273,23 @@ const Post = () => {
     fetchDeleteComment();
   }
   const EditComment = () => {
+    if(commentRef.current.value.length === 0 ) return;
     async function fetchEditComment() {
       try {
         const res = await API.post("/post/modify/comment", {
           commentId: commentId,
           content: commentRef.current.value,
         });
-        console.log(res);
-        setIsCommentBts(false);
+        window.location.reload();
       } catch (error) {
         console.error(error);
       }
     }
     fetchEditComment();
+  }
+  const EditTempComment = () => {
+    setIsEdit(true);
+    setIsCommentBts(false);
   }
   const AddComment = () => {
     setIsModalOpen(false);
@@ -345,7 +351,7 @@ const Post = () => {
                   comment={comment.deleted ? '삭제된 댓글입니다' : comment.content}
                   deleted={comment.deleted}
                   wirteChild={() => AddReComment(comment.commentId, comment.writer, true)}
-                  deleteComment={()=> DeleteCommentBts(comment.commentId, comment.commentWriterState)}/>
+                  deleteComment={()=> DeleteCommentBts(comment.commentId, comment.commentWriterState, comment.content)}/>
                 {comment.children?.map((child) => (
                   <Comment
                     paddingLeft={`8.17vw`}
@@ -358,7 +364,7 @@ const Post = () => {
                       uploadtime: caclTime(child.createdDate),
                     }}
                     wirteChild={() => AddReComment(child.commentId, child.writer, true)}
-                    deleteComment={()=> DeleteCommentBts(child.commentId, child.commentWriterState)}/>
+                    deleteComment={()=> DeleteCommentBts(child.commentId, child.commentWriterState, child.content)}/>
                 ))}
               </div>
             ))}
@@ -366,7 +372,7 @@ const Post = () => {
                 {commentWriterState ? (
                   <>
                     <MenuBox onClick={()=>DeleteComment()}>{`댓글 삭제하기`}</MenuBox>
-                    <MenuBox onClick={()=>EditComment()}>{`댓글 수정하기`}</MenuBox>
+                    <MenuBox onClick={()=>EditTempComment()}>{`댓글 수정하기`}</MenuBox>
                   </>
                 ) : (
                   <MenuBox Report={true}>{`신고하기`}</MenuBox>
@@ -381,8 +387,8 @@ const Post = () => {
               <AnonymousBox src={ isAnonymity ? FillCheckBox : CheckBox} />
               <AnonymousTxt>{`익명`}</AnonymousTxt>
             </Anonymous>
-            <InputComment placeholder="댓글을 입력하세요" ref={commentRef} />
-            <img src={Send} onClick={() => UploadComment()} />
+            <InputComment placeholder="댓글을 입력하세요" ref={commentRef} defaultValue={commentContent} />
+            <img src={Send} onClick={() => isEdit ? EditComment() : UploadComment()} />
             {isModalOpen && (
               <Modal padding={`22px 20px`}>
                 <ModalTxt>{recommentUserName === null ? '익명' : recommentUserName}{`님께 답글을 달까요?`}</ModalTxt>
