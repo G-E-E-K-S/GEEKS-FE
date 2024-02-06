@@ -344,6 +344,7 @@ const Post = () => {
             {postInfo.comments?.map((comment) => (
               <div>
                 <Comment
+                  isComment={true}
                   postInfo={{
                     username: comment.writer === null ? '익명' : comment.writer,
                     uploadtime: caclTime(comment.createdDate),
