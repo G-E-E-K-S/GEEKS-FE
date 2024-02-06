@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../../axios/BaseUrl";
+import moment from "moment";
+import "moment/locale/ko";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/MyPage/Header";
@@ -51,7 +53,7 @@ const SettingUserInfo = () => {
   useEffect(()=>{
     async function fetchUserInfo(){
       try{
-        const res = API.get("/member/information");
+        const res = await API.get("/member/information");
         setUserData(res.data)
       }catch(error){
         console.log(error);
@@ -77,7 +79,7 @@ const SettingUserInfo = () => {
         {/* when we account */}
         <AccountInfoBox>
           <AccountTitle>인증 날짜</AccountTitle>
-          <AccountInfo>{userData.createdDate}</AccountInfo>
+          <AccountInfo>{moment(userData?.createdDate).format('YYYY.MM.DD')}</AccountInfo>
         </AccountInfoBox>
         {/* Account school */}
         <AccountInfoBox>
