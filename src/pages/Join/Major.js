@@ -27,16 +27,6 @@ const DepartmentBox = styled.div`
     display: none;
   }
 `;
-
-const BlurBackground = styled.div`
-  position: absolute;
-  height: 248px;
-  width: 100vw;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 36.94%);
-`;
 const MajorText = styled.div`
   color: ${(props)=>props.major ? "#d0d0d0" : '#333333'};
   font-size: 1.5rem;
@@ -48,6 +38,7 @@ const StudentIdTotal = styled.div`
   margin-top: 1.77vh;
   padding: 7px 0px 8px 0px;
   display: flex;
+  justify-content: flex-start;
   width: 22.82vw;
   justify-content: space-between;
   border-bottom: 2px solid
@@ -160,7 +151,6 @@ const Major = () => {
                 <Department department={major} onClick={() => handleMajor(major)}/>
               ))}
             </DepartmentBox>
-            <BlurBackground/>
           </BottomSheet>}
 
         <StudentIdTotal
