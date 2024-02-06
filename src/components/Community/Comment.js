@@ -50,7 +50,7 @@ const Comment = (props) => {
           uploadtime={props.postInfo.uploadtime}
           deleted={props.deleted}/>
         <Icons>
-          <CommentImg src={props.deleted ? DeleteComment : CommentIcon} onClick={props.wirteChild}/>
+          {props.isComment && <CommentImg src={props.deleted ? DeleteComment : CommentIcon} onClick={props.wirteChild}/>}
           <ThreeDots src={props.deleted ? DeleteDots : Dots} onClick={props.deleteComment}/>
         </Icons>
       </c.SpaceBetween>
