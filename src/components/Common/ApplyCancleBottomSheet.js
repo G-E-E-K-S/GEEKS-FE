@@ -75,6 +75,7 @@ const ApplyCancelBottomSheet = (props) => {
           <BottomSheetBtn onClick={props.onClick}>
             {props.btnName}
           </BottomSheetBtn>
+          {props.children}
         </BottomSheet>
     </>
   );

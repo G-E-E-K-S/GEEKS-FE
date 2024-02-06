@@ -6,9 +6,11 @@ import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Join/Header";
 import MainText from "../../components/Join/MainText";
 import ErrorPopup from "../../components/Common/ErrorPopup";
+import ApplyCancelBottomSheet from "../../components/Common/ApplyCancleBottomSheet";
 import ForgetPwdImg from "../../assets/img/Join/forgetPwd.svg";
 import NoShowPwd from "../../assets/img/Join/NoShowPwd.svg";
 import ShowPwd from "../../assets/img/Join/ShowPwd.svg";
+import Automatic from "../../assets/img/Join/automatic.svg";
 
 const InputInfos = styled.div`
   display: flex;
@@ -69,12 +71,21 @@ const ForgetPwdIcon = styled.img`
   width: 16px;
   height: 16px;
 `;
+const No = styled.div`
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+  color: #8E9192;
+  margin-top: 22px;
+`;
 const InputEmail = () => {
   const [isEmailSelected, setIsEmailSelected] = useState('false');
   const [isPwdSelected, setIsPwdSelected] = useState('false');
   const [isNextPage, setIsNextPage] = useState(false);
   const [isErrorPopup, setIsErrorPopUp] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
+  const [automaticLogIn, setAutomaticLogin] = useState(false);
   const emailVal = useRef();
   const passwordVal = useRef();
   const navigate = useNavigate();
@@ -87,14 +98,15 @@ const InputEmail = () => {
 
   //axios
   const handleEmail = () => {
-    console.log(emailVal.current.value +"@sangmyung.kr",passwordVal.current.value)
     async function fetchLogin() {
       try {
         const res = await API.post("/login/login", {
           email: emailVal.current.value +"@sangmyung.kr",
           password: passwordVal.current.value,
         });
-        if(res.data === 'success') navigate('/home');
+        if(res.data === 'success'){
+          setAutomaticLogin(true);
+        }
         else{
           setIsPwdSelected('error');
           setIsEmailSelected('error');
@@ -109,6 +121,10 @@ const InputEmail = () => {
   const handlePwd = () => {
     setShowPwd(!showPwd);
   };
+  const AutomaticLogin = () => {
+    setAutomaticLogin(false);
+    navigate('/home');
+  }
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -149,7 +165,13 @@ const InputEmail = () => {
         <JoinButton
           onClick={() => handleEmail()}
           isNextPage={isNextPage}>{`로그인`}</JoinButton>
-        
+        <ApplyCancelBottomSheet height={`391px`} padding={`40px 20px 0px 20px`} 
+          isOpen={automaticLogIn} interaction={true}
+          onClick={()=>AutomaticLogin()}
+          Icon={Automatic} message={`다음부터\n자동으로 로그인할까요?`}
+          btnName={`자동 로그인 할게요`} applyRoommate={()=>setAutomaticLogin(false)}>
+          <No onClick={()=>setAutomaticLogin(false)}>{`안 할래요`}</No>
+        </ApplyCancelBottomSheet>
       </c.ScreenComponent>
     </c.Totalframe>
   );
