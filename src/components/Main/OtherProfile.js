@@ -113,10 +113,13 @@ const OtherProfile = (props) => {
 
       </c.SpaceBetween>
       {/* intro self */}
-      <IntroSelf>
+      {props.intro.length !== 0 &&
+        <IntroSelf>
         <Intro>{props.intro}</Intro>
         {/* <SaveImg src={fill? fillSave : save} onClick={(e)=>handleFill(e,props.nickName)}/> */}
       </IntroSelf>
+      }
+      
     </TotalProfile>
   );
 };
