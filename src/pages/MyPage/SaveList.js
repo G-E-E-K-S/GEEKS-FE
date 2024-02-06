@@ -118,7 +118,7 @@ const LifeStyles = () => {
               </c.Flex>
             ))}
             {activeEdit && <JoinButton btnName={`삭제하기`} isNextPage={checkUserName.length > 0} handleClick={() => handleBtn()} />}
-          {showPopup && <Popup bottom={`18.24vh`} setShowPopup={setShowPopup} message={'성공적으로 삭제되었습니다'}/> }
+          <Popup bottom={`18.24`} isShowPopup={showPopup} setShowPopup={setShowPopup} message={'성공적으로 삭제되었습니다'}/>
         </c.SubScreen>
       </c.ScreenComponent>
     </c.Totalframe>

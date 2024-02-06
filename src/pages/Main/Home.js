@@ -200,6 +200,7 @@ const Home = () => {
     async function fetchEmailPage() {
       try {
         const res = await API.get("/home/main");
+        console.log(res.data)
         setLoading(false);
         setIsExist(res.data.exist);
         setPoint(res.data.points);
@@ -228,12 +229,11 @@ const Home = () => {
         <c.ScreenComponent navigation={true}>
           <c.SubScreen>
             <Header isNoti={true} onClick={() => navigate("/search")} />
-            {showPopup && (
-              <Popup
+            <Popup
                 message={`곧 만날 수 있으니 조금만 기다려 주세요!`}
                 setShowPopup={setShowPopup}
-                top={`9.5vh`}/>
-            )}
+                isShowPopup={showPopup}
+                top={`9.5`}/>
             <System>
               <Icons onClick={() => setShowPopup(true)}>
                 <Icon src={checklist} />
