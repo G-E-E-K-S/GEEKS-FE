@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import API from "../../axios/BaseUrl";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/MyPage/Header";
@@ -47,6 +47,17 @@ const AccountInfo = styled.div`
   line-height: 24px; /* 150% */
 `;
 const SettingUserInfo = () => {
+  const [userData, setUserData] = useState('');
+  useEffect(()=>{
+    async function fetchUserInfo(){
+      try{
+        const res = API.get("/member/information");
+        setUserData(res.data)
+      }catch(error){
+        console.log(error);
+      }
+    }fetchUserInfo();
+  },[]);
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -55,7 +66,7 @@ const SettingUserInfo = () => {
         {/* Email */}
         <AccountInfoBox>
           <AccountTitle>아이디(이메일)</AccountTitle>
-          <AccountInfo>202020225@sangmyung.kr</AccountInfo>
+          <AccountInfo>{userData?.email}</AccountInfo>
         </AccountInfoBox>
         {/* Password */}
         <AccountInfoBox>
@@ -66,7 +77,7 @@ const SettingUserInfo = () => {
         {/* when we account */}
         <AccountInfoBox>
           <AccountTitle>인증 날짜</AccountTitle>
-          <AccountInfo>2023.10.05</AccountInfo>
+          <AccountInfo>{userData.createdDate}</AccountInfo>
         </AccountInfoBox>
         {/* Account school */}
         <AccountInfoBox>
