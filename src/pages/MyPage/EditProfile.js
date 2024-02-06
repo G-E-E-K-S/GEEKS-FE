@@ -57,7 +57,6 @@ const CameraIcons = styled.div`
   position: absolute;
   bottom: -5px;
   right: 33.66vw;
-  z-index: 3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -445,7 +444,7 @@ const EditProfile = () => {
           value={introduction}
           changeValue={setIntroduction}/>
         {isModalOpen &&
-          <Modal padding={`20px`}>
+          <Modal padding={`20px`} isClose={true} onClick={()=>setIsModalOpen(false)}>
             <IntroMySelf>{`미래의 룸메이트에게\n나를 소개해 주세요!`}</IntroMySelf>
             <IntroSub>{`내가 누군지, 어떤 습관을 가졌는지 등\n나에 대한 설명을 적으면\n더 빠르게 룸메이트를 찾을 수 있어요`}</IntroSub>
             <ExampleBox>
