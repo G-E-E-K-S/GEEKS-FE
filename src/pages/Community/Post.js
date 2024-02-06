@@ -143,6 +143,8 @@ const Post = () => {
   const [loading, setLoading] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [isSelect, setIsSelect] = useState(false);
+  const [commentWriterState, setCommentWriterState] = useState(false);
+
   const commentRef = useRef();
   let { postId } = useParams();
   const navigate = useNavigate();
@@ -250,7 +252,8 @@ const Post = () => {
     }
     fetchDeletePost();
   }
-  const DeleteCommentBts = (commentId) => {
+  const DeleteCommentBts = (commentId, commentWriterState) => {
+    setCommentWriterState(commentWriterState);
     setIsCommentBts(true);
     setCommentId(commentId);
   }
@@ -268,7 +271,19 @@ const Post = () => {
     fetchDeleteComment();
   }
   const EditComment = () => {
-    // edit comment axios add
+    async function fetchEditComment() {
+      try {
+        const res = await API.post("/post/modify/comment", {
+          commentId: commentId,
+          content: commentRef.current.value,
+        });
+        console.log(res);
+        setIsCommentBts(false);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchEditComment();
   }
   const AddComment = () => {
     setIsModalOpen(false);
@@ -330,7 +345,7 @@ const Post = () => {
                   comment={comment.deleted ? '삭제된 댓글입니다' : comment.content}
                   deleted={comment.deleted}
                   wirteChild={() => AddReComment(comment.commentId, comment.writer, true)}
-                  deleteComment={()=> DeleteCommentBts(comment.commentId)}/>
+                  deleteComment={()=> DeleteCommentBts(comment.commentId, comment.commentWriterState)}/>
                 {comment.children?.map((child) => (
                   <Comment
                     paddingLeft={`8.17vw`}
@@ -343,13 +358,12 @@ const Post = () => {
                       uploadtime: caclTime(child.createdDate),
                     }}
                     wirteChild={() => AddReComment(child.commentId, child.writer, true)}
-                    deleteComment={()=> DeleteCommentBts(child.commentId)}
-                  />
+                    deleteComment={()=> DeleteCommentBts(child.commentId, child.commentWriterState)}/>
                 ))}
               </div>
             ))}
             <BottomSheet height={`max-content`} padding={`12px 20px 0 20px`} isOpen={isCommentBts} interaction={true}>
-                {postInfo?.writerState ? (
+                {commentWriterState ? (
                   <>
                     <MenuBox onClick={()=>DeleteComment()}>{`댓글 삭제하기`}</MenuBox>
                     <MenuBox onClick={()=>EditComment()}>{`댓글 수정하기`}</MenuBox>
