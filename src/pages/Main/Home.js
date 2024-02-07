@@ -265,6 +265,7 @@ const Home = () => {
               {isExist ? (
                 point.map((opponent, index) => (
                   <MainOtherProfile
+                    onClick={() => navigate('/detail/details/'+opponent.userId)}
                     nickName={opponent.nickname}
                     userprofile={opponent.photoName.length === 0 ? BasicProfile : opponent.photoName}
                     major={opponent.major}
@@ -284,13 +285,15 @@ const Home = () => {
               )}
             </HomeBox>
             {isShowReview && (
-              <ShowReviewBox>
+              <a href="https://forms.gle/m9kF8KybtXr5E3sS7">
+              <ShowReviewBox >
                 <c.SpaceBetween>
                   <ReviewTxt>{`긱스 이용 후기를 남겨주세요!`}</ReviewTxt>
                   <CloseImg src={Close} onClick={() => handleShowReview()} />
                 </c.SpaceBetween>
                 <MoreSecurityTxt>{`더 멋지게 보완해서 찾아올게요`}</MoreSecurityTxt>
               </ShowReviewBox>
+              </a>  
             )}
             <HomeBox
               name={`이런 글은 어떠세요?`}
@@ -336,6 +339,7 @@ const Home = () => {
                 posts.map((post, index) => (
                   <MainPost
                     // onClick={post}
+                    onClick={() => navigate(`/post/${post.postId}`)}
                     text={post.title}
                     comment={post.commentCount}
                     likeCnt={post.likeCount}
@@ -347,6 +351,7 @@ const Home = () => {
               {isWeeklyPost === "weekly" &&
                 weeklyPost?.map((post, index) => (
                   <MainPost
+                    onClick={() => navigate(`/post/${post.postId}`)}
                     text={post.title}
                     comment={post.commentCount}
                     likeCnt={post.likeCount}
