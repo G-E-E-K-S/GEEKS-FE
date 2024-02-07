@@ -20,9 +20,8 @@ import question from "../../assets/img/MyPage/question.svg";
 import inquiry from "../../assets/img/MyPage/inquiry.svg";
 import secession from "../../assets/img/MyPage/secession.svg";
 import logout from "../../assets/img/MyPage/logout.svg";
-import { useSetRecoilState } from 'recoil';
-import { UserNickName } from '../../recoil/UserNickName';
-
+import { useSetRecoilState } from "recoil";
+import { UserNickName } from "../../recoil/UserNickName";
 
 const UserInfoTop = styled.div`
   margin-top: 4.5vh;
@@ -76,7 +75,7 @@ const ToggleBtn = styled.button`
   transition: all 0.5s ease-in-out;
 `;
 const Circle = styled.div`
-  background-color: ${(props) => (props.toggle ? "#FFC700" : "#949494" )};
+  background-color: ${(props) => (props.toggle ? "#FFC700" : "#949494")};
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -109,12 +108,12 @@ const WelcomeKit = styled.div`
 `;
 const MyPage = () => {
   const [toggle, setToggle] = useState(true);
-  const [userInfo, setUserInfo] = useState('');
-  const [userMajor , setUserMajor] = useState('');
+  const [userInfo, setUserInfo] = useState("");
+  const [userMajor, setUserMajor] = useState("");
   const [loading, setLoading] = useState(true);
 
   const setContent = useSetRecoilState(UserNickName);
-  
+
   const clickedToggle = () => {
     setToggle((prev) => !prev);
     async function fetchShowProfile() {
@@ -128,45 +127,45 @@ const MyPage = () => {
   };
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    async function fetchUserInfo(){
-      try{
-          const res = await API.get("/member/myPage");
-          setUserInfo(res.data);
-          setContent(res.data.nickname);
-          setLoading(false);
-          if(res.data.major.includes('공학과')) setUserMajor(res.data.major.replace('공학과',''));
-          else if(res.data.major.includes('학과')) setUserMajor(res.data.major.replace('학과',''));
-          else if(res.data.major.includes('전공')) setUserMajor(res.data.major.replace('전공',''));
-          else setUserMajor(res.data.major);
-      }catch(error){
+  useEffect(() => {
+    async function fetchUserInfo() {
+      try {
+        const res = await API.get("/member/myPage");
+        setUserInfo(res.data);
+        setContent(res.data.nickname);
+        setLoading(false);
+        if (res.data.major.includes("공학과"))
+          setUserMajor(res.data.major.replace("공학과", ""));
+        else if (res.data.major.includes("학과"))
+          setUserMajor(res.data.major.replace("학과", ""));
+        else if (res.data.major.includes("전공"))
+          setUserMajor(res.data.major.replace("전공", ""));
+        else setUserMajor(res.data.major);
+      } catch (error) {
         console.error(error);
       }
-  }
-  fetchUserInfo();
-  },[]);
+    }
+    fetchUserInfo();
+  }, []);
 
   const Logout = () => {
-    async function fetchLogOut(){
-      try{
-          const res = await API.get("/logout");
-          if(res.status == '200') navigate('/welcome');
-      }catch(error){
+    async function fetchLogOut() {
+      try {
+        const res = await API.get("/logout");
+        if (res.status == "200") {
+          navigate("/welcome", {
+            state: {
+              prev: "logout",
+            },
+          });
+        }
+      } catch (error) {
         console.error(error);
       }
-    }fetchLogOut();
-  }
+    }
+    fetchLogOut();
+  };
 
-  const Secession = () => {
-    async function fetchSecession(){
-      try{
-          const res = await API.get("/member/withdrawal");
-          console.log(res)
-      }catch(error){
-        console.error(error);
-      }
-    }fetchSecession();
-  }
   return (
     !loading && (
       <c.Totalframe>
@@ -175,15 +174,20 @@ const MyPage = () => {
             <PageName pageName={`마이`} />
             <UserInfoTop>
               <UserInfo
-                profileImg={userInfo.photoName?.length === 0 ? basicProfile : process.env.REACT_APP_BUCKET_BASEURL + userInfo.photoName}
+                profileImg={
+                  userInfo.photoName?.length === 0
+                    ? basicProfile
+                    : process.env.REACT_APP_BUCKET_BASEURL + userInfo.photoName
+                }
                 userName={userInfo.nickname}
                 userMajor={userMajor}
                 UserId={userInfo.studentID}
-                enrollLifeStyle={!userInfo.exist}/>
+                enrollLifeStyle={!userInfo.exist}
+              />
             </UserInfoTop>
-            {userInfo.introduction?.length !== 0 && 
+            {userInfo.introduction?.length !== 0 && (
               <SelfIntro>{userInfo.introduction}</SelfIntro>
-            }
+            )}
             <ShowMyProfile>
               <div>
                 <ShowProfileTxt>내 프로필 노출하기</ShowProfileTxt>
@@ -220,8 +224,13 @@ const MyPage = () => {
             <MyPageMenu
               menuImg={userInfoImg}
               menuName={`회원 정보 설정`}
-              onClick={() => navigate("/settinguserinfo")}/>
-            <MyPageMenu menuImg={notice} menuName={`알림 설정`} isNotice={true}/>
+              onClick={() => navigate("/settinguserinfo")}
+            />
+            <MyPageMenu
+              menuImg={notice}
+              menuName={`알림 설정`}
+              isNotice={true}
+            />
             <MyPageMenu
               menuImg={announce}
               menuName={`공지사항`}
@@ -230,13 +239,22 @@ const MyPage = () => {
             <MyPageMenu
               menuImg={question}
               menuName={`자주 묻는 질문`}
-              onClick={() => navigate("/faq")}/>
-            <MyPageMenu menuImg={logout} menuName={`로그아웃`} onClick={()=>Logout()}/>
-            <MyPageMenu menuImg={secession} menuName={`탈퇴하기`} isSecession={true} onClick={()=>Secession()}/>
+              onClick={() => navigate("/faq")}
+            />
+            <MyPageMenu
+              menuImg={logout}
+              menuName={`로그아웃`}
+              onClick={() => Logout()}
+            />
+            <MyPageMenu
+              menuImg={secession}
+              menuName={`탈퇴하기`}
+              isSecession={true}
+              onClick={()=>navigate('/secessionreason',{state:{userName: userInfo.nickname}})}/>
           </c.SubScreen>
         </c.ScreenComponent>
-      <NavigationBar type={`mypage`} />
-    </c.Totalframe>
+        <NavigationBar type={`mypage`} />
+      </c.Totalframe>
     )
   );
 };

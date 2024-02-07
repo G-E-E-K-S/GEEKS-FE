@@ -1,7 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import {Intro, AccessRight, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage, ForgetEmail, AlreadyRegist} from './pages/Join/Index';
 import { LiveRule, Home, Search } from './pages/Main/Index';
-import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply, MyProfile } from './pages/MyPage/Index';
+import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply, MyProfile, SecessionReason, NoticeDetail } from './pages/MyPage/Index';
 import { FindRoommate , User, RoommateSendTxt } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
 import { WritePost, Post, Community, MyCommunity, ScrapPost, CommunityWrite, OpenGroup } from './pages/Community/Index';
@@ -32,11 +32,13 @@ function App() {
           <Route path="/search" element={<Search/>} />
           <Route path="/mypage" element={<MyPage/>} />
           <Route path="/myprofile" element={<MyProfile/>} />
+          <Route path="/secessionreason" element={<SecessionReason/>} />
           <Route path="/lifestyle" element={<LifeStyles/>} />
           <Route path="/editprofile" element={<EditProfile/>} />
           <Route path="/settinguserinfo" element={<SettingUserInfo/>} />
           <Route path="/savelist" element={<SaveList/>} />
           <Route path="/notice" element={<Notice/>} />
+          <Route path="/notice/details/:noticenum" element={<NoticeDetail/>} />
           <Route path="/faq" element={<FAQ/>} />
           <Route path="/faq/rommate" element={<FaqRommate/>} />
           <Route path="/roommate" element={<FindRoommate/>} />
