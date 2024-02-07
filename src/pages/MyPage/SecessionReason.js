@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import API from "../../axios/BaseUrl";
 import styled from "styled-components";
 import Header from "../../components/MyPage/Header";
@@ -39,7 +39,7 @@ const Bottom = styled.div`
   padding: 20px 20px 100px 20px;
   width: 100%;
 `;
-
+    
 const ChoiceBtn = styled.div`
   border-radius: 12px;
   background: ${(props) => (props.useMore ? "#FFC700" : "#EFEFEF")};
@@ -93,6 +93,7 @@ const SecessionReason = () => {
     "기타",
   ];
   const navigate = useNavigate();
+  const location = useLocation;
   const Secession = () => {
     async function fetchSecession() {
       try {
@@ -110,7 +111,7 @@ const SecessionReason = () => {
     <c.Totalframe>
       <c.ScreenComponent style={{height: `calc(100vh - 200px)`}}>
         <Header subtitle={`서비스 탈퇴`} />
-        <MainText>{`00님, 떠나시다니 아쉬워요`}</MainText>
+        <MainText>{location.state?.userName + `님, 떠나시다니 아쉬워요`}</MainText>
         <SubText>{`계정을 삭제하시면 가입 정보, 게시글 작성 내역 등 모든 활동 정보가 사라지며 재가입시 재학생 인증도 다시 해야 해요.`}</SubText>
         <CuriousReason>{`떠나시려는 이유가 궁금해요`}</CuriousReason>
         {leaveReason.map((val) => (
