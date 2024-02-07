@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/MyPage/Header";
+import NoticeJson from "../../JSON/notice.json";
 
 const NoticeBox = styled.div`
   padding: 20px 0px;
@@ -13,6 +14,10 @@ const NoticeText = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: 24px;
+`;
+const NoticeEvent = styled(NoticeText)`
+  color: #EC5062;
+  margin-right: 12px;
 `;
 const NoticeDate = styled.div`
   color: #b7b7b7;
@@ -27,18 +32,23 @@ const Br = styled.div`
   background-color: #efefef;
 `;
 const Notice = () => {
+
+  const navigate = useNavigate();
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header subtitle={`공지사항`} />
         <NoticeBox isFirst={true}>
-          <NoticeText>{`편리한 채팅을 위한 새로운 기능이 생겼어요 두줄은 이렇게 써져요`}</NoticeText>
-          <NoticeDate>{`2023.09.25`}</NoticeDate>
+          <c.Flex>
+            <NoticeEvent>{`이벤트`}</NoticeEvent>
+            <NoticeText>{`긱스 이용후기 작성하고 기숙사 웰컴 키트 받자!`}</NoticeText>
+          </c.Flex>
+          <NoticeDate>{`2024.02.12`}</NoticeDate>
         </NoticeBox>
         <Br />
-        <NoticeBox>
-          <NoticeText>{`이제 00대학교도 긱스를 사용할 수 있어요`}</NoticeText>
-          <NoticeDate>{`2023.09.25`}</NoticeDate>
+        <NoticeBox onClick={()=>navigate('/notice/details/' + `${(NoticeJson.notice[0]?.noticeNum)}`)}>
+          <NoticeText>{`긱스가 드디어 오픈했어요!`}</NoticeText>
+          <NoticeDate>{`2024.02.12`}</NoticeDate>
         </NoticeBox>
       </c.ScreenComponent>
     </c.Totalframe>
