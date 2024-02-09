@@ -22,10 +22,13 @@ import moment from "moment";
 import 'moment/locale/ko'
 
 const ChatHeader = styled.div`
-  width: 100%;
+  width: calc(100% - 5.12vw*2);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  background-color: #fff;
+  top: 0;
 `;
 const Name = styled.div`
   color: #333;
@@ -51,15 +54,22 @@ const Date = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: 16px;
-  margin-top: 2.96vh;
   margin-bottom: 1.65vh;
   text-align: center;
+`;
+const ChatContent = styled.div`
+  overflowY: scroll; 
+  height: max-content;
+  margin-top: 65px;
+  margin-bottom: 100px;
 `;
 // chat bottom
 const ChatBottom = styled.div`
   position: fixed;
   width: 100%;
-  bottom: 86px;
+  height: 86px;
+  bottom: 0;
+  background-color: #fff;
   padding: 14px 5.12vw 0 5.12vw;
   border-top: 1px solid #efefef;
 `;
@@ -137,6 +147,7 @@ const ChatRoom = () => {
 
   const client = useRef();
   const content = useRef();
+  const scrollRef = useRef();
 
   let { roomId } = useParams();
 
@@ -159,11 +170,32 @@ const ChatRoom = () => {
   }, []);
 
   useEffect(() => {
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [chatList]);
+
+  useEffect(() => {
     connect();
 
     return () => disconnect();
   }, [roomInfo])
 
+  // 베포용
+  // const connect = () => {
+  //   client.current = new StompJs.Client({
+  //     brokerURL: 'wss://server.my-geeks.com/stomp',
+  //     onConnect: () => {
+  //       subscribe();
+  //     }
+  //   });
+
+  //   client.current.webSocketFactory = function () {
+  //     return new SockJS("https://server.my-geeks.com/stomp");
+  //   };
+
+  //   client.current.activate();
+  // };
+
+  //로컬용
   const connect = () => {
     client.current = new StompJs.Client({
       brokerURL: 'ws://localhost:8080/stomp',
@@ -179,10 +211,10 @@ const ChatRoom = () => {
     client.current.activate();
   };
 
-  const publish = () => {
+  const publish = async () => {
     if (!client.current.connected || content.current.value.length === 0) return;
 
-    client.current.publish({
+    await client.current.publish({
       destination: '/app/message',
       body: JSON.stringify({
         roomid: roomId,
@@ -192,7 +224,7 @@ const ChatRoom = () => {
       }),
     });
 
-    content.current.value = '';
+    content.current.value = '';   
   };
 
   const subscribe = () => {
@@ -212,7 +244,7 @@ const ChatRoom = () => {
 
   return (
     <c.Totalframe>
-      <c.ScreenComponent>
+      <c.ScreenComponent ref={scrollRef}>
         <c.SubScreen>
           <ChatHeader>
             <GoBack/>
@@ -228,14 +260,16 @@ const ChatRoom = () => {
             <CloseBtn onClick={() => setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
           </BottomSheet>
           {/* chat */}
-          <Date>8월 25일</Date>
-          {chatList?.map((chat) => (
-            <div>
-              {roomInfo?.user == chat?.sender ?
-                <MyChat time={moment(chat.createdAt).format('A h:mm')} chat={chat.message} /> :
-                <OtherChat profileImg={BasicProfile} time={moment(chat.createdAt).format('A h:mm')} chat={chat.message} />}
-            </div>
-          ))}
+          <ChatContent>
+            <Date>8월 25일</Date>
+              {chatList?.map((chat) => (
+                <div>
+                  {roomInfo?.user == chat?.sender ?
+                    <MyChat time={moment(chat.createdAt).format('A h:mm')} chat={chat.message} /> :
+                    <OtherChat profileImg={BasicProfile} time={moment(chat.createdAt).format('A h:mm')} chat={chat.message} />}
+                </div>
+              ))}
+          </ChatContent>
 
         </c.SubScreen>
       </c.ScreenComponent>

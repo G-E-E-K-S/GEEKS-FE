@@ -5,7 +5,8 @@ import * as c from '../../components/Common/CommonStyle';
 import mainLogo from '../../assets/img/Join/mainLogo.svg';
 
 const IntroLogo = styled.div`
-    height: 100%;
+    height: 100vh;
+    min-height: -webkit-fill-available; 
     display: flex;
     justify-content: center;
     align-items: center;

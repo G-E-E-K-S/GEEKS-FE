@@ -11,6 +11,11 @@ body {
   font-family: 'Pretendard', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  user-select:none;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 *{

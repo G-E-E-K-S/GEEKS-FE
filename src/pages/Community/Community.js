@@ -121,7 +121,7 @@ const Community = () => {
         <TotalHeader>
           <img src={GeeksLogo}/>
           <Icon>
-            <img src={Search}/>
+            <img src={Search} onClick={()=>navigate('serach')}/>
             <img src={MyPageIcon} onClick={() => navigate("/myCommunity")}/>
           </Icon>
         </TotalHeader>

@@ -9,12 +9,6 @@ const FaqBox = styled.div`
   padding: 20px 0;
   cursor: pointer;
 `;
-const Circle = styled.div`
-  width: 24px;
-  height: 24px;
-  background-color: #d9d9d9;
-  border-radius: 50%;
-`;
 const FaqText = styled.div`
   display: flex;
   align-items: center;
@@ -25,9 +19,8 @@ const FaqText = styled.div`
 `;
 const FaqRommate = (props) => {
   return (
-    <FaqBox>
+    <FaqBox onClick={props.onClick}>
       <c.Flex>
-        <Circle />
         <FaqText>{props.faqtext}</FaqText>
       </c.Flex>
       <img src={RightArrowFaQ} />
