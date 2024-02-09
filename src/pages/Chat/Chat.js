@@ -7,6 +7,8 @@ import * as c from "../../components/Common/CommonStyle";
 import NavigationBar from "../../components/Main/NavigationBar";
 import ChatList from "../../components/Chat/ChatList";
 import basicProfile from "../../assets/img/MyPage/basicProfile.svg";
+import moment from "moment";
+import 'moment/locale/ko'
 
 const Title = styled.div`
   color: #333;
@@ -14,7 +16,6 @@ const Title = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: 28px;
-  margin-top: 7.58vh;
 `;
 const TotalMenu = styled.div`
   display: flex;
@@ -80,7 +81,7 @@ const Chat = () => {
               roomId={room.roomId} 
               chatprofile={basicProfile} 
               name={room.opponentUser} 
-              prevDate={`1일 전`} 
+              prevDate={moment(room.histories.at(-1)?.createdAt).format('A h:mm')} 
               chat={room.histories.length != 0 ? room.histories.at(-1).message : ''}  
               noneReadCnt={
                 room.histories.length != 0 && 
