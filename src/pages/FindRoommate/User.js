@@ -9,6 +9,7 @@ import Br from "../../components/Common/Br";
 import HeaderMenu from "../../components/Common/HeaderMenu";
 import LifeStyle from "../../components/Roommate/LifeStyle";
 import ApplyCancelBottomSheet from "../../components/Common/ApplyCancleBottomSheet";
+import BottomSheet from "../../components/Common/BottomSheet"; 
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import ChatImg from "../../assets/img/Roommate/chat.svg";
 import Info from "../../assets/img/Roommate/info.svg";
@@ -17,6 +18,27 @@ import FillSave from "../../assets/img/MyPage/fillSave.svg";
 import Dots from "../../assets/img/Community/dots.svg";
 import ApplyRoommateIcon from "../../assets/img/Roommate/applyRoommate.svg";
 
+const MenuBox = styled.div`
+  padding: 20px 0;
+  color: ${(props) => (props.Report ? "#CB3D0B" : "#525252")};
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+`;
+const CloseBtn = styled.div`
+  padding: 16px 0;
+  border-radius: 12px;
+  border: 1px solid #e2e2e2;
+  background: #fff;
+  text-align: center;
+  color: #333;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 24px;
+  margin-top: 20px;
+  margin-bottom: 94px;
+`;
 const MyRoommateNoti = styled.div`
   background-color: #FFF4CD;
   width: 100vw;
@@ -164,10 +186,10 @@ const EnrollBtn = styled.div`
   height: 56px;
   padding: 18px 12.17vw;
   border-radius: 12px;
-  background: #ffc700;
+  background: ${(props)=> props.state == true ? '#F7F7F7' : '#ffc700'};
 `;
 const EnrollTxt = styled.div`
-  color: #333;
+  color: ${(props)=> props.state == true ? '#B7B7B7' : '#333'};
   text-align: center;
   font-size: 1.125rem;
   font-style: normal;
@@ -206,7 +228,11 @@ const Me = styled.div``;
 const User = () => {
   const [isSave, setIsSave] = useState(false);
   const [applyRoommate, setApplyRommate] = useState(false);
+  const [roommateState, setRoommateState] = useState(false);
+  const [roommateApplyState, setRoommateApplyState] = useState(false);
   const [opponentUser, setOpponentUser] = useState(null);
+  const [isBtsOpen, setIsBtsOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [lifeStyles, setLifeStyles] = useState([]);
   const [lifeStyleList, setLifeStyleList] = useState([
     {name : '흡연', key : 'smoking' , true : '흡연자', false : '비흡연자'},
@@ -232,6 +258,10 @@ const User = () => {
         setOpponentUser(res.data);
         setIsSave(res.data.details[0].saved);
         setLifeStyles(res.data.details);
+        setRoommateState(res.data.roommateState);
+        setRoommateApplyState(res.data.roommateApply);
+        console.log(res.data);
+
         setData({
           datasets: [
             {
@@ -302,16 +332,27 @@ const User = () => {
   }
 
   const ApplyRoommate = () => {
+    if(roommateApplyState || roommateState) {
+      return;
+    }
+
     async function fetchApplyRoommate() {
       try{
         const res = await API.get("/roommate/request?yourNickname="+opponentUser.nickname);
         console.log(res);
         setApplyRommate(false);
-        if(res.status === 200) navigate('/roommatesendtxt',{ state: {OpponentUser:opponentUser?.nickname} });
+        if(res.status === 200) {
+          navigate('/roommatesendtxt',{ 
+            state: {
+              OpponentUser:opponentUser?.nickname,
+              userId: userId
+            } });
+        }
       }catch(e) {
         console.log(e);
       }
     }
+
     fetchApplyRoommate();
   }
   
@@ -321,13 +362,18 @@ const User = () => {
         <c.SubScreen>
           <c.SpaceBetween>
             <HeaderMenu>
-              <img src={Dots}/>
+              <img src={Dots} onClick={()=>setIsBtsOpen(true)}/>
             </HeaderMenu>
           </c.SpaceBetween>
+          <BottomSheet height={`max-content`} padding={`12px 20px 0 20px`} isOpen={isBtsOpen} interaction={true}>
+            <MenuBox Report={true}>{`신고하기`}</MenuBox>
+            <CloseBtn onClick={() => setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
+          </BottomSheet>
+          {roommateState && 
           <MyRoommateNoti>
             <MyRoommateNotiTxt>{`현재 나의 룸메이트에요`}</MyRoommateNotiTxt>
-            <EndRoommate>{`룸메이트 끊기`}</EndRoommate>
-          </MyRoommateNoti>
+            <EndRoommate onClick={()=>navigate('/finishroommate',{state : {opponentUser: opponentUser?.nickname}})}>{`룸메이트 끊기`}</EndRoommate>
+          </MyRoommateNoti>}
           <TopProfile>
             <c.SpaceBetween>
               <div>
@@ -375,8 +421,10 @@ const User = () => {
           <SaveImg src={isSave ? FillSave : Save} />
           <SaveTxt>저장</SaveTxt>
         </div>
-        <EnrollBtn>
-          <EnrollTxt onClick={()=>setApplyRommate(true)}>룸메이트 신청하기</EnrollTxt>
+        <EnrollBtn state={roommateApplyState || roommateState}>
+          <EnrollTxt 
+          state={roommateApplyState || roommateState}
+          onClick={()=>setApplyRommate(true)}>룸메이트 신청하기</EnrollTxt>
         </EnrollBtn>
       </BottomEnroll>
       <ApplyCancelBottomSheet
@@ -386,7 +434,7 @@ const User = () => {
             message={opponentUser?.nickname+`님께\n룸메이트를 신청할까요?`}
             subMessage={`상대방이 수락하기 전까지는\n언제든지 취소 가능해요`}
             btnName={`신청하기`}
-            isOpen={applyRoommate}
+            isOpen={applyRoommate && !roommateApplyState && !roommateState}
             onClick={()=>ApplyRoommate()}
             applyRoommate={()=>setApplyRommate(false)}/>
     </c.Totalframe>
