@@ -26,7 +26,6 @@ const DoneBtn = styled.div`
   font-weight: 600;
 `;
 const EditImg = styled.img`
-  margin-top: calc( 6.16vh + 12px);
   cursor: pointer;
   width: 28px;
   height: 28px;
