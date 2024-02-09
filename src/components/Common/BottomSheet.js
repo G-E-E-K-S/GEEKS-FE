@@ -12,11 +12,11 @@ const ModalBackground = styled.div`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 0.5;
-  z-index: 1;
+  z-index: 20;
   transition: 0.3s ease;
 `;
 const TotalBottomSheet = styled.div`
-  z-index: 2;
+  z-index: 20;
   position: fixed;
   width: 100vw;
   left: 50%;
