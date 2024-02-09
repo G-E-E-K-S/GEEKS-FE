@@ -11,7 +11,7 @@ const SearchForm = styled.div`
   align-items: center;
 `;
 const InputBox = styled.div`
-  width: 100%;
+  width: calc(100% - 5.12vw);
   border-radius: 8px;
   background: #f7f7f7;
   padding: 10px 3.07vw;
@@ -38,12 +38,23 @@ const InpufForm = styled.input`
   }
 `;
 const InputSearch = (props) => {
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      props.search(e.target.value);
+    }
+  };
+
   return (
     <SearchForm>
       <GoBack />
       <InputBox>
         <Search src={SearchIcon} />
-        <InpufForm placeholder={`검색 키워드를 입력하세요`}/>
+        <InpufForm
+          placeholder={`검색 키워드를 입력하세요`}
+          enterkeyhint="search"
+          onKeyDown={(e) => handleKeyDown(e)}
+        />
       </InputBox>
     </SearchForm>
   );
