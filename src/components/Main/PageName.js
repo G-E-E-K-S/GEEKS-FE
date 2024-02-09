@@ -6,7 +6,6 @@ const MainText = styled.div`
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
-    margin-top: 6.64vh;
     margin-left: 8px;
     white-space: nowrap;
     display: ${(props)=>props.handleShow ? 'none' : 'block'};
