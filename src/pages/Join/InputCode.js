@@ -49,9 +49,9 @@ const Code = styled.input`
   width: 72px;
   height: 50px;
   padding-bottom: 15px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
   border-bottom: 2px solid
     ${(props) => (props.isSelected ? "#ECAA00" : "#EFEFEF")};
   margin-right: 20px;
