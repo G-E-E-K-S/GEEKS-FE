@@ -11,7 +11,8 @@ const TotalHeader = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-top: 5.21vh;
+    z-index: 10;
+    position: relative;
 `;
 const DormitoryKind = styled.div`
     display: flex;
