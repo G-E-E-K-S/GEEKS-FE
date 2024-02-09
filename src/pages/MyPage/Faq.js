@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import * as c from "../../components/Common/CommonStyle";
-import GoBack from "../../components/Common/GoBack";
-import SubTitle from "../../components/Main/SubTitle";
-import FaqRommate from "./FaqRommate";
+import FaqQuestion from "../../components/MyPage/FaqQuestion";
 import Header from "../../components/MyPage/Header";
-import SearchImg from "../../assets/img/MyPage/search.svg";
 
 const FAQTop = styled.div`
   display: flex;
@@ -75,23 +72,24 @@ const MiniAskBox = styled.div`
   font-weight: 600;
 `;
 const FAQ = () => {
-  const [isSelect, setIsSelect] = useState("rommate");
+  const [isSelect, setIsSelect] = useState("roommate");
   const ChangePage = (pageName) => {
     setIsSelect(pageName);
   };
+  const navigate = useNavigate();
+  const RoommateFaq = ['룸메이트를 끊고 싶어요','룸메이트 매칭 점수는 어떻게 매겨지나요?','보낸/받은 룸메이트 신청 내역이 사라졌어요','룸메이트 매칭은 어떤 과정으로 이루어지나요?'];
+  const ChatFaq = ['대화창을 나가고 싶어요','대화창에서 사진은 어떻게 보내나요?'];
+  const NoticeFaq = ['알림이 안 울려요'];
+  const communityFaq = ['내가 쓴 글/댓글은 어디서 볼 수 있나요?','좋아요 누른 글은 어디서 볼 수 있나요?','스크랩 한 글은 어디서 볼 수 있나요?','모임은 무엇인가요?'];
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header subtitle={`자주 묻는 질문`} />
-        <SearchBox>
-          <img src={SearchImg} />
-          <SearchInput placeholder={`궁금한 것을 검색해 보세요`} />
-        </SearchBox>
         {/* Tab */}
         <c.Flex>
           <TabMenu
-            isLine={isSelect === "rommate"}
-            onClick={() => ChangePage("rommate")}>
+            isLine={isSelect === "roommate"}
+            onClick={() => ChangePage("roommate")}>
               {`룸메이트 찾기`}
           </TabMenu>
           <TabMenu
@@ -110,12 +108,24 @@ const FAQ = () => {
               {`커뮤니티`}
           </TabMenu>
         </c.Flex>
-        {isSelect === "rommate" && (
-          <FaqRommate faqtext={`룸메이트 신청을 취소하고 싶어요`} />
+        {isSelect === "roommate" && (
+          RoommateFaq.map((question,index)=>(
+          <FaqQuestion faqtext={question} onClick={()=>navigate('/faq/roommate/' + index)}/>))
+        )}
+        {isSelect === "chat" && (
+          ChatFaq.map((question,index)=>(<FaqQuestion faqtext={question} onClick={()=>navigate('/faq/chat/' +index)}/>))
+        )}
+        {isSelect === "notice" && (
+          NoticeFaq.map((question,index)=>(<FaqQuestion faqtext={question} onClick={()=>navigate('/faq/notice/' +index)}/>))
+        )}
+        {isSelect === "community" && (
+          communityFaq.map((question,index)=>(<FaqQuestion faqtext={question} onClick={()=>navigate('/faq/community/' +index)}/>))
         )}
         <AskBox>
           <AskText>궁금증이 풀리지 않으셨나요?</AskText>
-          <MiniAskBox>문의하기</MiniAskBox>
+          <a href="https://forms.gle/jhknCXQijwwFbM1a9">
+            <MiniAskBox>문의하기</MiniAskBox>
+          </a>
         </AskBox>
       </c.ScreenComponent>
     </c.Totalframe>
