@@ -18,7 +18,7 @@ const TotalButton = styled.div`
     font-weight: 600;
     line-height: 24px;
     cursor: pointer;
-    z-index: 0;
+    z-index: 10;
 `;
 
 
