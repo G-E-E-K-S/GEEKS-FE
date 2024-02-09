@@ -4,7 +4,6 @@ import GoBack from "../Common/GoBack";
 import SubTitle from "../Main/SubTitle";
 
 const TotalHeader = styled.div`
-  margin-top: 6.16vh;
   margin-bottom: 16px;
   padding: 12px 0px;
   display: flex;

@@ -17,7 +17,6 @@ const DoneBtn = styled.div`
   justify-content: center;
   align-items: center;
   height: 4.73vh;
-  margin-top: 6.16vh;
   padding: 0.94vh 3.07vw;
   border-radius: 8px;
   background: ${(props)=>props.isDone ? '#FFC700' : '#efefef'};
@@ -117,7 +116,7 @@ const LifeStyles = () => {
               <OtherProfile activeCheck={checkUserName.includes(userData.nickname)} score={userData.point} userprofile={Profile} nickName={userData.nickname} major={userData.major} id={userData.studentID} intro={userData.introduction} />
               </c.Flex>
             ))}
-            {activeEdit && <JoinButton btnName={`삭제하기`} isNextPage={checkUserName.length > 0} handleClick={() => handleBtn()} />}
+            {activeEdit && <JoinButton btnName={`삭제하기`} handleClick={() => handleBtn()} isNextPage={checkUserName.length > 0}  />}
           <Popup bottom={`18.24`} isShowPopup={showPopup} setShowPopup={setShowPopup} message={'성공적으로 삭제되었습니다'}/>
         </c.SubScreen>
       </c.ScreenComponent>
