@@ -26,7 +26,6 @@ const Name = styled.div`
   font-weight: 600;
   line-height: 24px;
   //   사진있으면 179 없으면 237
-  width: 60.76vw;
 `;
 const Date = styled.div`
   color: #b7b7b7;
