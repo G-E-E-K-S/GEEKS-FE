@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../../axios/BaseUrl";
 import moment from "moment";
 import "moment/locale/ko";
@@ -50,6 +51,7 @@ const AccountInfo = styled.div`
 `;
 const SettingUserInfo = () => {
   const [userData, setUserData] = useState('');
+  const navigate = useNavigate();
   useEffect(()=>{
     async function fetchUserInfo(){
       try{
@@ -73,7 +75,7 @@ const SettingUserInfo = () => {
         {/* Password */}
         <AccountInfoBox>
           <AccountTitle>비밀번호</AccountTitle>
-          <AccountBtn>변경하기</AccountBtn>
+          <AccountBtn onClick={()=>navigate('/changepassword')}>변경하기</AccountBtn>
         </AccountInfoBox>
         <AccountInfoTxt>계정 정보</AccountInfoTxt>
         {/* when we account */}
