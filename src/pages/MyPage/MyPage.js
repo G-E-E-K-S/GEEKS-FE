@@ -20,6 +20,7 @@ import question from "../../assets/img/MyPage/question.svg";
 import inquiry from "../../assets/img/MyPage/inquiry.svg";
 import secession from "../../assets/img/MyPage/secession.svg";
 import logout from "../../assets/img/MyPage/logout.svg";
+import GiftBox from "../../assets/img/MyPage/giftBox.svg";
 import { useSetRecoilState } from "recoil";
 import { UserNickName } from "../../recoil/UserNickName";
 
@@ -94,7 +95,7 @@ const WelcomeKit = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 8.05vh;
+  height: 68px;
   padding: 0px 6.15vw;
   margin: 2.36vh 0px;
   border-radius: 12px;
@@ -105,6 +106,13 @@ const WelcomeKit = styled.div`
   font-weight: 600;
   white-space: pre-wrap;
   line-height: 18px; /* 128.571% */
+  background: #FFECAC;
+  position: relative;
+`;
+const GiftBoxImg = styled.img`
+  position: absolute;
+  right: 9.8vw;
+  top: -25px;
 `;
 const MyPage = () => {
   const [toggle, setToggle] = useState(true);
@@ -202,6 +210,7 @@ const MyPage = () => {
             <Br />
             <WelcomeKit>
               {`긱스 사용 후기 작성하고\n기숙사 웰컴 키트 받아가세요!`}
+              <GiftBoxImg src={GiftBox}/>
               <img src={rightArrow} />
             </WelcomeKit>
             <MyPageMenu
