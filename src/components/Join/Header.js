@@ -3,7 +3,7 @@ import GoBack from "../Common/GoBack";
 
 const Headers = () => {
     return(
-        <GoBack marginTop={`64px`}/>
+        <GoBack/>
     )
 }
 export default Headers;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue } from "recoil";
 import moment from "moment";
-import 'moment/locale/ko';
+import "moment/locale/ko";
 import API from "../../axios/BaseUrl";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -42,7 +42,7 @@ const Notice = styled.div`
   font-weight: 500;
   line-height: 18px;
   color: #949494;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   padding: 14px 20px 14px 20px;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
@@ -57,9 +57,10 @@ const NoRoommateTxt = styled.div`
   font-weight: 500;
   color: #949494;
   text-align: center;
+  font-style: medium;
 `;
 const FinRoommateBtn = styled.div`
-  border: 1px solid #E2E2E2;
+  border: 1px solid #e2e2e2;
   padding: 14px 20px 14px 20px;
   border-radius: 12px;
   height: 52px;
@@ -118,7 +119,7 @@ const ReceiveBtn = styled.div`
   width: calc((100% - 2.05vw) / 2);
   height: 56px;
   border-radius: 12px;
-  border: ${(props) => (!props.isAccept && "1px solid #e2e2e2")};
+  border: ${(props) => !props.isAccept && "1px solid #e2e2e2"};
   background: ${(props) => (props.isAccept ? "#FFC700" : "#fff")};
   display: flex;
   justify-content: center;
@@ -153,7 +154,7 @@ const DeleteContent = styled.div`
   justify-content: center;
   text-align: center;
 `;
-const ContainBottom =styled.div`
+const ContainBottom = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -182,48 +183,51 @@ const RoommateApply = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [sentApply, setSentApply] = useState([]);
   const [receivedApply, setReceivedApply] = useState([]);
-  const [opponentNickName, setOpponentNickName] = useState('');
+  const [opponentNickName, setOpponentNickName] = useState("");
   const content = useRecoilValue(UserNickName);
   const navigate = useNavigate();
-  useState(()=>{
+  useState(() => {
     async function fetchSentApply() {
-      try{
+      try {
         const res = await API.get("/roommate/sent");
         setSentApply(res.data);
-      }catch(e) {
+      } catch (e) {
         console.log(e);
       }
     }
     async function fetchReceivedApply() {
-      try{
+      try {
         const res = await API.get("/roommate/received");
         setReceivedApply(res.data);
-      }catch(e) {
+      } catch (e) {
         console.log(e);
       }
     }
     fetchReceivedApply();
     fetchSentApply();
-  },[]);
-
+  }, []);
 
   const handleCancle = () => {
     setIsBtsShow(false);
     setShowPopup(true);
     async function fetchDeleteAply() {
-      try{
-        const res = await API.get("/roommate/remove?yournickname="+ opponentNickName);
-        setSentApply(sentApply.filter((data)=>data.nickname !== opponentNickName));
-      }catch(e) {
+      try {
+        const res = await API.get(
+          "/roommate/remove?yournickname=" + opponentNickName
+        );
+        setSentApply(
+          sentApply.filter((data) => data.nickname !== opponentNickName)
+        );
+      } catch (e) {
         console.log(e);
-      } 
+      }
     }
     fetchDeleteAply();
   };
   const handleBtsShow = (opponent) => {
     setIsBtsShow(!isBtsShow);
     setOpponentNickName(opponent);
-  }
+  };
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -231,83 +235,114 @@ const RoommateApply = () => {
         <c.Flex>
           <ApplyList
             choose={isChoose === "send"}
-            onClick={() => setIsChoose("send")}>
+            onClick={() => setIsChoose("send")}
+          >
             보낸 신청
           </ApplyList>
           <ApplyList
             choose={isChoose === "receive"}
-            onClick={() => setIsChoose("receive")}>
+            onClick={() => setIsChoose("receive")}
+          >
             받은 신청
           </ApplyList>
         </c.Flex>
         <Notice>{`룸메이트가 맺어지면, 다른 사람에게 보낸 받은 신청과 보낸 신청은 모두 사라져요`}</Notice>
         {/* axios add  */}
-        {isChoose === "send" && (
-          sentApply.length === 0 ? 
-          <NoRoommate>
-            <NoRoommateTxt>{`보낸 룸메이트 신청이 없어요`}</NoRoommateTxt>
-            <FinRoommateBtn onClick={()=>navigate('/roommate')}>
-              <FindRoommateIcon src={Roommate}/>
-              <FindRoommateTxt>{`룸메이트 찾으러 가기`}</FindRoommateTxt>
-            </FinRoommateBtn>
-          </NoRoommate>
-          : sentApply.map((userData)=>(
+        {isChoose === "send" &&
+          (sentApply.length === 0 ? (
+            <NoRoommate>
+              <NoRoommateTxt>{`보낸 룸메이트 신청이 없어요`}</NoRoommateTxt>
+              <FinRoommateBtn onClick={() => navigate("/roommate")}>
+                <FindRoommateIcon src={Roommate} />
+                <FindRoommateTxt>{`룸메이트 찾으러 가기`}</FindRoommateTxt>
+              </FinRoommateBtn>
+            </NoRoommate>
+          ) : (
             <div>
-            <Semester>{`2024년도 2학기`}</Semester>
-            <ApplyTotalInfo>
-              <ApplyDate>{moment(userData.createdDate).format("M월 d일")}</ApplyDate>
-              <c.SpaceBetween>
-                <OtherProfileApply
-                  nickName={userData.nickname}
-                  major={userData.major}
-                  id={userData.studentID}
-                  userprofile={userData.photoName.length !==0 ? userData.photoName : null}/>
-                <CancleBtn onClick={() => handleBtsShow(userData.nickname)}>취소</CancleBtn>
-              </c.SpaceBetween>
-            </ApplyTotalInfo>
-          </div>
-          ))
-        )}
-        {isChoose === "receive" && (
-          receivedApply.length === 0 ? 
-          <NoRoommate>
-            <NoRoommateTxt>{`받은 룸메이트 신청이 없어요`}</NoRoommateTxt>
-            <FinRoommateBtn onClick={()=>navigate('/roommate')}>
-              <FindRoommateIcon src={Roommate}/>
-              <FindRoommateTxt>{`룸메이트 찾으러 가기`}</FindRoommateTxt>
-            </FinRoommateBtn>
-          </NoRoommate>
-          : receivedApply.map((userData)=>(
-            <div>
-              <Semester>{`3학년 2학기`}</Semester>
-              <ApplyTotalInfo>
-                <ApplyDate>{`10.01`}</ApplyDate>
-                <OtherProfileApply
-                  nickName={userData.nickname}
-                  major={userData.major}
-                  id={userData.studentID}
-                  userprofile={userData.photoName.length !==0 ? userData.photoName : null}/>
-                <c.Flex>
-                  <ReceiveBtn isAccept={false}>{`거절하기`}</ReceiveBtn>
-                  <ReceiveBtn isAccept={true}>{`수락하기`}</ReceiveBtn>
-                </c.Flex>
-              </ApplyTotalInfo>
+              <Semester>{`2024년도 1학기`}</Semester>
+              {sentApply.map((userData) => (
+                <ApplyTotalInfo>
+                  <ApplyDate>
+                    {moment(userData.createdDate).format("M월 D일")}
+                  </ApplyDate>
+                  <c.SpaceBetween>
+                    <OtherProfileApply
+                      nickName={userData.nickname}
+                      major={userData.major}
+                      id={userData.studentID}
+                      userprofile={
+                        userData.photoName.length !== 0
+                          ? userData.photoName
+                          : null
+                      }
+                    />
+                    <CancleBtn onClick={() => handleBtsShow(userData.nickname)}>
+                      취소
+                    </CancleBtn>
+                  </c.SpaceBetween>
+                </ApplyTotalInfo>
+              ))}
             </div>
-          ))
-        )}
+          ))}
+        {isChoose === "receive" &&
+          (receivedApply.length === 0 ? (
+            <NoRoommate>
+              <NoRoommateTxt>{`받은 룸메이트 신청이 없어요`}</NoRoommateTxt>
+              <FinRoommateBtn onClick={() => navigate("/roommate")}>
+                <FindRoommateIcon src={Roommate} />
+                <FindRoommateTxt>{`룸메이트 찾으러 가기`}</FindRoommateTxt>
+              </FinRoommateBtn>
+            </NoRoommate>
+          ) : (
+            <div>
+              <Semester>{`2024년도 1학기`}</Semester>
+              {receivedApply.map((userData) => (
+                <ApplyTotalInfo>
+                  <ApplyDate>{`10.01`}</ApplyDate>
+                  <OtherProfileApply
+                    nickName={userData.nickname}
+                    major={userData.major}
+                    id={userData.studentID}
+                    userprofile={
+                      userData.photoName.length !== 0
+                        ? userData.photoName
+                        : null
+                    }
+                  />
+                  <c.Flex>
+                    <ReceiveBtn isAccept={false}>{`거절하기`}</ReceiveBtn>
+                    <ReceiveBtn isAccept={true}>{`수락하기`}</ReceiveBtn>
+                  </c.Flex>
+                </ApplyTotalInfo>
+              ))}
+            </div>
+          ))}
         <div>
-            <BottomSheet height={`331px`} padding={`24px`} isOpen={isBtsShow} interaction={true}>
-              <ContainBottom>
-                <DeleteContent>
-                  <DeletMainIcon src={CancelRoommate} />
-                  <DeleteMsg>{opponentNickName+`님께\n전송한 룸메이트 신청을 취소할까요?`}</DeleteMsg>
-                </DeleteContent>
-                <CloseIcon src={Colse} onClick={() => setIsBtsShow(false)}/>
-              </ContainBottom>
-              <BtsCancelBtn onClick={()=>handleCancle()}>취소하기</BtsCancelBtn>
-            </BottomSheet>
-          </div>
-        {showPopup && <Popup bottom={`9.95vh`} setShowPopup={setShowPopup} message={`룸메이트 신청을 취소하였습니다`}/>}
+          <BottomSheet
+            height={`331px`}
+            padding={`24px`}
+            isOpen={isBtsShow}
+            interaction={true}
+          >
+            <ContainBottom>
+              <DeleteContent>
+                <DeletMainIcon src={CancelRoommate} />
+                <DeleteMsg>
+                  {opponentNickName +
+                    `님께\n전송한 룸메이트 신청을 취소할까요?`}
+                </DeleteMsg>
+              </DeleteContent>
+              <CloseIcon src={Colse} onClick={() => setIsBtsShow(false)} />
+            </ContainBottom>
+            <BtsCancelBtn onClick={() => handleCancle()}>취소하기</BtsCancelBtn>
+          </BottomSheet>
+        </div>
+        <Popup
+            bottom={`9.95`}
+            isShowPopup={showPopup}
+            setShowPopup={setShowPopup}
+            message={`룸메이트 신청을 취소하였습니다`}
+          />
       </c.ScreenComponent>
     </c.Totalframe>
   );

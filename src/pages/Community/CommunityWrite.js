@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import * as c from "../../components/Common/CommonStyle";
 import API from "../../axios/BaseUrl";
 import Header from "../../components/MyPage/Header";
@@ -28,6 +29,8 @@ const CommunityWrite = () => {
   const [post,setPost] = useState([]);
   const [comment,setComment] = useState([]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchCommunityWrite() {
       try {
@@ -53,6 +56,8 @@ const CommunityWrite = () => {
         {selectMenu === 'post' && (
           post.map((post)=>(
             <CommunityPost
+            dot={false}
+            onClick={() => navigate(`/post/${post.postId}`)}
             postName={post.title}
             commentNum={post.commentCount}
             postContent={post.content}
@@ -63,6 +68,8 @@ const CommunityWrite = () => {
         {selectMenu === 'comment' && (
           comment.map((comment)=>(
             <CommunityPost
+            dot={false}
+            onClick={() => navigate(`/post/${comment.postId}`)}
             isComment={true}
             postName={comment.title}
             likeNum={comment.likeCount}

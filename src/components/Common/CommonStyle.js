@@ -4,6 +4,8 @@ export const Totalframe = styled.div`
   // width: 390px;
   width: 100vw;
   height: 100vh;
+  height: -webkit-fill-available;
+  height: fill-available;
   margin: 0 auto;
   overflow-y: auto;
   margin-top: env(safe-area-inset-top);

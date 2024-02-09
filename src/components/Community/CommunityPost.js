@@ -84,7 +84,7 @@ const CommunityPost = (props) => {
           <PostContent isComment={props.isComment}>{props.postContent}</PostContent>
           <c.Flex>
             <UserInfo>
-              {props.writeTime} · {props.userName}
+              {props.writeTime} {props.dot === false ? '' : '·'} {props.userName}
             </UserInfo>
           </c.Flex>
         </div>

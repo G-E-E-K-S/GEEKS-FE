@@ -145,6 +145,7 @@ const Post = () => {
   const [commentContent,setCommentContent] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const [commentWriterState, setCommentWriterState] = useState(false);
+  const [nowFocus, setNowFocus] = useState(-1);
 
   const commentRef = useRef();
   let { postId } = useParams();
@@ -236,11 +237,14 @@ const Post = () => {
       fetchDeleteScrapState();
     }
   };
-  const AddReComment = (commentId, commentUserName, modalState) => {
+  
+  const AddReComment = (commentId, commentUserName, modalState, nowFocus) => {
+    setNowFocus(nowFocus);
     setIsModalOpen(modalState);
     setParentId(commentId);
     setRecommentUserName(commentUserName);
   };
+
   const DeletePost = () => {
     async function fetchDeletePost() {
       try {
@@ -341,9 +345,10 @@ const Post = () => {
 
             {/* 댓글 부분 */}
             <CommentCnt number={postInfo.commentCount} />
-            {postInfo.comments?.map((comment) => (
+            {postInfo.comments?.map((comment, index) => (
               <div>
                 <Comment
+                  recommentFocus={index === nowFocus}
                   isComment={true}
                   postInfo={{
                     username: comment.writer === null ? '익명' : comment.writer,
@@ -351,12 +356,10 @@ const Post = () => {
                   }}
                   comment={comment.deleted ? '삭제된 댓글입니다' : comment.content}
                   deleted={comment.deleted}
-                  wirteChild={() => AddReComment(comment.commentId, comment.writer, true)}
+                  wirteChild={() => AddReComment(comment.commentId, comment.writer, true, index)}
                   deleteComment={()=> DeleteCommentBts(comment.commentId, comment.commentWriterState, comment.content)}/>
                 {comment.children?.map((child) => (
                   <Comment
-                    paddingLeft={`8.17vw`}
-                    paddingRight={`5.12vw`}
                     recomment={true}
                     deleted={child.deleted}
                     comment={child.deleted ? '삭제된 댓글입니다' : child.content}
@@ -390,11 +393,12 @@ const Post = () => {
             </Anonymous>
             <InputComment placeholder="댓글을 입력하세요" ref={commentRef} defaultValue={commentContent} />
             <img src={Send} onClick={() => isEdit ? EditComment() : UploadComment()} />
+            {/* 댓글 모달 */}
             {isModalOpen && (
               <Modal padding={`22px 20px`}>
                 <ModalTxt>{recommentUserName === null ? '익명' : recommentUserName}{`님께 답글을 달까요?`}</ModalTxt>
                 <ModalBtn>
-                  <NoBtn onClick={() => AddReComment(null, false)}>{`아니요`}</NoBtn>
+                  <NoBtn onClick={() => setIsModalOpen(false)}>{`아니요`}</NoBtn>
                   <YesBtn onClick={() => AddComment(false)}>{`네`}</YesBtn>
                 </ModalBtn>
               </Modal>

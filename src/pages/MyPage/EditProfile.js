@@ -16,7 +16,6 @@ import Close from "../../assets/img/Join/closeModal.svg";
 import UnderArrow from "../../assets/img/Join/arrow_under.svg";
 
 const Finish = styled.div`
-  margin-top: 6.64vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -362,7 +361,7 @@ const EditProfile = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SpaceBetween>
-          <GoBack marginTop={`7.58vh`} />
+          <GoBack/>
           <Finish onClick={hadleEditProfile}>{`수정`}</Finish>
         </c.SpaceBetween>
         <UploadProfile>
