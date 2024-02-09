@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import JoinButton from "../../components/Join/JoinButton";
+import Popup from "../../components/Common/Popup";
 import House from "../../assets/gif/house.gif";
+import API from "../../axios/BaseUrl";
 
 const StartMent = styled.div`
   margin-top: 15.16vh;
@@ -50,7 +52,27 @@ const LoginButton = styled.div`
   line-height: 24px;
 `;
 const Welcome = () => {
+  const [showPopup, setShowPopup] = useState(false);
   const navigator = useNavigate();
+  const location = useLocation(null);
+
+  useEffect(() => {
+    setShowPopup(location.state?.prev === "logout" ? true : false);
+
+    async function fetchAutoLogin() {
+      try {
+        const res = await API.get("/member/auto/login");
+
+        if (res.data === "success") {
+          navigator("/home");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchAutoLogin();
+  }, []);
 
   const nextPage = () => {
     navigator("/inputemail");
@@ -59,10 +81,16 @@ const Welcome = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
+        <Popup
+          message={`로그아웃 되었습니다`}
+          setShowPopup={setShowPopup}
+          isShowPopup={showPopup}
+          top={`9.5`}
+        />
         <StartMent>{`기숙사 생활 걱정 끝,\n긱스에 오신 걸 환영해요!`}</StartMent>
         <SubMent>{`이메일 가입으로 바로 시작해보세요`}</SubMent>
         <TotalImg>
-          <TopImg src={House}/>
+          <TopImg src={House} />
         </TotalImg>
         <LoginButton onClick={() => navigator("/login")}>로그인</LoginButton>
         <JoinButton
