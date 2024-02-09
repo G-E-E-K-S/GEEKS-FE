@@ -93,13 +93,13 @@ const SecessionReason = () => {
     "기타",
   ];
   const navigate = useNavigate();
-  const location = useLocation;
+  const location = useLocation();
   const Secession = () => {
     async function fetchSecession() {
       try {
         const res = await API.get("/member/withdrawal");
         if(res.data === 'success') {
-          navigate('/')
+          navigate('/welcome');
         }
       } catch (error) {
         console.error(error);
