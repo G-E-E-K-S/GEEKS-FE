@@ -18,6 +18,7 @@ import dormiNoti from "../../assets/img/Home/dormiNoti.svg";
 import Close from "../../assets/img/Home/close.svg";
 import Find from "../../assets/gif/find.gif";
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
+import BoldClose from "../../assets/img/Home/boldClose.svg";
 
 const System = styled.div`
   width: 100%;
@@ -37,8 +38,8 @@ const Icons = styled.div`
   cursor: pointer;
 `;
 const Icon = styled.img`
-margin: auto;
-display: block;
+  margin: auto;
+  display: block;
   margin-bottom: 8px;
 `;
 const IconText = styled.div`
@@ -48,6 +49,24 @@ const IconText = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
+`;
+const ApplyRoommate = styled.div`
+  widht: 100%;
+  background: #fff4cd;
+  padding: 20px 20px 32px 20px;
+  margin-top: 32px;
+  border-radius: 20px;
+`;
+const ApplyNoticeTxt = styled.div`
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 32px;
+  text-align: left;
+  white-space: pre-wrap;
+`;
+const ApplyCloseImg = styled.img`
+  width: 20px;
+  height: 20px;
 `;
 const FindRoommateTxt = styled.div`
   white-space: pre-wrap;
@@ -75,11 +94,11 @@ const EnrollRule = styled.div`
   line-height: 24px;
 `;
 const ShowReviewBox = styled.div`
-    width: 100%;
-    height: 86px;
-    padding: 20px 5.12vw;
-    border-radius: 20px;
-    background: #FCEDE8;
+  width: 100%;
+  height: 86px;
+  padding: 20px 5.12vw;
+  border-radius: 20px;
+  background: #fcede8;
 `;
 const ReviewTxt = styled.div`
   color: #1a1a1a;
@@ -184,7 +203,7 @@ const Home = () => {
   const [isExist, setIsExist] = useState(true);
   const [point, setPoint] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [weeklyPost,setWeeklyPost] = useState([]);
+  const [weeklyPost, setWeeklyPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState(false);
   const navigate = useNavigate();
@@ -200,14 +219,14 @@ const Home = () => {
     async function fetchEmailPage() {
       try {
         const res = await API.get("/home/main");
-        console.log(res.data)
+        console.log(res.data);
         setLoading(false);
         setIsExist(res.data.exist);
         setPoint(res.data.points);
         setPosts(res.data.livePosts);
         setWeeklyPost(res.data.weeklyPosts);
         setUserName(res.data.nickname);
-        setIsShowReView(localStorage.getItem('show')!=='false');
+        setIsShowReView(localStorage.getItem("show") !== "false");
       } catch (error) {
         console.error(error);
       }
@@ -220,9 +239,9 @@ const Home = () => {
     return moment(uploadTime).fromNow(`A`) + "전"; // 지금으로부터 계산
   };
   const handleShowReview = () => {
-    setIsShowReView(false); 
-    localStorage.setItem('show', false);
-  }
+    setIsShowReView(false);
+    localStorage.setItem("show", false);
+  };
   return (
     !loading && (
       <c.Totalframe background={`#FAFAFA`}>
@@ -230,10 +249,10 @@ const Home = () => {
           <c.SubScreen>
             <Header isNoti={true} onClick={() => navigate("/search")} />
             <Popup
-                message={`곧 만날 수 있으니 조금만 기다려 주세요!`}
-                setShowPopup={setShowPopup}
-                isShowPopup={showPopup}
-                top={`9.5`}/>
+              message={`곧 만날 수 있으니 조금만 기다려 주세요!`}
+              setShowPopup={setShowPopup}
+              isShowPopup={showPopup}
+              top={`9.5`}/>
             <System>
               <Icons onClick={() => setShowPopup(true)}>
                 <Icon src={checklist} />
@@ -244,7 +263,7 @@ const Home = () => {
                 <IconText>생활 규칙</IconText>
               </Icons>
               <Icons>
-                <a href={"https://smsso.smu.ac.kr/svc/tk/Auth.do?ac=Y&ifa=N&id=portal&"} target="_blank">
+                <a href={"https://smsso.smu.ac.kr/svc/tk/Auth.do?ac=Y&ifa=N&id=portal&"}target="_blank">
                   <Icon src={stayOut} />
                   <IconText>외박 신청</IconText>
                 </a>
@@ -256,8 +275,17 @@ const Home = () => {
                 </a>
               </Icons>
             </System>
+            <ApplyRoommate onClick={()=>navigate('/roommate/apply')}>
+              <c.SpaceBetween>
+                <ApplyNoticeTxt>{`누군가 나에게 룸메이트를\n신청했어요!`}</ApplyNoticeTxt>
+                <ApplyCloseImg src={BoldClose}/>
+              </c.SpaceBetween>
+              <IconBox>
+                <FindIcon src={Find} />
+              </IconBox>
+            </ApplyRoommate>
             <HomeBox
-              name={ isExist ? `${userName} 님과 딱 맞는\n룸메이트를 찾았어요` : `${userName} 님과 딱 맞는\n룸메이트를 찾아드려요`}
+              name={isExist ? `${userName} 님과 딱 맞는\n룸메이트를 찾았어요`: `${userName} 님과 딱 맞는\n룸메이트를 찾아드려요`}
               marginTop={`3.79vh`}
               marginBottom={`24px`}
               height={`max-content`}
@@ -265,9 +293,9 @@ const Home = () => {
               {isExist ? (
                 point.map((opponent, index) => (
                   <MainOtherProfile
-                    onClick={() => navigate('/detail/details/'+opponent.userId)}
+                    onClick={() => navigate("/detail/details/" + opponent.userId)}
                     nickName={opponent.nickname}
-                    userprofile={opponent.photoName.length === 0 ? BasicProfile : opponent.photoName}
+                    userprofile={opponent.photoName.length === 0 ? BasicProfile: opponent.photoName}
                     major={opponent.major}
                     id={opponent.studentID}
                     score={opponent.point}
@@ -286,21 +314,21 @@ const Home = () => {
             </HomeBox>
             {isShowReview && (
               <a href="https://forms.gle/m9kF8KybtXr5E3sS7">
-              <ShowReviewBox >
-                <c.SpaceBetween>
-                  <ReviewTxt>{`긱스 이용 후기를 남겨주세요!`}</ReviewTxt>
-                  <CloseImg src={Close} onClick={() => handleShowReview()} />
-                </c.SpaceBetween>
-                <MoreSecurityTxt>{`더 멋지게 보완해서 찾아올게요`}</MoreSecurityTxt>
-              </ShowReviewBox>
-              </a>  
+                <ShowReviewBox>
+                  <c.SpaceBetween>
+                    <ReviewTxt>{`긱스 이용 후기를 남겨주세요!`}</ReviewTxt>
+                    <CloseImg src={Close} />
+                  </c.SpaceBetween>
+                  <MoreSecurityTxt>{`더 멋지게 보완해서 찾아올게요`}</MoreSecurityTxt>
+                </ShowReviewBox>
+              </a>
             )}
             <HomeBox
               name={`이런 글은 어떠세요?`}
               marginTop={`20px`}
               marginBottom={`3.31vh`}
               height={`max-content`}
-              onClick={() => navigate('/community')}>
+              onClick={() => navigate("/community")}>
               <PopularPostBox>
                 <PopularPostText
                   view={isWeeklyPost === "weekly"}
@@ -317,7 +345,6 @@ const Home = () => {
                   className={isWeeklyPost === "live" ? "active" : ""}>
                   {`주간 인기글`}
                 </PopularPostText>
-                
                 <PopularPostText
                   toggle={true}
                   view={true}
@@ -357,7 +384,8 @@ const Home = () => {
                     likeCnt={post.likeCount}
                     postContent={post.content}
                     UploadTime={caclTime(post.createdDate)}
-                    marginBottom={posts.length === index + 1 ? "0px" : "24px"}/>
+                    marginBottom={posts.length === index + 1 ? "0px" : "24px"}
+                  />
                 ))}
             </HomeBox>
           </c.SubScreen>
