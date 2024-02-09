@@ -18,6 +18,7 @@ const NoticeText = styled.div`
 const NoticeEvent = styled(NoticeText)`
   color: #EC5062;
   margin-right: 12px;
+  white-space: nowrap;
 `;
 const NoticeDate = styled.div`
   color: #b7b7b7;
