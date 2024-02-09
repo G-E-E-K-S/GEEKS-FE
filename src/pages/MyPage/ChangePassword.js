@@ -1,0 +1,227 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import API from "../../axios/BaseUrl";
+import axios from "axios";
+import styled from "styled-components";
+import * as c from "../../components/Common/CommonStyle";
+import Header from "../../components/MyPage/Header";
+import JoinButton from "../../components/Join/JoinButton";
+import NoneCheck from "../../assets/img/Join/noneCheck.svg";
+import Check from "../../assets/img/Join/Check.svg";
+import NoShowPwd from "../../assets/img/Join/NoShowPwd.svg";
+import ShowPwd from "../../assets/img/Join/ShowPwd.svg";
+
+const PasswordText = styled.div`
+  margin-top: 37px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #707070;
+`;
+const InputPasswordTotal = styled.div`
+  display: flex;
+  border-bottom: 2px solid
+    ${(props) =>
+      props.currentSelected || props.newSelected || props.newSelectedCheck
+        ? "#ECAA00"
+        : "#EFEFEF"};
+  padding: 0px 0px 0.94vh 0px;
+  margin-bottom: 3.9vh;
+`;
+const InputPassword = styled.input`
+  width: 100%;
+  border: none;
+  outline: none;
+  height: 48px;
+  font-style: normal;
+  font-size: 1.125rem;
+  font-weight: 500;
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  &::placeholder {
+    color: ##d0d0d0;
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+`;
+
+const PwdCondition = styled.div`
+  display: flex;
+  margin-bottom: 1.42vh;
+`;
+const ConditionTxt = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8px;
+  color: ${(props) => (props.isOk ? "#149D9D" : "#525252")};
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+`;
+
+const ChangePassword = () => {
+  const [currentSelected, setCurrentSelected] = useState(false);
+  const [newSelected, setNewSelected] = useState(false);
+  const [inputval, setInputval] = useState("");
+  const [pwdLen, setPwdLen] = useState(false);
+  const [pwdSpecial, setpwdSpecial] = useState(false);
+  const [pwdSame, setpwdSame] = useState(false);
+  const [isNextPage, setIsNextPage] = useState(false);
+  const [currentPwd, setCurrentPwd] = useState(false);
+  const [newPwd, setNewPwd] = useState(false);
+  const [newSelectedCheck, setNewSelectedCheck] = useState(false);
+  const [againCheck, setAgainCheck] = useState(false);
+  const [newCheckPwd, setNewCheckPwd] = useState(false);
+  const [newPwdVal, setNewPwdVal] = useState("");
+  const [checkNewPwd, setCheckNewPwd] = useState("");
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setNewPwdVal(value);
+
+    const validatePassword = () => {
+      return new Promise((resolve, reject) => {
+        const length = newPwdVal.length;
+        const specialCharRegex =
+          /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\=\(\'\"]/;
+        const sameCharRegex = /(.)\1{3,}/;
+
+        // pwd len
+        const isPwdLen = length >= 8 && length <= 15;
+        setPwdLen(isPwdLen);
+
+        // pwd 특수문자
+        const hasPwdSpecial = specialCharRegex.test(value);
+        setpwdSpecial(hasPwdSpecial);
+
+        // pwd 4번반복여부
+        const hasPwdSame = sameCharRegex.test(value);
+        setpwdSame(!hasPwdSame);
+
+        resolve(); // Resolve the Promise immediately
+      });
+    };
+    validatePassword().then(() => {});
+  };
+
+  const handleNewPwdChange = (e) => {
+    const value = e.target.value;
+    setCheckNewPwd(value);
+    if (value === newPwdVal){
+      setAgainCheck(true);
+      setIsNextPage(true);
+    }
+    else{
+      setAgainCheck(false);
+      setIsNextPage(false);
+    } 
+  };
+
+  const checkPassword = () => {
+    async function fetchPassword() {
+      try {
+        const res = await API.post("/member/edit/password", {
+          password: checkNewPwd,
+        });
+        if (res.data === "success") navigate("/settinguserinfo");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchPassword();
+  };
+
+  return (
+    <c.Totalframe>
+      <c.ScreenComponent>
+        <Header subtitle={`비밀번호 변경`} />
+        <PasswordText>{`현재 비밀번호`}</PasswordText>
+        <InputPasswordTotal currentSelected={currentSelected}>
+          <InputPassword
+            placeholder="현재 비밀번호를 입력"
+            type={currentPwd ? "text" : "password"}
+            onFocus={() => setCurrentSelected(true)}
+            onBlur={() => setCurrentSelected(false)}
+            maxLength={15}
+          />
+          <img
+            src={currentPwd ? ShowPwd : NoShowPwd}
+            onClick={() => setCurrentPwd(!currentPwd)}
+          />
+        </InputPasswordTotal>
+        <PasswordText>{`새로운 비밀번호`}</PasswordText>
+        <InputPasswordTotal newSelected={newSelected}>
+          <InputPassword
+            placeholder="새로운 비밀번호를 입력"
+            type={newPwd ? "text" : "password"}
+            onFocus={() => setNewSelected(true)}
+            onBlur={() => setNewSelected(false)}
+            onChange={handleInputChange}
+            maxLength={15}
+          />
+          <img
+            src={newPwd ? ShowPwd : NoShowPwd}
+            onClick={() => setNewPwd(!newPwd)}
+          />
+        </InputPasswordTotal>
+        {newPwdVal && (
+          <>
+            <PwdCondition>
+              {pwdLen ? <img src={Check} /> : <img src={NoneCheck} />}
+              <ConditionTxt isOk={pwdLen}>
+                8자 이상, 15자 이하로 설정해 주세요
+              </ConditionTxt>
+            </PwdCondition>
+            <PwdCondition>
+              {pwdSpecial ? <img src={Check} /> : <img src={NoneCheck} />}
+              <ConditionTxt isOk={pwdSpecial}>
+                특수 문자를 사용해 주세요
+              </ConditionTxt>
+            </PwdCondition>
+            <PwdCondition>
+              {pwdSame ? <img src={Check} /> : <img src={NoneCheck} />}
+              <ConditionTxt isOk={pwdSame}>
+                똑같은 문자가 4번 반복되면 안돼요
+              </ConditionTxt>
+            </PwdCondition>
+          </>
+        )}
+        {pwdLen && pwdSpecial && pwdSame && (
+          <>
+            <PasswordText>{`새로운 비밀번호 확인`}</PasswordText>
+            <InputPasswordTotal newSelectedCheck={newSelectedCheck}>
+              <InputPassword
+                placeholder="새로운 비밀번호를 입력"
+                type={newCheckPwd ? "text" : "password"}
+                onFocus={() => setNewSelectedCheck(true)}
+                onBlur={() => setNewSelectedCheck(false)}
+                onChange={handleNewPwdChange}
+                maxLength={15}
+              />
+              <img
+                src={newCheckPwd ? ShowPwd : NoShowPwd}
+                onClick={() => setNewCheckPwd(!newCheckPwd)}
+              />
+            </InputPasswordTotal>
+            <PwdCondition>
+              {againCheck ? <img src={Check} /> : <img src={NoneCheck} />}
+              <ConditionTxt isOk={againCheck}>일치해요</ConditionTxt>
+            </PwdCondition>
+          </>
+        )}
+        <JoinButton
+          btnName={"변경하기"}
+          handleClick={() => checkPassword()}
+          isNextPage={isNextPage}
+        />
+      </c.ScreenComponent>
+    </c.Totalframe>
+  );
+};
+
+export default ChangePassword;
