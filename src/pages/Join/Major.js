@@ -20,13 +20,6 @@ const MajorTotal = styled.div`
   width: 100%;
   border-bottom: 2px solid #efefef;
 `;
-const DepartmentBox = styled.div`
-  height: calc(630px - 53px - 230px);
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
 const MajorText = styled.div`
   color: ${(props)=>props.major ? "#d0d0d0" : '#333333'};
   font-size: 1.5rem;
@@ -51,6 +44,7 @@ const InputStudentId = styled.input`
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 32px;
+  text-align: left;
   &::placeholder {
     color: #d0d0d0;
     font-size: 1.5rem;
@@ -146,11 +140,9 @@ const Major = () => {
               <MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
               <CloseImg src={Close} onClick={() => setIsDepartmentOpen(!isDepartmentOpen)} />
             </c.SpaceBetween>
-            <DepartmentBox>
-              {DepartmentMajors[department].map((major) => (
-                <Department department={major} onClick={() => handleMajor(major)}/>
-              ))}
-            </DepartmentBox>
+            {DepartmentMajors[department].map((major) => (
+              <Department department={major} onClick={() => handleMajor(major)}/>
+            ))}
           </BottomSheet>}
 
         <StudentIdTotal
