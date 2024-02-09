@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as c from "../../components/Common/CommonStyle";
 import API from "../../axios/BaseUrl";
 import Header from "../../components/MyPage/Header";
@@ -8,6 +9,8 @@ import "moment/locale/ko";
 
 const ScrapPost = () => {
   const [scrapPost, setScrapPost] = useState([]);
+
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchScrapPost() {
       try {
@@ -26,6 +29,8 @@ const ScrapPost = () => {
         {scrapPost.map((post) => (
           <CommunityPost
             padding={'10px 0'}
+            dot={false}
+            onClick={() => navigate(`/post/${post.postId}`)}
             postName={post.title}
             commentNum={post.commentCount}
             postContent={post.content}
