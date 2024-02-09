@@ -5,6 +5,7 @@ import CommentIcon from "../../assets/img/Community/comment.svg";
 const CommentBox = styled.div`
   display: flex;
   padding-top: 12px;
+  margin-bottom: 12px;
 `;
 const CommentImg = styled.img`
   margin: auto 0;

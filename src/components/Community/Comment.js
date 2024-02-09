@@ -9,14 +9,14 @@ import DeleteDots from "../../assets/img/Community/deleteThreeDot.svg";
 
 const CommentBox = styled.div`
   height: max-content;
-  width: ${(props)=>props.isRecomment ? `100vw` : `100%`};
+  width: ${(props)=>props.isRecomment || props.recommentFocus ? `100vw` : `100%`};
   padding-top: 8px;
   padding-bottom: 16px;
   pointer-events: ${(props)=>props.deleted && 'none' };
-  padding-left: ${(props)=>props.paddingLeft};
-  padding-right: ${(props)=>props.paddingRight};
-  background-color: ${(props)=>props.isRecomment ? '#F7F7F7' : '#fff'};
-  margin-left: ${(props)=>props.isRecomment && `calc(-50vw + 50%)`};
+  padding-left: ${(props)=>(props.isRecomment || props.recommentFocus) && '8.17vw'};
+  padding-right: ${(props)=>(props.isRecomment || props.recommentFocus) && '5.12vw'};
+  background-color: ${(props)=>props.isRecomment ? '#F7F7F7' : props.recommentFocus ? '#FFFBEE' : '#fff'};
+  margin-left: ${(props)=>(props.isRecomment || props.recommentFocus) && `calc(-50vw + 50%)`};
 `;
 const ThreeDots = styled.img`
   width: 16px;
@@ -42,7 +42,7 @@ const Icons = styled.div`
 `;
 const Comment = (props) => {
   return (
-    <CommentBox deleted={props.deleted} paddingLeft={props.paddingLeft} isRecomment={props.recomment} paddingRight={props.paddingRight}>
+    <CommentBox deleted={props.deleted} paddingLeft={props.paddingLeft} isRecomment={props.recomment} paddingRight={props.paddingRight} recommentFocus={props.recommentFocus}>
       <c.SpaceBetween>
         <PostInfo
           profileImg={props.postInfo.profileImg}
