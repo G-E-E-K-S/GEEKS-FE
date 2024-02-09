@@ -1,11 +1,12 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import {Intro, AccessRight, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage, ForgetEmail, AlreadyRegist} from './pages/Join/Index';
 import { LiveRule, Home, Search } from './pages/Main/Index';
-import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqRommate, RoommateApply, MyProfile, SecessionReason, NoticeDetail } from './pages/MyPage/Index';
-import { FindRoommate , User, RoommateSendTxt } from './pages/FindRoommate/Index';
+import { FindRoommate , User, RoommateSendTxt, FinishRoommate } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
 import { WritePost, Post, Community, MyCommunity, ScrapPost, CommunityWrite, OpenGroup } from './pages/Community/Index';
+import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqContent,RoommateApply, MyProfile, SecessionReason, NoticeDetail, ChangePassword } from './pages/MyPage/Index';
 import './index.css';
+import Loading from "./pages/Loading";
 
 function App() {
   return (
@@ -38,10 +39,12 @@ function App() {
           <Route path="/settinguserinfo" element={<SettingUserInfo/>} />
           <Route path="/savelist" element={<SaveList/>} />
           <Route path="/notice" element={<Notice/>} />
+          <Route path="/changepassword" element={<ChangePassword/>} />
           <Route path="/notice/details/:noticenum" element={<NoticeDetail/>} />
           <Route path="/faq" element={<FAQ/>} />
-          <Route path="/faq/rommate" element={<FaqRommate/>} />
+          <Route path="/faq/:type/:pageNum" element={<FaqContent/>} />
           <Route path="/roommate" element={<FindRoommate/>} />
+          <Route path="/finishroommate" element={<FinishRoommate/>} />
           <Route path="/detail/details/:userId" element={<User/>} />
           <Route path="/roommatesendtxt" element={<RoommateSendTxt/>} />
           <Route path="/chat" element={<Chat/>} />
@@ -54,6 +57,7 @@ function App() {
           <Route path="/scrappost" element={<ScrapPost/>} />
           <Route path="/communitywrite" element={<CommunityWrite/>} />
           <Route path="/opengroup" element={<OpenGroup/>} />
+          <Route path="/loading" element={<Loading/>}/>
         </Routes>
       </Router>
     </div>

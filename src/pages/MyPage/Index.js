@@ -5,11 +5,12 @@ import SettingUserInfo from "./SettingUserInfo";
 import SaveList from "./SaveList";
 import Notice from "./Notice";
 import FAQ from "./Faq";
-import FaqRommate from "./FaqRommate";
+import FaqContent from "./FaqContent";
 import RoommateApply from "./RoommateApply";
 import MyProfile from "./MyProfile";
 import SecessionReason from "./SecessionReason";
 import NoticeDetail from "./NoticeDetail";
+import ChangePassword from "./ChangePassword";
 
 export {
   MyPage,
@@ -19,9 +20,10 @@ export {
   SaveList,
   Notice,
   FAQ,
-  FaqRommate,
+  FaqContent,
   RoommateApply,
   MyProfile,
   SecessionReason,
   NoticeDetail,
+  ChangePassword
 };
