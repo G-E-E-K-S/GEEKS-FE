@@ -14,6 +14,11 @@ const PostName = styled.div`
   font-size: ${(props)=>props.isComment ? '1rem': '1.125rem'};
   font-weight: ${(props)=>props.isComment ? '500' : '600'};
   margin-right: 3.07vw;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  width: max-content;
+  width: 256px;
 `;
 const CommentNumIcon = styled.img`
   width: 16px;
