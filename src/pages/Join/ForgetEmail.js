@@ -80,15 +80,11 @@ const ForgetEmail = () => {
   };
 
   const handleEmail = () => {
-    console.log(
-      emailVal.current.value + "@sangmyung.kr",
-      passwordVal.current.value
-    );
     async function fetchLogin() {
       try {
-        const res = await API.post("/member/edit/password", {
-          email: emailVal.current.value + "@sangmyung.kr",
-        });
+        let email = emailVal.current.value + "@sangmyung.kr";
+        console.log(email)
+        const res = await API.get("/mail/temporary?email=" + email)
         if (res.data === "success") navigate("/login");
       } catch (error) {
         console.error(error);
@@ -117,7 +113,7 @@ const ForgetEmail = () => {
             onChange={() => handleEmailVal()}/>
           <Univ>@sangmyung.kr</Univ>
         </InputInfos>
-        <JoinButton onClick={() => handleEmail()} isNextPage={isNextPage} btnName={`메일 받기`}/>
+        <JoinButton handleClick={() => handleEmail()} isNextPage={isNextPage} btnName={`메일 받기`}/>
       </c.ScreenComponent>
     </c.Totalframe>
   );
