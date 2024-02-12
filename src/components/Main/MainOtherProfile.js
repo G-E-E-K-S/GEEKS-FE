@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
+import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 
 const TotalProfile = styled.div`
   width: 100%;
@@ -61,7 +62,7 @@ const MainOtherProfile = (props) => {
     <TotalProfile activeCheck={props.activeCheck} myProfile={props.myProfile} onClick={props.onClick} marginBottom={props.marginBottom}>
       <c.SpaceBetween>
         <c.Flex>
-          <UserProfile src={props.userprofile} />
+          <UserProfile src={props.userprofile?.length === 0 ? BasicProfile : process.env.REACT_APP_BUCKET_BASEURL + props.userprofile} />
           <div>
             <c.Flex>
               <NickName>{props.nickName}</NickName>
