@@ -201,6 +201,7 @@ const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [userName, setUserName] = useState("");
   const [isExist, setIsExist] = useState(true);
+  const [isRoommateApply, setRoommateApply] = useState(false);
   const [point, setPoint] = useState([]);
   const [posts, setPosts] = useState([]);
   const [weeklyPost, setWeeklyPost] = useState([]);
@@ -221,6 +222,7 @@ const Home = () => {
         const res = await API.get("/home/main");
         console.log(res.data);
         setLoading(false);
+        setRoommateApply(res.data.roommateApply)
         setIsExist(res.data.exist);
         setPoint(res.data.points);
         setPosts(res.data.livePosts);
@@ -238,10 +240,16 @@ const Home = () => {
     moment.locale("ko"); // 언어를 한국어로 설정
     return moment(uploadTime).fromNow(`A`) + "전"; // 지금으로부터 계산
   };
-  const handleShowReview = () => {
+  const handleShowReview = (e) => {
+    e.preventDefault();
     setIsShowReView(false);
     localStorage.setItem("show", false);
   };
+  // const handleShowApplyRoommate = (e) =>{
+  //   e.preventDefault();
+  //   setRoommateApply(false);
+  //   localStorage.setItem("showApply", false);
+  // }
   return (
     !loading && (
       <c.Totalframe background={`#FAFAFA`}>
@@ -275,15 +283,17 @@ const Home = () => {
                 </a>
               </Icons>
             </System>
-            <ApplyRoommate onClick={()=>navigate('/roommate/apply')}>
-              <c.SpaceBetween>
-                <ApplyNoticeTxt>{`누군가 나에게 룸메이트를\n신청했어요!`}</ApplyNoticeTxt>
-                <ApplyCloseImg src={BoldClose}/>
-              </c.SpaceBetween>
-              <IconBox>
-                <FindIcon src={Find} />
-              </IconBox>
-            </ApplyRoommate>
+            {isRoommateApply &&
+              <ApplyRoommate onClick={()=>navigate('/roommate/apply')}>
+                <c.SpaceBetween>
+                  <ApplyNoticeTxt>{`누군가 나에게 룸메이트를\n신청했어요!`}</ApplyNoticeTxt>
+                  <ApplyCloseImg src={BoldClose}/>
+                </c.SpaceBetween>
+                <IconBox>
+                  <FindIcon src={Find} />
+                </IconBox>
+              </ApplyRoommate>
+            }
             <HomeBox
               name={isExist ? `${userName} 님과 딱 맞는\n룸메이트를 찾았어요`: `${userName} 님과 딱 맞는\n룸메이트를 찾아드려요`}
               marginTop={`3.79vh`}
@@ -313,11 +323,11 @@ const Home = () => {
               )}
             </HomeBox>
             {isShowReview && (
-              <a href="https://forms.gle/m9kF8KybtXr5E3sS7">
+              <a href="https://forms.gle/m9kF8KybtXr5E3sS7" target="_blank">
                 <ShowReviewBox>
                   <c.SpaceBetween>
                     <ReviewTxt>{`긱스 이용 후기를 남겨주세요!`}</ReviewTxt>
-                    <CloseImg src={Close} />
+                    <CloseImg src={Close} onClick={(e)=>handleShowReview(e)}/>
                   </c.SpaceBetween>
                   <MoreSecurityTxt>{`더 멋지게 보완해서 찾아올게요`}</MoreSecurityTxt>
                 </ShowReviewBox>
