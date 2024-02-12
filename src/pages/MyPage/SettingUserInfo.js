@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import API from "../../axios/BaseUrl";
 import moment from "moment";
 import "moment/locale/ko";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/MyPage/Header";
+import Popup from "../../components/Common/Popup";
 
 const SubTitleBox = styled.div`
   margin-top: 6.64vh;
@@ -50,22 +51,30 @@ const AccountInfo = styled.div`
   line-height: 24px; /* 150% */
 `;
 const SettingUserInfo = () => {
-  const [userData, setUserData] = useState('');
+  const [userData, setUserData] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
-  useEffect(()=>{
-    async function fetchUserInfo(){
-      try{
+  let location = useLocation();
+
+  useEffect(() => {
+    setShowPopup(location.state?.prev === "change");
+
+    async function fetchUserInfo() {
+      try {
         const res = await API.get("/member/information");
-        setUserData(res.data)
-      }catch(error){
+        setUserData(res.data);
+      } catch (error) {
         console.log(error);
       }
-    }fetchUserInfo();
-  },[]);
+
+      window.history.replaceState({ prev: "" }, "", "/settinguserinfo");
+    }
+    fetchUserInfo();
+  }, []);
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header subtitle={`회원 정보 설정`}/>
+        <Header subtitle={`회원 정보 설정`} />
         <AccountInfoTxt>계정 정보</AccountInfoTxt>
         {/* Email */}
         <AccountInfoBox>
@@ -75,13 +84,17 @@ const SettingUserInfo = () => {
         {/* Password */}
         <AccountInfoBox>
           <AccountTitle>비밀번호</AccountTitle>
-          <AccountBtn onClick={()=>navigate('/changepassword')}>변경하기</AccountBtn>
+          <AccountBtn onClick={() => navigate("/changepassword")}>
+            변경하기
+          </AccountBtn>
         </AccountInfoBox>
         <AccountInfoTxt>계정 정보</AccountInfoTxt>
         {/* when we account */}
         <AccountInfoBox>
           <AccountTitle>인증 날짜</AccountTitle>
-          <AccountInfo>{moment(userData?.createdDate).format('YYYY.MM.DD')}</AccountInfo>
+          <AccountInfo>
+            {moment(userData?.createdDate).format("YYYY.MM.DD")}
+          </AccountInfo>
         </AccountInfoBox>
         {/* Account school */}
         <AccountInfoBox>
@@ -89,6 +102,12 @@ const SettingUserInfo = () => {
           <AccountInfo>상명대학교 천안캠퍼스</AccountInfo>
         </AccountInfoBox>
         {/* <AccountBtn>재인증하기</AccountBtn> */}
+        <Popup
+          bottom={`9.95`}
+          isShowPopup={showPopup}
+          setShowPopup={setShowPopup}
+          message={`비밀번호가 변경되었습니다`}
+        />
       </c.ScreenComponent>
     </c.Totalframe>
   );
