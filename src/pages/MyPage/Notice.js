@@ -39,7 +39,7 @@ const Notice = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <Header subtitle={`공지사항`} />
-        <NoticeBox isFirst={true}>
+        <NoticeBox isFirst={true} onClick={()=>navigate('/notice/details/event')}>
           <c.Flex>
             <NoticeEvent>{`이벤트`}</NoticeEvent>
             <NoticeText>{`긱스 이용후기 작성하고 기숙사 웰컴 키트 받자!`}</NoticeText>

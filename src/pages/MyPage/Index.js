@@ -10,6 +10,7 @@ import RoommateApply from "./RoommateApply";
 import MyProfile from "./MyProfile";
 import SecessionReason from "./SecessionReason";
 import NoticeDetail from "./NoticeDetail";
+import EventNoticeDetail from "./EventNoticeDetail";
 import ChangePassword from "./ChangePassword";
 
 export {
@@ -25,5 +26,6 @@ export {
   MyProfile,
   SecessionReason,
   NoticeDetail,
+  EventNoticeDetail,
   ChangePassword
 };
