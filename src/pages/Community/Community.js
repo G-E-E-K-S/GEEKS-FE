@@ -21,7 +21,6 @@ const TotalHeader = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-top: 52px;
     padding: 12px 0;
 `;
 const Icon = styled.div`
@@ -121,7 +120,7 @@ const Community = () => {
         <TotalHeader>
           <img src={GeeksLogo}/>
           <Icon>
-            <img src={Search} onClick={()=>navigate('serach')}/>
+            <img src={Search} onClick={()=>navigate('/search')}/>
             <img src={MyPageIcon} onClick={() => navigate("/myCommunity")}/>
           </Icon>
         </TotalHeader>
