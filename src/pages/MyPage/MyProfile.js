@@ -98,7 +98,7 @@ const MyProfile = () => {
     async function fetchMyProfile() {
       try {
         const res = await API.get("/member/profile");
-        console.log(res.data);
+        console.log(res.data)
         setMyProfile(res.data);
       } catch (error) {
         console.error(error);
@@ -128,12 +128,14 @@ const MyProfile = () => {
             </c.Flex>
             <RoommateBox>
               <MyRommate>{`현재 나의 룸메이트`}</MyRommate>
-              <MainOtherProfile
-                myProfile={true}
-                userprofile={null}
-                nickName={`은진`}
-                major={`커뮤니케이션 디자인학과`}
-                id={`20`}/>
+              {myProfile.nickname !== null &&
+                <MainOtherProfile
+                  myProfile={true}
+                  userprofile={myProfile?.photoName}
+                  nickName={myProfile?.nickname}
+                  major={myProfile?.major}
+                  id={myProfile?.studentID}/>
+              }
             </RoommateBox>
           </> : <NoApply>{`아직 룸메이트를 신청한 내역이 없어요`}</NoApply>
         }
