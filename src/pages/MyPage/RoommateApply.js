@@ -224,6 +224,31 @@ const RoommateApply = () => {
     }
     fetchDeleteAply();
   };
+
+  const acceptRoommate = (opponentId) => {
+    async function fetchAccept() {
+      try {
+        const res = await API.post(`/roommate/accept/${opponentId}`);
+        
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchAccept();
+  }
+
+  const refuseRoommate = (opponentId) => {
+    async function fetchRefuse() {
+      try {
+        const res = await API.post(`/roommate/refuse/${opponentId}`);
+        
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchRefuse();
+  }
+
   const handleBtsShow = (opponent) => {
     setIsBtsShow(!isBtsShow);
     setOpponentNickName(opponent);
@@ -310,8 +335,8 @@ const RoommateApply = () => {
                     }
                   />
                   <c.Flex>
-                    <ReceiveBtn isAccept={false}>{`거절하기`}</ReceiveBtn>
-                    <ReceiveBtn isAccept={true}>{`수락하기`}</ReceiveBtn>
+                    <ReceiveBtn isAccept={false} onClick={() => acceptRoommate(userData.userId)}>{`거절하기`}</ReceiveBtn>
+                    <ReceiveBtn isAccept={true}  onClick={() => refuseRoommate(userData.userId)}>{`수락하기`}</ReceiveBtn>
                   </c.Flex>
                 </ApplyTotalInfo>
               ))}
