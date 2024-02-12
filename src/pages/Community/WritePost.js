@@ -13,7 +13,8 @@ import DeletePhoto from "../../assets/img/Community/deletePhoto.svg";
 
 const DoneBtn = styled.div`
   border-radius: 8px;
-  background: #ffc700;
+  background: #ffc700; 
+  // #D0D0D0
   color: #333;
   font-size: 1rem;
   font-weight: 600;
@@ -148,6 +149,7 @@ const Community = () => {
         
       }
         async function fetchPost() {
+          if(!(title && content)) return;
           try {
             const res = await API.post("/post/create", formData,{
                 headers:{
