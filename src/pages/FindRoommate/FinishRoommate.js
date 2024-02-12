@@ -6,6 +6,8 @@ import SecessionIcon from "../../assets/img/MyPage/secessionModal.svg";
 
 const Background = styled.div`
   background: #00000033;
+  position: relative;
+  z-index: 1;
 `;
 const WFull = styled.div`
   width: 100%;
@@ -53,7 +55,7 @@ const ChoiceNo = styled.div`
   color: #707070;
   margin-top: 22px;
 `;
-const FinishRoommate = () => {
+const FinishRoommate = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   return (
@@ -62,10 +64,10 @@ const FinishRoommate = () => {
         <WFull>
           <SecessionImg src={SecessionIcon} />
         </WFull>
-        <RealSeccsion>{location.state?.opponentUser +` 님과\n룸메이트를 그만둘까요?`}</RealSeccsion>
-        <Description>{`다시 복구되지 않아요`}</Description>
-        <ModalChoiceBtn useMore={true}>{`네, 그만둘래요`}</ModalChoiceBtn>
-        <ChoiceNo onClick={() => navigate(-1)}>{`아니요`}</ChoiceNo>
+        <RealSeccsion>{props.ment}</RealSeccsion>
+        {props.description && <Description>{`다시 복구되지 않아요`}</Description>}
+        <ModalChoiceBtn useMore={true} onClick={props.onClick}>{props.choiceMent}</ModalChoiceBtn>
+        <ChoiceNo onClick={props.noOnClick}>{`아니요`}</ChoiceNo>
       </Modal>
     </Background>
   );

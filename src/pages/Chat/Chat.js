@@ -82,12 +82,12 @@ const Chat = () => {
               chatprofile={basicProfile} 
               name={room.opponentUser} 
               prevDate={moment(room.histories.at(-1)?.createdAt).format('A h:mm')} 
-              chat={room.histories.length != 0 ? room.histories.at(-1).message : ''}  
+              chat={room.histories.length != 0 && (room.histories.at(-1).message === "$%#deleteRoommate" ? "룸메이트가 끊겼어요" : room.histories.at(-1).message)}  
               noneReadCnt={
                 room.histories.length != 0 && 
                 room.histories.at(-1).sender != room.user && 
                 room.histories.at(-1).readCount >= 1 ? 'N' : null}
-              onClick={() => navigate(`/chat/chatRoom/${room.roomId}`)} />
+              onClick={() => navigate(`/chat/chatRoom/${room.roomId}`)}/>
             ))}
             {isSelectMenu === 'group' && <ChatList chatprofile={basicProfile} name={`같이 신전떡볶이 주문하신분`} prevDate={`1일 전`} chat={`안녕하세요. 룸메 구하셨나요?요를레히힣힣넘어가는지확인하는중입니다.`} noneReadCnt={`2`} />}
           </c.SubScreen>

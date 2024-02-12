@@ -99,7 +99,7 @@ const SecessionReason = () => {
       try {
         const res = await API.get("/member/withdrawal");
         if(res.data === 'success') {
-          navigate('/welcome');
+          navigate('/welcome', {state: {prev: "withdrawal"}, replace: true});
         }
       } catch (error) {
         console.error(error);

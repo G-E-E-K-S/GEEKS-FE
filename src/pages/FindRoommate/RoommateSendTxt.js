@@ -69,7 +69,7 @@ const RoommateSendTxt = () => {
         <Button
           isNextPage={true}
           btnName={`확인`}
-          handleClick={() => navigate('/detail/details/'+ location.state.userId)}
+          handleClick={() => navigate(`/detail/details/${location.state.userId}`, {replace: true})}
         />
       </c.ScreenComponent>
     </c.Totalframe>

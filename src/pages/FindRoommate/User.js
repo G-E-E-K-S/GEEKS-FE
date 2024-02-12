@@ -9,7 +9,8 @@ import Br from "../../components/Common/Br";
 import HeaderMenu from "../../components/Common/HeaderMenu";
 import LifeStyle from "../../components/Roommate/LifeStyle";
 import ApplyCancelBottomSheet from "../../components/Common/ApplyCancleBottomSheet";
-import BottomSheet from "../../components/Common/BottomSheet"; 
+import BottomSheet from "../../components/Common/BottomSheet";
+import FinishRoommate from "./FinishRoommate";
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import ChatImg from "../../assets/img/Roommate/chat.svg";
 import Info from "../../assets/img/Roommate/info.svg";
@@ -247,6 +248,7 @@ const User = () => {
 
   const [textCenter, setTextCenter] = useState(null);
   const [data, setData] = useState(null);
+  const [finishState, setFinishState] = useState(false);
 
   let { userId } = useParams();
   let navigate = useNavigate();
@@ -318,6 +320,22 @@ const User = () => {
     fetchChatRoom();
   }
 
+  const startChatForFinish = () => {
+    async function fetchChatRoom() {
+      try{
+        const res = await API.get("/chat/room?yournickname="+opponentUser.nickname);
+        navigate(`/chat/chatroom/${res.data}`, 
+          {state : {
+            status: "deleteRommate"
+          }}
+        )
+      }catch(e) {
+        console.log(e);
+      }
+    }
+    fetchChatRoom();
+  }
+
   const saveOther = () => {
     setIsSave(!isSave);
     async function fetchSave() {
@@ -346,7 +364,9 @@ const User = () => {
             state: {
               OpponentUser:opponentUser?.nickname,
               userId: userId
-            } });
+            },
+            replace: true 
+          });
         }
       }catch(e) {
         console.log(e);
@@ -369,10 +389,22 @@ const User = () => {
             <MenuBox Report={true}>{`신고하기`}</MenuBox>
             <CloseBtn onClick={() => setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
           </BottomSheet>
+          
+          {finishState && 
+            <FinishRoommate 
+            opponenNickname={opponentUser?.nickname}
+            onClick={() => startChatForFinish()}
+            description={true}
+            choiceMent={'네, 그만둘래요'}
+            noOnClick={() => setFinishState(false)}
+            ment={opponentUser.nickname +` 님과\n룸메이트를 그만둘까요?`}
+            />
+          }
+          
           {roommateState && 
           <MyRoommateNoti>
             <MyRoommateNotiTxt>{`현재 나의 룸메이트에요`}</MyRoommateNotiTxt>
-            <EndRoommate onClick={()=>navigate('/finishroommate',{state : {opponentUser: opponentUser?.nickname}})}>{`룸메이트 끊기`}</EndRoommate>
+            <EndRoommate onClick={() => setFinishState(true)}>{`룸메이트 끊기`}</EndRoommate>
           </MyRoommateNoti>}
           <TopProfile>
             <c.SpaceBetween>
