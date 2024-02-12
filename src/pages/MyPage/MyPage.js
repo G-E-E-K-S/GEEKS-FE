@@ -123,10 +123,11 @@ const MyPage = () => {
   const setContent = useSetRecoilState(UserNickName);
 
   const clickedToggle = () => {
-    setToggle((prev) => !prev);
+    let toggleVal = !toggle;
+    setToggle(toggleVal);
     async function fetchShowProfile() {
       try {
-        const res = await API.get("/member/open?open=" + toggle);
+        const res = await API.get("/member/open?open=" + toggleVal);
       } catch (error) {
         console.error(error);
       }
@@ -142,6 +143,7 @@ const MyPage = () => {
         setUserInfo(res.data);
         setContent(res.data.nickname);
         setLoading(false);
+        setToggle(res.data.open);
         if (res.data.major.includes("공학과"))
           setUserMajor(res.data.major.replace("공학과", ""));
         else if (res.data.major.includes("학과"))
