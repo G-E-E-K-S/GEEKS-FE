@@ -4,7 +4,7 @@ import { LiveRule, Home, Search } from './pages/Main/Index';
 import { FindRoommate , User, RoommateSendTxt, FinishRoommate } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
 import { WritePost, Post, Community, MyCommunity, ScrapPost, CommunityWrite, OpenGroup } from './pages/Community/Index';
-import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqContent,RoommateApply, MyProfile, SecessionReason, NoticeDetail, ChangePassword } from './pages/MyPage/Index';
+import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqContent,RoommateApply, MyProfile, SecessionReason, NoticeDetail, EventNoticeDetail, ChangePassword } from './pages/MyPage/Index';
 import './index.css';
 import Loading from "./pages/Loading";
 
@@ -41,6 +41,7 @@ function App() {
           <Route path="/notice" element={<Notice/>} />
           <Route path="/changepassword" element={<ChangePassword/>} />
           <Route path="/notice/details/:noticenum" element={<NoticeDetail/>} />
+          <Route path="/notice/details/event" element={<EventNoticeDetail/>} />
           <Route path="/faq" element={<FAQ/>} />
           <Route path="/faq/:type/:pageNum" element={<FaqContent/>} />
           <Route path="/roommate" element={<FindRoommate/>} />
