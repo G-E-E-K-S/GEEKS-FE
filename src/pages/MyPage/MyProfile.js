@@ -124,7 +124,7 @@ const MyProfile = () => {
             <MyDormitory>{`나의 기숙사`}</MyDormitory>
             <c.Flex>
               <LiveYear>{`2024 - 1학기`}</LiveYear>
-              <LiveDormitory>{myProfile.type+`거주`}</LiveDormitory>
+              <LiveDormitory>{myProfile.type === 'NEW' ? '신관 거주' : myProfile.type === 'OLD' ? '구관 거주' : '행복기숙사 거주'}</LiveDormitory>
             </c.Flex>
             <RoommateBox>
               <MyRommate>{`현재 나의 룸메이트`}</MyRommate>
