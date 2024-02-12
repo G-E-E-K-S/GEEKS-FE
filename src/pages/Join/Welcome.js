@@ -55,9 +55,13 @@ const Welcome = () => {
   const [showPopup, setShowPopup] = useState(false);
   const navigator = useNavigate();
   const location = useLocation(null);
+  const [popupMessage, setPopupMessage] = useState('');
 
   useEffect(() => {
-    setShowPopup(location.state?.prev === "logout" ? true : false);
+    setPopupMessage(location.state?.prev);
+    setShowPopup(
+      location.state?.prev === "logout" ||
+      location.state?.prev === "withdrawal" ? true : false);
 
     async function fetchAutoLogin() {
       try {
@@ -69,6 +73,8 @@ const Welcome = () => {
       } catch (error) {
         console.error(error);
       }
+
+      window.history.replaceState({ prev: "" }, "", "/welcome");
     }
 
     fetchAutoLogin();
@@ -82,7 +88,7 @@ const Welcome = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <Popup
-          message={`로그아웃 되었습니다`}
+          message={popupMessage === 'logout' ? `로그아웃 되었습니다` : `탈퇴가 정상적으로 처리되었습니다`}
           setShowPopup={setShowPopup}
           isShowPopup={showPopup}
           top={`9.5`}

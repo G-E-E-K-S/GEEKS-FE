@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import API from "../../axios/BaseUrl";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -7,6 +7,7 @@ import GoBack from "../../components/Common/GoBack";
 import MyChat from "../../components/Chat/MyChat";
 import OtherChat from "../../components/Chat/OtherChat";
 import BottomSheet from "../../components/Common/BottomSheet";
+import FinishRoommate from "../FindRoommate/FinishRoommate";
 import Dots from "../../assets/img/Home/edit.svg";
 import Plus from "../../assets/img/Chat/add.svg";
 import Send from "../../assets/img/Chat/send.svg";
@@ -137,6 +138,19 @@ const CloseBtn = styled.div`
   margin-top: 20px;
   margin-bottom: 94px;
 `;
+const DeleteRoommateLine = styled.div`
+  text-align: center;
+  height: 58px;
+  padding: 20px 8px;
+  margin-bottom : 10px;
+  margin-top: 10px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #AA3106;
+  background-color: #FCEDE8;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+`
 const ChatRoom = () => {
   const [isChatBottomClick, setIsChatBottomClick] = useState(false);
   const [isBtsOpen, setIsBtsOpen] = useState(false);
@@ -150,16 +164,22 @@ const ChatRoom = () => {
   const scrollRef = useRef();
 
   let { roomId } = useParams();
+  let location = useLocation(); //add
+  const navigate = useNavigate();
 
   const [roomInfo, setRoomInfo] = useState(null);
   const [chatList, setChatList] = useState([]);
-  
+  const [deleteState, setDeleteState] = useState(false);
+
   useEffect(() => {
     async function fetchChatRoom() {
       try {
         const res = await API.get("/chat/find?roomId=" + roomId);
         setRoomInfo(res.data);
         setChatList(res.data.histories);
+        if (location.state?.status === "deleteRommate") {
+          setDeleteState(true)
+        }
         console.log(res.data);
       } catch (error) {
         console.error(error);
@@ -242,6 +262,20 @@ const ChatRoom = () => {
     client.current.deactivate();
   };
 
+  const deleteRoommate = async () => {
+    content.current.value = "$%#deleteRoommate"
+    await publish();
+
+    try {
+      const res = await API.delete(`/roommate/quit/${roomInfo?.roommateId}`);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setDeleteState(false);
+  }
+
   return (
     <c.Totalframe>
       <c.ScreenComponent ref={scrollRef}>
@@ -261,14 +295,28 @@ const ChatRoom = () => {
           </BottomSheet>
           {/* chat */}
           <ChatContent>
-            <Date>8월 25일</Date>
-              {chatList?.map((chat) => (
-                <div>
-                  {roomInfo?.user == chat?.sender ?
-                    <MyChat time={moment(chat.createdAt).format('A h:mm')} chat={chat.message} /> :
-                    <OtherChat profileImg={BasicProfile} time={moment(chat.createdAt).format('A h:mm')} chat={chat.message} />}
-                </div>
-              ))}
+          {deleteState &&
+            <FinishRoommate
+              onClick={() => deleteRoommate()}
+              description={false}
+              choiceMent={'룸메이트 그만두기'}
+              noOnClick={() => navigate(-1)}
+              ment={`룸메이트를 그만두려면\n아래 버튼을 눌러\n상대방에게 알려주세요`}
+            />
+          }
+            {chatList?.map((chat,index) => (
+              <>
+              {(index === 0  || (moment(chat.createAt)).diff(moment(chatList[index-1].createAt),'days')) ?
+              <Date>{moment(chat.createAt).format('MM월 DD일')}</Date> : null}
+              {chat.message === "$%#deleteRoommate" ?
+              <DeleteRoommateLine>{`룸메이트가 끊겼어요`}</DeleteRoommateLine> :
+              <div>
+                {roomInfo?.user == chat?.sender ?
+                  <MyChat time={moment(chat.createdAt).format('A h:mm')} chat={chat.message} /> :
+                  <OtherChat profileImg={BasicProfile} time={moment(chat.createdAt).format('A h:mm')} chat={chat.message} />}                  
+              </div>}
+              </>
+            ))}
           </ChatContent>
 
         </c.SubScreen>
