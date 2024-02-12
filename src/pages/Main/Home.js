@@ -295,7 +295,7 @@ const Home = () => {
                   <MainOtherProfile
                     onClick={() => navigate("/detail/details/" + opponent.userId)}
                     nickName={opponent.nickname}
-                    userprofile={opponent.photoName.length === 0 ? BasicProfile: opponent.photoName}
+                    userprofile={opponent.photoName}
                     major={opponent.major}
                     id={opponent.studentID}
                     score={opponent.point}

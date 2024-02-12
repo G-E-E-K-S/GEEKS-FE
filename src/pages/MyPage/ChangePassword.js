@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../axios/BaseUrl";
-import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/MyPage/Header";
@@ -65,11 +64,14 @@ const ConditionTxt = styled.div`
 
 const ChangePassword = () => {
   const [currentSelected, setCurrentSelected] = useState(false);
+  const [currentSelectedError, setCurrentSelectedError] = useState(false);
+  const [isRightPrevPwd, setIsRightPrevPwd] = useState(false);
   const [newSelected, setNewSelected] = useState(false);
   const [inputval, setInputval] = useState("");
   const [pwdLen, setPwdLen] = useState(false);
   const [pwdSpecial, setpwdSpecial] = useState(false);
   const [pwdSame, setpwdSame] = useState(false);
+  const [pwdDifferent, setPwdDifferent] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
   const [currentPwd, setCurrentPwd] = useState(false);
   const [newPwd, setNewPwd] = useState(false);
@@ -77,16 +79,17 @@ const ChangePassword = () => {
   const [againCheck, setAgainCheck] = useState(false);
   const [newCheckPwd, setNewCheckPwd] = useState(false);
   const [newPwdVal, setNewPwdVal] = useState("");
+  const [prevPwdVal, setPrevPwdVal] = useState("");
   const [checkNewPwd, setCheckNewPwd] = useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setNewPwdVal(value);
-
+    setAgainCheck(false);
     const validatePassword = () => {
       return new Promise((resolve, reject) => {
-        const length = newPwdVal.length;
+        const length = value.length;
         const specialCharRegex =
           /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\=\(\'\"]/;
         const sameCharRegex = /(.)\1{3,}/;
@@ -103,32 +106,77 @@ const ChangePassword = () => {
         const hasPwdSame = sameCharRegex.test(value);
         setpwdSame(!hasPwdSame);
 
+        // 현재 Pwd와 같은지 여부
+        if(prevPwdVal !== value) setPwdDifferent(true);
+        else setPwdDifferent(false);
         resolve(); // Resolve the Promise immediately
       });
     };
     validatePassword().then(() => {});
   };
 
+  useEffect(() => {
+    if(checkNewPwd === newPwdVal && againCheck && isRightPrevPwd) {
+      setIsNextPage(true);
+    } else {
+      setIsNextPage(false);
+    }
+
+  }, [againCheck, isRightPrevPwd])
+
   const handleNewPwdChange = (e) => {
     const value = e.target.value;
     setCheckNewPwd(value);
     if (value === newPwdVal){
       setAgainCheck(true);
-      setIsNextPage(true);
     }
     else{
       setAgainCheck(false);
-      setIsNextPage(false);
     } 
   };
 
+  const changePrevPassword = (e) => {
+    const value = e.target.value;
+    setPrevPwdVal(value);
+
+    if(newPwdVal !== value) setPwdDifferent(true);
+    else setPwdDifferent(false);
+  };
+
+  useEffect(()=> {
+    const timeId = setTimeout(()=>{
+      fetchCheckPassword();
+    }, 800);
+    return () => {
+      clearTimeout(timeId);
+    }
+    
+    async function fetchCheckPassword() {
+      try{
+        const res = await API.post("/member/check/password",{
+          password: prevPwdVal,
+        });
+        console.log(res.data)
+        if(res.data === false){
+          setIsRightPrevPwd(false);
+        }else{
+          setIsRightPrevPwd(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  },[prevPwdVal]);
+    
   const checkPassword = () => {
     async function fetchPassword() {
       try {
         const res = await API.post("/member/edit/password", {
           password: checkNewPwd,
         });
-        if (res.data === "success") navigate("/settinguserinfo");
+        if (res.data === "success") {
+          navigate("/settinguserinfo", { state: {prev: "change"}, replace: true});
+        }
       } catch (error) {
         console.error(error);
       }
@@ -148,12 +196,19 @@ const ChangePassword = () => {
             onFocus={() => setCurrentSelected(true)}
             onBlur={() => setCurrentSelected(false)}
             maxLength={15}
+            onChange={changePrevPassword}
           />
           <img
             src={currentPwd ? ShowPwd : NoShowPwd}
             onClick={() => setCurrentPwd(!currentPwd)}
           />
         </InputPasswordTotal>
+        <PwdCondition>
+          {isRightPrevPwd ? <img src={Check} /> : <img src={NoneCheck} />}
+          <ConditionTxt isOk={isRightPrevPwd}>
+            일치해요
+          </ConditionTxt>
+        </PwdCondition>
         <PasswordText>{`새로운 비밀번호`}</PasswordText>
         <InputPasswordTotal newSelected={newSelected}>
           <InputPassword
@@ -189,9 +244,15 @@ const ChangePassword = () => {
                 똑같은 문자가 4번 반복되면 안돼요
               </ConditionTxt>
             </PwdCondition>
+            <PwdCondition>
+              {pwdDifferent ? <img src={Check} /> : <img src={NoneCheck} />}
+              <ConditionTxt isOk={pwdDifferent}>
+                현재 비밀번호와 달라야해요
+              </ConditionTxt>
+            </PwdCondition>
           </>
         )}
-        {pwdLen && pwdSpecial && pwdSame && (
+        {pwdLen && pwdSpecial && pwdSame && pwdDifferent && (
           <>
             <PasswordText>{`새로운 비밀번호 확인`}</PasswordText>
             <InputPasswordTotal newSelectedCheck={newSelectedCheck}>
