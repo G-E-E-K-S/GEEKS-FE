@@ -37,4 +37,8 @@ GEEKS(긱스)는 상명대학교 기숙사생들을 위한 플랫폼입니다. �
 <img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=react&logoColor=#61DAFB"> <img src="https://img.shields.io/badge/JAVASCRIPT-F7DF1E?style=for-the-badge&logo=javascript&logoColor=#fff"> <img src="https://img.shields.io/badge/STYLED COMPONENTS-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=#007ACC"> 
 <img src="https://img.shields.io/badge/RECOIL-ffffff?style=for-the-badge&logo=recoil&logoColor=#ffffff"> <img src="https://img.shields.io/badge/Socket-010101?style=for-the-badge&logo=socketdotio&logoColor=#010101"> <img src="https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=pwa&logoColor=#5A0FC8"> 
 
-
+## 기능
+**1. 회원가입 페이지**
+이용약관 동의 - 이메일 입력 - 인증 코드 입력(3분 시간 흐름) - 조건에 맞는 비밀번호 설정 - 닉네임 설정 - 학번 및 학과 입력 - 성별 - 성별에 맞는 기숙사 종류 선택 - 웰컴페이지
+**1.1. 로그인 페이지**
+로그인 - 비밀번호 잃어버렸을때 - 자동 로그인 - 기존 가입했던 이메일이라면 (비밀번호 찾기 페이지로 이동)
