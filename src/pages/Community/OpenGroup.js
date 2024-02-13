@@ -84,11 +84,16 @@ const Host = styled.div`
   align-items: center;
   margin-bottom: 24px;
   margin-top: 24px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 18px;
+  color: #096666;
 `;
 const Participants = styled(Host)`
   background: #FFECAC;
   margin-bottom: 20px;
   margin-top: 120px;
+  color: #865800;
 `;
 const Icons = styled.img`
   width: 32px;
@@ -98,8 +103,8 @@ const Icons = styled.img`
 `;
 const OpenGroup = () => {
   const navigate = useNavigate();
-  const [isHostDelivery, setIsHostDelivery] = useState(true);
-  const [isParticipate, setIsParticipate] = useState(true);
+  const [isHostDelivery, setIsHostDelivery] = useState(false);
+  const [isParticipate, setIsParticipate] = useState(false);
   return (
     <>
       <GroupSection>
