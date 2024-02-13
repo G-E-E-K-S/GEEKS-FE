@@ -3,7 +3,7 @@ import API from "../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import Header from "../../components/Join/Header";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
 import DormitoryBox from "../../components/Join/DormitoryBox";
@@ -48,7 +48,7 @@ const Dormitory = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header />
+        <HeaderMenu />
         <MainText maintitle={`어떤 기숙사에서 생활하시나요?`} />
         <DormitoryTotal>
           <DormitoryBox

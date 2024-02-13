@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../axios/BaseUrl";
-import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import Header from "../../components/Join/Header";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
 import BottomSheet from "../../components/Common/BottomSheet";
@@ -121,7 +120,7 @@ const Major = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header />
+        <HeaderMenu />
         <MainText maintitle={`전공 학과와 학번을 알려주세요`} />
         <MajorTotal onClick={() => handleBottomSheet()}>
           <MajorText major={major === null}>{major === null ? '학과/전공' : major}</MajorText>
@@ -155,7 +154,7 @@ const Major = () => {
           onFocus={() => handleFocus(true)}
           onBlur={() => handleFocus(false)}
           isSelected={isSelected}>
-          <InputStudentId placeholder="학번 입력" type="text" maxlength={'2'} value={studentID}onChange={(e)=>handleStudentId(e.target.value)}/>
+          <InputStudentId placeholder="학번 입력" type="text" maxlength={'2'} value={studentID} onChange={(e)=>handleStudentId(e.target.value)}/>
         </StudentIdTotal>
 
         <JoinButton btnName={"다음"} isNextPage={isNextPage} handleClick={()=>sendData()}/>

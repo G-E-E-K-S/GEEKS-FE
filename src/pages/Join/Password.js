@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../axios/BaseUrl";
-import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import Header from "../../components/Join/Header";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import TopNumber from "../../components/Join/TopNumber";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
@@ -128,7 +127,7 @@ const Password = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header />
+        <HeaderMenu />
         <TopNumber page={3} />
         <MainText maintitle={`로그인 때 사용할\n비밀번호를 입력해 주세요`} />
         <SubText>로그인 아이디는 이메일 주소를 입력하면 돼요</SubText>

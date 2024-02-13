@@ -3,7 +3,7 @@ import API from "../../axios/BaseUrl";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import Header from "../../components/Join/Header";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import JoinButton from "../../components/Join/JoinButton";
 
 const NoticeTitle = styled.div`
@@ -92,7 +92,7 @@ const AlreadyRegist = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header />
+        <HeaderMenu />
         <NoticeTitle>{`아래 이메일로\n이미 가입한 이력이 있어요`}</NoticeTitle>
         <EnrollDate>{`2023년 9월 23일 가입`}</EnrollDate>
         <UserEmail>{location.state?.userEmail + '@sangmyung.kr'}</UserEmail>

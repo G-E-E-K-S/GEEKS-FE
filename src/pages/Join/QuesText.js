@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import Header from "../../components/Join/Header";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
 import Question from "../../assets/gif/question.gif";
@@ -27,7 +27,7 @@ const QuesText = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header />
+        <HeaderMenu />
         <MainText maintitle={`${location.state?.inputNickName}님 반가워요!\n\n기숙사 생활을 위한\n몇 가지만 여쭤볼게요`}/>
         <Icon>
           <QuestionIcon src={Question}/>

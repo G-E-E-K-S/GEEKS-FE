@@ -3,7 +3,7 @@ import API from "../../axios/BaseUrl";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import Header from "../../components/Join/Header";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import TopNumber from "../../components/Join/TopNumber";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
@@ -180,7 +180,7 @@ const InputCode = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header />
+        <HeaderMenu />
         <TopNumber page={2} />
         <MainText
           maintitle={`수신된 메일에 적힌\n4자리 코드를 입력해 주세요`}
