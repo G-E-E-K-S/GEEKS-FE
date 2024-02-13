@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import API from "../../axios/BaseUrl";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
@@ -8,6 +8,7 @@ import TopNumber from "../../components/Join/TopNumber";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
 import ErrorPopup from "../../components/Common/ErrorPopup";
+import Timmer from "../../assets/img/Join/timmer.svg";
 
 const TotalSendMail = styled.div`
   display: flex;
@@ -64,6 +65,22 @@ const Code = styled.input`
     -webkit-appearance: none;
   }
 `;
+const TimeImg = styled.img`
+  width: 16px;
+  height: 16px;
+  margin-top: 13px;
+  margin-right: 4px;
+`;
+
+const Time = styled.div` 
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #B7B7B7;
+  text-align: left;
+  margin-top: 12px;
+  
+`
 
 const InputCode = () => {
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
@@ -71,6 +88,10 @@ const InputCode = () => {
   const [isNextPage, setIsNextPage] = useState(false);
   const [isErrorPopup, setIsErrorPopup] = useState(false);
   const [isResend, setIsResend] = useState(false);
+  const [timer,setTimer] = useState(180);
+  const [min,setMin] = useState(3);
+  const [sec,setSec] = useState(0);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -127,13 +148,35 @@ const InputCode = () => {
     async function fetchCode() {
       try {
         const res = await API.get("/mail/send?email=" + UserEmail + "@sangmyung.kr");
-        if(res.status==200) setIsResend(true);
+        if(res.status==200) {
+          setIsResend(true);
+          setTimer(180);
+        }
       } catch (error) {
         console.error(error);
       }
     }
     fetchCode();
   }
+
+  useEffect(() => {
+    if(timer === 181) {
+      return;
+    }
+
+    const id = setInterval(() => {
+        setTimer(timer => timer - 1);
+        setMin(Math.floor(timer/60));
+        setSec(timer%60);
+    }, 1000);
+
+    if(timer === -1){
+        clearInterval(id);
+        setTimer(181);
+    }
+    
+    return () => clearInterval(id);
+}, [timer]);
 
   return (
     <c.Totalframe>
@@ -161,6 +204,10 @@ const InputCode = () => {
             />
           ))}
         </InputNumber>
+        <c.Flex>
+          <TimeImg src={Timmer}/>
+          <Time>{min}:{sec < 10 ? '0' + sec : sec}</Time>
+        </c.Flex>
         <ErrorPopup 
         message={`코드가 일치하지 않아요`} 
         bottom={`18.72`} 
