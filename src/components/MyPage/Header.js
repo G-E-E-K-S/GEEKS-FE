@@ -6,6 +6,7 @@ import SubTitle from "../Main/SubTitle";
 const TotalHeader = styled.div`
   margin-bottom: 16px;
   display: flex;
+  margin-top: 8px;
 `;
 const Header = (props) => {
   return (

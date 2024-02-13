@@ -24,11 +24,13 @@ const DoneBtn = styled.div`
   color: ${(props)=>props.isDone ? '#333' : '#949494'};
   font-size: 16px;
   font-weight: 600;
+  margin-top: 8px;
 `;
 const EditImg = styled.img`
   cursor: pointer;
   width: 28px;
   height: 28px;
+  margin-top: 8px;
 `;
 const TotalSaveNum = styled.div`
   margin-top: 3.31vh;

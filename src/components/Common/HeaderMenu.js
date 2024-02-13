@@ -7,6 +7,7 @@ const TotalHeaderMenu = styled.div`
   padding: 12px 0px;
   justify-content: space-between;
   align-items: center;
+  margin-top: 8px;
 `;
 const HeaderMenu = (props) => {
   return (

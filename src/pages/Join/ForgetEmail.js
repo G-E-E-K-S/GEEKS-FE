@@ -3,7 +3,7 @@ import API from "../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import Header from "../../components/Join/Header";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import JoinButton from "../../components/Join/JoinButton";
 
 const NoticeTitle = styled.div`
@@ -12,7 +12,7 @@ const NoticeTitle = styled.div`
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 32px;
-  margin-top: 44px;
+  margin-top: 32px;
 `;
 const Total = styled.div`
   display: flex;
@@ -95,7 +95,7 @@ const ForgetEmail = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header />
+        <HeaderMenu />
         <NoticeTitle>{`비밀번호를 찾아드릴게요\n\n기존에 가입하셨던\n이메일 주소를 입력해 주세요`}</NoticeTitle>
         <Total>
           <SendEmail>{`비밀번호 변경 메일을 보내드려요`}</SendEmail>
