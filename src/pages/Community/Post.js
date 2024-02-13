@@ -245,6 +245,7 @@ const Post = () => {
   };
   
   const AddReComment = (commentId, commentUserName, modalState, nowFocus) => {
+    console.log(commentUserName)
     setNowFocus(nowFocus);
     setIsModalOpen(modalState);
     setParentId(commentId);
@@ -370,7 +371,7 @@ const Post = () => {
                     deleted={child.deleted}
                     comment={child.deleted ? '삭제된 댓글입니다' : child.content}
                     postInfo={{
-                      username: child.writer  === null ? '익명' : comment.writer,
+                      username: child.writer  === null ? '익명' : child.writer,
                       uploadtime: caclTime(child.createdDate),
                     }}
                     wirteChild={() => AddReComment(child.commentId, child.writer, true)}
