@@ -104,7 +104,7 @@ const FindRoommate = () => {
       <c.ScreenComponent navigation={true}>
         <c.SubScreen>
           <Header isNoti={true} isEdit={false} onClick={() => navigate("/search")}/>
-          <TitleText>{`내가 원하는 기준으로\n룸메이트를 찾아보세요`}</TitleText>
+          <TitleText>{`나와 잘 맞는 룸메이트를\n찾아보세요`}</TitleText>
           {/* <ConditionScroll onClick={()=>setIsOpen(true)}>
             <Condition condition={`전공`} />
             <Condition condition={`학번`} />
