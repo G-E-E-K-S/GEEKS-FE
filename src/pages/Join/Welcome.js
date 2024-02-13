@@ -81,7 +81,7 @@ const Welcome = () => {
   }, []);
 
   const nextPage = () => {
-    navigator("/inputemail");
+    navigator("/agree");
   };
 
   return (
