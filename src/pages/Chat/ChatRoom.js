@@ -177,6 +177,7 @@ const ChatRoom = () => {
         const res = await API.get("/chat/find?roomId=" + roomId);
         setRoomInfo(res.data);
         setChatList(res.data.histories);
+        
         if (location.state?.status === "deleteRommate") {
           setDeleteState(true)
         }
@@ -275,6 +276,17 @@ const ChatRoom = () => {
 
     setDeleteState(false);
   }
+  const handleQuit = () => {
+    async function fetchQuit() {
+      try {
+        const res = await API.get("/chat/removechat?roomId=" + roomInfo?.roommateId);
+        console.log(res.data);
+        navigate('/chat');
+      } catch (error) {
+        console.error(error);
+      }
+    }fetchQuit();
+  }
 
   return (
     <c.Totalframe>
@@ -289,7 +301,7 @@ const ChatRoom = () => {
             <DotsImg src={Dots} onClick={() => setIsBtsOpen(true)}/>
           </ChatHeader>
           <BottomSheet height={`max-content`} padding={`12px 20px 0 20px`} isOpen={isBtsOpen} interaction={true}>
-            <MenuBox>{`나가기`}</MenuBox>
+            <MenuBox onClick={()=>handleQuit()}>{`나가기`}</MenuBox>
             <MenuBox>{`신고하기`}</MenuBox>
             <CloseBtn onClick={() => setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
           </BottomSheet>
@@ -306,7 +318,7 @@ const ChatRoom = () => {
           }
             {chatList?.map((chat,index) => (
               <>
-              {(index === 0  || (moment(chat.createAt)).diff(moment(chatList[index-1].createAt),'days')) ?
+              {(index === 0  || moment(chat.createAt).format('YYYY MM DD') !== moment(chatList[index - 1].createAt).format('YYYY MM DD')) ?
               <Date>{moment(chat.createAt).format('MM월 DD일')}</Date> : null}
               {chat.message === "$%#deleteRoommate" ?
               <DeleteRoommateLine>{`룸메이트가 끊겼어요`}</DeleteRoommateLine> :

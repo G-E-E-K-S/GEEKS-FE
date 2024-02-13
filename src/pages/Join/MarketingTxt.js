@@ -3,11 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import Header from "../../components/Join/Header";
-import JoinButton from "../../components/Join/JoinButton";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import MainText from "../../components/Join/MainText";
-import Check from "../../assets/img/Join/agreeCheck.svg";
-import FillCheck from "../../assets/img/Join/agreeFillCheck.svg";
 
 const Choice = styled.div`
   font-size: 24px;
@@ -46,7 +43,7 @@ const Agree = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header />
+        <HeaderMenu />
         <c.Flex>
           <Choice>{`선택`}</Choice>
           <MainText maintitle={`마케팅 정보 수신 동의`} />

@@ -67,9 +67,9 @@ const Welcome = () => {
       try {
         const res = await API.get("/member/auto/login");
 
-        if (res.data === "success") {
+        if (res.data === "success" && localStorage.getItem('autologin') !== 'false') {
           navigator("/home");
-        }
+        } 
       } catch (error) {
         console.error(error);
       }

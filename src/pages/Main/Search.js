@@ -56,9 +56,11 @@ const FixInput = styled.div`
   position: fixed;
   height: 124px;
   background-color: #fff;
+  z-index: 3;
 `;
 const ContentBox = styled.div`
-    padding-top: 500px: 
+  position: relative;
+  top: 124px;
 `;
 const Search = () => {
   const [keyword, setKeyword] = useState(null);
@@ -87,7 +89,7 @@ const Search = () => {
 
   async function fetchMember() {
     try {
-      const res = await API.get("/home/search/post?keyword=" + keyword);
+      const res = await API.get("/home/search/member?keyword=" + keyword);
       console.log(res.data);
       setUsers(res.data);
     } catch (error) {
@@ -104,11 +106,11 @@ const Search = () => {
   }, [cursor]);
 
   useEffect(() => {
-    console.log(keyword);
-
     if (keyword == null) {
       return;
     }
+
+    console.log(keyword);
 
     if (isSelect === "post") {
       setCursor(0);
@@ -150,7 +152,9 @@ const Search = () => {
           {isSelect === "member" && (
             <>
               <MemberNotice>{`같은 성별의 회원만 검색할 수 있어요`}</MemberNotice>
-              <FindMember />
+              {users?.map((user) => (
+                <FindMember userName={user.nickname} profileImg={user.photoName}major={user.major} onClick={()=>navigate('/detail/details/'+user.userId)}/>
+              ))}
             </>
           )}
           {posts.length === 0 && (

@@ -24,12 +24,13 @@ const ProfileImg = styled.img`
   width: 40px;
   height: 40px;
   margin-right: 12px;
+  border-radius: 50%;
 `;
 const FindMember = (props) => {
   return (
-    <FindMemberTotal>
+    <FindMemberTotal onClick={props.onClick}>
       <c.Flex>
-        <ProfileImg src={BasicProfile} />
+        <ProfileImg src={props.profileImg.length === 0 ? BasicProfile : process.env.REACT_APP_BUCKET_BASEURL + props.profileImg} />
         <div>
           <UserName>{props.userName}</UserName>
           <Major>{props.major}</Major>

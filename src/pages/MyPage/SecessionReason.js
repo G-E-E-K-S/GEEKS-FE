@@ -120,7 +120,7 @@ const SecessionReason = () => {
       </c.ScreenComponent>
       <Bottom>
           <c.Flex>
-            <ChoiceBtn useMore={true}>{`더 쓸래요`}</ChoiceBtn>
+            <ChoiceBtn useMore={true} onClick={()=>navigate('/mypage')}>{`더 쓸래요`}</ChoiceBtn>
             <ChoiceBtn
               onClick={() => setModalOpen(true)}
             >{`탈퇴할래요`}</ChoiceBtn>

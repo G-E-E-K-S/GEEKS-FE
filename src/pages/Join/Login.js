@@ -85,7 +85,7 @@ const InputEmail = () => {
   const [isNextPage, setIsNextPage] = useState(false);
   const [isErrorPopup, setIsErrorPopUp] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
-  const [automaticLogIn, setAutomaticLogin] = useState(false);
+  const [automaticLogIn, setAutomaticLogIn] = useState(false);
   const emailVal = useRef();
   const passwordVal = useRef();
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ const InputEmail = () => {
           password: passwordVal.current.value,
         });
         if(res.data === 'success'){
-          setAutomaticLogin(true);
+          setAutomaticLogIn(true);
         }
         else{
           setIsPwdSelected('error');
@@ -122,7 +122,13 @@ const InputEmail = () => {
     setShowPwd(!showPwd);
   };
   const AutomaticLogin = () => {
-    setAutomaticLogin(false);
+    setAutomaticLogIn(false);
+    localStorage.setItem('autologin', true);
+    navigate('/home');
+  }
+  const NoneAutomaticLogin = () => {
+    setAutomaticLogIn(false);
+    localStorage.setItem('autologin', false);
     navigate('/home');
   }
   return (
@@ -169,8 +175,8 @@ const InputEmail = () => {
           isOpen={automaticLogIn} interaction={true}
           onClick={()=>AutomaticLogin()}
           Icon={Automatic} message={`다음부터\n자동으로 로그인할까요?`}
-          btnName={`자동 로그인 할게요`} applyRoommate={()=>setAutomaticLogin(false)}>
-          <No onClick={()=>setAutomaticLogin(false)}>{`안 할래요`}</No>
+          btnName={`자동 로그인 할게요`} applyRoommate={()=>setAutomaticLogIn(false)}>
+          <No onClick={()=>NoneAutomaticLogin()}>{`안 할래요`}</No>
         </ApplyCancelBottomSheet>
       </c.ScreenComponent>
     </c.Totalframe>
