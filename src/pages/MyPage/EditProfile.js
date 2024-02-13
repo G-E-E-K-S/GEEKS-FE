@@ -15,6 +15,11 @@ import MiniQeustion from "../../assets/img/MyPage/miniQuestion.svg";
 import Close from "../../assets/img/Join/closeModal.svg";
 import UnderArrow from "../../assets/img/Join/arrow_under.svg";
 
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+`;
 const Finish = styled.div`
   display: flex;
   justify-content: center;
@@ -360,10 +365,10 @@ const EditProfile = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <c.SpaceBetween>
+        <Header>
           <GoBack/>
           <Finish onClick={hadleEditProfile}>{`수정`}</Finish>
-        </c.SpaceBetween>
+        </Header>
         <UploadProfile>
           <ProfileImg key={1} src={fileUrl !== null ? fileUrl : photo.length !== 0 ? process.env.REACT_APP_BUCKET_BASEURL + photo : Profile} isProfile={fileUrl !== null}/>
           <HiddenFileInput type="file" accept="image/*" onChange={handleFile}/>

@@ -16,6 +16,7 @@ const Title = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: 28px;
+  margin-top: 8px;
 `;
 const TotalMenu = styled.div`
   display: flex;

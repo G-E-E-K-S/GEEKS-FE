@@ -3,7 +3,7 @@ import API from "../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import Header from "../../components/Join/Header";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import MainText from "../../components/Join/MainText";
 import ErrorPopup from "../../components/Common/ErrorPopup";
 import ApplyCancelBottomSheet from "../../components/Common/ApplyCancleBottomSheet";
@@ -128,7 +128,7 @@ const InputEmail = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header />
+        <HeaderMenu />
         <MainText maintitle={`학교 이메일 주소로\n로그인 해주세요`} />
         <InputInfos isSelected={isEmailSelected === 'error' ? '#CB3D0B' : isEmailSelected === 'false' ? '#EFEFEF' : '#ECAA00'}>
           <Input
