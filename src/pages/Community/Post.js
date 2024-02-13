@@ -24,7 +24,7 @@ import CheckBox from "../../assets/img/Community/checkBox.svg";
 import FillCheckBox from "../../assets/img/Community/fillCheckPost.svg";
 
 const InputCommentBox = styled.div`
-  height: 11.84vh;
+  height: 13.26vh;
   padding: 14px 2.36vw;
   border-top: 1px solid #efefef;
   background: #fff;
