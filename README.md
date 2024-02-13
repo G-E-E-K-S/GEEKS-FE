@@ -34,6 +34,7 @@ GEEKS(긱스)는 상명대학교 기숙사생들을 위한 플랫폼입니다. �
 
 ### Development
 #### Frontend
-<img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=react&logoColor=#007ACC"> <img src="https://img.shields.io/badge/JAVASCRIPT-F7DF1E?style=for-the-badge&logo=javascript&logoColor=#fff"> <img src="https://img.shields.io/badge/STYLED COMPONENTS-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=#007ACC"> 
-<img src="https://img.shields.io/badge/RECOIL-ffffff?style=for-the-badge&logo=recoil&logoColor=#ffffff"> 
+<img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=react&logoColor=#61DAFB"> <img src="https://img.shields.io/badge/JAVASCRIPT-F7DF1E?style=for-the-badge&logo=javascript&logoColor=#fff"> <img src="https://img.shields.io/badge/STYLED COMPONENTS-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=#007ACC"> 
+<img src="https://img.shields.io/badge/RECOIL-ffffff?style=for-the-badge&logo=recoil&logoColor=#ffffff"> <img src="https://img.shields.io/badge/Socket-010101?style=for-the-badge&logo=socketdotio&logoColor=#010101"> <img src="https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=pwa&logoColor=#5A0FC8"> 
+
 
