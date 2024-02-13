@@ -134,6 +134,7 @@ const YesBtn = styled(NoBtn)`
 const Post = () => {
   const [postInfo, setPostInfo] = useState("");
   const [isLike, setIsLike] = useState(false);
+  const [likeCnt, setLikeCnt] = useState(0);
   const [isStar, setIsStar] = useState(false);
   const [parentId, setParentId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -157,6 +158,8 @@ const Post = () => {
     async function fetchPost() {
       try {
         const res = await API.get("/post/show?postId=" + postId);
+        console.log(res.data);
+        setLikeCnt(res.data.likeCount);
         setLoading(false);
         setIsActive(true);
         setPostInfo(res.data);
@@ -334,7 +337,7 @@ const Post = () => {
             <c.Flex>
               <LikeAndStarBtn
                 icon={isLike ? FillLike : Like}
-                text={isLike && 1}
+                text={likeCnt !== 0 && likeCnt}
                 isLike={isLike}
                 onClick={() => handleLike()}/>
               <LikeAndStarBtn
