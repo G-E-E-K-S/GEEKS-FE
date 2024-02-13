@@ -101,6 +101,45 @@ const Icons = styled.img`
   margin-right: 16px;
   margin-bottom: ${(props)=>props.participate && `95px`};
 `;
+const TendinousBox = styled.div`
+  background: #fff;
+  margin-top: 36px;
+  margin-bottom: 50px;
+  padding: 0px 5.12vw;
+`;
+const WriteTendinousBox = styled.div`
+  width: 100%;
+  height: 66px;
+  border-radius: 12px;
+  background: #F7F7F7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 21px 20px;
+`;
+const TendinousTxt = styled.div`
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 24px;
+  color: #707070;
+`;
+const Tendinous = styled.div`
+  margin-left: 15px;
+  width: max-content;
+  padding: 0 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 42px;
+  border-radius: 8px;
+  border: 1px solid #E2E2E2;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+  background: #fff;
+  color: #333;
+`;
 const OpenGroup = () => {
   const navigate = useNavigate();
   const [isHostDelivery, setIsHostDelivery] = useState(false);
@@ -142,6 +181,14 @@ const OpenGroup = () => {
           <Icons participate={true} src={isParticipate ? FillGroup : Group} onClick={()=>setIsParticipate(!isParticipate)}/>
         </FullScreen>
       </GroupDescriptionSection>
+      <TendinousBox>
+        <WriteTendinousBox>
+          <TendinousTxt>{`이 기능에 대해 의견을 남겨주세요!`}</TendinousTxt>
+          <a href="https://forms.gle/jhknCXQijwwFbM1a9">
+            <Tendinous>{`문의하기`}</Tendinous>
+          </a>
+        </WriteTendinousBox>
+      </TendinousBox>
     </>
   );
 };
