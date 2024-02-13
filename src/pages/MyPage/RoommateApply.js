@@ -10,9 +10,12 @@ import OtherProfileApply from "../../components/MyPage/OtherProfileApply";
 import { UserNickName } from "../../recoil/UserNickName";
 import Popup from "../../components/Common/Popup";
 import BottomSheet from "../../components/Common/BottomSheet";
+import Modal from "../../components/Common/Modal";
 import Colse from "../../assets/img/MyPage/close.svg";
 import CancelRoommate from "../../assets/img/MyPage/cancleRoommate.svg";
 import Roommate from "../../assets/img/MyPage/roommate.svg";
+import BasicrProfile from "../../assets/img/MyPage/basicProfile.svg";
+import Success from "../../assets/gif/success.gif";
 import { useNavigate } from "react-router-dom";
 
 const ApplyTop = styled.div`
@@ -85,7 +88,7 @@ const FindRoommateTxt = styled.div`
 const Semester = styled.div`
   color: #949494;
   text-align: center;
-  font-size: 12px;
+  font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
   margin-top: 2.84vh;
@@ -177,6 +180,63 @@ const CloseIcon = styled.img`
   cursor: pointer;
   margin-left: 2.17vw;
 `;
+const SuccessGif = styled.img`
+  position: absolute;
+  width: 157px;
+  height: 157px;
+  top: -133px;
+`;
+const MatchingTxt = styled.div`
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 26px;
+  text-align: center;
+  margin-bottom: 28px;
+`;
+const OpponentProfileBox = styled.div`
+  width: 100%;
+  height: 150px;
+  border-radius: 12px;
+  background: #F7F7F7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+const ProfileImg = styled.img`
+  width: 56px;
+  height: 56px;
+`;
+const OpponentName = styled.div`
+  margin-top: 8px;
+  margin-bottom: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+  color: #1A1A1A;
+`;
+const OpponentMajor = styled.div`
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: center;
+  color: #707070;
+`;
+const OkBtn = styled.div`
+  width: 100%;
+  height: 56px;
+  border-radius: 12px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FFC700;
+  color: #1A1A1A;
+  margin-top: 32px;
+`;
 const RoommateApply = () => {
   const [isChoose, setIsChoose] = useState("send");
   const [isBtsShow, setIsBtsShow] = useState(false);
@@ -184,6 +244,8 @@ const RoommateApply = () => {
   const [sentApply, setSentApply] = useState([]);
   const [receivedApply, setReceivedApply] = useState([]);
   const [opponentNickName, setOpponentNickName] = useState("");
+  const [matching, setMatching] = useState(false);
+  const [openMatchingModal, setOpenMatchingModal] = useState(false);
   const content = useRecoilValue(UserNickName);
   const navigate = useNavigate();
   useState(() => {
@@ -225,11 +287,11 @@ const RoommateApply = () => {
     fetchDeleteAply();
   };
 
-  const acceptRoommate = (opponentId) => {
+  const AcceptRoommate = (opponentId) => {
     async function fetchAccept() {
       try {
         const res = await API.post(`/roommate/accept/${opponentId}`);
-        
+        if(res.data === 'success') setOpenMatchingModal(true);
       } catch (e) {
         console.log(e);
       }
@@ -237,11 +299,10 @@ const RoommateApply = () => {
     fetchAccept();
   }
 
-  const refuseRoommate = (opponentId) => {
+  const RefuseRoommate = (opponentId) => {
     async function fetchRefuse() {
       try {
         const res = await API.post(`/roommate/refuse/${opponentId}`);
-        
       } catch (e) {
         console.log(e);
       }
@@ -253,6 +314,11 @@ const RoommateApply = () => {
     setIsBtsShow(!isBtsShow);
     setOpponentNickName(opponent);
   };
+
+  const handleModal = () => {
+    setMatching(true);
+    setOpenMatchingModal(false);
+  }
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -334,10 +400,26 @@ const RoommateApply = () => {
                         : null
                     }
                   />
+                  {!matching &&
                   <c.Flex>
-                    <ReceiveBtn isAccept={false} onClick={() => acceptRoommate(userData.userId)}>{`거절하기`}</ReceiveBtn>
-                    <ReceiveBtn isAccept={true}  onClick={() => refuseRoommate(userData.userId)}>{`수락하기`}</ReceiveBtn>
+                    <ReceiveBtn isAccept={false} onClick={() => RefuseRoommate(userData.userId)}>{`거절하기`}</ReceiveBtn>
+                    <ReceiveBtn isAccept={true}  onClick={() => AcceptRoommate(userData.userId)}>{`수락하기`}</ReceiveBtn>
                   </c.Flex>
+                  }
+                  {openMatchingModal && 
+                    <Modal padding={`28px 20px 22px 20px`}>
+                      <SuccessGif src={Success}/>
+                      <MatchingTxt>{`룸메이트가 맺어졌어요!`}</MatchingTxt>
+                      <OpponentProfileBox>
+                        <ProfileImg src={userData.photoName.length !== 0
+                          ? process.env.REACT_APP_BUCKET_BASEURL+userData.photoName
+                          : BasicrProfile}/>
+                        <OpponentName>{userData.nickname}</OpponentName>
+                        <OpponentMajor>{userData.major} · {userData.studentID + '학번'}</OpponentMajor>
+                      </OpponentProfileBox>
+                      <OkBtn onClick={()=>handleModal()}>{`확인`}</OkBtn>
+                    </Modal>
+                  }
                 </ApplyTotalInfo>
               ))}
             </div>
