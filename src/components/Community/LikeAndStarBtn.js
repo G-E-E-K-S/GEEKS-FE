@@ -5,6 +5,8 @@ const GrayBox = styled.div`
   width: max-content;
   padding: 8px 3.07vw;
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 2.6vh;
   margin-left: ${(props)=>props.marginLeft};
   margin-top: 2.36vh;
