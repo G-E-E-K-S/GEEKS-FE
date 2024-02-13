@@ -17,8 +17,7 @@ const PostName = styled.div`
   overflow:hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
-  width: max-content;
-  width: 256px;
+  max-width: 256px;
 `;
 const CommentNumIcon = styled.img`
   width: 16px;
