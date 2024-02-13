@@ -4,7 +4,7 @@ import { LiveRule, Home, Search } from './pages/Main/Index';
 import { FindRoommate , User, RoommateSendTxt, FinishRoommate } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
 import { WritePost, Post, Community, MyCommunity, ScrapPost, CommunityWrite, OpenGroup } from './pages/Community/Index';
-import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqContent,RoommateApply, MyProfile, SecessionReason, NoticeDetail, EventNoticeDetail, ChangePassword } from './pages/MyPage/Index';
+import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqContent,RoommateApply, MyProfile, SecessionReason, NoticeDetail, EventNoticeDetail, ChangePassword, ReviewEvent } from './pages/MyPage/Index';
 import './index.css';
 import Loading from "./pages/Loading";
 
@@ -62,6 +62,7 @@ function App() {
           <Route path="/communitywrite" element={<CommunityWrite/>} />
           <Route path="/opengroup" element={<OpenGroup/>} />
           <Route path="/loading" element={<Loading/>}/>
+          <Route path="/reviewevent" element={<ReviewEvent/>}/>
         </Routes>
       </Router>
     </div>
