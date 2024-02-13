@@ -196,6 +196,7 @@ const Post = () => {
   };
   const handleLike = () => {
     if (isLike === false) {
+      setLikeCnt(likeCnt+1);
       async function fetchLikeState() {
         try {
           const res = await API.get("/post/heart/insert?postId=" + postId);
@@ -207,6 +208,7 @@ const Post = () => {
       fetchLikeState();
     }
     if (isLike === true) {
+      setLikeCnt(likeCnt-1);
       async function fetchDeleteLikeState() {
         try {
           const res = await API.get("/post/heart/delete?postId=" + postId);
