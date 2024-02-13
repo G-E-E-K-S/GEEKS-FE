@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
-import Header from "../../components/Join/Header";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
 import Check from "../../assets/img/Join/agreeCheck.svg";
@@ -82,7 +82,7 @@ const Agree = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header />
+        <HeaderMenu />
         <MainText maintitle={`편리한 이용을 위해\n아래 약관에 동의해 주세요`} />
         <AgreeTotal isTotalCheck={isTotalCheck}>
           <c.Flex>

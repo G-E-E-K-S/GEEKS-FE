@@ -4,10 +4,9 @@ import GoBack from "./GoBack";
 const TotalHeaderMenu = styled.div`
   width: 100%;
   display: flex;
-  padding: 12px 0px;
+  padding: 8px 0px;
   justify-content: space-between;
   align-items: center;
-  margin-top: 8px;
 `;
 const HeaderMenu = (props) => {
   return (

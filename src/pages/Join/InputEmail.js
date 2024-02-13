@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
-import axios from "axios";
 import API from "../../axios/BaseUrl";
+import HeaderMenu from "../../components/Common/HeaderMenu";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
@@ -76,7 +76,7 @@ const InputEmail = () => {
   return (
     <c.Totalframe>
       <c.ScreenComponent>
-        <Header />
+        <HeaderMenu />
         <TopNumber page={1} />
         <MainText
           maintitle={`재학생 인증을 위해\n학교 이메일 주소를 입력해 주세요`}
