@@ -84,6 +84,9 @@ const InputComment = styled.input`
   border: none;
   background-color: #f7f7f7;
   width: 100%;
+  font-size: 1rem;
+  font-weight: medium; 
+  color: #333;
   &::placeholder {
     color: #b7b7b7;
     font-size: 1rem;
