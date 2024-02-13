@@ -7,11 +7,11 @@ const SearchForm = styled.div`
   width: 100%;
   display: flex;
   padding: 12px 0px;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `;
 const InputBox = styled.div`
-  width: calc(100% - 5.12vw);
+  width: 90%;
   border-radius: 8px;
   background: #f7f7f7;
   padding: 10px 3.07vw;
