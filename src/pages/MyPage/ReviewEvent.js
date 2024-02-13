@@ -46,6 +46,7 @@ const IfWrtieReview = styled.div`
   text-align: center;
   color: #b7b7b7;
   margin-bottom: 8px;
+  margin-top: 18px;
 `;
 const GiveKitRow = styled.div`
   display: flex;
@@ -53,9 +54,9 @@ const GiveKitRow = styled.div`
   align-items: center;
 `;
 const Givekit = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 600;
-  line-height: 32px;
+  line-height: 40px;
   text-align: center;
   color: #ffffff;
 `;
@@ -183,7 +184,7 @@ const ParticipateDetail = styled.div`
   letter-spacing: 0em;
   text-align: center;
   color: #efefef;
-  margin-bottom: 16px;
+  margin-bottom: ${(props)=>props.isLast ? '159.97px' : '16px'};
 `;
 const Num = styled.div`
   display: flex;
@@ -199,12 +200,13 @@ const Num = styled.div`
   text-align: center;
   color: #e2e2e2;
   margin-right: 6px;
-  margin-bottom: 16px;
+  margin-bottom: ${(props)=>props.isLast ? '159.97px' : '16px'};
 `;
 const KnowEvent = styled.div`
-    background: #333333;
-    padding: 17.58px 5.12vw; 61.42px 5.12vw;
-    height: 187px;
+  background: #333333;
+  padding: 17.58px 5.12vw; 61.42px 5.12vw;
+  height: 187px;
+  margin-bottom: 130px;
 `;
 const KnowEventTitle = styled.div`
   font-size: 0.75rem;
@@ -219,6 +221,9 @@ const KnowEventTxt = styled(KnowEventTitle)`
   margin-top: 10px;
 `;
 const WriteReviewBox = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   height: 190px;
   background: linear-gradient(180deg, rgba(17, 17, 17, 0) 0%, #111111 25.24%);
   padding: 44px 20px;
@@ -237,11 +242,11 @@ const ReviewBox = styled.div`
   align-items: center;
 `;
 const ReviewEvent = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <Totalframe>
       <ScreenComponent>
-        <BackIcon src={Back} onClick={()=>navigate(-1)}/>
+        <BackIcon src={Back} onClick={() => navigate(-1)} />
       </ScreenComponent>
       <GiftImg src={GiftBoxTop} />
       <IfWrtieReview>{`긱스 이용 후기를 남겨주시면`}</IfWrtieReview>
@@ -325,8 +330,8 @@ const ReviewEvent = () => {
           <ParticipateDetail>{`정성스레 이용 후기를 적는다`}</ParticipateDetail>
         </c.FlexCenter>
         <c.FlexCenter>
-          <Num>{`4`}</Num>
-          <ParticipateDetail>{`추첨 결과를 기다린 후 신관 앞에서 키트를 받아간다`}</ParticipateDetail>
+          <Num isLast={true}>{`4`}</Num>
+          <ParticipateDetail isLast={true}>{`추첨 결과를 기다린 후 신관 앞에서 키트를 받아간다`}</ParticipateDetail>
         </c.FlexCenter>
       </ScreenComponent>
       <KnowEvent>
