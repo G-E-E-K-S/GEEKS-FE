@@ -41,14 +41,13 @@ const ReSendBtn = styled.div`
 
 const InputNumber = styled.div`
   display: flex;
-  margin-top: 6.99vh;
+  margin-top: 55px;
 `;
 
 const Code = styled.input`
   border: none;
   outline: none;
   width: 72px;
-  height: 50px;
   padding-bottom: 15px;
   display: flex;
   flex-direction: column;
@@ -197,7 +196,7 @@ const InputCode = () => {
               key={index}
               ref={ref}
               type="number"
-              maxLength={1}
+              maxlength={'2'}
               onChange={(e) => handleInputChange(index, e)}
               onKeyUp={(e) => handleKeydown(index, e)}
               onFocus={() => ChangeBarColor()}
