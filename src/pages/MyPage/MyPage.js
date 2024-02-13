@@ -210,7 +210,7 @@ const MyPage = () => {
               </ToggleBtn>
             </ShowMyProfile>
             <Br />
-            <WelcomeKit>
+            <WelcomeKit onClick={()=>navigate('/reviewevent')}>
               {`긱스 사용 후기 작성하고\n기숙사 웰컴 키트 받아가세요!`}
               <GiftBoxImg src={GiftBox}/>
               <img src={rightArrow} />

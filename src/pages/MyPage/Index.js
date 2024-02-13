@@ -12,6 +12,7 @@ import SecessionReason from "./SecessionReason";
 import NoticeDetail from "./NoticeDetail";
 import EventNoticeDetail from "./EventNoticeDetail";
 import ChangePassword from "./ChangePassword";
+import ReviewEvent from "./ReviewEvent";
 
 export {
   MyPage,
@@ -27,5 +28,6 @@ export {
   SecessionReason,
   NoticeDetail,
   EventNoticeDetail,
-  ChangePassword
+  ChangePassword,
+  ReviewEvent
 };
