@@ -162,7 +162,7 @@ const BottomEnroll = styled.div`
   padding-top: 20.17px;
   padding-right: 5.12vw;
   padding-left: 5.12vw;
-  padding-bottom: calc(11.84vh - 56px - 20.17px);
+  padding-bottom: calc(11.84vh - 56px - 20.17px + 12px);
   border-top: 1px solid #efefef;
   position: fixed;
   bottom: 0px;

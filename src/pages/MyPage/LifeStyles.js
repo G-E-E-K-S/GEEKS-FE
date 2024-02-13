@@ -21,7 +21,7 @@ const SubTitle = styled.div`
 const BottomMenues = styled.div`
   display: flex;
   width: 100%;
-  padding: 20.17px 5.12vw 26.5px 5.12vw;
+  padding: 20.17px 5.12vw 38.5px 5.12vw;
   border-top: 1px solid #EFEFEF;
   position: fixed;
   bottom: 0;
@@ -52,7 +52,6 @@ const ResetImg = styled.img`
 const Enroll = styled.div`
   display: flex;
   width: 57.43vw;
-  height: 56px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
