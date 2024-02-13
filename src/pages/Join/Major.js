@@ -33,7 +33,6 @@ const StudentIdTotal = styled.div`
   display: flex;
   justify-content: flex-start;
   width: 22.82vw;
-  justify-content: space-between;
   border-bottom: 2px solid
     ${(props) => (props.isSelected ? "#ECAA00" : "#efefef")};
 `;
@@ -50,6 +49,10 @@ const InputStudentId = styled.input`
     font-size: 1.5rem;
     font-weight: 600;
     line-height: 32px;
+  }
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 `;
 const MajorBtsTxt = styled.div`
@@ -79,8 +82,11 @@ const Major = () => {
     setIsMajorOpen(!isMajorOpen);
   };
   const handleStudentId = (ID) => {
-    setIsNextPage(ID.trim() !== '');
-    setStudentID(ID);
+    if(isNaN(ID)) return;
+    else{
+      setIsNextPage(ID.trim() !== '');
+      setStudentID(ID);
+    }
   }
 
   const DepartmentList = ["글로벌인문학부대학","디자인대학","예술대학","융합기술대학","공과대학"];
@@ -149,7 +155,7 @@ const Major = () => {
           onFocus={() => handleFocus(true)}
           onBlur={() => handleFocus(false)}
           isSelected={isSelected}>
-          <InputStudentId placeholder="학번 입력" onChange={(e)=>handleStudentId(e.target.value)} maxlength={'2'}/>
+          <InputStudentId placeholder="학번 입력" type="text" maxlength={'2'} value={studentID}onChange={(e)=>handleStudentId(e.target.value)}/>
         </StudentIdTotal>
 
         <JoinButton btnName={"다음"} isNextPage={isNextPage} handleClick={()=>sendData()}/>
