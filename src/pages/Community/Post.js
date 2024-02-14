@@ -319,7 +319,7 @@ const Post = () => {
                 {postInfo?.writerState ? (
                   <>
                     <MenuBox onClick={()=>DeletePost()}>{`글 삭제하기`}</MenuBox>
-                    <MenuBox>{`글 수정하기`}</MenuBox>
+                    {/* <MenuBox>{`글 수정하기`}</MenuBox> */}
                   </>
                 ) : (
                   <MenuBox Report={true}>{`신고하기`}</MenuBox>
