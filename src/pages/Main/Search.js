@@ -50,6 +50,8 @@ const MemberNotice = styled.div`
   text-align: left;
   color: #949494;
   margin-left: calc(-50vw + 50%);
+  position: relative;
+  top: 1px;
 `;
 const FixInput = styled.div`
   width: calc(100% - 5.12vw * 2);
@@ -157,7 +159,7 @@ const Search = () => {
               ))}
             </>
           )}
-          {posts.length === 0 && (
+          {(posts.length === 0 && users?.length === 0) &&(
             <SearchTotalTxt>
               <SearchInfoTxt>{`모든 키워드를 검색할 수 있어요`}</SearchInfoTxt>
               <SearchSUbTxt>{`예) 닉네임, 커뮤니티 글 제목, 내용 등`}</SearchSUbTxt>
