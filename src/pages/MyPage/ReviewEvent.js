@@ -81,6 +81,7 @@ const PreWelcomekit = styled.div`
   line-height: 28px;
   text-align: center;
   color: #ffc700;
+  margin-bottom: 36px;
 `;
 const GiftBoxImg = styled.img`
   width: 160px;
@@ -263,10 +264,6 @@ const ReviewEvent = () => {
         {`긱스는 아직 베타 버전이에요\n여러분들에게 더 나은 서비스를 제공하기 위해\n매일매일 노력하고 있어요\n\n여러분들의 소중한 이용 후기가 모여\n더 나은 긱스가 될 수 있게 도와주세요!`}
       </AboutGeeks>
       <PreWelcomekit>{`웰컴 키트 미리보기`}</PreWelcomekit>
-      <WFull>
-        <GiftBoxImg src={GiftBox} />
-      </WFull>
-      <Includes>{`구성품`}</Includes>
       <ScreenComponent>
         <c.Flex>
           <IncludesTotal>
