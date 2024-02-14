@@ -102,12 +102,12 @@ const Agree = () => {
         <AgreeSection>
           <img src={personal ? FillCheck : Check} onClick={()=>setPersonal(!personal)}/>
           <Essential>{`필수`}</Essential>
-          <AgreeText>{`개인정보 수집 및 이용`}</AgreeText>
+          <AgreeText onClick={()=>navigate('/personalinfotxt')}>{`개인정보 수집 및 이용`}</AgreeText>
         </AgreeSection>
         <AgreeSection>
           <img src={location ? FillCheck : Check} onClick={()=>setLocation(!location)}/>
           <Essential>{`필수`}</Essential>
-          <AgreeText>{`위치정보 수집 및 이용`}</AgreeText>
+          <AgreeText onClick={()=>navigate('/locationtxt')}>{`위치정보 수집 및 이용`}</AgreeText>
         </AgreeSection>
         <AgreeSection>
           <img src={marketing ? FillCheck : Check} onClick={()=>setMarketing(marketing === false ? true : false)}/>

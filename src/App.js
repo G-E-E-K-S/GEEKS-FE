@@ -1,5 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import {Intro, AccessRight, ServiceTxt, MarketingTxt,Agree, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage, ForgetEmail, AlreadyRegist} from './pages/Join/Index';
+import {Intro, AccessRight, PersonalInfoTxt, ServiceTxt, LocationTxt, MarketingTxt,Agree, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage, ForgetEmail, AlreadyRegist} from './pages/Join/Index';
 import { LiveRule, Home, Search } from './pages/Main/Index';
 import { FindRoommate , User, RoommateSendTxt, FinishRoommate } from './pages/FindRoommate/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
@@ -16,7 +16,9 @@ function App() {
           <Route path="/" element={<Intro/>} />
           <Route path="/agree" element={<Agree/>} />
           <Route path="/servicetxt" element={<ServiceTxt/>} />
+          <Route path="/personalinfotxt" element={<PersonalInfoTxt/>} />
           <Route path="/marketingtxt" element={<MarketingTxt/>} />
+          <Route path="/locationtxt" element={<LocationTxt/>} />
           <Route path="/accessright" element={<AccessRight/>} />
           <Route path="/welcome" element={<Welcome/>} />
           <Route path="/login" element={<Login/>} />
