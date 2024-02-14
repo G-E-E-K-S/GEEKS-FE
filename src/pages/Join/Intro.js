@@ -11,7 +11,6 @@ const IntroLogo = styled.div`
     justify-content: center;
     align-items: center;
 `;
-
 const Intro = () => {
     const navigation = useNavigate();
 
