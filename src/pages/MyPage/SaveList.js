@@ -114,7 +114,7 @@ const LifeStyles = () => {
             {saveList.map((userData)=>(
               <c.Flex onClick={activeEdit? () => handleCheckIndex(userData.nickname) : null}>
               {activeEdit && <CheckImg src={checkUserName.includes(userData.nickname) ? Check : NoCheck} />}
-              <OtherProfile activeCheck={checkUserName.includes(userData.nickname)} score={userData.point} userprofile={Profile} nickName={userData.nickname} major={userData.major} id={userData.studentID} intro={userData.introduction} />
+              <OtherProfile activeCheck={checkUserName.includes(userData.nickname)} score={userData.point} userprofile={userData.photoName} nickName={userData.nickname} major={userData.major} id={userData.studentID} intro={userData.introduction} />
               </c.Flex>
             ))}
             {activeEdit && <JoinButton btnName={`삭제하기`} handleClick={() => handleBtn()} isNextPage={checkUserName.length > 0}  />}
