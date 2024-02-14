@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "../../components/MyPage/Header";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
+import { useNavigate } from "react-router-dom";
 
 const NoticeName = styled.div`
   font-size: 1.25rem;
@@ -62,6 +63,7 @@ const GoEvent = styled.div`
     margin-top: 24px;
 `;
 const EventNoticeDetail = () => {
+  const navigate = useNavigate();
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -82,7 +84,7 @@ const EventNoticeDetail = () => {
           <Notice>{`2024.02.12 - `}</Notice>
           <NoticeBold>{`이벤트 참여 방법`}</NoticeBold>
           <Notice>{`‘마이 탭>이벤트 배너’ 에서 확인`}</Notice>
-          <GoEvent>{`이벤트 바로가기`}</GoEvent>
+          <GoEvent onClick={()=>navigate('/reviewevent')}>{`이벤트 바로가기`}</GoEvent>
         </NoticeContent>
       </c.ScreenComponent>
     </c.Totalframe>
