@@ -130,6 +130,7 @@ const MyProfile = () => {
               <MyRommate>{`현재 나의 룸메이트`}</MyRommate>
               {myProfile.nickname !== null &&
                 <MainOtherProfile
+                  onClick={()=>navigate('/')}
                   myProfile={true}
                   userprofile={myProfile?.photoName}
                   nickName={myProfile?.nickname}
@@ -137,7 +138,7 @@ const MyProfile = () => {
                   id={myProfile?.studentID}/>
               }
             </RoommateBox>
-          </> : <NoApply>{`아직 룸메이트를 신청한 내역이 없어요`}</NoApply>
+          </> : <NoApply>{`룸메이트 맺어진 내역이 없어요`}</NoApply>
         }
       </c.ScreenComponent>
     </c.Totalframe>
