@@ -206,6 +206,7 @@ const OpponentProfileBox = styled.div`
 const ProfileImg = styled.img`
   width: 56px;
   height: 56px;
+  border-radius: 50%;
 `;
 const OpponentName = styled.div`
   margin-top: 8px;
@@ -261,6 +262,7 @@ const RoommateApply = () => {
       try {
         const res = await API.get("/roommate/received");
         setReceivedApply(res.data);
+        console.log(res.data)
       } catch (e) {
         console.log(e);
       }
@@ -389,8 +391,9 @@ const RoommateApply = () => {
               <Semester>{`2024년도 1학기`}</Semester>
               {receivedApply.map((userData) => (
                 <ApplyTotalInfo>
-                  <ApplyDate>{`10.01`}</ApplyDate>
+                  <ApplyDate>{moment(userData.createdDate).format('MM.DD')}</ApplyDate>
                   <OtherProfileApply
+                    onClick={()=>navigate('/detail/details/'+userData.userId)}
                     nickName={userData.nickname}
                     major={userData.major}
                     id={userData.studentID}
