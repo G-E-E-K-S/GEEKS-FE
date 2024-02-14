@@ -38,7 +38,7 @@ const Major = styled.div`
 `;
 const OtherProfileApply = (props) => {
   return (
-    <TotalProfile activeCheck={props.activeCheck}>
+    <TotalProfile activeCheck={props.activeCheck} onClick={props.onClick}>
       <c.SpaceBetween>
         <UserProfiles>
           <UserProfile src={props.userprofile === null ? BasicrProfile : process.env.REACT_APP_BUCKET_BASEURL+props.userprofile} />
