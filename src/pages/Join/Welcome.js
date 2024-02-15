@@ -6,8 +6,9 @@ import JoinButton from "../../components/Join/JoinButton";
 import Popup from "../../components/Common/Popup";
 import House from "../../assets/gif/house.gif";
 import API from "../../axios/BaseUrl";
-import Loading from "../Loading";
-
+import Modal from "../../components/Common/Modal";
+import Logo from "../../assets/img/Common/mainLogo.png";
+import TextLogo from "../../assets/img/Common/yellowLogo.svg";
 const StartMent = styled.div`
   margin-top: 15.16vh;
   color: #333;
@@ -52,25 +53,95 @@ const LoginButton = styled.div`
   font-weight: 600;
   line-height: 24px;
 `;
+const Ceter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+const LogoImg = styled.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+`;
+const DownLoadApp = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  border-radius: 12px;
+  background: #FFC700;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+  color: #333333;
+`;
+const ModalText = styled.div`
+  font-size: 1.5rem;
+  margin-top: 44px;
+  margin-bottom: 56px;
+  font-weight: 700;
+  line-height: 32px;
+  text-align: center;
+  white-space: pre-wrap;
+`;
 const Welcome = () => {
   const [showPopup, setShowPopup] = useState(false);
   const location = useLocation(null);
-  const [popupMessage, setPopupMessage] = useState('');
+  const [popupMessage, setPopupMessage] = useState("");
   const navigator = useNavigate();
 
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
   useEffect(() => {
+    console.log(deferredPrompt);
+  }, [deferredPrompt])
+
+  const handleBeforeInstallPrompt = (event) => {
+    event.preventDefault();
+
+    setDeferredPrompt(event);
+  };
+
+  const handleInstall = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("사용자가 앱 설치를 동의했습니다.");
+        } else {
+          console.log("사용자가 앱 설치를 동의하지 않았습니다.");
+        }
+
+        setDeferredPrompt(null);
+      });
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
     setPopupMessage(location.state?.prev);
     setShowPopup(
-      location.state?.prev === "logout" ||
-      location.state?.prev === "withdrawal" ? true : false);
+      location.state?.prev === "logout" || location.state?.prev === "withdrawal"
+        ? true
+        : false
+    );
 
     async function fetchAutoLogin() {
       try {
         const res = await API.get("/member/auto/login");
 
-        if (res.data === "success" && localStorage.getItem('autologin') !== 'false') {
+        if (
+          res.data === "success" &&
+          localStorage.getItem("autologin") !== "false"
+        ) {
           navigator("/home");
-        } 
+        }
       } catch (error) {
         console.error(error);
       }
@@ -79,6 +150,13 @@ const Welcome = () => {
     }
 
     fetchAutoLogin();
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+    };
   }, []);
 
   const nextPage = () => {
@@ -89,7 +167,11 @@ const Welcome = () => {
     <c.Totalframe>
       <c.ScreenComponent>
         <Popup
-          message={popupMessage === 'logout' ? `로그아웃 되었습니다` : `탈퇴가 정상적으로 처리되었습니다`}
+          message={
+            popupMessage === "logout"
+              ? `로그아웃 되었습니다`
+              : `탈퇴가 정상적으로 처리되었습니다`
+          }
           setShowPopup={setShowPopup}
           isShowPopup={showPopup}
           top={`9.5`}
@@ -105,6 +187,17 @@ const Welcome = () => {
           handleClick={nextPage}
           isNextPage={true}
         />
+        {/* {deferredPrompt && <button onClick={handleInstall}>앱 설치</button>} */}
+        {deferredPrompt &&
+        <Modal padding={`40px 24px 28px 24px`} isWelcome={true}>
+          <Ceter>
+            <LogoImg src={Logo}/>
+            <img src={TextLogo}/>
+          </Ceter>
+          <ModalText>{`긱스를 터치 한 번으로\n바로 시작해 보세요!`}</ModalText>
+          <DownLoadApp onClick={()=>handleInstall()}>{`앱 내려받기`}</DownLoadApp>
+        </Modal>
+        }
       </c.ScreenComponent>
     </c.Totalframe>
   );
