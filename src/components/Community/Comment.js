@@ -13,7 +13,7 @@ const CommentBox = styled.div`
   padding-top: 8px;
   padding-bottom: 16px;
   pointer-events: ${(props)=>props.deleted && 'none' };
-  padding-left: ${(props)=>(props.isRecomment || props.recommentFocus) && '8.17vw'};
+  padding-left: ${(props)=>(props.isRecomment) ? '8.17vw' : props.recommentFocus && '5.12vw'};
   padding-right: ${(props)=>(props.isRecomment || props.recommentFocus) && '5.12vw'};
   background-color: ${(props)=>props.isRecomment ? '#F7F7F7' : props.recommentFocus ? '#FFFBEE' : '#fff'};
   margin-left: ${(props)=>(props.isRecomment || props.recommentFocus) && `calc(-50vw + 50%)`};
