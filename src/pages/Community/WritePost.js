@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import API from "../../axios/BaseUrl";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -109,7 +109,7 @@ const AnonymousTxt = styled.div`
 const Community = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState([]);
     const [showImages,setShowImages] = useState([]);
     const [height, setHeight] = useState('216px');
     const [isAnonymity, setIsAnonymity] = useState(false);
@@ -118,17 +118,19 @@ const Community = () => {
     const navigate = useNavigate();
     
     const handleFile = (event) => {
-      console.log(event.target.files);
-      setFile(event.target.files);
-      const imageLists = event.target.files;
-      let imageUrlLists = [...showImages];
+      console.log(file)
+      let newFiles = Array.from(event.target.files).slice(0, 5-file.length);
+      if(newFiles.length !== 0) setFile([...file, ...newFiles]);
+    }
 
-      for(let i = 0 ; i < imageLists.length ; i++){
-        const currentImageUrl = URL.createObjectURL(imageLists[i]);
+    useEffect(()=>{
+      let imageUrlLists = [];
+      for(let i = 0 ; i < file.length ; i++){
+        const currentImageUrl = URL.createObjectURL(file[i]);
         imageUrlLists.push(currentImageUrl);
       }
       setShowImages(imageUrlLists);
-    }
+    },[file]);
     const UploadPost = () => {
       const postData = {
         'title': title,
@@ -166,6 +168,7 @@ const Community = () => {
       };
       const handleDeleteImage = (id) => {
         setShowImages(showImages.filter((_, index) => index !== id));
+        setFile(file.filter((_,index) => index !== id));
       }
       const handleResizeHeight = useCallback(() => {
         let scrollHeight = contentRef.current.scrollHeight +'px';
