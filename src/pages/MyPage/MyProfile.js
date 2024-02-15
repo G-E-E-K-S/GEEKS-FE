@@ -130,7 +130,7 @@ const MyProfile = () => {
               <MyRommate>{`현재 나의 룸메이트`}</MyRommate>
               {myProfile.nickname !== null &&
                 <MainOtherProfile
-                  onClick={()=>navigate('/')}
+                  onClick={()=>navigate('/detail/details/'+myProfile.roommateId)}
                   myProfile={true}
                   userprofile={myProfile?.photoName}
                   nickName={myProfile?.nickname}
