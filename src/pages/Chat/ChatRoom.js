@@ -203,36 +203,36 @@ const ChatRoom = () => {
   }, [roomInfo]);
 
   // 베포용
-  // const connect = () => {
-  //   client.current = new StompJs.Client({
-  //     brokerURL: 'wss://server.my-geeks.com/stomp',
-  //     onConnect: () => {
-  //       subscribe();
-  //     }
-  //   });
-
-  //   client.current.webSocketFactory = function () {
-  //     return new SockJS("https://server.my-geeks.com/stomp");
-  //   };
-
-  //   client.current.activate();
-  // };
-
-  //로컬용
   const connect = () => {
     client.current = new StompJs.Client({
-      brokerURL: "ws://localhost:8080/stomp",
+      brokerURL: 'wss://server.my-geeks.com/stomp',
       onConnect: () => {
         subscribe();
-      },
+      }
     });
 
     client.current.webSocketFactory = function () {
-      return new SockJS("http://localhost:8080/stomp");
+      return new SockJS("https://server.my-geeks.com/stomp");
     };
 
     client.current.activate();
   };
+
+  //로컬용
+  // const connect = () => {
+  //   client.current = new StompJs.Client({
+  //     brokerURL: "ws://localhost:8080/stomp",
+  //     onConnect: () => {
+  //       subscribe();
+  //     },
+  //   });
+
+  //   client.current.webSocketFactory = function () {
+  //     return new SockJS("http://localhost:8080/stomp");
+  //   };
+
+  //   client.current.activate();
+  // };
 
   const publish = async () => {
     if (!client.current.connected || content.current.value.length === 0) return;
