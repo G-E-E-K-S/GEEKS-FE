@@ -18,6 +18,7 @@ import Save from "../../assets/img/MyPage/save.svg";
 import FillSave from "../../assets/img/MyPage/fillSave.svg";
 import Dots from "../../assets/img/Community/dots.svg";
 import ApplyRoommateIcon from "../../assets/img/Roommate/applyRoommate.svg";
+import Loading from "../Loading";
 
 const MenuBox = styled.div`
   padding: 20px 0;
@@ -249,6 +250,7 @@ const User = () => {
   const [textCenter, setTextCenter] = useState(null);
   const [data, setData] = useState(null);
   const [finishState, setFinishState] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   let { userId } = useParams();
   let navigate = useNavigate();
@@ -263,7 +265,7 @@ const User = () => {
         setRoommateState(res.data.roommateState);
         setRoommateApplyState(res.data.roommateApply);
         console.log(res.data);
-
+        setLoading(false);
         setData({
           datasets: [
             {
@@ -377,6 +379,7 @@ const User = () => {
   }
   
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent navigation={true}>
         <c.SubScreen>
@@ -470,6 +473,7 @@ const User = () => {
             onClick={()=>ApplyRoommate()}
             applyRoommate={()=>setApplyRommate(false)}/>
     </c.Totalframe>
+    )
   );
 };
 export default User;

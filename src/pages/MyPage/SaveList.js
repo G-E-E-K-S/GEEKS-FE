@@ -11,6 +11,7 @@ import Edit from "../../assets/img/MyPage/edit.svg";
 import Profile from "../../assets/img/MyPage/basicProfile.svg";
 import NoCheck from "../../assets/img/MyPage/noCheck.svg";
 import Check from "../../assets/img/MyPage/check.svg";
+import Loading from "../Loading";
 
 const DoneBtn = styled.div`
   display: flex;
@@ -52,6 +53,7 @@ const LifeStyles = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [saveList, setSaveList] = useState([]);
   const [isDone, setIsDone] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleEdit = () => {
     setActiveEdit(true);
@@ -67,6 +69,7 @@ const LifeStyles = () => {
             setSaveList(saveList.filter((data)=> !checkUserName.includes(data.nickname)));
             setCheckUserName([]);
             setIsDone(!isDone);
+            setLoading(false);
           }
           console.log(res)
         }catch(e) {
@@ -93,6 +96,7 @@ const LifeStyles = () => {
     if(checkUserName.includes(userName)) setCheckUserName(checkUserName.filter(nowName => nowName !== userName));
   }
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
@@ -122,6 +126,7 @@ const LifeStyles = () => {
         </c.SubScreen>
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 export default LifeStyles;

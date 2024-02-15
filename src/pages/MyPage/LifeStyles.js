@@ -6,6 +6,7 @@ import * as c from "../../components/Common/CommonStyle";
 import ColHeaderMenu from "../../components/Common/ColHeaderMenu";
 import LifeStyle from "../../components/Main/LifeStyle";
 import reset from '../../assets/img/MyPage/reset.svg';
+import Loading from "../Loading";
 
 const SubTitle = styled.div`
   display: flex;
@@ -75,6 +76,7 @@ const LifeStyles = () => {
   const [isCleaning, setIsCleaning] = useState(null);
   const [isTendency, setIsTendency] = useState(null);
   const [receiveData, setReceiveData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const handleReset = () => {
     setIsSmoke(null);
@@ -92,6 +94,7 @@ const LifeStyles = () => {
       try{
           const res = await API.get("/detail/send");
           setReceiveData(res.data);
+          setLoading(false);
       }catch(error){
         console.error(error);
       }
@@ -109,6 +112,7 @@ const LifeStyles = () => {
     setIsOut(receiveData.out);
     setIsCleaning(receiveData.cleaning);
     setIsTendency(receiveData.tendency);
+    setLoading(false);
   },[receiveData]);
 
   useEffect(()=>{
@@ -139,6 +143,7 @@ const LifeStyles = () => {
     }
   }
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent navigation={true}>
         <c.SubScreen>
@@ -163,6 +168,7 @@ const LifeStyles = () => {
         <Enroll onClick={()=>handleButtonClick()} isClicked={isClicked}>{receiveData?.exist ? '수정하기' : '등록하기' }</Enroll>
       </BottomMenues>
     </c.Totalframe>
+    )
   );
 };
 export default LifeStyles;

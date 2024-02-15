@@ -6,6 +6,7 @@ import JoinButton from "../../components/Join/JoinButton";
 import Popup from "../../components/Common/Popup";
 import House from "../../assets/gif/house.gif";
 import API from "../../axios/BaseUrl";
+import Loading from "../Loading";
 
 const StartMent = styled.div`
   margin-top: 15.16vh;
@@ -53,9 +54,9 @@ const LoginButton = styled.div`
 `;
 const Welcome = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const navigator = useNavigate();
   const location = useLocation(null);
   const [popupMessage, setPopupMessage] = useState('');
+  const navigator = useNavigate();
 
   useEffect(() => {
     setPopupMessage(location.state?.prev);

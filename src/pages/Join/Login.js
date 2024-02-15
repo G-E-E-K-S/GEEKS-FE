@@ -11,6 +11,7 @@ import ForgetPwdImg from "../../assets/img/Join/forgetPwd.svg";
 import NoShowPwd from "../../assets/img/Join/NoShowPwd.svg";
 import ShowPwd from "../../assets/img/Join/ShowPwd.svg";
 import Automatic from "../../assets/img/Join/automatic.svg";
+import Loading from "../Loading";
 
 const InputInfos = styled.div`
   display: flex;
@@ -86,6 +87,7 @@ const InputEmail = () => {
   const [isErrorPopup, setIsErrorPopUp] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
   const [automaticLogIn, setAutomaticLogIn] = useState(false);
+  const [loading, setLoading] = useState(false);
   const emailVal = useRef();
   const passwordVal = useRef();
   const navigate = useNavigate();
@@ -99,6 +101,7 @@ const InputEmail = () => {
   //axios
   const handleEmail = () => {
     async function fetchLogin() {
+      setLoading(true);
       try {
         const res = await API.post("/login/login", {
           email: emailVal.current.value +"@sangmyung.kr",
@@ -132,6 +135,7 @@ const InputEmail = () => {
     navigate('/home');
   }
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <HeaderMenu />
@@ -180,6 +184,7 @@ const InputEmail = () => {
         </ApplyCancelBottomSheet>
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 

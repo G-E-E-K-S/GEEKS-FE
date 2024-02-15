@@ -19,6 +19,7 @@ import Close from "../../assets/img/Home/close.svg";
 import Find from "../../assets/gif/find.gif";
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import BoldClose from "../../assets/img/Home/boldClose.svg";
+import Loading from "../Loading";
 
 const System = styled.div`
   width: 100%;
@@ -221,7 +222,6 @@ const Home = () => {
       try {
         const res = await API.get("/home/main");
         console.log(res.data);
-        setLoading(false);
         setRoommateApply(res.data.roommateApply)
         setIsExist(res.data.exist);
         setPoint(res.data.points);
@@ -229,6 +229,7 @@ const Home = () => {
         setWeeklyPost(res.data.weeklyPosts);
         setUserName(res.data.nickname);
         setIsShowReView(localStorage.getItem("show") !== "false");
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -251,7 +252,7 @@ const Home = () => {
   //   localStorage.setItem("showApply", false);
   // }
   return (
-    !loading && (
+    loading ? <Loading/> : (
       <c.Totalframe background={`#FAFAFA`}>
         <c.ScreenComponent navigation={true}>
           <c.SubScreen>

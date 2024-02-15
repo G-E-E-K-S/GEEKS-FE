@@ -7,6 +7,7 @@ import Header from "../../components/MyPage/Header";
 import Br from "../../components/Common/Br";
 import MainOtherProfile from "../../components/Main/MainOtherProfile";
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
+import Loading from "../Loading";
 
 const EditProfile = styled.div`
   padding: 16px 0px;
@@ -92,14 +93,17 @@ const NoApply = styled.div`
   margin-top: 63.82px;
 `;
 const MyProfile = () => {
-  const navigate = useNavigate();
   const [myProfile, setMyProfile] = useState('');
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
   useEffect(()=>{
     async function fetchMyProfile() {
       try {
         const res = await API.get("/member/profile");
         console.log(res.data)
         setMyProfile(res.data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -107,6 +111,7 @@ const MyProfile = () => {
     fetchMyProfile();
   },[]);
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header />
@@ -142,6 +147,7 @@ const MyProfile = () => {
         }
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 export default MyProfile;

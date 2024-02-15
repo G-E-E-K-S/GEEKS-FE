@@ -8,7 +8,8 @@ import NavigationBar from "../../components/Main/NavigationBar";
 import ChatList from "../../components/Chat/ChatList";
 import basicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import moment from "moment";
-import 'moment/locale/ko'
+import 'moment/locale/ko';
+import Loading from "../Loading";
 
 const Title = styled.div`
   color: #333;
@@ -33,7 +34,7 @@ const InnerBox = styled.div`
   height: ${(props)=>props.isSelect ? '4.73vh' : '100%'};
   color: ${(props)=>props.isSelect ? '#333' : '#949494'};
   font-size: 1rem;
-  font-weight: ${(props)=>props.isSelect ? '600' : '500'};;
+  font-weight: ${(props)=>props.isSelect ? '600' : '500'};
   line-height: 24px; /* 150% */
   display: flex;
   justify-content: center;
@@ -68,7 +69,7 @@ const Chat = () => {
   }
 
   return (
-    !loading && (
+    loading ? <Loading/> : (
       <c.Totalframe>
         <c.ScreenComponent navigation={true}>
           <c.SubScreen>

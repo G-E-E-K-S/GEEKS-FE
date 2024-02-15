@@ -6,9 +6,11 @@ import Header from "../../components/MyPage/Header";
 import CommunityPost from "../../components/Community/CommunityPost";
 import moment from "moment";
 import "moment/locale/ko";
+import Loading from "../Loading";
 
 const ScrapPost = () => {
   const [scrapPost, setScrapPost] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -16,6 +18,7 @@ const ScrapPost = () => {
       try {
         const res = await API.get("/post/scrap/history");
         setScrapPost(res.data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -23,6 +26,7 @@ const ScrapPost = () => {
     fetchScrapPost();
   }, []);
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header subtitle={`스크랩한 글`}/>
@@ -41,6 +45,7 @@ const ScrapPost = () => {
         ))}
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 

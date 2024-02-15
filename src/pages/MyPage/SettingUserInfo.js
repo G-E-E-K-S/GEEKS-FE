@@ -7,6 +7,7 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/MyPage/Header";
 import Popup from "../../components/Common/Popup";
+import Loading from "../Loading";
 
 const SubTitleBox = styled.div`
   margin-top: 6.64vh;
@@ -53,6 +54,7 @@ const AccountInfo = styled.div`
 const SettingUserInfo = () => {
   const [userData, setUserData] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   let location = useLocation();
 
@@ -63,6 +65,7 @@ const SettingUserInfo = () => {
       try {
         const res = await API.get("/member/information");
         setUserData(res.data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -72,6 +75,7 @@ const SettingUserInfo = () => {
     fetchUserInfo();
   }, []);
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header subtitle={`회원 정보 설정`} />
@@ -110,6 +114,7 @@ const SettingUserInfo = () => {
         />
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 export default SettingUserInfo;

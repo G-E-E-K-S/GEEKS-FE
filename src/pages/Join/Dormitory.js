@@ -7,6 +7,7 @@ import HeaderMenu from "../../components/Common/HeaderMenu";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
 import DormitoryBox from "../../components/Join/DormitoryBox";
+import Loading from "../Loading";
 
 const DormitoryTotal = styled.div`
   margin-top: 6.16vh;
@@ -26,6 +27,7 @@ const DormitoryBoxChoice = styled.div`
 
 const Dormitory = () => {
   const [dormiVal, setDormiVal] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const SelectDormitory = (dormitory) => {
@@ -35,6 +37,7 @@ const Dormitory = () => {
   const sendDormitory = () => {
     let type = dormiVal === '신관' ? 'NEW' : dormiVal === '구관' ? 'OLD' : 'HAPPY';
     async function fetchDormitory() {
+      setLoading(true);
       try{
         const res = await API.get("/member/type?type=" + type);
         res.data === 'success' && navigate('/finalpage')
@@ -46,6 +49,7 @@ const Dormitory = () => {
   }
 
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <HeaderMenu />
@@ -71,6 +75,8 @@ const Dormitory = () => {
         <JoinButton btnName={"다음"} handleClick={()=>sendDormitory()} isNextPage={dormiVal}/>
       </c.ScreenComponent>
     </c.Totalframe>
+
+    )
   );
 };
 

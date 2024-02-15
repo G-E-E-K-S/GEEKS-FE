@@ -23,6 +23,7 @@ import logout from "../../assets/img/MyPage/logout.svg";
 import GiftBox from "../../assets/img/MyPage/giftBox.svg";
 import { useSetRecoilState } from "recoil";
 import { UserNickName } from "../../recoil/UserNickName";
+import Loading from "../Loading";
 
 const UserInfoTop = styled.div`
   margin-top: 4.5vh;
@@ -142,7 +143,6 @@ const MyPage = () => {
         const res = await API.get("/member/myPage");
         setUserInfo(res.data);
         setContent(res.data.nickname);
-        setLoading(false);
         setToggle(res.data.open);
         if (res.data.major.includes("공학과"))
           setUserMajor(res.data.major.replace("공학과", ""));
@@ -151,6 +151,7 @@ const MyPage = () => {
         else if (res.data.major.includes("전공"))
           setUserMajor(res.data.major.replace("전공", ""));
         else setUserMajor(res.data.major);
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -177,7 +178,7 @@ const MyPage = () => {
   };
 
   return (
-    !loading && (
+    loading ? <Loading/> : (
       <c.Totalframe>
         <c.ScreenComponent navigation={true}>
           <c.SubScreen>

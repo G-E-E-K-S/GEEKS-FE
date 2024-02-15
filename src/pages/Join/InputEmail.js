@@ -8,6 +8,7 @@ import Header from "../../components/Join/Header";
 import TopNumber from "../../components/Join/TopNumber";
 import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
+import Loading from "../Loading";
 
 const InputEmailText = styled.div`
   font-size: 24px;
@@ -48,6 +49,7 @@ const Univ = styled.div`
 const InputEmail = () => {
   const [isSelected, setIsSelected] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
+  const [loading, setLoading] = useState(false);
   const emailVal = useRef();
   const navigate = useNavigate();
 
@@ -63,7 +65,6 @@ const InputEmail = () => {
   const handleEmail = () => {
     async function fetchEmailPage() {
       try {
-         // allow cookies
         const res = await API.get("/mail/send?email=" + emailVal.current.value + "@sangmyung.kr");
         res.data == "duplicate" ? navigate("/alreadyregist",{state:{userEmail: emailVal.current.value}}) :
         navigate("/inputcode",{state:{userEmail: emailVal.current.value}});
@@ -74,6 +75,7 @@ const InputEmail = () => {
     fetchEmailPage();
   };
   return (
+  loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <HeaderMenu />
@@ -97,7 +99,7 @@ const InputEmail = () => {
           isNextPage={isNextPage}
         />
       </c.ScreenComponent>
-    </c.Totalframe>
+    </c.Totalframe>)
   );
 };
 

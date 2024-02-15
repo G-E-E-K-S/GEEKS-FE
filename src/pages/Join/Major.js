@@ -10,6 +10,7 @@ import BottomSheet from "../../components/Common/BottomSheet";
 import Department from "../../components/Join/Department";
 import UnderArrow from "../../assets/img/Join/arrow_under.svg";
 import Close from "../../assets/img/Join/closeModal.svg";
+import Loading from "../Loading";
 
 const MajorTotal = styled.div`
   margin-top: 6.16vh;
@@ -73,7 +74,9 @@ const Major = () => {
   const [department,setDepartment] = useState('디자인대학');
   const [major,setMajor] = useState(null);
   const [studentID,setStudentID] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleFocus = (state) => {
     setIsSelected(state);
   };
@@ -107,6 +110,7 @@ const Major = () => {
   }
   const sendData = () => {
     async function fetchMjor() {
+      setLoading(true);
       try {
         const res = await API.get("/member/major?major=" + `${major}` + "&studentID=" + `${studentID}`);
         if(res.data === 'success') navigate('/gender');
@@ -118,6 +122,7 @@ const Major = () => {
   }
 
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <HeaderMenu />
@@ -160,6 +165,7 @@ const Major = () => {
         <JoinButton btnName={"다음"} isNextPage={isNextPage} handleClick={()=>sendData()}/>
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 

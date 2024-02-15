@@ -11,6 +11,7 @@ import NavigationBar from "../../components/Main/NavigationBar";
 import BottomSheet from "../../components/Roommate/BottomSheet";
 import basicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import BlurImg from "../../assets/img/Roommate/blurImg.svg";
+import Loading from "../Loading";
 
 const TitleText = styled.div`
   margin-top: 3.31vh;
@@ -88,9 +89,9 @@ const FindRoommate = () => {
     async function fetchUserData() {
       try{
         const res = await API.get("/point/find");
-        setLoading(false);
         setUserData(res.data.points);
         setIsExist(res.data.exist);
+        setLoading(false);
       }catch(e) {
         console.log(e);
       }
@@ -99,7 +100,7 @@ const FindRoommate = () => {
   },[]);
 
   return (
-    !loading && (
+    loading ? <Loading/> : (
       <c.Totalframe background={`linear-gradient(180deg, #FFF 0%, #F7F7F7 71%)`}>
       <c.ScreenComponent navigation={true}>
         <c.SubScreen>

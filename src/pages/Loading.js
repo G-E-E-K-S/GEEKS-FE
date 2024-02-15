@@ -4,7 +4,7 @@ import Lottie from "lottie-react";
 import LoadingImg from "../assets/lottie/loading.json";
 
 const Total = styled.div`
-  background: #000000;
+  background: #fff;
   opacity: 0.2;
   height: 100vh;
   display: flex;

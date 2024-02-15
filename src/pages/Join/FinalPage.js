@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import API from "../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import JoinButton from "../../components/Join/JoinButton";
 import BedIcon from "../../assets/gif/bed.gif";
+import Loading from "../Loading";
 
 const WelcomeText = styled.div`
   margin-top: 14.21vh;
@@ -35,9 +36,11 @@ const MainImg = styled.img`
   height: 354px;
 `;
 const FinalPage = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const sendEveryInfo = () => {
     async function fetchUserRegist(){
+      setLoading(true)
       try{
           const res = await API.get("/member/register");
           if(res.status == '200') navigate("/home");
@@ -48,6 +51,7 @@ const FinalPage = () => {
   fetchUserRegist();
 }
   return (
+    loading ? <Loading/> : (
     <c.Totalframe background={`linear-gradient(180deg, rgba(255, 199, 0, 0.10) 0%, rgba(250, 250, 250, 0.10) 100%)`}>
       <c.ScreenComponent>
         <WelcomeText>환영합니다!</WelcomeText>
@@ -61,6 +65,7 @@ const FinalPage = () => {
           handleClick={() => sendEveryInfo()}/>
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 
