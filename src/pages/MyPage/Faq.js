@@ -71,6 +71,13 @@ const MiniAskBox = styled.div`
   font-size: 0.875rem;
   font-weight: 600;
 `;
+const TotalTab =styled.div`
+    display: flex;
+    overflow-x : auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+`;
 const FAQ = () => {
   const [isSelect, setIsSelect] = useState("roommate");
   const ChangePage = (pageName) => {
@@ -81,12 +88,13 @@ const FAQ = () => {
   const ChatFaq = ['대화창을 나가고 싶어요','대화창에서 사진은 어떻게 보내나요?'];
   const NoticeFaq = ['알림이 안 울려요'];
   const communityFaq = ['내가 쓴 글/댓글은 어디서 볼 수 있나요?','좋아요 누른 글은 어디서 볼 수 있나요?','스크랩 한 글은 어디서 볼 수 있나요?','모임은 무엇인가요?'];
+  const etcFaq = ['홈 탭의 체크리스트는 무엇인가요?','홈 탭의 생활 규칙은 무엇인가요?','‘내 프로필 노출하기’는 무엇인가요?','외박신청은 어떻게 하는 건가요?','긱스는 어떻게 만들어졌나요?'];
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header subtitle={`자주 묻는 질문`} />
         {/* Tab */}
-        <c.Flex>
+        <TotalTab>
           <TabMenu
             isLine={isSelect === "roommate"}
             onClick={() => ChangePage("roommate")}>
@@ -107,7 +115,12 @@ const FAQ = () => {
             onClick={() => ChangePage("community")}>
               {`커뮤니티`}
           </TabMenu>
-        </c.Flex>
+          <TabMenu
+            isLine={isSelect === "etc"}
+            onClick={() => ChangePage("etc")}>
+              {`기타`}
+          </TabMenu>
+        </TotalTab>
         {isSelect === "roommate" && (
           RoommateFaq.map((question,index)=>(
           <FaqQuestion faqtext={question} onClick={()=>navigate('/faq/roommate/' + index)}/>))
@@ -120,6 +133,9 @@ const FAQ = () => {
         )}
         {isSelect === "community" && (
           communityFaq.map((question,index)=>(<FaqQuestion faqtext={question} onClick={()=>navigate('/faq/community/' +index)}/>))
+        )}
+        {isSelect === "etc" && (
+          etcFaq.map((question,index)=>(<FaqQuestion faqtext={question} onClick={()=>navigate('/faq/etc/' +index)}/>))
         )}
         <AskBox>
           <AskText>궁금증이 풀리지 않으셨나요?</AskText>

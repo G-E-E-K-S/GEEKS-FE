@@ -6,6 +6,7 @@ import FaqQuestion from "../../components/MyPage/FaqQuestion";
 import Header from "../../components/MyPage/Header";
 import NoticeIcon from "../../assets/img/MyPage/FAQ/notice.svg";
 import DetailsFaq from "../../JSON/DetailFaq.json";
+import Group from "../../assets/gif/round.gif";
 
 const Title = styled.div`
   margin-top: 16px;
@@ -86,6 +87,13 @@ const MiniAskBox = styled.div`
   font-size: 0.875rem;
   font-weight: 600;
 `;
+const IMG = styled.img`
+  margin-top: 8px;
+  width: 100%;
+`;
+const GIF = styled.img`
+  width: 100%;
+`;
 const FaqContent = () => {
   let { pageNum, type } = useParams();
   let navigate = useNavigate();
@@ -95,10 +103,21 @@ const FaqContent = () => {
         <Header />
         <Title>{DetailsFaq.faq[type][pageNum].postTitle}</Title>
         <c.Flex>
+        {DetailsFaq.faq[type][pageNum].notice &&
+        <>
           <NoticeImg src={NoticeIcon} />
           <Notice>{DetailsFaq.faq[type][pageNum].notice}</Notice>
+        </>
+        }
         </c.Flex>
+        {(type === 'community' && pageNum == 3) && <GIF src={Group}/>}
         <Content>{DetailsFaq.faq[type][pageNum].content}</Content>
+        {DetailsFaq.faq[type][pageNum].detailContent?.map((val,index) => 
+          <>
+            <Content>{val}</Content>
+            <IMG src={process.env.REACT_APP_BUCKET_BASEURL + "FAQ/" + DetailsFaq.faq[type][pageNum].image[index] + ".svg"}/>
+          </>
+        )}
         <Important>{DetailsFaq.faq[type][pageNum].important}</Important>
         {/* {DetailsFaq.faq.community[pageNum].button} */}
         {type === "community" && pageNum == "3" && (
