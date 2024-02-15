@@ -20,17 +20,17 @@ const Header = styled.div`
   justify-content: space-between;
   margin-top: 8px;
 `;
-const Finish = styled.div`
+const EditBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
   height: 40px;
   width: 50px;
-  background: #efefef;
-  color: #949494;
+  background: ${(props)=>props.isChange ? '#FFC700' : '#efefef'};
+  color: ${(props)=>props.isChange ? '#333' : '#949494'};
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 600;isChange
 `;
 const UploadProfile = styled.div`
   width: 100%;
@@ -225,16 +225,21 @@ const EditProfile = () => {
   const [prevNickname, setPrevNickname] = useState(null);
   const [photo, setPhoto] = useState('');
   const [introduction, setIntroduction] = useState(null);
+  const [prevIntroduction, setPrevIntroduction] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
   const [dormitory, setDormitory] = useState('');
+  const [prevDormitory, setPrevDormitory] = useState('');
   const DormitoryKind = ["구관", "신관", "행복기숙사"];
   const [file, setFile] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
   const [studentID,setStudentID] = useState(null);
+  const [prevStudentID,setPrevStudentID] = useState(null);
   const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
   const [department, setDepartment] = useState('');
+  const [prevMajor, setPrevMajor] = useState('');
   const [major,setMajor] = useState(null);
   const [isMajorOpen, setIsMajorOpen] = useState(false);
+  const [isChange, setIsChange] = useState(false);
 
   const navigate = useNavigate();
   const handleMajor = (major) =>{
@@ -259,9 +264,13 @@ const EditProfile = () => {
         setPrevNickname(res.data.nickname);
         setPhoto(res.data.photoName);
         setIntroduction(res.data.introduction);
+        setPrevIntroduction(res.data.introduction);
         setStudentID(res.data.studentID);
+        setPrevStudentID(res.data.studentID);
         setMajor(res.data.major);
+        setPrevMajor(res.data.major);
         setDormitory(res.data.type === 'NEW' ? '신관' : res.data.type === 'OLD' ? '구관' : '행복기숙사');
+        setPrevDormitory(res.data.type === 'NEW' ? '신관' : res.data.type === 'OLD' ? '구관' : '행복기숙사');
       } catch (error) {
         console.error(error);
       }
@@ -308,6 +317,7 @@ const EditProfile = () => {
   }
 
   const hadleEditProfile = () => {
+    if(isChange === false) return;
     const formData = new FormData();
     
     const postData = {
@@ -362,12 +372,18 @@ const EditProfile = () => {
     setDepartment(department);
   };
 
+  useEffect(()=>{
+    if(prevNickname !== nickname || prevMajor !== major || prevStudentID !== studentID || prevDormitory !== dormitory || prevIntroduction !== introduction || file !== null) setIsChange(true);
+    else setIsChange(false);
+    
+  },[nickname,major, studentID, prevNickname, dormitory, introduction, file])
+
   return (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header>
           <GoBack/>
-          <Finish onClick={hadleEditProfile}>{`수정`}</Finish>
+          <EditBtn onClick={hadleEditProfile} isChange={isChange}>{`수정`}</EditBtn>
         </Header>
         <UploadProfile>
           <ProfileImg key={1} src={fileUrl !== null ? fileUrl : photo.length !== 0 ? process.env.REACT_APP_BUCKET_BASEURL + photo : Profile} isProfile={fileUrl !== null}/>
