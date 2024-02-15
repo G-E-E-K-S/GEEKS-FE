@@ -11,6 +11,7 @@ import Girl from "../../assets/img/Join/girl.svg";
 import SelectGirl from "../../assets/img/Join/selectGirl.svg";
 import Boy from "../../assets/img/Join/man.svg";
 import SelectBoy from "../../assets/img/Join/selectMan.svg";
+import Loading from "../Loading";
 
 const GenderTotal = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ const Gender = () => {
   const [isgirl, setIsgirl] = useState(false);
   const [isboy, setIsboy] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const ChangeColor = () => {
@@ -45,6 +47,7 @@ const Gender = () => {
   const checkGender = () => {
     const CurGender = isgirl ? 'FEMALE' : 'MALE';
     async function fetchGenderPage() {
+      setLoading(true);
       try {
         const res = await API.get("/member/gender?gender=" + CurGender);
         if(res.data === 'success') navigate('/dormitory');
@@ -56,6 +59,7 @@ const Gender = () => {
   };
 
   return (
+  loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <HeaderMenu />
@@ -80,6 +84,7 @@ const Gender = () => {
           isNextPage={isNextPage}/>
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 

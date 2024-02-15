@@ -17,6 +17,8 @@ import MyPageIcon from "../../assets/img/Community/myPage.svg";
 import WritePost from "../../assets/img/Community/edit.svg";
 import GeeksLogo from "../../assets/img/Common/geeksLogo.svg";
 import Search from "../../assets/img/Home/search.svg";
+import Loading from "../Loading";
+
 const TotalHeader = styled.div`
     display: flex;
     justify-content: space-between;
@@ -114,7 +116,7 @@ const Community = () => {
     return moment(uploadTime).fromNow(`A`)+'전'; // 지금으로부터 계산
   }
 
-  return loading ? null : (
+  return loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent navigation={true}>
         <TotalHeader>

@@ -10,6 +10,7 @@ import AddPhoto from "../../assets/img/Community/addPhoto.svg";
 import checkBoxIcon from "../../assets/img/Community/checkBox.svg";
 import FillCheckBoxIcon from "../../assets/img/Community/fillCheckBox.svg";
 import DeletePhoto from "../../assets/img/Community/deletePhoto.svg";
+import Loading from "../Loading";
 
 const DoneBtn = styled.div`
   border-radius: 8px;
@@ -114,6 +115,7 @@ const Community = () => {
     const [height, setHeight] = useState('216px');
     const [isAnonymity, setIsAnonymity] = useState(false);
     const [isCheck, setIsCheck] = useState(false);
+    const [loading, setLoading] = useState(false);
     const contentRef = useRef();
     const navigate = useNavigate();
     
@@ -152,6 +154,7 @@ const Community = () => {
       }
         async function fetchPost() {
           if(!(title && content)) return;
+          setLoading(true);
           try {
             const res = await API.post("/post/create", formData,{
                 headers:{
@@ -176,6 +179,7 @@ const Community = () => {
       }, [contentRef]);
     
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <c.SubScreen>
@@ -206,6 +210,7 @@ const Community = () => {
         </c.SubScreen>
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 

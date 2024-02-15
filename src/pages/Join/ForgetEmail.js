@@ -5,6 +5,7 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import HeaderMenu from "../../components/Common/HeaderMenu";
 import JoinButton from "../../components/Join/JoinButton";
+import Loading from "../Loading";
 
 const NoticeTitle = styled.div`
   white-space: pre-wrap;
@@ -70,6 +71,7 @@ const Univ = styled.div`
 const ForgetEmail = () => {
   const [isEmailSelected, setIsEmailSelected] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
+  const [loading, setLoading] = useState(false);
   const emailVal = useRef();
   const passwordVal = useRef();
   const navigate = useNavigate();
@@ -81,6 +83,7 @@ const ForgetEmail = () => {
 
   const handleEmail = () => {
     async function fetchLogin() {
+      setLoading(true);
       try {
         let email = emailVal.current.value + "@sangmyung.kr";
         console.log(email)
@@ -93,6 +96,7 @@ const ForgetEmail = () => {
     fetchLogin();
   };
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <HeaderMenu />
@@ -116,6 +120,8 @@ const ForgetEmail = () => {
         <JoinButton handleClick={() => handleEmail()} isNextPage={isNextPage} btnName={`메일 받기`}/>
       </c.ScreenComponent>
     </c.Totalframe>
+
+    )
   );
 };
 

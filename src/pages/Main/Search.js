@@ -69,7 +69,6 @@ const Search = () => {
   const [posts, setPosts] = useState([]);
   const [cursor, setCursor] = useState(-1);
   const [hasNext, setHasNext] = useState(true);
-  const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [isSelect, setIsSelect] = useState("post");
 
@@ -81,7 +80,6 @@ const Search = () => {
         "/home/search/post?cursor=" + cursor + "&keyword=" + keyword
       );
       console.log(res.data);
-      setLoading(false);
       setHasNext(res.data.hasNextPage);
       setPosts((prev) => [...prev, ...res.data.posts]);
     } catch (error) {

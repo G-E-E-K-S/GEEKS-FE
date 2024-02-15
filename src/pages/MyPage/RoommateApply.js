@@ -16,6 +16,7 @@ import CancelRoommate from "../../assets/img/MyPage/cancleRoommate.svg";
 import Roommate from "../../assets/img/MyPage/roommate.svg";
 import BasicrProfile from "../../assets/img/MyPage/basicProfile.svg";
 import Success from "../../assets/gif/success.gif";
+import Loading from "../Loading";
 import { useNavigate } from "react-router-dom";
 
 const ApplyTop = styled.div`
@@ -247,6 +248,7 @@ const RoommateApply = () => {
   const [opponentNickName, setOpponentNickName] = useState("");
   const [matching, setMatching] = useState(false);
   const [openMatchingModal, setOpenMatchingModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   const content = useRecoilValue(UserNickName);
   const navigate = useNavigate();
   useState(() => {
@@ -254,6 +256,7 @@ const RoommateApply = () => {
       try {
         const res = await API.get("/roommate/sent");
         setSentApply(res.data);
+        setLoading(false);
       } catch (e) {
         console.log(e);
       }
@@ -322,6 +325,7 @@ const RoommateApply = () => {
     setOpenMatchingModal(false);
   }
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <Header subtitle={`신청 목록`} />
@@ -455,6 +459,7 @@ const RoommateApply = () => {
           />
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 export default RoommateApply;

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import HeaderMenu from "../../components/Common/HeaderMenu";
 import JoinButton from "../../components/Join/JoinButton";
+import Loading from "../Loading";
 
 const NoticeTitle = styled.div`
   white-space: pre-wrap;
@@ -62,6 +63,7 @@ const FindPWD = styled.div`
 const AlreadyRegist = () => {
   const [isEmailSelected, setIsEmailSelected] = useState("false");
   const [isNextPage, setIsNextPage] = useState(false);
+  const [loading, setLoading] = useState(false);
   const emailVal = useRef();
   const passwordVal = useRef();
   const navigate = useNavigate();
@@ -78,6 +80,7 @@ const AlreadyRegist = () => {
       passwordVal.current.value
     );
     async function fetchLogin() {
+      setLoading(true);
       try {
         const res = await API.post("/login/login", {
           email: emailVal.current.value + "@sangmyung.kr",
@@ -90,6 +93,7 @@ const AlreadyRegist = () => {
     fetchLogin();
   };
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <HeaderMenu />
@@ -101,6 +105,7 @@ const AlreadyRegist = () => {
         <JoinButton onClick={() => handleEmail()} isNextPage={true} btnName={`메일 받기`}/>
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 

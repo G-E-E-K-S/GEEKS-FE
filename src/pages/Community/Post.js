@@ -22,6 +22,7 @@ import FillStar from "../../assets/img/Community/fillStar.svg";
 import Send from "../../assets/img/Chat/send.svg";
 import CheckBox from "../../assets/img/Community/checkBox.svg";
 import FillCheckBox from "../../assets/img/Community/fillCheckPost.svg";
+import Loading from "../Loading";
 
 const InputCommentBox = styled.div`
   height: 13.26vh;
@@ -166,6 +167,7 @@ const Post = () => {
         setPostInfo(res.data);
         setIsLike(res.data.heartState);
         setIsStar(res.data.scrapState);
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -313,7 +315,8 @@ const Post = () => {
     })
   }
   return (
-    <c.Totalframe>
+    loading ? <Loading/> : (
+      <c.Totalframe>
         <c.ScreenComponent navigation={true}>
           <c.SubScreen>
             <HeaderMenu>
@@ -427,6 +430,7 @@ const Post = () => {
           </TotalInput>
         </InputCommentBox>
       </c.Totalframe>
+    )
   );
 };
 

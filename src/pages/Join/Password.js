@@ -11,6 +11,7 @@ import NoneCheck from "../../assets/img/Join/noneCheck.svg";
 import Check from "../../assets/img/Join/Check.svg";
 import NoShowPwd from "../../assets/img/Join/NoShowPwd.svg";
 import ShowPwd from "../../assets/img/Join/ShowPwd.svg";
+import Loading from "../Loading";
 
 const SubText = styled.div`
   color: #949494;
@@ -66,6 +67,7 @@ const Password = () => {
   const [pwdSame, setpwdSame] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
   const [isNextPage, setIsNextPage] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const ChangeBarColor = () => {
@@ -112,6 +114,7 @@ const Password = () => {
 
   const checkPassword = () => {
     async function fetchPassword() {
+      setLoading(true);
       try {
         const res = await API.post("/member/password", {
           password: inputval,
@@ -125,6 +128,7 @@ const Password = () => {
   };
 
   return (
+    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <HeaderMenu />
@@ -166,6 +170,8 @@ const Password = () => {
           isNextPage={isNextPage}/>
       </c.ScreenComponent>
     </c.Totalframe>
+
+    )
   );
 };
 

@@ -7,6 +7,7 @@ import CommunityPost from "../../components/Community/CommunityPost";
 import styled from "styled-components";
 import moment from "moment";
 import "moment/locale/ko";
+import Loading from "../Loading";
 
 const Menu = styled.div`
   width: 100%;
@@ -28,6 +29,7 @@ const CommunityWrite = () => {
   const [selectMenu, setSelectMenu] = useState("post");
   const [post,setPost] = useState([]);
   const [comment,setComment] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -38,6 +40,7 @@ const CommunityWrite = () => {
         console.log(res.data)
         setPost(res.data.postHistories);
         setComment(res.data.commentHistories);
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -46,40 +49,42 @@ const CommunityWrite = () => {
   }, []);
 
   return (
-    <c.Totalframe>
-      <c.ScreenComponent>
-        <Header subtitle={`커뮤니티 작성 내역`} />
-        <Menu>
-          <SubMenu isSelect={selectMenu === 'post'} onClick={()=>setSelectMenu('post')}>{`글`}</SubMenu>
-          <SubMenu isSelect={selectMenu === 'comment'} onClick={()=>setSelectMenu('comment')}>{`댓글`}</SubMenu>
-        </Menu>
-        {selectMenu === 'post' && (
-          post.map((post)=>(
-            <CommunityPost
-            dot={false}
-            onClick={() => navigate(`/post/${post.postId}`)}
-            postName={post.title}
-            commentNum={post.commentCount}
-            postContent={post.content}
-            likeNum={post.likeCount}
-            writeTime={moment(post.createdDate).format('MM.DD')}/>
-          ))
-        )}
-        {selectMenu === 'comment' && (
-          comment.map((comment)=>(
-            <CommunityPost
-            dot={false}
-            onClick={() => navigate(`/post/${comment.postId}`)}
-            isComment={true}
-            postName={comment.title}
-            likeNum={comment.likeCount}
-            commentNum={comment.commentCount}
-            postContent={comment.content}
-            writeTime={moment(comment.createdDate).format('MM.DD')}/>
-          ))
-        )}
+    loading ? <Loading/> :(
+      <c.Totalframe>
+        <c.ScreenComponent>
+          <Header subtitle={`커뮤니티 작성 내역`} />
+          <Menu>
+            <SubMenu isSelect={selectMenu === 'post'} onClick={()=>setSelectMenu('post')}>{`글`}</SubMenu>
+            <SubMenu isSelect={selectMenu === 'comment'} onClick={()=>setSelectMenu('comment')}>{`댓글`}</SubMenu>
+          </Menu>
+          {selectMenu === 'post' && (
+            post.map((post)=>(
+              <CommunityPost
+              dot={false}
+              onClick={() => navigate(`/post/${post.postId}`)}
+              postName={post.title}
+              commentNum={post.commentCount}
+              postContent={post.content}
+              likeNum={post.likeCount}
+              writeTime={moment(post.createdDate).format('MM.DD')}/>
+            ))
+          )}
+          {selectMenu === 'comment' && (
+            comment.map((comment)=>(
+              <CommunityPost
+              dot={false}
+              onClick={() => navigate(`/post/${comment.postId}`)}
+              isComment={true}
+              postName={comment.title}
+              likeNum={comment.likeCount}
+              commentNum={comment.commentCount}
+              postContent={comment.content}
+              writeTime={moment(comment.createdDate).format('MM.DD')}/>
+            ))
+          )}
       </c.ScreenComponent>
     </c.Totalframe>
+    )
   );
 };
 export default CommunityWrite;
