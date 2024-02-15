@@ -150,6 +150,7 @@ const Post = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [commentWriterState, setCommentWriterState] = useState(false);
   const [nowFocus, setNowFocus] = useState(-1);
+  const [commentInfo, setCommentInfo] = useState([]);
 
   const commentRef = useRef();
   let { postId } = useParams();
@@ -246,12 +247,11 @@ const Post = () => {
     }
   };
   
-  const AddReComment = (commentId, commentUserName, modalState, nowFocus) => {
-    console.log(commentUserName)
-    setNowFocus(nowFocus);
-    setIsModalOpen(modalState);
-    setParentId(commentId);
-    setRecommentUserName(commentUserName);
+  const AddReComment = () => {
+    setIsModalOpen(false);
+    setNowFocus(commentInfo.nowFocus);
+    setParentId(commentInfo.parentId);
+    commentRef.current.focus();
   };
 
   const DeletePost = () => {
@@ -304,9 +304,13 @@ const Post = () => {
     setIsEdit(true);
     setIsCommentBts(false);
   }
-  const AddComment = () => {
-    setIsModalOpen(false);
-    commentRef.current.focus();
+  const handleCommentModal = (parentId, commentUserName, nowFocus) => {
+    setIsModalOpen(true);
+    setRecommentUserName(commentUserName);
+    setCommentInfo({
+      parentId: parentId,
+      nowFocus: nowFocus
+    })
   }
   return (
     <c.Totalframe>
@@ -365,7 +369,7 @@ const Post = () => {
                   }}
                   comment={comment.deleted ? '삭제된 댓글입니다' : comment.content}
                   deleted={comment.deleted}
-                  wirteChild={() => AddReComment(comment.commentId, comment.writer, true, index)}
+                  wirteChild={()=>handleCommentModal(comment.commentId, comment.writer, index)} 
                   deleteComment={()=> DeleteCommentBts(comment.commentId, comment.commentWriterState, comment.content)}/>
                 {comment.children?.map((child) => (
                   <Comment
@@ -376,7 +380,6 @@ const Post = () => {
                       username: child.writer  === null ? '익명' : child.writer,
                       uploadtime: caclTime(child.createdDate),
                     }}
-                    wirteChild={() => AddReComment(child.commentId, child.writer, true)}
                     deleteComment={()=> DeleteCommentBts(child.commentId, child.commentWriterState, child.content)}/>
                 ))}
               </div>
@@ -408,7 +411,7 @@ const Post = () => {
                 <ModalTxt>{recommentUserName === null ? '익명' : recommentUserName}{`님께 답글을 달까요?`}</ModalTxt>
                 <ModalBtn>
                   <NoBtn onClick={() => setIsModalOpen(false)}>{`아니요`}</NoBtn>
-                  <YesBtn onClick={() => AddComment(false)}>{`네`}</YesBtn>
+                  <YesBtn onClick={() => AddReComment()}>{`네`}</YesBtn>
                 </ModalBtn>
               </Modal>
             )}
