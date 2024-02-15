@@ -33,9 +33,6 @@ const InpufForm = styled.input`
   font-weight: 500;
   line-height: 24px;
   margin-left: 8px;
-  &:placeholder-shown {
-    overflow: visible;
-  }
 `;
 const InputSearch = (props) => {
 
