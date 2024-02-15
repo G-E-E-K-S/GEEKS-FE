@@ -13,16 +13,17 @@ const ModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  z-index: 15;
 `;
 const ModalBox = styled.div`
-  background: #fff;
+  background: ${(props)=>props.isWelcome ? '#F7F7F7' : '#fff'};
   padding: ${(props)=>props.padding};
   border-radius: 16px;
   min-width: 319px;
   width: max-content;
   height: max-content;
   position: relative;
-  z-index: 2;
+  z-index: 30;
 `;
 const WFull = styled.div`
   width: 320px;
@@ -39,7 +40,7 @@ const Modal = (props) => {
           <CloseBtn src={Close} onClick={props.onClick}/>
         </WFull>
       }
-      <ModalBox padding={props.padding}>{props.children}</ModalBox>
+      <ModalBox padding={props.padding} isWelcome={props.isWelcome}>{props.children}</ModalBox>
     </ModalOverlay>
   );
 };
