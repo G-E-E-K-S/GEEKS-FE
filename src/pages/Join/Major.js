@@ -32,7 +32,7 @@ const StudentIdTotal = styled.div`
   padding: 7px 0px 8px 0px;
   display: flex;
   justify-content: flex-start;
-  width: 22.82vw;
+  width: 30.82vw;
   border-bottom: 2px solid
     ${(props) => (props.isSelected ? "#ECAA00" : "#efefef")};
 `;
