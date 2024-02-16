@@ -99,6 +99,7 @@ const SecessionReason = () => {
       try {
         const res = await API.get("/member/withdrawal");
         if(res.data === 'success') {
+          localStorage.setItem('autologin',false);
           navigate('/welcome', {state: {prev: "withdrawal"}, replace: true});
         }
       } catch (error) {
