@@ -7,6 +7,7 @@ import LeaveReason from "../../components/MyPage/LeaveReason";
 import Modal from "../../components/Common/Modal";
 import * as c from "../../components/Common/CommonStyle";
 import SecessionIcon from "../../assets/img/MyPage/secessionModal.svg";
+import Loading from "../Loading";
 
 const MainText = styled.div`
   font-size: 1.5rem;
@@ -92,13 +93,32 @@ const SecessionReason = () => {
     "마음에 드는 룸메이트가 없어요",
     "기타",
   ];
+  const [detailReason, setDetailReason] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
   const Secession = () => {
+    async function fetchReason() {
+      setLoading(true);
+      try {
+        const res = await API.post("/member/reason", detailReason);
+        if(res.data === 'success'){
+          fetchSecession();
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchReason();
+
     async function fetchSecession() {
+      setLoading(true);
       try {
         const res = await API.get("/member/withdrawal");
         if(res.data === 'success') {
+          setLoading(false);
           localStorage.setItem('autologin',false);
           navigate('/welcome', {state: {prev: "withdrawal"}, replace: true});
         }
@@ -106,8 +126,10 @@ const SecessionReason = () => {
         console.error(error);
       }
     }
-    fetchSecession();
   };
+  const handleReaseon = (reason) => {
+    setDetailReason((prev)=>([...prev,reason]));
+  }
   return (
     <c.Totalframe>
       <c.ScreenComponent style={{height: `calc(100vh - 200px)`}}>
@@ -116,7 +138,7 @@ const SecessionReason = () => {
         <SubText>{`계정을 삭제하시면 가입 정보, 게시글 작성 내역 등 모든 활동 정보가 사라지며 재가입시 재학생 인증도 다시 해야 해요.`}</SubText>
         <CuriousReason>{`떠나시려는 이유가 궁금해요`}</CuriousReason>
         {leaveReason.map((val) => (
-          <LeaveReason leaveReason={val} />
+          <LeaveReason leaveReason={val} onSelect={(selectedReason) => handleReaseon(selectedReason)}/>
         ))}
       </c.ScreenComponent>
       <Bottom>
