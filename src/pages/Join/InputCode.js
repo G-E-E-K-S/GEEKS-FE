@@ -44,23 +44,27 @@ const InputNumber = styled.div`
   display: flex;
   margin-top: 55px;
 `;
-
+const InputInfos = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 7px;
+  border-bottom: 2px solid
+    ${(props) => (props.isSelected ? "#ECAA00" : "#EFEFEF")};
+  color: #c4c7c7;
+  width: 18.46vw;
+  margin-right: 20px;
+`;
 const Code = styled.input`
   border: none;
   outline: none;
-  width: 72px;
-  padding-bottom: 15px;
+  width: 19.46vw;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  border-bottom: 2px solid
-    ${(props) => (props.isSelected ? "#ECAA00" : "#EFEFEF")};
-  margin-right: 20px;
-  font-style: normal;
+  align-items: center;
   text-align: center;
-  font-size: 48px;
+  font-size: 3rem;
   font-weight: 700;
-  line-height: 32px; /* 66.667% */
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
@@ -98,10 +102,14 @@ const InputCode = () => {
   const handleInputChange = (index, event) => {
     const nextIndex = index + 1;
 
-    if (event.target.value.length === 1 && nextIndex < inputRefs.length) {
-      inputRefs[nextIndex].current.focus();
+    if (isNaN(inputRefs[index].current.value)) {
+      return;
+    }else{
+      if (event.target.value.length === 1 && nextIndex < inputRefs.length) {
+        inputRefs[nextIndex].current.focus();
+      }
     }
-
+    
     event.target.value.length > 0 ? setIsNextPage(true) : setIsNextPage(false);
   };
 
@@ -120,8 +128,6 @@ const InputCode = () => {
     for(let i = 0 ; i < 4 ; i++){
       code += inputRefs[i].current.value;
     }
-
-    //if(code.length !== 4) return;
 
     async function fetchCode() {
       try {
@@ -193,16 +199,18 @@ const InputCode = () => {
         </TotalSendMail>
         <InputNumber>
           {inputRefs.map((ref, index) => (
-            <Code
-              isSelected={isSelected}
-              key={index}
-              ref={ref}
-              type="number"
-              maxlength={'2'}
-              onChange={(e) => handleInputChange(index, e)}
-              onKeyUp={(e) => handleKeydown(index, e)}
-              onFocus={() => ChangeBarColor()}
-            />
+            <InputInfos isSelected={isSelected}>
+              <Code
+                key={index}
+                ref={ref}
+                type="text"
+                maxLength={1}
+                pattern="\d*"
+                onChange={(e) => handleInputChange(index, e)}
+                onKeyUp={(e) => handleKeydown(index, e)}
+                onFocus={() => ChangeBarColor()}
+              />
+            </InputInfos>
           ))}
         </InputNumber>
         <c.Flex>
