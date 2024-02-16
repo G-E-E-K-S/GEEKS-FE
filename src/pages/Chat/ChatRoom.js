@@ -60,7 +60,7 @@ const Date = styled.div`
   text-align: center;
 `;
 const ChatContent = styled.div`
-  overflowy: scroll;
+  overflow-y: auto;
   height: max-content;
   margin-top: 65px;
   margin-bottom: 100px;
@@ -193,8 +193,10 @@ const ChatRoom = () => {
   }, []);
 
   useEffect(() => {
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  }, [chatList]);
+    if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+}, [chatList]);
 
   useEffect(() => {
     connect();
