@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import CircleCheck from "../../assets/img/MyPage/circleCheck.svg";
@@ -44,14 +44,24 @@ const ReasonBox = styled.textarea`
 `;
 const LeaveReason = (props) => {
   const [isClick, setIsClick] = useState(false);
+  const detailReason = useRef(null);
+
+  const handleClick = () => {
+    if (props.onSelect) {
+      props.onSelect({
+        reason: props.leaveReason,
+        detailReason: detailReason.current?.value,
+      });
+    }
+  }
   return (
     <>
-      <Total onClick={() => setIsClick(!isClick)}>
+      <Total onClick={()=>setIsClick(!isClick)}>
         <Check src={isClick ? FIllCircleCheck : CircleCheck} />
         <Reason>{props.leaveReason}</Reason>
       </Total>
       {isClick && (
-        <ReasonBox placeholder="(선택) 자세한 이유를 듣고 싶어요. 더 멋지게 보완할게요." />
+        <ReasonBox ref={detailReason} onBlur={()=>handleClick()}placeholder="(선택) 자세한 이유를 듣고 싶어요. 더 멋지게 보완할게요."/>
       )}
     </>
   );
