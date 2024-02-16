@@ -5,7 +5,6 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import HeaderMenu from "../../components/Common/HeaderMenu";
 import JoinButton from "../../components/Join/JoinButton";
-import Loading from "../Loading";
 
 const NoticeTitle = styled.div`
   white-space: pre-wrap;
@@ -61,51 +60,27 @@ const FindPWD = styled.div`
   line-height: 24px;
 `;
 const AlreadyRegist = () => {
-  const [isEmailSelected, setIsEmailSelected] = useState("false");
-  const [isNextPage, setIsNextPage] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const emailVal = useRef();
-  const passwordVal = useRef();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleEmailVal = () => {
-    let EmailLen = emailVal.current.value.length;
-    EmailLen > 0 ? setIsNextPage(true) : setIsNextPage(false);
-  };
-
-  const handleEmail = () => {
-    console.log(
-      emailVal.current.value + "@sangmyung.kr",
-      passwordVal.current.value
-    );
-    async function fetchLogin() {
-      setLoading(true);
-      try {
-        const res = await API.post("/login/login", {
-          email: emailVal.current.value + "@sangmyung.kr",
-        });
-        if (res.data === "success") navigate("/home");
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchLogin();
-  };
   return (
-    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <HeaderMenu />
         <NoticeTitle>{`아래 이메일로\n이미 가입한 이력이 있어요`}</NoticeTitle>
         <EnrollDate>{`2023년 9월 23일 가입`}</EnrollDate>
-        <UserEmail>{location.state?.userEmail + '@sangmyung.kr'}</UserEmail>
+        <UserEmail>{location.state?.userEmail + "@sangmyung.kr"}</UserEmail>
         <ForgetPWD>{`비밀번호를 잊어버리셨나요?`}</ForgetPWD>
-        <FindPWD onClick={()=>navigate('/forgetemail')}>{`비밀번호 찾기`}</FindPWD>
-        <JoinButton onClick={() => handleEmail()} isNextPage={true} btnName={`메일 받기`}/>
+        <FindPWD
+          onClick={() => navigate("/forgetemail")}
+        >{`비밀번호 찾기`}</FindPWD>
+        <JoinButton
+          handleClick={() => navigate("/login")}
+          isNextPage={true}
+          btnName={`로그인하기`}
+        />
       </c.ScreenComponent>
     </c.Totalframe>
-    )
   );
 };
 
