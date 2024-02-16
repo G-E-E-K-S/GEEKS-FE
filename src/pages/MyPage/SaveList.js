@@ -63,13 +63,14 @@ const LifeStyles = () => {
     if (checkUserName.length > 0) {
       async function fetchDeleteSaveList() {
         try{
+          setLoading(true);
           const res = await API.get("/roommate/removesave?nickname="+checkUserName);
           if(res.status == '200'){
+            setLoading(false);
             setShowPopup(true);
             setSaveList(saveList.filter((data)=> !checkUserName.includes(data.nickname)));
             setCheckUserName([]);
             setIsDone(!isDone);
-            setLoading(false);
           }
           console.log(res)
         }catch(e) {
@@ -84,7 +85,8 @@ const LifeStyles = () => {
     async function fetchSaveList() {
       try{
         const res = await API.get("/roommate/savelist");
-        setSaveList(res.data)
+        setSaveList(res.data);
+        setLoading(false);
       }catch(e) {
         console.log(e);
       } 
