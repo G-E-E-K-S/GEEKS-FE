@@ -34,6 +34,7 @@ const UserEmail = styled.div`
   font-weight: 600;
   line-height: 28px;
   margin-bottom: 64px;
+  margin-top: 40px;
 `;
 const ForgetPWD = styled.div`
   color: #333;
