@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import API from "../../axios/BaseUrl";
-import axios from "axios";
 import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import fillSave from '../../assets/img/MyPage/fillSave.svg';
