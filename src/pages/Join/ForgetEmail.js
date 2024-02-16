@@ -86,9 +86,11 @@ const ForgetEmail = () => {
       setLoading(true);
       try {
         let email = emailVal.current.value + "@sangmyung.kr";
-        console.log(email)
         const res = await API.get("/mail/temporary?email=" + email)
-        if (res.data === "success") navigate("/login");
+        if (res.data === "success"){
+          navigate("/login");
+          setLoading(false);
+        }
       } catch (error) {
         console.error(error);
       }
