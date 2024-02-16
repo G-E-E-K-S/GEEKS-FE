@@ -9,14 +9,23 @@ import JoinButton from "../../components/Join/JoinButton";
 import MainText from "../../components/Join/MainText";
 import ErrorPopup from "../../components/Common/ErrorPopup";
 
+const InputInfos = styled.div`
+  display: flex;
+  padding: 0px 0px 0.94vh 0px;
+  border-bottom: 2px solid
+    ${(props) => (props.isSelected ? "#ECAA00" : "#EFEFEF")};
+  color: #c4c7c7;
+  font-size: 24px;
+  font-weight: 600;
+  width: 100%;
+  height: 48px;
+  margin-top: 6.16vh;
+`;
+
 const InputNickName = styled.input`
   width: 100%;
   border: none;
   outline: none;
-  height: 48px;
-  padding: 0px 0px 0.94vh 0px;
-  border-bottom: 2px solid ${(props) => (!props.isSelected ? "#EFEFEF" : props.valuableName === "duplicate" ? "#CB3D0B" : "#ECAA00")};
-  margin-top: 6.16vh;
   font-style: normal;
   font-size: 24px;
   font-weight: 700;
@@ -97,14 +106,15 @@ const NickName = () => {
         <HeaderMenu />
         <TopNumber page={4} />
         <MainText maintitle={`회원님을 표현할\n닉네임을 알려주세요`} />
-        <InputNickName
-          isSelected={isSelected}
-          onClick={ChangeBarColor}
-          value={inputNickName}
-          onChange={handleInputChange}
-          maxLength={8}
-          valuableName={valuableName}
-        />
+        <InputInfos isSelected={isSelected}>
+          <InputNickName
+            onClick={ChangeBarColor}
+            value={inputNickName}
+            onChange={handleInputChange}
+            maxLength={8}
+            valuableName={valuableName}
+          />
+        </InputInfos>
         <LetterLen>
           {letterCnt.current}/{8}
         </LetterLen>

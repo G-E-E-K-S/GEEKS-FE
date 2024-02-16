@@ -87,7 +87,6 @@ const InputEmail = () => {
   const [isErrorPopup, setIsErrorPopUp] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
   const [automaticLogIn, setAutomaticLogIn] = useState(false);
-  const [loading, setLoading] = useState(false);
   const emailVal = useRef();
   const passwordVal = useRef();
   const navigate = useNavigate();
@@ -101,7 +100,6 @@ const InputEmail = () => {
   //axios
   const handleEmail = () => {
     async function fetchLogin() {
-      setLoading(true);
       try {
         const res = await API.post("/login/login", {
           email: emailVal.current.value +"@sangmyung.kr",
@@ -135,7 +133,6 @@ const InputEmail = () => {
     navigate('/home');
   }
   return (
-    loading ? <Loading/> : (
     <c.Totalframe>
       <c.ScreenComponent>
         <HeaderMenu />
@@ -184,7 +181,6 @@ const InputEmail = () => {
         </ApplyCancelBottomSheet>
       </c.ScreenComponent>
     </c.Totalframe>
-    )
   );
 };
 
