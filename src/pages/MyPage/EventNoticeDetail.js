@@ -81,7 +81,7 @@ const EventNoticeDetail = () => {
           <NoticeBold>{`이벤트 참여 대상`}</NoticeBold>
           <Notice>{`2024-1학기에 기숙사에서 생활하는 기숙사생들`}</Notice>
           <NoticeBold>{`이벤트 참여 기간`}</NoticeBold>
-          <Notice>{`2024.02.12 - `}</Notice>
+          <Notice>{`2024.02.12 - 02.28 금요일 23:59:59 까지`}</Notice>
           <NoticeBold>{`이벤트 참여 방법`}</NoticeBold>
           <Notice>{`‘마이 탭>이벤트 배너’ 에서 확인`}</Notice>
           <GoEvent onClick={()=>navigate('/reviewevent')}>{`이벤트 바로가기`}</GoEvent>
