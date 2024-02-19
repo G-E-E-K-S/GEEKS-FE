@@ -3,6 +3,9 @@ import styled from "styled-components";
 
 const TotalBox = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const PopupBox = styled.div`
   width: 89.74vw;
@@ -15,7 +18,6 @@ const PopupBox = styled.div`
   top: ${(props)=>props.top && '0%'};
   border-radius: 12px;
   background: #525252;
-
   color: #fff;
   text-align: center;
   font-size: 1rem;
