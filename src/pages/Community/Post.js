@@ -12,6 +12,7 @@ import PostContent from "../../components/Community/PostContent";
 import LikeAndStarBtn from "../../components/Community/LikeAndStarBtn";
 import CommentCnt from "../../components/Community/CommentCnt";
 import Comment from "../../components/Community/Comment";
+import Popup from "../../components/Common/Popup";
 import Modal from "../../components/Common/Modal";
 import BottomSheet from "../../components/Common/BottomSheet";
 import Dot from "../../assets/img/Community/dots.svg";
@@ -148,9 +149,11 @@ const Post = () => {
   const [loading, setLoading] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [commentContent,setCommentContent] = useState('');
+  const [handleCommentContent, setHandleCommentContent] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const [commentWriterState, setCommentWriterState] = useState(false);
   const [nowFocus, setNowFocus] = useState(-1);
+  const [showPopup, setShowPopup] = useState(false);
   const [commentInfo, setCommentInfo] = useState([]);
 
   const commentRef = useRef();
@@ -268,12 +271,6 @@ const Post = () => {
     }
     fetchDeletePost();
   }
-  const DeleteCommentBts = (commentId, commentWriterState, commentContent) => {
-    setCommentWriterState(commentWriterState);
-    setIsCommentBts(true);
-    setCommentId(commentId);
-    setCommentContent(commentContent);
-  }
   const DeleteComment = () => {
     async function fetchDeleteComment() {
       try {
@@ -305,6 +302,7 @@ const Post = () => {
   const EditTempComment = () => {
     setIsEdit(true);
     setIsCommentBts(false);
+    setHandleCommentContent(commentContent);
   }
   const handleCommentModal = (parentId, commentUserName, nowFocus) => {
     setIsModalOpen(true);
@@ -313,6 +311,20 @@ const Post = () => {
       parentId: parentId,
       nowFocus: nowFocus
     })
+  }
+  const DeleteCommentBts = (commentId, commentWriterState, commentContent) => {
+    setCommentWriterState(commentWriterState);
+    setIsCommentBts(true);
+    setCommentId(commentId);
+    setCommentContent(commentContent);
+  }
+  const handleDeclaration = () => {
+    setShowPopup(true);
+    setIsBtsOpen(false)
+  }
+  const handleDeclarationComment = () => {
+    setShowPopup(true);
+    setIsCommentBts(false);
   }
   return (
     loading ? <Loading/> : (
@@ -329,10 +341,15 @@ const Post = () => {
                     {/* <MenuBox>{`글 수정하기`}</MenuBox> */}
                   </>
                 ) : (
-                  <MenuBox Report={true}>{`신고하기`}</MenuBox>
+                  <MenuBox Report={true} onClick={()=>handleDeclaration()}>{`신고하기`}</MenuBox>
                 )}
                 <CloseBtn onClick={() => setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
             </BottomSheet>
+            <Popup
+                message={`신고가 정상적으로 접수되었어요`}
+                setShowPopup={setShowPopup}
+                isShowPopup={showPopup}
+                bottom={`20.5`}/>
             <PostInfo
               username={postInfo.writer === null ? "익명" : postInfo.writer}
               uploadtime={caclTime(postInfo.createdDate)}></PostInfo>
@@ -394,7 +411,7 @@ const Post = () => {
                     <MenuBox onClick={()=>EditTempComment()}>{`댓글 수정하기`}</MenuBox>
                   </>
                 ) : (
-                  <MenuBox Report={true}>{`신고하기`}</MenuBox>
+                  <MenuBox Report={true} onClick={()=>handleDeclarationComment()}>{`신고하기`}</MenuBox>
                 )}
                 <CloseBtn onClick={() => setIsCommentBts(false)}>{`닫기`}</CloseBtn>
             </BottomSheet>
@@ -406,7 +423,7 @@ const Post = () => {
               <AnonymousBox src={ isAnonymity ? FillCheckBox : CheckBox} />
               <AnonymousTxt>{`익명`}</AnonymousTxt>
             </Anonymous>
-            <InputComment placeholder="댓글을 입력하세요" ref={commentRef} defaultValue={commentContent} />
+            <InputComment placeholder="댓글을 입력하세요" ref={commentRef} defaultValue={handleCommentContent} />
             <img src={Send} onClick={() => isEdit ? EditComment() : UploadComment()} />
             {/* 댓글 모달 */}
             {isModalOpen && (

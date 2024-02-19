@@ -11,6 +11,7 @@ import LifeStyle from "../../components/Roommate/LifeStyle";
 import ApplyCancelBottomSheet from "../../components/Common/ApplyCancleBottomSheet";
 import BottomSheet from "../../components/Common/BottomSheet";
 import FinishRoommate from "./FinishRoommate";
+import Popup from "../../components/Common/Popup";
 import BasicProfile from "../../assets/img/MyPage/basicProfile.svg";
 import ChatImg from "../../assets/img/Roommate/chat.svg";
 import Info from "../../assets/img/Roommate/info.svg";
@@ -251,7 +252,7 @@ const User = () => {
   const [data, setData] = useState(null);
   const [finishState, setFinishState] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const [showPopup, setShowPopup] = useState(false);
   let { userId } = useParams();
   let navigate = useNavigate();
 
@@ -377,6 +378,11 @@ const User = () => {
 
     fetchApplyRoommate();
   }
+
+  const handleDeclaration = () => {
+    setShowPopup(true);
+    setIsBtsOpen(false);
+  }
   
   return (
     loading ? <Loading/> : (
@@ -389,10 +395,9 @@ const User = () => {
             </HeaderMenu>
           </c.SpaceBetween>
           <BottomSheet height={`max-content`} padding={`12px 20px 0 20px`} isOpen={isBtsOpen} interaction={true}>
-            <MenuBox Report={true}>{`신고하기`}</MenuBox>
+            <MenuBox Report={true} onClick={()=>handleDeclaration()}>{`신고하기`}</MenuBox>
             <CloseBtn onClick={() => setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
           </BottomSheet>
-          
           {finishState && 
             <FinishRoommate 
             opponenNickname={opponentUser?.nickname}
@@ -462,6 +467,10 @@ const User = () => {
           onClick={()=>setApplyRommate(true)}>룸메이트 신청하기</EnrollTxt>
         </EnrollBtn>
       </BottomEnroll>
+      <Popup message={`신고가 정상적으로 접수되었어요`}
+          setShowPopup={setShowPopup}
+          isShowPopup={showPopup}
+          bottom={`15.5`}/>
       <ApplyCancelBottomSheet
             height={`393px`}
             padding={`24px 20px 85px 20px`}
