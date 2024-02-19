@@ -44,6 +44,9 @@ const Reset = styled.div`
   font-style: normal;
   font-weight: 600;
   cursor: pointer;
+  &:active{
+    background: #D0D0D0;
+  }
 `;
 const ResetImg = styled.img`
   width: 20px;

@@ -66,7 +66,7 @@ const InputEmail = () => {
     async function fetchEmailPage() {
       try {
         const res = await API.get("/mail/send?email=" + emailVal.current.value + "@sangmyung.kr");
-        res.data == "duplicate" ? navigate("/alreadyregist",{state:{userEmail: emailVal.current.value}}) :
+        res.data === "duplicate" ? navigate("/alreadyregist",{state:{userEmail: emailVal.current.value}}) :
         navigate("/inputcode",{state:{userEmail: emailVal.current.value}});
       } catch (error) {
         console.error(error);

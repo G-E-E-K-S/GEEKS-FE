@@ -15,3 +15,12 @@ root.render(
 
 serviceWorkerRegistration.register();
 reportWebVitals();
+
+serviceWorkerRegistration.register({
+  onUpdate: () => {
+    console.log("onUpdate");
+  },
+  onSuccess: () => {
+    console.log("onSuccess");
+  },
+});

@@ -58,6 +58,9 @@ const BottomSheetBtn = styled.div`
   align-items: center;
   margin-top: 36px;
   cursor: pointer;
+  &:active{
+    background: #ECAA00;
+  }
 `;
 const ApplyCancelBottomSheet = (props) => {
   return (

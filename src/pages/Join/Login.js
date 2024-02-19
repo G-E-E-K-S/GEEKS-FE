@@ -67,6 +67,9 @@ const JoinButton = styled.div`
   font-weight: 600;
   line-height: 24px;
   cursor: pointer;
+  &:active{
+    background: #ECAA00;
+  }
 `;
 const ForgetPwdIcon = styled.img`
   width: 16px;
