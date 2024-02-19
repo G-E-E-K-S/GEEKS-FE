@@ -38,6 +38,9 @@ const ReSendBtn = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
+  &:active{
+    background: #D0D0D0;
+  }
 `;
 
 const InputNumber = styled.div`

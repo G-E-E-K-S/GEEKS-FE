@@ -10,7 +10,7 @@ import Modal from "../../components/Common/Modal";
 import Logo from "../../assets/img/Common/mainLogo.png";
 import TextLogo from "../../assets/img/Common/yellowLogo.svg";
 const StartMent = styled.div`
-  margin-top: 15.16vh;
+  margin-top: 12.27vh;
   color: #333;
   font-size: 1.75rem;
   font-weight: 700;
@@ -124,7 +124,6 @@ const Welcome = () => {
 
   useEffect(() => {
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-
     setPopupMessage(location.state?.prev);
     setShowPopup(
       location.state?.prev === "logout" || location.state?.prev === "withdrawal"

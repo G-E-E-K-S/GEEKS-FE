@@ -36,6 +36,9 @@ const ResendMail = styled.div`
   font-weight: 600;
   height: max-content;
   line-height: 18px;
+  &:active{
+    background: #D0D0D0;
+  }
 `;
 const InputInfos = styled.div`
   display: flex;

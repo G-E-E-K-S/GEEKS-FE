@@ -92,6 +92,9 @@ const Chat = styled.div`
   border-radius: 12px;
   border: 1px solid #e2e2e2;
   background: #fff;
+  &:active{
+    background: #F7F7F7;
+  }
 `;
 const ChatImage = styled.img`
   width: 24px;
@@ -190,6 +193,11 @@ const EnrollBtn = styled.div`
   padding: 18px 12.17vw;
   border-radius: 12px;
   background: ${(props)=> props.state == true ? '#F7F7F7' : '#ffc700'};
+  position: relative;
+  z-index: 20;
+  &:active{
+    background: ${(props)=> props.state !== true && '#ECAA00'};
+  }
 `;
 const EnrollTxt = styled.div`
   color: ${(props)=> props.state == true ? '#B7B7B7' : '#333'};
@@ -461,16 +469,14 @@ const User = () => {
           <SaveImg src={isSave ? FillSave : Save} />
           <SaveTxt>저장</SaveTxt>
         </div>
-        <EnrollBtn state={roommateApplyState || roommateState}>
-          <EnrollTxt 
-          state={roommateApplyState || roommateState}
-          onClick={()=>setApplyRommate(true)}>룸메이트 신청하기</EnrollTxt>
+        <EnrollBtn state={roommateApplyState || roommateState} onClick={()=>setApplyRommate(true)}>
+          <EnrollTxt state={roommateApplyState || roommateState}>룸메이트 신청하기</EnrollTxt>
         </EnrollBtn>
       </BottomEnroll>
       <Popup message={`신고가 정상적으로 접수되었어요`}
           setShowPopup={setShowPopup}
           isShowPopup={showPopup}
-          bottom={`15.5`}/>
+          bottom={`19.5`}/>
       <ApplyCancelBottomSheet
             height={`393px`}
             padding={`24px 20px 85px 20px`}

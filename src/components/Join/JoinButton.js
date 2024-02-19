@@ -19,6 +19,9 @@ const TotalButton = styled.div`
     line-height: 24px;
     cursor: pointer;
     z-index: 10;
+    &:active{
+        background: #ECAA00;
+    }
 `;
 
 

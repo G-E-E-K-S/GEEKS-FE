@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
 import {Intro, AccessRight, PersonalInfoTxt, ServiceTxt, LocationTxt, MarketingTxt,Agree, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage, ForgetEmail, AlreadyRegist} from './pages/Join/Index';
 import { LiveRule, Home, Search } from './pages/Main/Index';
 import { FindRoommate , User, RoommateSendTxt, FinishRoommate } from './pages/FindRoommate/Index';
@@ -8,8 +8,10 @@ import { WritePost, Post, Community, MyCommunity, ScrapPost, CommunityWrite, Ope
 import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqContent,RoommateApply, MyProfile, SecessionReason, NoticeDetail, EventNoticeDetail, ChangePassword, ReviewEvent } from './pages/MyPage/Index';
 import './index.css';
 import Loading from "./pages/Loading";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 function App() {
+  
   return (
     <div>
       <Router>
