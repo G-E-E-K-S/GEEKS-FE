@@ -184,7 +184,7 @@ const OpenGroup = () => {
       <TendinousBox>
         <WriteTendinousBox>
           <TendinousTxt>{`이 기능에 대해 의견을 남겨주세요!`}</TendinousTxt>
-          <a href="https://forms.gle/jhknCXQijwwFbM1a9">
+          <a href="https://forms.gle/jhknCXQijwwFbM1a9" target="_blank">
             <Tendinous>{`문의하기`}</Tendinous>
           </a>
         </WriteTendinousBox>

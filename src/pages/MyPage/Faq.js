@@ -139,7 +139,7 @@ const FAQ = () => {
         )}
         <AskBox>
           <AskText>궁금증이 풀리지 않으셨나요?</AskText>
-          <a href="https://forms.gle/jhknCXQijwwFbM1a9">
+          <a href="https://forms.gle/jhknCXQijwwFbM1a9" target="_blank">
             <MiniAskBox>문의하기</MiniAskBox>
           </a>
         </AskBox>
