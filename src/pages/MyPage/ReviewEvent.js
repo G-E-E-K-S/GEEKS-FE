@@ -336,7 +336,7 @@ const ReviewEvent = () => {
         <KnowEventTxt>{`- 해당 이벤트는 당사 사정에 따라 사전 고지없이 변경 혹은 중단될 수 있습니다.\n- 긱스는 해당 이벤트를 통해 이벤트 참여자들에게 금전적인 요구를 하지 않습니다.\n- 작성하기 버튼을 통해 구글 폼을 제출할 시 개인정보 수집에 동의한 것으로 간주합니다.\n- 수집된 개인정보는 이벤트 종료시 일괄 파기 될 예정입니다.\n- 기재된 내용을 읽지 않고 생기는 참여자들의 실수에 대해 당사는 책임을 지지 않습니다.`}</KnowEventTxt>
       </KnowEvent>
       <WriteReviewBox>
-        <a href="https://forms.gle/uUVez3yWB2TPf1r6A">
+        <a href="https://forms.gle/uUVez3yWB2TPf1r6A" target="_blank">
           <ReviewBox>{`후기 작성하기`}</ReviewBox>
         </a>
       </WriteReviewBox>
