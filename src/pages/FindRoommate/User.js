@@ -425,7 +425,7 @@ const User = () => {
           <TopProfile>
             <c.SpaceBetween>
               <div>
-                <Profile src={BasicProfile} />
+                <Profile src={opponentUser?.photoName.length === 0 ? BasicProfile : process.env.REACT_APP_BUCKET_BASEURL + opponentUser?.photoName} />
                 <NickName>{opponentUser?.nickname}</NickName>
                 <Major>{opponentUser?.major} · {opponentUser?.studentID}</Major>
               </div>
