@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
 import {Intro, AccessRight, PersonalInfoTxt, ServiceTxt, LocationTxt, MarketingTxt,Agree, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage, ForgetEmail, AlreadyRegist} from './pages/Join/Index';
 import { LiveRule, Home, Search } from './pages/Main/Index';
 import { FindRoommate , User, RoommateSendTxt, FinishRoommate } from './pages/FindRoommate/Index';
@@ -11,7 +11,6 @@ import Loading from "./pages/Loading";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 function App() {
-  
   return (
     <div>
       <Router>
