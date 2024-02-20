@@ -33,6 +33,7 @@ const InputCommentBox = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
+  z-index: 3;
 `;
 const TotalInput = styled.div`
   border-radius: 24px;
@@ -349,7 +350,7 @@ const Post = () => {
                 message={`신고가 정상적으로 접수되었어요`}
                 setShowPopup={setShowPopup}
                 isShowPopup={showPopup}
-                bottom={`20.5`}/>
+                bottom={`8.5`}/>
             <PostInfo
               username={postInfo.writer === null ? "익명" : postInfo.writer}
               uploadtime={caclTime(postInfo.createdDate)}></PostInfo>
