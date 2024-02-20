@@ -82,6 +82,7 @@ const Major = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
+  margin-top: 10px;
   margin-bottom: 4px;
 `;
 const Chat = styled.div`
@@ -235,11 +236,28 @@ const Other = styled.div`
   margin-right: 32.45vw;
 `;
 const Me = styled.div``;
+const Smoke = styled.div`
+  width: 53px;
+  height: 24px;
+  border-radius: 6px;
+  background: #EFEFEF;
+  padding : 4px 8px 4px 8px;
+  color: #707070;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 18px;
+  margin-left: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 13px;
+`;
 
 const User = () => {
   const [isSave, setIsSave] = useState(false);
   const [applyRoommate, setApplyRommate] = useState(false);
   const [roommateState, setRoommateState] = useState(false);
+  const [acceptRoommate, setAcceptRoommate] = useState(false);
   const [roommateApplyState, setRoommateApplyState] = useState(false);
   const [opponentUser, setOpponentUser] = useState(null);
   const [isBtsOpen, setIsBtsOpen] = useState(false);
@@ -272,8 +290,9 @@ const User = () => {
         setIsSave(res.data.details[0].saved);
         setLifeStyles(res.data.details);
         setRoommateState(res.data.roommateState);
+        setAcceptRoommate(res.data.acceptRoommate);
         setRoommateApplyState(res.data.roommateApply);
-        console.log(res.data);
+        console.log(res.data.details);
         setLoading(false);
         setData({
           datasets: [
@@ -426,7 +445,10 @@ const User = () => {
             <c.SpaceBetween>
               <div>
                 <Profile src={opponentUser?.photoName.length === 0 ? BasicProfile : process.env.REACT_APP_BUCKET_BASEURL + opponentUser?.photoName} />
-                <NickName>{opponentUser?.nickname}</NickName>
+                <c.Flex>
+                  <NickName>{opponentUser?.nickname}</NickName>
+                  {lifeStyles[1].smoking && <Smoke>{`흡연자`}</Smoke>}
+                </c.Flex>
                 <Major>{opponentUser?.major} · {opponentUser?.studentID}</Major>
               </div>
               <Chat>
@@ -469,8 +491,8 @@ const User = () => {
           <SaveImg src={isSave ? FillSave : Save} />
           <SaveTxt>저장</SaveTxt>
         </div>
-        <EnrollBtn state={roommateApplyState || roommateState} onClick={()=>setApplyRommate(true)}>
-          <EnrollTxt state={roommateApplyState || roommateState}>룸메이트 신청하기</EnrollTxt>
+        <EnrollBtn state={roommateApplyState || roommateState || acceptRoommate} onClick={()=>setApplyRommate(true)}>
+          <EnrollTxt state={roommateApplyState || roommateState || acceptRoommate}>룸메이트 신청하기</EnrollTxt>
         </EnrollBtn>
       </BottomEnroll>
       <Popup message={`신고가 정상적으로 접수되었어요`}
