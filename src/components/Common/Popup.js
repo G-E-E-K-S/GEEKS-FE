@@ -7,7 +7,7 @@ const TotalBox = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  z-index: 10;
+  z-index: 5;
 `;
 const PopupBox = styled.div`
   width: 89.74vw;
