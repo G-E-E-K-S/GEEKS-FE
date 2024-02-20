@@ -162,7 +162,7 @@ const LifeStyles = () => {
             />
           )}
           <Popup
-            bottom={`18.24`}
+            bottom={`20.24`}
             isShowPopup={showPopup}
             setShowPopup={setShowPopup}
             message={"성공적으로 삭제되었습니다"}
