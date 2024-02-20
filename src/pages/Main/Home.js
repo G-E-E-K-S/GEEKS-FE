@@ -318,7 +318,7 @@ const Home = () => {
                     major={opponent.major}
                     id={opponent.studentID}
                     score={opponent.point}
-                    smoke={opponent.smoke}
+                    smoke={opponent.smoking}
                     marginBottom={point.length === index + 1 ? "0px" : "36px"}/>
                 ))
               ) : (

@@ -32,6 +32,25 @@ const NickName = styled.div`
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 18px; /* 128.571% */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const Smoking = styled.div`
+  width: 53px;
+  height: 24px;
+  border-radius: 6px;
+  background: #EFEFEF;
+  padding : 4px, 8px, 4px, 8px;
+  color: #707070;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 18px;
+  margin-left: 8px;
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const Major = styled.div`
   color: #707070;
@@ -99,7 +118,10 @@ const OtherProfile = (props) => {
         <Profiles>
           <UserProfile src={props.userprofile.length == 0 ? BasicProfile : process.env.REACT_APP_BUCKET_BASEURL + props.userprofile} />
           <div>
-            <NickName>{props.nickName}</NickName>
+            <c.Flex>
+              <NickName>{props.nickName}</NickName>
+              {props.smoking && <Smoking>{`흡연자`}</Smoking>}    
+            </c.Flex>        
             <Major>
               {props.major} · {props.id}학번
             </Major>
