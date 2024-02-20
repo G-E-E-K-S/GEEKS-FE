@@ -9,6 +9,8 @@ import API from "../../axios/BaseUrl";
 import Modal from "../../components/Common/Modal";
 import Logo from "../../assets/img/Common/mainLogo.png";
 import TextLogo from "../../assets/img/Common/yellowLogo.svg";
+import "@pwabuilder/pwainstall";
+
 const StartMent = styled.div`
   margin-top: 12.27vh;
   color: #333;
@@ -72,7 +74,7 @@ const DownLoadApp = styled.div`
   width: 100%;
   height: 60px;
   border-radius: 12px;
-  background: #FFC700;
+  background: #ffc700;
   font-size: 1.125rem;
   font-weight: 600;
   line-height: 24px;
@@ -88,17 +90,28 @@ const ModalText = styled.div`
   text-align: center;
   white-space: pre-wrap;
 `;
+
 const Welcome = () => {
   const [showPopup, setShowPopup] = useState(false);
   const location = useLocation(null);
   const [popupMessage, setPopupMessage] = useState("");
-  const navigator = useNavigate();
+  const [updateState, setUpdateState] = useState(false);
+  const [phoneKind, setPhoneKind] = useState("");
+  const navigate = useNavigate();
 
   const [deferredPrompt, setDeferredPrompt] = useState(null);
 
+  // useEffect(() => {
+  //   if ("serviceWorker" in navigator) {
+  //     navigator.serviceWorker.ready.then((registration) => {
+  //       registration.update();
+  //     });
+  //   }
+  // }, [location]);
+
   useEffect(() => {
     console.log(deferredPrompt);
-  }, [deferredPrompt])
+  }, [deferredPrompt]);
 
   const handleBeforeInstallPrompt = (event) => {
     event.preventDefault();
@@ -131,6 +144,14 @@ const Welcome = () => {
         : false
     );
 
+    // window["isUpdateAvailable"].then((isAvailable) => {
+    //   console.log("isUpdateAvailable");
+    //   if (isAvailable) {
+    //     setUpdateState(true);
+    //   }
+    // });
+    //ios or android확인
+
     async function fetchAutoLogin() {
       try {
         const res = await API.get("/member/auto/login");
@@ -139,7 +160,7 @@ const Welcome = () => {
           res.data === "success" &&
           localStorage.getItem("autologin") !== "false"
         ) {
-          navigator("/home");
+          navigate("/home");
         }
       } catch (error) {
         console.error(error);
@@ -159,7 +180,7 @@ const Welcome = () => {
   }, []);
 
   const nextPage = () => {
-    navigator("/agree");
+    navigate("/agree");
   };
 
   return (
@@ -180,23 +201,33 @@ const Welcome = () => {
         <TotalImg>
           <TopImg src={House} />
         </TotalImg>
-        <LoginButton onClick={() => navigator("/login")}>로그인</LoginButton>
+        <LoginButton onClick={() => navigate("/login")}>로그인</LoginButton>
         <JoinButton
           btnName={"이메일 회원가입"}
           handleClick={nextPage}
           isNextPage={true}
         />
         {/* {deferredPrompt && <button onClick={handleInstall}>앱 설치</button>} */}
-        {deferredPrompt &&
-        <Modal padding={`40px 24px 28px 24px`} isWelcome={true}>
-          <Ceter>
-            <LogoImg src={Logo}/>
-            <img src={TextLogo}/>
-          </Ceter>
-          <ModalText>{`긱스를 터치 한 번으로\n바로 시작해 보세요!`}</ModalText>
-          <DownLoadApp onClick={()=>handleInstall()}>{`앱 내려받기`}</DownLoadApp>
-        </Modal>
-        }
+        {(deferredPrompt || updateState) && (
+          <Modal padding={`40px 24px 28px 24px`} isWelcome={true}>
+            <Ceter>
+              <LogoImg src={Logo} />
+              <img src={TextLogo} />
+            </Ceter>
+            <ModalText>{`긱스를 터치 한 번으로\n바로 시작해 보세요!`}</ModalText>
+            {navigator.userAgent.toLowerCase().indexOf("android") > -1 ? (
+              <DownLoadApp
+                onClick={() => handleInstall()}
+              >{`앱 내려받기`}</DownLoadApp>
+            ) : (
+              <pwa-install
+                installbuttontext={"앱 내려받기"}
+                iosinstallinfotext={"공유 버튼 클릭 후 홈화면에 추가를 눌러주세요!"}
+                descriptionheader={``}
+              />
+            )}
+          </Modal>
+        )}
       </c.ScreenComponent>
     </c.Totalframe>
   );

@@ -3,8 +3,7 @@ import styled from "styled-components";
 export const Totalframe = styled.div`
   // width: 390px;
   width: 100vw;
-  min-height: 100vh;
-  min-height:: calc(var(--vh, 1vh) * 100);
+  min-height: calc(var(--vh, 1vh) * 100);
   height: -webkit-fill-available;
   height: fill-available;
   margin: 0 auto;

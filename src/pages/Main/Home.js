@@ -1,5 +1,5 @@
 import React, { useEffect, useState, memo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/ko";
 import API from "../../axios/BaseUrl";
@@ -216,6 +216,14 @@ const Home = () => {
   const isNavigate = () => {
     isExist && navigate("/roommate");
   };
+  const location = useLocation();
+  // React.useEffect(() => {
+  //   if ('serviceWorker' in navigator) {
+  //     navigator.serviceWorker.ready.then((registration) => {
+  //       registration.update();
+  //     });
+  //   }
+  // }, [location]);
 
   useEffect(() => {
     async function fetchEmailPage() {
