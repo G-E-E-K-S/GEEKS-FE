@@ -222,7 +222,7 @@ const Welcome = () => {
             ) : (
               <pwa-install
                 installbuttontext={"앱 내려받기"}
-                iosinstallinfotext={"공유 버튼 클릭 후 홈화면에 추가를 눌러주세요!"}
+                iosinstallinfotext={"공유 버튼 클릭 후 \"홈 화면에 추가\" 를 눌러주세요!"}
                 descriptionheader={``}
               />
             )}
