@@ -30,7 +30,10 @@ const EditBtn = styled.div`
   background: ${(props)=>props.isChange ? '#FFC700' : '#efefef'};
   color: ${(props)=>props.isChange ? '#333' : '#949494'};
   font-size: 1rem;
-  font-weight: 600;isChange
+  font-weight: 600;
+  &:active{
+    background: ${(props)=> props.isChange && '#ECAA00'}
+  }
 `;
 const UploadProfile = styled.div`
   width: 100%;
@@ -240,7 +243,7 @@ const EditProfile = () => {
   const [major,setMajor] = useState(null);
   const [isMajorOpen, setIsMajorOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
-
+  const [gender,setGender] = useState('');
   const navigate = useNavigate();
   const handleMajor = (major) =>{
     setMajor(major);
@@ -271,6 +274,7 @@ const EditProfile = () => {
         setPrevMajor(res.data.major);
         setDormitory(res.data.type === 'NEW' ? '신관' : res.data.type === 'OLD' ? '구관' : '행복기숙사');
         setPrevDormitory(res.data.type === 'NEW' ? '신관' : res.data.type === 'OLD' ? '구관' : '행복기숙사');
+        setGender(res.data.gender);
       } catch (error) {
         console.error(error);
       }
@@ -373,10 +377,10 @@ const EditProfile = () => {
   };
 
   useEffect(()=>{
-    if(prevNickname !== nickname || prevMajor !== major || prevStudentID !== studentID || prevDormitory !== dormitory || prevIntroduction !== introduction || file !== null) setIsChange(true);
+    if(!isDuplicate && (prevNickname !== nickname || prevMajor !== major || prevStudentID !== studentID || prevDormitory !== dormitory || prevIntroduction !== introduction || file !== null) ) setIsChange(true);
     else setIsChange(false);
     
-  },[nickname,major, studentID, prevNickname, dormitory, introduction, file])
+  },[nickname,major, studentID, prevNickname, dormitory, introduction, file, isDuplicate])
 
   return (
     <c.Totalframe>
@@ -445,7 +449,9 @@ const EditProfile = () => {
         <SubTitle>{`기숙사`}</SubTitle>
         <c.Flex>
           {DormitoryKind.map((kind) => (
+            (gender === 'MALE' && kind === "구관") ? null : (
               <DormitroyBox onClick={()=>setDormitory(kind)} isSelect={dormitory === kind}>{kind}</DormitroyBox>
+            )
           ))}
         </c.Flex>
         <Br marginTop={`3.31vh`}/>
