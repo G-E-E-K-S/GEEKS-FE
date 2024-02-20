@@ -58,6 +58,7 @@ const InputSelf = (props) => {
           placeholder={props.placeholder}
           onFocus={props.isFocus}
           onBlur={props.isBlur}
+          disabled={props.disabled}
           valid={props.valid}/>
         {/* {props.isrepresent ? <Represent>대표</Represent> : null} */}
       </Flex>

@@ -409,6 +409,7 @@ const EditProfile = () => {
           totalLen={8}
           placeholder={`닉네임 입력`}
           value={nickname}
+          disabled={true}
           changeValue={setNickname}/>}
 
         {/* choose major */}

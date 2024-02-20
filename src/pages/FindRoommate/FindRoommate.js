@@ -118,6 +118,7 @@ const FindRoommate = () => {
           {isExist ?
             userdata.map((user)=>(
               <OtherProfile
+                smoking={user.smoking}
                 userprofile={user.photoName}
                 nickName={user.nickname}
                 major={user.major}
