@@ -69,12 +69,11 @@ const Agree = () => {
   const navigate = useNavigate();
 
   const handleCheck = () => {
-
-    setIsTotalCheck(!isTotalCheck);
-    setService(!service);
-    setPersonal(!personal);
-    setLocation(!location);
-    setMarketing(!marketing);
+    setIsTotalCheck(true);
+    setService(true);
+    setPersonal(true);
+    setLocation(true);
+    setMarketing(true);
   }
   const handleNextPage = () => {
     navigate('/inputemail');
@@ -114,7 +113,7 @@ const Agree = () => {
           <Choice>{`선택`}</Choice>
           <AgreeText onClick={()=>navigate('/marketingtxt')}>{`마케팅 정보 수신 동의`}</AgreeText>
         </AgreeSection>
-        <JoinButton btnName={"동의하기"} isNextPage={isTotalCheck || (service && personal && location)} handleClick={()=>handleNextPage()}/>
+        <JoinButton btnName={"동의하기"} isNextPage={service && personal && location} handleClick={()=>handleNextPage()}/>
       </c.ScreenComponent>
     </c.Totalframe>
   );
