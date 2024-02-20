@@ -17,8 +17,6 @@ const CommentBox = styled.div`
   padding-right: ${(props)=>(props.isRecomment || props.recommentFocus) && '5.12vw'};
   background-color: ${(props)=>props.isRecomment ? '#F7F7F7' : props.recommentFocus ? '#FFFBEE' : '#fff'};
   margin-left: ${(props)=>(props.isRecomment || props.recommentFocus) && `calc(-50vw + 50%)`};
-  position: relative;
-  z-index: 20;
 `;
 const ThreeDots = styled.img`
   width: 16px;
