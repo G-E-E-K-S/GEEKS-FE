@@ -22,7 +22,7 @@ const SubTitle = styled.div`
 const BottomMenues = styled.div`
   display: flex;
   width: 100%;
-  padding: 20.17px 5.12vw 38.5px 5.12vw;
+  padding: 20.17px 5.12vw 20.5px 5.12vw;
   border-top: 1px solid #EFEFEF;
   position: fixed;
   bottom: 0;

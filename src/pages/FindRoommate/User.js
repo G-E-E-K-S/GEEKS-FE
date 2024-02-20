@@ -267,7 +267,7 @@ const User = () => {
     {name : '흡연', key : 'smoking' , true : '흡연자', false : '비흡연자'},
     {name : '잠버릇', key : 'habit' , true : '잠버릇 있어요', false : '잠버릇 없어요'},
     {name : '잠귀', key : 'ear', BRIGHT : '귀 밝아요', DARK : '귀 어두워요'},
-    {name : '취침', key : 'sleep', EARLY : '일찍 자요', LATE : '늦게 자요', RANDOM : '때때로 달라요'},
+    {name : '취침', key : 'sleep', EARLY : '일찍 자요', LATE : '늦게 자요', RANDOM : '때마다 달라요'},
     {name : '기상', key : 'wakeup', EARLY: '일찍 일어나요', LATE : '늦게 일어나요', RANDOM : '때마다 달라요'},
     {name : '외출', key : 'out', HOME : '집순이에요', OUT : '밖순이에요', PROMISE : '약속이 있으면 나가요'},
     {name : '청소', key : 'cleaning', CLEAN : '주기적으로 청소해요', DIRTY : '더러워지면 청소해요', OPPONENT : '상대에게 맞춰요'},
