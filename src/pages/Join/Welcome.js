@@ -208,7 +208,7 @@ const Welcome = () => {
           isNextPage={true}
         />
         {/* {deferredPrompt && <button onClick={handleInstall}>앱 설치</button>} */}
-        {(deferredPrompt || updateState) && (
+        {(deferredPrompt || updateState || (!window.matchMedia('(display-mode: standalone)').matches && (/iPad|iPhone|iPod/.test(navigator.userAgent)))) && (
           <Modal padding={`40px 24px 28px 24px`} isWelcome={true}>
             <Ceter>
               <LogoImg src={Logo} />
