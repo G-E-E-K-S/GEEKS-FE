@@ -17,6 +17,7 @@ import Video from "../../assets/img/Chat/video.svg";
 import Camera from "../../assets/img/Chat/camera.svg";
 import Rule from "../../assets/img/Chat/liveRule.svg";
 import ChatBottomMenu from "../../components/Chat/ChatBottomMenu";
+import Popup from "../../components/Common/Popup";
 import SockJS from "sockjs-client";
 import * as StompJs from "@stomp/stompjs";
 import moment from "moment";
@@ -156,6 +157,7 @@ const ChatRoom = () => {
   const [isChatBottomClick, setIsChatBottomClick] = useState(false);
   const [isBtsOpen, setIsBtsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleChatBottom = () => {
     setIsChatBottomClick(!isChatBottomClick);
@@ -293,6 +295,11 @@ const ChatRoom = () => {
     fetchQuit();
   };
 
+  const handleDeclaration = () => {
+    setIsBtsOpen(false);
+    setShowPopup(true);
+  }
+
   return (
     loading ? <Loading/> : (
       <c.Totalframe>
@@ -308,6 +315,11 @@ const ChatRoom = () => {
             </c.DirectionCol>
             <DotsImg src={Dots} onClick={() => setIsBtsOpen(true)} />
           </ChatHeader>
+          <Popup
+                message={`신고가 정상적으로 접수되었어요`}
+                setShowPopup={setShowPopup}
+                isShowPopup={showPopup}
+                bottom={`20.5`}/>
           <BottomSheet
             height={`max-content`}
             padding={`12px 20px 0 20px`}
@@ -315,7 +327,7 @@ const ChatRoom = () => {
             interaction={true}
           >
             <MenuBox onClick={() => handleQuit()}>{`나가기`}</MenuBox>
-            <MenuBox>{`신고하기`}</MenuBox>
+            <MenuBox onClick={()=>handleDeclaration()}>{`신고하기`}</MenuBox>
             <CloseBtn onClick={() => setIsBtsOpen(false)}>{`닫기`}</CloseBtn>
           </BottomSheet>
           {/* chat */}
