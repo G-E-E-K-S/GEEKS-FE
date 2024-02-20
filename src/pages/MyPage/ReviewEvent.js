@@ -312,7 +312,7 @@ const ReviewEvent = () => {
         <ParticipateTxt>{`참여 대상`}</ParticipateTxt>
         <ParticipateDetail>{`2024-1학기에 기숙사에서 생활하는 기숙사생들`}</ParticipateDetail>
         <ParticipateTxt>{`참여 기간`}</ParticipateTxt>
-        <ParticipateDetail>{`02.12 월요일 - 02.28 금요일 23:59:59 까지`}</ParticipateDetail>
+        <ParticipateDetail>{`02.21 수요일 - 02.28 금요일 23:59:59 까지`}</ParticipateDetail>
         <ParticipateTxt>{`참여 방법`}</ParticipateTxt>
         <c.FlexCenter>
           <Num>{`1`}</Num>

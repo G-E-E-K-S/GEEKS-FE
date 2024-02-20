@@ -72,7 +72,7 @@ const EventNoticeDetail = () => {
           <Event>{`이벤트`}</Event>
           <NoticeName>{`긱스 이용 후기 작성하고 기숙사 웰컴 키트 받자!`}</NoticeName>
         </c.Flex>
-        <NoticeDate>{`2024.02.12`}</NoticeDate>
+        <NoticeDate>{`2024.02.21`}</NoticeDate>
         <Line />
         <NoticeContent>
           <NoticeBold>{`긱스 이용 후기를 작성하면 기숙사 웰컴 키트를 받을 수 있는 이벤트가 12일부터 시작돼요!`}</NoticeBold>
