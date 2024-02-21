@@ -81,7 +81,7 @@ const FindRoommate = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userdata, setUserData] = useState([]);
   const [isExist, setIsExist] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   
