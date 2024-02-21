@@ -491,7 +491,7 @@ const User = () => {
           <SaveImg src={isSave ? FillSave : Save} />
           <SaveTxt>저장</SaveTxt>
         </div>
-        <EnrollBtn state={roommateApplyState || roommateState || acceptRoommate} onClick={()=>setApplyRommate(true)}>
+        <EnrollBtn state={roommateApplyState || roommateState || acceptRoommate} onClick={()=>setApplyRommate(true)} >
           <EnrollTxt state={roommateApplyState || roommateState || acceptRoommate}>룸메이트 신청하기</EnrollTxt>
         </EnrollBtn>
       </BottomEnroll>
