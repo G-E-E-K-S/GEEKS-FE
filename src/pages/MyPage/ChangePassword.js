@@ -49,6 +49,13 @@ const InputPassword = styled.input`
 const PwdCondition = styled.div`
   display: flex;
   margin-bottom: 1.42vh;
+  display: flex;
+  align-items: center;
+`;
+const CheckImg = styled.img`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const ConditionTxt = styled.div`
   display: flex;
@@ -217,13 +224,13 @@ const ChangePassword = () => {
             maxLength={15}
             onChange={changePrevPassword}
           />
-          <img
+          <CheckImg
             src={currentPwd ? ShowPwd : NoShowPwd}
             onClick={() => setCurrentPwd(!currentPwd)}
           />
         </InputPasswordTotal>
         <PwdCondition>
-          {isRightPrevPwd ? <img src={Check} /> : <img src={NoneCheck} />}
+          {isRightPrevPwd ? <CheckImg src={Check} /> : <CheckImg src={NoneCheck} />}
           <ConditionTxt isOk={isRightPrevPwd}>
             일치해요
           </ConditionTxt>
@@ -238,7 +245,7 @@ const ChangePassword = () => {
             onChange={handleInputChange}
             maxLength={15}
           />
-          <img
+          <CheckImg
             src={newPwd ? ShowPwd : NoShowPwd}
             onClick={() => setNewPwd(!newPwd)}
           />
@@ -246,25 +253,25 @@ const ChangePassword = () => {
         {newPwdVal && (
           <>
             <PwdCondition>
-              {pwdLen ? <img src={Check} /> : <img src={NoneCheck} />}
+              {pwdLen ? <CheckImg src={Check} /> : <CheckImg src={NoneCheck} />}
               <ConditionTxt isOk={pwdLen}>
                 8자 이상, 15자 이하로 설정해 주세요
               </ConditionTxt>
             </PwdCondition>
             <PwdCondition>
-              {pwdSpecial ? <img src={Check} /> : <img src={NoneCheck} />}
+              {pwdSpecial ? <CheckImg src={Check} /> : <CheckImg src={NoneCheck} />}
               <ConditionTxt isOk={pwdSpecial}>
                 특수 문자를 사용해 주세요
               </ConditionTxt>
             </PwdCondition>
             <PwdCondition>
-              {pwdSame ? <img src={Check} /> : <img src={NoneCheck} />}
+              {pwdSame ? <CheckImg src={Check} /> : <CheckImg src={NoneCheck} />}
               <ConditionTxt isOk={pwdSame}>
                 똑같은 문자가 4번 반복되면 안돼요
               </ConditionTxt>
             </PwdCondition>
             <PwdCondition>
-              {pwdDifferent ? <img src={Check} /> : <img src={NoneCheck} />}
+              {pwdDifferent ? <CheckImg src={Check} /> : <CheckImg src={NoneCheck} />}
               <ConditionTxt isOk={pwdDifferent}>
                 현재 비밀번호와 달라야해요
               </ConditionTxt>
@@ -283,13 +290,13 @@ const ChangePassword = () => {
                 onChange={handleNewPwdChange}
                 maxLength={15}
               />
-              <img
+              <CheckImg
                 src={newCheckPwd ? ShowPwd : NoShowPwd}
                 onClick={() => setNewCheckPwd(!newCheckPwd)}
               />
             </InputPasswordTotal>
             <PwdCondition>
-              {againCheck ? <img src={Check} /> : <img src={NoneCheck} />}
+              {againCheck ? <CheckImg src={Check} /> : <CheckImg src={NoneCheck} />}
               <ConditionTxt isOk={againCheck}>일치해요</ConditionTxt>
             </PwdCondition>
           </>
