@@ -62,7 +62,6 @@ const ConditionTxt = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 8px;
-  margin-bottom: 8px;
   color: ${(props) => (props.isOk ? "#149D9D" : "#525252")};
 
   font-size: 14px;
