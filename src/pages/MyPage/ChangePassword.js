@@ -295,10 +295,9 @@ const ChangePassword = () => {
           </>
         )}
         <TotalButton
-          btnName={"변경하기"}
           handleClick={() => checkPassword()}
           isNextPage={isNextPage}
-        />
+        >{`변경하기`}</TotalButton>
       </c.ScreenComponent>
     </c.Totalframe>
   );
