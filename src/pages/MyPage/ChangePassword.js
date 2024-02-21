@@ -301,7 +301,7 @@ const ChangePassword = () => {
           </>
         )}
         <TotalButton
-          handleClick={() => checkPassword()}
+          onClick={() => checkPassword()}
           isNextPage={isNextPage}
         >{`변경하기`}</TotalButton>
       </c.ScreenComponent>
