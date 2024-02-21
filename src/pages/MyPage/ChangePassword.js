@@ -62,7 +62,25 @@ const ConditionTxt = styled.div`
   font-style: normal;
   font-weight: 600;
 `;
-
+const TotalButton = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    width: 100%;
+    height: 60px;
+    background-color: ${(props) => (props.isNextPage ? '#FFC700' : '#F7F7F7')};
+    pointer-events : ${(props) => props.isNextPage ? 'auto' : 'none'};
+    border-radius: 12px;
+    color: ${(props)=> (props.isNextPage ? '#333' : '#B7B7B7')};
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 24px;
+    cursor: pointer;
+    &:active{
+        background: #ECAA00;
+    }
+`;
 const ChangePassword = () => {
   const [currentSelected, setCurrentSelected] = useState(false);
   const [currentSelectedError, setCurrentSelectedError] = useState(false);
@@ -276,7 +294,7 @@ const ChangePassword = () => {
             </PwdCondition>
           </>
         )}
-        <JoinButton
+        <TotalButton
           btnName={"변경하기"}
           handleClick={() => checkPassword()}
           isNextPage={isNextPage}
