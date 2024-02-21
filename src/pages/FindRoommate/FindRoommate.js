@@ -81,7 +81,7 @@ const FindRoommate = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userdata, setUserData] = useState([]);
   const [isExist, setIsExist] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   
@@ -91,6 +91,7 @@ const FindRoommate = () => {
         const res = await API.get("/point/find");
         setUserData(res.data.points);
         setIsExist(res.data.exist);
+        setLoading(false);
       }catch(e) {
         console.log(e);
       }
