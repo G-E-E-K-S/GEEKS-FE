@@ -150,7 +150,7 @@ const DeleteRoommateLine = styled.div`
   line-height: 18px;
   color: #aa3106;
   background-color: #fcede8;
-  width: 100vw;
+  width: 100%;
   margin-left: calc(-50vw + 50%);
 `;
 const ChatRoom = () => {
