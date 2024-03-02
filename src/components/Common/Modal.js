@@ -20,7 +20,7 @@ const ModalBox = styled.div`
   padding: ${(props)=>props.padding};
   border-radius: 16px;
   min-width: 319px;
-  width: max-content;
+  width: 85%;
   height: max-content;
   position: relative;
   z-index: 30;
