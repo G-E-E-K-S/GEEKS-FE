@@ -90,13 +90,34 @@ const ModalText = styled.div`
   text-align: center;
   white-space: pre-wrap;
 `;
-
+const ModalApologizeTxt = styled.div`
+  white-space: pre-wrap;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: center;
+`;
+const Close = styled.div`
+  width: 100%;
+  border: 1px solid #e2e2e2;
+  width: 100%;
+  height: 60px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+`;
 const Welcome = () => {
   const [showPopup, setShowPopup] = useState(false);
   const location = useLocation(null);
   const [popupMessage, setPopupMessage] = useState("");
   const [updateState, setUpdateState] = useState(false);
   const [phoneKind, setPhoneKind] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const navigate = useNavigate();
 
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -183,6 +204,13 @@ const Welcome = () => {
     navigate("/agree");
   };
 
+  useEffect(() => {
+    const isApologizeStored = localStorage.getItem("apologize");
+    if (isApologizeStored === "false") {
+      setIsModalOpen(false);
+    }
+  }, []);
+
   return (
     <c.Totalframe>
       <c.ScreenComponent>
@@ -208,7 +236,10 @@ const Welcome = () => {
           isNextPage={true}
         />
         {/* {deferredPrompt && <button onClick={handleInstall}>앱 설치</button>} */}
-        {(deferredPrompt || updateState || (!window.matchMedia('(display-mode: standalone)').matches && (/iPad|iPhone|iPod/.test(navigator.userAgent)))) ? (
+        {deferredPrompt ||
+        updateState ||
+        (!window.matchMedia("(display-mode: standalone)").matches &&
+          /iPad|iPhone|iPod/.test(navigator.userAgent)) ? (
           <Modal padding={`40px 24px 28px 24px`} isWelcome={true}>
             <Ceter>
               <LogoImg src={Logo} />
@@ -222,18 +253,30 @@ const Welcome = () => {
             ) : (
               <pwa-install
                 installbuttontext={"앱 내려받기"}
-                iosinstallinfotext={"공유 버튼 클릭 후 \"홈 화면에 추가\" 를 눌러주세요!"}
+                iosinstallinfotext={
+                  '공유 버튼 클릭 후 "홈 화면에 추가" 를 눌러주세요!'
+                }
                 descriptionheader={``}
               />
             )}
           </Modal>
-        ): <Modal padding={`40px 24px 28px 24px`} isWelcome={true}>
-        <Ceter>
-          <LogoImg src={Logo} />
-          <img src={TextLogo} />
-        </Ceter>
-        <ModalText>{`지금은 점검중이에요\n조금만 기다려주세요!`}</ModalText>
-      </Modal>}
+        ) : (
+          isModalOpen && (
+            <Modal padding={`40px 24px 28px 24px`} isWelcome={true}>
+              <ModalApologizeTxt>{`[2024년 03월 02일 이전 가입하신 분들께]\n안녕하세요 모든 긱스 사용자 여러분.
+            현재 긱스는 '건의함' 신기능을 개발하고 있습니다. 그러나, 해당 기능을 개발하던 도중. 운영진들의 실수로, 2024년 03월 02일 이전에 가입해주신 분들의 회원가입 정보가 삭제되었습니다. 
+            2024년 03월 02일 이전에 가입해주신 모든 분들께서는 번거로우시겠지만, 다시 한 번 가입을 진행해주시면 감사하겠습니다.\n\n
+            이 사태를 바탕으로 더 나은 긱스를 제공하기 위해 최선을 다하겠습니다. 이해와 협조를 부탁드리며, 불편을 끼쳐드려 다시 한 번 깊이 사과드립니다.
+        \n\n- 긱스 운영진 올림 -`}</ModalApologizeTxt>
+              <Close
+                onClick={() => {
+                  localStorage.setItem("apologize", false);
+                  setIsModalOpen(false);
+                }}
+              >{`닫기`}</Close>
+            </Modal>
+          )
+        )}
       </c.ScreenComponent>
     </c.Totalframe>
   );
