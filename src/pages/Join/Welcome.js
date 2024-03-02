@@ -208,7 +208,7 @@ const Welcome = () => {
           isNextPage={true}
         />
         {/* {deferredPrompt && <button onClick={handleInstall}>앱 설치</button>} */}
-        {(deferredPrompt || updateState || (!window.matchMedia('(display-mode: standalone)').matches && (/iPad|iPhone|iPod/.test(navigator.userAgent)))) && (
+        {(deferredPrompt || updateState || (!window.matchMedia('(display-mode: standalone)').matches && (/iPad|iPhone|iPod/.test(navigator.userAgent)))) ? (
           <Modal padding={`40px 24px 28px 24px`} isWelcome={true}>
             <Ceter>
               <LogoImg src={Logo} />
@@ -227,7 +227,13 @@ const Welcome = () => {
               />
             )}
           </Modal>
-        )}
+        ): <Modal padding={`40px 24px 28px 24px`} isWelcome={true}>
+        <Ceter>
+          <LogoImg src={Logo} />
+          <img src={TextLogo} />
+        </Ceter>
+        <ModalText>{`지금은 점검중이에요\n조금만 기다려주세요!`}</ModalText>
+      </Modal>}
       </c.ScreenComponent>
     </c.Totalframe>
   );
