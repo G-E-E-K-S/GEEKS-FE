@@ -33,7 +33,7 @@ const ConditionScroll = styled.div`
 `;
 const BottomMenues = styled.div`
   display: flex;
-  padding: 2.38vh; 5.12vw 0px 5.12vw;
+  padding: 2.38vh;
   border-top: 1px solid #EFEFEF;
 `;
 const ResetImg = styled.img`
