@@ -20,7 +20,7 @@ const MenuImg = styled.img`
 const MenuName = styled.div`
     display: flex;
     align-items: center;
-    color: ${(props)=>props.isNotice ? '#D0D0D0' : props.isSecession ? '#CB3D0B' : '#333'};
+    color: ${(props)=>props.isShow ? '#D0D0D0' : props.isSecession ? '#CB3D0B' : '#333'};
     font-size: 1.125rem;
     font-style: normal;
     font-weight: 600;
@@ -46,7 +46,7 @@ const MyPageMenu = (props) => {
         <TotalMenu onClick={props.onClick}>
             <c.Flex>
                 <MenuImg src={props.menuImg}></MenuImg>
-                <MenuName isNotice={props.isNotice} isSecession={props.isSecession}>{props.menuName}</MenuName>
+                <MenuName isShow={props.isShow} isSecession={props.isSecession}>{props.menuName}</MenuName>
             </c.Flex>
             <Arrows>
                 {props.enrollLifeStyle && <RedCircle/>}
