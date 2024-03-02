@@ -5,6 +5,8 @@ import Home from '../../assets/img//Navigation/home.svg';
 import FillHome from '../../assets/img//Navigation/fillHome.svg';
 import Roommate from '../../assets/img//Navigation/roommate.svg';
 import FillRoommate from '../../assets/img//Navigation/fillRoommate.svg';
+import FillSuggestion from '../../assets/img/Navigation/fillSuggestion.svg';
+import Suggestion from '../../assets/img/Navigation/suggestion.svg';
 import Chat from '../../assets/img//Navigation/chat.svg';
 import FillChat from '../../assets/img//Navigation/fillChat.svg';
 import Community from '../../assets/img//Navigation/community.svg';
@@ -48,6 +50,7 @@ const IconText = styled.div`
 
 const NavigationBar = (props) => {
   const [isHome, setIsHome] = useState(true);
+  const [isSuggestion, setIsSuggestion] = useState(true);
   const [isRoommate, setIsRoommate] = useState(false);
   const [isChat, setIsChat] = useState(false);
   const [isCommunity, setIsCommunity] = useState(false);
@@ -76,6 +79,10 @@ const NavigationBar = (props) => {
         setIsRoommate(true);
         navigate('/roommate');
         break;
+      case 'isSuggestion':
+        setIsSuggestion(true);
+        navigate('/comingsoon');
+        break;
       case 'isChat':
         setIsChat(true);
         navigate('/chat');
@@ -99,17 +106,21 @@ const NavigationBar = (props) => {
         {selectIcon == 'home' ? <Icon src={FillHome} /> : <Icon src={Home} />}
         <IconText>홈</IconText>
       </Icons>
-      <Icons isSelected={selectIcon == 'rommate'} onClick={() => handlePage('isRoommate')}>
+      {/* <Icons isSelected={selectIcon == 'rommate'} onClick={() => handlePage('isRoommate')}>
         {selectIcon == 'rommate' ? <Icon src={FillRoommate} /> : <Icon src={Roommate} />}
         <IconText>룸메찾기</IconText>
-      </Icons>
-      <Icons isSelected={selectIcon == 'chat'} onClick={() => handlePage('isChat')}>
-        {selectIcon == 'chat' ? <Icon src={FillChat} /> : <Icon src={Chat} />}
-        <IconText>대화</IconText>
+      </Icons> */}
+      <Icons isSelected={selectIcon == 'suggestion'} onClick={() => handlePage('isSuggestion')}>
+        {selectIcon == 'suggestion' ? <Icon src={FillSuggestion} /> : <Icon src={Suggestion} />}
+        <IconText>건의함</IconText>
       </Icons>
       <Icons isSelected={selectIcon == 'community'} onClick={() => handlePage('isCommunity')}>
         {selectIcon == 'community' ? <Icon src={FillCommunity} /> : <Icon src={Community} />}
         <IconText>커뮤니티</IconText>
+      </Icons>
+      <Icons isSelected={selectIcon == 'chat'} onClick={() => handlePage('isChat')}>
+        {selectIcon == 'chat' ? <Icon src={FillChat} /> : <Icon src={Chat} />}
+        <IconText>대화</IconText>
       </Icons>
       <Icons isSelected={selectIcon == 'mypage'} onClick={() => handlePage('isMy')}>
         {selectIcon == 'mypage' ? <Icon src={FillMyPage} /> : <Icon src={Mypage} />}
