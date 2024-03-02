@@ -219,18 +219,21 @@ const MyPage = () => {
             <MyPageMenu
               menuImg={enrollLifeStyle}
               menuName={`생활 습관 등록하기`}
-              onClick={() => navigate("/lifestyle")}
+              // onClick={() => navigate("/lifestyle")}
               enrollLifeStyle={!userInfo.exist}
+              isShow={true}
             />
             <MyPageMenu
               menuImg={saveList}
               menuName={`룸메이트 저장 목록`}
-              onClick={() => navigate("/savelist")}
+              // onClick={() => navigate("/savelist")}
+              isShow={true}
             />
             <MyPageMenu
               menuImg={roommateApply}
               menuName={`룸메이트 신청 목록`}
-              onClick={() => navigate("/roommate/apply")}
+              // onClick={() => navigate("/roommate/apply")}
+              isShow={true}
             />
             <Br />
             <MyPageMenu
@@ -241,7 +244,7 @@ const MyPage = () => {
             <MyPageMenu
               menuImg={notice}
               menuName={`알림 설정`}
-              isNotice={true}
+              isShow={true}
             />
             <MyPageMenu
               menuImg={announce}
