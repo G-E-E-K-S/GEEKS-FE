@@ -100,6 +100,7 @@ const ShowReviewBox = styled.div`
   padding: 20px 5.12vw;
   border-radius: 20px;
   background: #fcede8;
+  margin-top: 3.7vh;
 `;
 const ReviewTxt = styled.div`
   color: #1a1a1a;
@@ -196,6 +197,15 @@ const FindIcon = styled.img`
   width: 120px;
   height: 120px;
 `;
+const RoommateComingSoonTxt = styled.div`
+  white-space: pre-wrap;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 24px;
+  color: #707070;
+  text-align: center;
+`;
 const Home = () => {
   const [isShowReview, setIsShowReView] = useState(true);
   const [isWeeklyPost, setIsWeeklyPost] = useState("live");
@@ -230,7 +240,7 @@ const Home = () => {
       try {
         const res = await API.get("/home/main");
         console.log(res.data);
-        setRoommateApply(res.data.roommateApply)
+        setRoommateApply(res.data.roommateApply);
         setIsExist(res.data.exist);
         setPoint(res.data.points);
         setPosts(res.data.livePosts);
@@ -259,51 +269,61 @@ const Home = () => {
   //   setRoommateApply(false);
   //   localStorage.setItem("showApply", false);
   // }
-  return (
-    loading ? <Loading/> : (
-      <c.Totalframe background={`#FAFAFA`}>
-        <c.ScreenComponent navigation={true}>
-          <c.SubScreen>
-            <Header isNoti={true} onClick={() => navigate("/search")} />
-            <Popup
-              message={`곧 만날 수 있으니 조금만 기다려 주세요!`}
-              setShowPopup={setShowPopup}
-              isShowPopup={showPopup}
-              top={`9.5`}/>
-            <System>
-              <Icons onClick={() => setShowPopup(true)}>
-                <Icon src={checklist} />
-                <IconText>체크리스트</IconText>
-              </Icons>
-              <Icons onClick={() => handlePage()}>
-                <Icon src={rule} />
-                <IconText>생활 규칙</IconText>
-              </Icons>
-              <Icons>
-                <a href={"https://smsso.smu.ac.kr/svc/tk/Auth.do?ac=Y&ifa=N&id=portal&"}target="_blank">
-                  <Icon src={stayOut} />
-                  <IconText>외박 신청</IconText>
-                </a>
-              </Icons>
-              <Icons>
-                <a href={"https://www.smu.ac.kr/dormi2/board/notice.do"} target="_blank">
-                  <Icon src={dormiNoti} />
-                  <IconText>기숙사 공지</IconText>
-                </a>
-              </Icons>
-            </System>
-            {isRoommateApply &&
-              <ApplyRoommate onClick={()=>navigate('/roommate/apply')}>
-                <c.SpaceBetween>
-                  <ApplyNoticeTxt>{`누군가 나에게 룸메이트를\n신청했어요!`}</ApplyNoticeTxt>
-                  <ApplyCloseImg src={BoldClose}/>
-                </c.SpaceBetween>
-                <IconBox>
-                  <FindIcon src={Find} />
-                </IconBox>
-              </ApplyRoommate>
-            }
-            <HomeBox
+  return loading ? (
+    <Loading />
+  ) : (
+    <c.Totalframe background={`#FAFAFA`}>
+      <c.ScreenComponent navigation={true}>
+        <c.SubScreen>
+          <Header isNoti={true} onClick={() => navigate("/search")} />
+          <Popup
+            message={`곧 만날 수 있으니 조금만 기다려 주세요!`}
+            setShowPopup={setShowPopup}
+            isShowPopup={showPopup}
+            top={`9.5`}
+          />
+          <System>
+            <Icons onClick={() => setShowPopup(true)}>
+              <Icon src={checklist} />
+              <IconText>체크리스트</IconText>
+            </Icons>
+            <Icons onClick={() => handlePage()}>
+              <Icon src={rule} />
+              <IconText>생활 규칙</IconText>
+            </Icons>
+            <Icons>
+              <a
+                href={
+                  "https://smsso.smu.ac.kr/svc/tk/Auth.do?ac=Y&ifa=N&id=portal&"
+                }
+                target="_blank"
+              >
+                <Icon src={stayOut} />
+                <IconText>외박 신청</IconText>
+              </a>
+            </Icons>
+            <Icons>
+              <a
+                href={"https://www.smu.ac.kr/dormi2/board/notice.do"}
+                target="_blank"
+              >
+                <Icon src={dormiNoti} />
+                <IconText>기숙사 공지</IconText>
+              </a>
+            </Icons>
+          </System>
+          {isRoommateApply && (
+            <ApplyRoommate onClick={() => navigate("/roommate/apply")}>
+              <c.SpaceBetween>
+                <ApplyNoticeTxt>{`누군가 나에게 룸메이트를\n신청했어요!`}</ApplyNoticeTxt>
+                <ApplyCloseImg src={BoldClose} />
+              </c.SpaceBetween>
+              <IconBox>
+                <FindIcon src={Find} />
+              </IconBox>
+            </ApplyRoommate>
+          )}
+          {/* <HomeBox
               name={isExist ? `${userName} 님과 딱 맞는\n룸메이트를 찾았어요`: `${userName} 님과 딱 맞는\n룸메이트를 찾아드려요`}
               marginTop={`3.79vh`}
               marginBottom={`24px`}
@@ -330,88 +350,106 @@ const Home = () => {
                   <EnrollRule onClick={() => navigate("/lifestyle")}>{`생활습관 등록하기`}</EnrollRule>
                 </div>
               )}
-            </HomeBox>
-            {isShowReview && (
-              <a href="https://forms.gle/m9kF8KybtXr5E3sS7" target="_blank">
-                <ShowReviewBox>
-                  <c.SpaceBetween>
-                    <ReviewTxt>{`긱스 이용 후기를 남겨주세요!`}</ReviewTxt>
-                    <CloseImg src={Close} onClick={(e)=>handleShowReview(e)}/>
-                  </c.SpaceBetween>
-                  <MoreSecurityTxt>{`더 멋지게 보완해서 찾아올게요`}</MoreSecurityTxt>
-                </ShowReviewBox>
-              </a>
-            )}
-            <HomeBox
-              name={`이런 글은 어떠세요?`}
-              marginTop={`20px`}
-              marginBottom={`3.31vh`}
-              height={`max-content`}
-              onClick={() => navigate("/community")}>
-              <PopularPostBox>
-                <PopularPostText
-                  view={isWeeklyPost === "weekly"}
-                  isWeeklyPost={isWeeklyPost === "live"}
-                  onClick={() => setIsWeeklyPost("live")}
-                  className={isWeeklyPost === "weekly" ? "active" : ""}>
-                  {`실시간 인기글`}
-                </PopularPostText>
+            </HomeBox> */}
+          {isShowReview && (
+            <a href="https://forms.gle/m9kF8KybtXr5E3sS7" target="_blank">
+              <ShowReviewBox>
+                <c.SpaceBetween>
+                  <ReviewTxt>{`긱스 이용 후기를 남겨주세요!`}</ReviewTxt>
+                  <CloseImg src={Close} onClick={(e) => handleShowReview(e)} />
+                </c.SpaceBetween>
+                <MoreSecurityTxt>{`더 멋지게 보완해서 찾아올게요`}</MoreSecurityTxt>
+              </ShowReviewBox>
+            </a>
+          )}
+          <HomeBox
+            name={`이런 글은 어떠세요?`}
+            marginTop={`20px`}
+            marginBottom={`3.31vh`}
+            height={`max-content`}
+            onClick={() => navigate("/community")}
+          >
+            <PopularPostBox>
+              <PopularPostText
+                view={isWeeklyPost === "weekly"}
+                isWeeklyPost={isWeeklyPost === "live"}
+                onClick={() => setIsWeeklyPost("live")}
+                className={isWeeklyPost === "weekly" ? "active" : ""}
+              >
+                {`실시간 인기글`}
+              </PopularPostText>
 
-                <PopularPostText
-                  view={isWeeklyPost === "live"}
+              <PopularPostText
+                view={isWeeklyPost === "live"}
+                isWeeklyPost={isWeeklyPost === "weekly"}
+                onClick={() => setIsWeeklyPost("weekly")}
+                className={isWeeklyPost === "live" ? "active" : ""}
+              >
+                {`주간 인기글`}
+              </PopularPostText>
+              <PopularPostText
+                toggle={true}
+                view={true}
+                isWeeklyPost={isWeeklyPost === "weekly"}
+                className="active"
+              >
+                <PopularPostTextInDiv
+                  isWeeklyPost={isWeeklyPost === "live"}
+                  className={isWeeklyPost === "live" ? "active" : ""}
+                >
+                  실시간 인기글
+                </PopularPostTextInDiv>
+                <PopularPostTextInDiv
                   isWeeklyPost={isWeeklyPost === "weekly"}
-                  onClick={() => setIsWeeklyPost("weekly")}
-                  className={isWeeklyPost === "live" ? "active" : ""}>
-                  {`주간 인기글`}
-                </PopularPostText>
-                <PopularPostText
-                  toggle={true}
-                  view={true}
-                  isWeeklyPost={isWeeklyPost === "weekly"}
-                  className="active">
-                  <PopularPostTextInDiv
-                    isWeeklyPost={isWeeklyPost === "live"}
-                    className={isWeeklyPost === "live" ? "active" : ""}>
-                    실시간 인기글
-                  </PopularPostTextInDiv>
-                  <PopularPostTextInDiv
-                    isWeeklyPost={isWeeklyPost === "weekly"}
-                    className={isWeeklyPost === "weekly" ? "active" : ""}>
-                    주간 인기글
-                  </PopularPostTextInDiv>
-                </PopularPostText>
-              </PopularPostBox>
-              {isWeeklyPost === "live" &&
-                posts.map((post, index) => (
-                  <MainPost
-                    // onClick={post}
-                    onClick={() => navigate(`/post/${post.postId}`)}
-                    text={post.title}
-                    comment={post.commentCount}
-                    likeCnt={post.likeCount}
-                    postContent={post.content}
-                    UploadTime={caclTime(post.createdDate)}
-                    marginBottom={posts.length === index + 1 ? "0px" : "24px"}
-                  />
-                ))}
-              {isWeeklyPost === "weekly" &&
-                weeklyPost?.map((post, index) => (
-                  <MainPost
-                    onClick={() => navigate(`/post/${post.postId}`)}
-                    text={post.title}
-                    comment={post.commentCount}
-                    likeCnt={post.likeCount}
-                    postContent={post.content}
-                    UploadTime={caclTime(post.createdDate)}
-                    marginBottom={posts.length === index + 1 ? "0px" : "24px"}
-                  />
-                ))}
-            </HomeBox>
-          </c.SubScreen>
-        </c.ScreenComponent>
-        <NavigationBar type={`home`} />
-      </c.Totalframe>
-    )
+                  className={isWeeklyPost === "weekly" ? "active" : ""}
+                >
+                  주간 인기글
+                </PopularPostTextInDiv>
+              </PopularPostText>
+            </PopularPostBox>
+            {isWeeklyPost === "live" &&
+              posts.map((post, index) => (
+                <MainPost
+                  // onClick={post}
+                  onClick={() => navigate(`/post/${post.postId}`)}
+                  text={post.title}
+                  comment={post.commentCount}
+                  likeCnt={post.likeCount}
+                  postContent={post.content}
+                  UploadTime={caclTime(post.createdDate)}
+                  marginBottom={posts.length === index + 1 ? "0px" : "24px"}
+                />
+              ))}
+            {isWeeklyPost === "weekly" &&
+              weeklyPost?.map((post, index) => (
+                <MainPost
+                  onClick={() => navigate(`/post/${post.postId}`)}
+                  text={post.title}
+                  comment={post.commentCount}
+                  likeCnt={post.likeCount}
+                  postContent={post.content}
+                  UploadTime={caclTime(post.createdDate)}
+                  marginBottom={posts.length === index + 1 ? "0px" : "24px"}
+                />
+              ))}
+          </HomeBox>
+          <HomeBox
+            onClick={(e) => e&&e.preventDefault()}
+            name={
+              isExist
+                ? `${userName} 님과 딱 맞는\n룸메이트를 찾았어요`
+                : `${userName} 님과 딱 맞는\n룸메이트를 찾아드려요`
+            }
+            marginTop={`3.79vh`}
+            marginBottom={`24px`}
+            height={`max-content`}
+          >
+            <RoommateComingSoonTxt>{`룸메이트 매칭은 잠시 쉬어갈게요\n2학기에 만나요!`}</RoommateComingSoonTxt>
+          </HomeBox>
+        </c.SubScreen>
+      </c.ScreenComponent>
+      <NavigationBar type={`home`} />
+    </c.Totalframe>
   );
 };
 export default Home;
