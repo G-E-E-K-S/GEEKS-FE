@@ -118,10 +118,10 @@ const NavigationBar = (props) => {
         {selectIcon == 'community' ? <Icon src={FillCommunity} /> : <Icon src={Community} />}
         <IconText>커뮤니티</IconText>
       </Icons>
-      <Icons isSelected={selectIcon == 'chat'} onClick={() => handlePage('isChat')}>
+      {/* <Icons isSelected={selectIcon == 'chat'} onClick={() => handlePage('isChat')}>
         {selectIcon == 'chat' ? <Icon src={FillChat} /> : <Icon src={Chat} />}
         <IconText>대화</IconText>
-      </Icons>
+      </Icons> */}
       <Icons isSelected={selectIcon == 'mypage'} onClick={() => handlePage('isMy')}>
         {selectIcon == 'mypage' ? <Icon src={FillMyPage} /> : <Icon src={Mypage} />}
         <IconText>마이</IconText>
