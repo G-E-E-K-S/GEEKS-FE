@@ -9,6 +9,7 @@ import { WritePost, Post, Community, MyCommunity, ScrapPost, CommunityWrite, Ope
 import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqContent,RoommateApply, MyProfile, SecessionReason, NoticeDetail, EventNoticeDetail, ChangePassword, ReviewEvent } from './pages/MyPage/Index';
 import './index.css';
 import Loading from "./pages/Loading";
+import Manager from "./pages/Manager/ManagerMain";
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
           <Route path="/loading" element={<Loading/>}/>
           <Route path="/reviewevent" element={<ReviewEvent/>}/>
           <Route path="/comingsoon" element={<ComingSoon/>}/>
+          <Route path="/managermain" element={<Manager/>}/>
         </Routes>
       </Router>
     </div>
