@@ -50,6 +50,7 @@ const NickName = () => {
   const [valuableName, setValuableName] = useState('');
   const [isNextPage, setIsNextPage] = useState(false);
   const [isPopup, setIsPopup] = useState(false);
+  const [errorPopup, setErrorPopup] = useState(false);
   const letterCnt = useRef(0);
   const navigate = useNavigate();
 
@@ -58,12 +59,15 @@ const NickName = () => {
   };
 
   const handleInputChange = (e) => {
+    const regex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$/;
     const value = e.target.value;
+    if (value.length > 0 && !regex.test(value)) {
+      setErrorPopup(true);
+    }
     setInputNickName(value);
     const length = value.length;
     letterCnt.current = length;
-
-    length > 0 ? setIsNextPage(true) : setIsNextPage(false);
+    length > 0 && regex.test(value) ? setIsNextPage(true) : setIsNextPage(false);
   };
 
   const handleNickName = () => {
@@ -123,6 +127,12 @@ const NickName = () => {
         message={`이미 사용 중인 닉네임이에요`} 
         setShowPopup={setIsPopup}
         isShowPopup={isPopup} 
+        bottom={'18.72'}/>
+        
+        <ErrorPopup 
+        message={`닉네임은 한글 / 숫자 / 영어만 입력이 가능합니다`} 
+        setShowPopup={setErrorPopup}
+        isShowPopup={errorPopup} 
         bottom={'18.72'}/>
         <JoinButton
           btnName={"다음"}
