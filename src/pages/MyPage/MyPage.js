@@ -27,6 +27,7 @@ import Loading from "../Loading";
 
 const UserInfoTop = styled.div`
   margin-top: 4.5vh;
+  margin-bottom: 2.72vh;
 `;
 const SelfIntro = styled.div`
   border-radius: 8px;
@@ -199,7 +200,7 @@ const MyPage = () => {
             {userInfo.introduction?.length !== 0 && (
               <SelfIntro>{userInfo.introduction}</SelfIntro>
             )}
-            <ShowMyProfile>
+            {/* <ShowMyProfile>
               <div>
                 <ShowProfileTxt>내 프로필 노출하기</ShowProfileTxt>
                 <ShowProfileSubtxt>
@@ -209,13 +210,13 @@ const MyPage = () => {
               <ToggleBtn onClick={clickedToggle} toggle={toggle}>
                 <Circle toggle={toggle} />
               </ToggleBtn>
-            </ShowMyProfile>
+            </ShowMyProfile> */}
             <Br />
-            <WelcomeKit onClick={()=>navigate('/reviewevent')}>
+            {/* <WelcomeKit onClick={()=>navigate('/reviewevent')}>
               {`긱스 사용 후기 작성하고\n기숙사 웰컴 키트 받아가세요!`}
               <GiftBoxImg src={GiftBox}/>
               <img src={rightArrow} />
-            </WelcomeKit>
+            </WelcomeKit> */}
             <MyPageMenu
               menuImg={enrollLifeStyle}
               menuName={`생활 습관 등록하기`}

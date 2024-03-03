@@ -8,7 +8,7 @@ import Loading from "../Loading";
 import GeeksLogo from "../../assets/img/Common/geeksLogo.svg";
 import Search from "../../assets/img/Home/search.svg";
 import MyPageIcon from "../../assets/img/Community/myPage.svg";
-import SuggestionNotice from "../../assets/img/Suggestion/noticeSuggestion.svg";
+import SuggestionNotice from "../../assets/gif/suggestion.gif";
 
 const TotalHeader = styled.div`
     display: flex;
@@ -30,10 +30,12 @@ const ComingSoonTotal = styled.div`
 `;
 const ComingSoonImg = styled.img`
   margin-top: 96px;
+  width: 172px;
+  height: 172px;
 `;
 const ComingSoonTxt = styled.div`
   margin-top: 36px;
-  margin-bottom: 16px;
+  margin-bottom: 5px;
   color: #b92335;
   font-size: 2rem;
   font-weight: 600;
