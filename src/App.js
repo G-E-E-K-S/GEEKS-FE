@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router, Routes, useLocation } from "react-route
 import {Intro, AccessRight, PersonalInfoTxt, ServiceTxt, LocationTxt, MarketingTxt,Agree, Welcome, Login, InputEmail, InputCode, Password, NickName, QuesText, Major, Gender, Dormitory, FinalPage, ForgetEmail, AlreadyRegist} from './pages/Join/Index';
 import { LiveRule, Home, Search } from './pages/Main/Index';
 import { FindRoommate , User, RoommateSendTxt, FinishRoommate } from './pages/FindRoommate/Index';
-import ComingSoon from './pages/Suggestion/ComingSoon';
+import { ComingSoon, Suggestion } from './pages/Suggestion/Index';
 import { Chat , ChatRoom } from './pages/Chat/Index';
 import { WritePost, Post, Community, MyCommunity, ScrapPost, CommunityWrite, OpenGroup } from './pages/Community/Index';
 import { MyPage, LifeStyles, EditProfile, SettingUserInfo, SaveList, Notice, FAQ, FaqContent,RoommateApply, MyProfile, SecessionReason, NoticeDetail, EventNoticeDetail, ChangePassword, ReviewEvent } from './pages/MyPage/Index';
@@ -69,6 +69,7 @@ function App() {
           <Route path="/loading" element={<Loading/>}/>
           <Route path="/reviewevent" element={<ReviewEvent/>}/>
           <Route path="/comingsoon" element={<ComingSoon/>}/>
+          <Route path="/suggestion" element={<Suggestion/>}/>
           <Route path="/managermain" element={<Manager/>}/>
         </Routes>
       </Router>
