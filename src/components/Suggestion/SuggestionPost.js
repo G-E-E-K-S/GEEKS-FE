@@ -53,7 +53,7 @@ const IconNum = styled.div`
 `;
 const SuggestionPost = (props) => {
   return (
-    <>
+    <div onClick={props.onClick}>
       <PostTotalTitle>
         <PostTitle>{props.title}</PostTitle>
         {props.cnt && (
@@ -66,7 +66,7 @@ const SuggestionPost = (props) => {
       <PostContent>{props.content}</PostContent>
       <PostTime>{props.time}</PostTime>
       <Line />
-    </>
+    </div>
   );
 };
 export default SuggestionPost;

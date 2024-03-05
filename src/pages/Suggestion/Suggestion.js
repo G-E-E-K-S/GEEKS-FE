@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import API from "../../axios/BaseUrl";
 import * as c from "../../components/Common/CommonStyle";
 import NavigationBar from "../../components/Main/NavigationBar";
 import SuggestionPost from "../../components/Suggestion/SuggestionPost";
+import FetchMore from "../../components/Community/FetchMore";
+import moment from "moment";
+import 'moment/locale/ko';
 import Loading from "../Loading";
 import GeeksLogo from "../../assets/img/Common/geeksLogo.svg";
 import Search from "../../assets/img/Home/search.svg";
@@ -71,12 +75,39 @@ const WriteTxt = styled.div`
 `;
 const Suggestion = () => {
   const [loading, setLoading] = useState(false);
+  const [post, setPost] = useState([]);
+  const [cursor, setCursor] = useState(0);
+  const [hasNext, setHasNext] = useState(true);
   const [filterState, setFilterState] = useState("");
   const navigate = useNavigate();
 
   const handleFilter = (state) => {
     filterState === state ? setFilterState(false) : setFilterState(state);
   };
+
+  async function fetchSuggestion() {
+    try {
+      const res = await API.get("/suggestion/main/"+cursor);
+      console.log(res.data)
+      setLoading(false);
+      setHasNext(res.data.hasNextPage);
+      setPost((prev) => [...prev, ...res.data.suggestions]);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  useEffect(() => {
+    if (!hasNext) {
+      return;
+    }
+    fetchSuggestion();
+  }, [cursor]);
+
+  const caclTime = (uploadTime) => {
+    moment.locale("ko"); // 언어를 한국어로 설정
+    return moment(uploadTime).fromNow(`A`)+'전'; // 지금으로부터 계산
+  }
   return loading ? (
     <Loading />
   ) : (
@@ -104,15 +135,18 @@ const Suggestion = () => {
             onClick={() => handleFilter("no")}
           >{`처리 보류`}</ProcessBox>
         </c.Flex>
-        <SuggestionPost
-          title={`gkdl`}
-          content={`gkdls`}
-          time={`dd`}
-          cnt={`3`}
+        {post?.map((data)=>(
+          <SuggestionPost
+          title={data.title}
+          content={data.content}
+          time={caclTime(data.createDate)}
+          cnt={data.agreeCount === 0 ? false : data.agreeCount}
+          onClick={() => navigate(`/suggestion/show/${data.suggestionId}`)}
         />
-        <SuggestionPost title={`gkdl`} content={`gkdls`} time={`dd`} />
+        ))}
+        <FetchMore items={post} setCursor={setCursor}/>
       </c.ScreenComponent>
-      <WritePostBox onClick={() => navigate("/writepost")}>
+      <WritePostBox onClick={() => navigate("/writesuggestion")}>
         <WritePostIcon src={WritePost} />
         <WriteTxt>{`건의하기`}</WriteTxt>
       </WritePostBox>
