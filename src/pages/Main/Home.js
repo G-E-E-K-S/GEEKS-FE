@@ -363,7 +363,7 @@ const Home = () => {
             </a>
           )}
           <HomeBox
-            name={`이런 글은 어떠세요?`}
+            name={`지금 기숙사에서\n인기있는 글이에요`}
             marginTop={`20px`}
             marginBottom={`3.31vh`}
             height={`max-content`}

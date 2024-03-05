@@ -9,7 +9,7 @@ const FetchMore = ({ items, setCursor }) => {
     const fetchMoreTrigger = useRef(null);
 
     const fetchMoreObserver = new IntersectionObserver(([{ isIntersecting }]) => {
-        if (isIntersecting) setCursor((prev) => items?.at(-1).postId);
+        if (isIntersecting) setCursor((prev) => items?.at(-1)?.postId);
     });
 
     useEffect(() => {
