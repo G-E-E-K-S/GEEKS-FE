@@ -11,7 +11,6 @@ import ForgetPwdImg from "../../assets/img/Join/forgetPwd.svg";
 import NoShowPwd from "../../assets/img/Join/NoShowPwd.svg";
 import ShowPwd from "../../assets/img/Join/ShowPwd.svg";
 import Automatic from "../../assets/img/Join/automatic.svg";
-import Loading from "../Loading";
 
 const InputInfos = styled.div`
   display: flex;
@@ -108,6 +107,9 @@ const InputEmail = () => {
           email: emailVal.current.value +"@sangmyung.kr",
           password: passwordVal.current.value,
         });
+        if(res.data === 'admin'){
+          navigate('/managermain');
+        }
         if(res.data === 'success'){
           setAutomaticLogIn(true);
         }

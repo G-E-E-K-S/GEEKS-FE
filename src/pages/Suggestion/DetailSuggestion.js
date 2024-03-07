@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import API from "../../axios/BaseUrl";
 import moment from "moment";
 import "moment/locale/ko";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/Common/HeaderMenu";
+import ProcessBtn from "../../components/Suggestion/ProcessBtn";
+import ProcessBar from "../../components/Suggestion/ProcessBar";
 import Loading from "../Loading";
 import Agree from "../../assets/img/Suggestion/agree.svg";
 import FillAgree from "../../assets/img/Suggestion/fillAgree.svg";
@@ -44,6 +46,7 @@ const AgreeBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 52px;
 `;
 const AgreeIcon = styled.img`
   width: 16px;
@@ -61,6 +64,7 @@ const DetailSuggestion = () => {
   const [isAgree, setIsAgree] = useState(false);
   const [agreeCnt, setAgreeCnt] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
   const { pagenum } = useParams();
 
   useEffect(() => {
@@ -80,34 +84,50 @@ const DetailSuggestion = () => {
     moment.locale("ko"); // 언어를 한국어로 설정
     return moment(uploadTime).fromNow(`A`) + "전"; // 지금으로부터 계산
   };
-  const handleAgreeState = () => {
-    if (!isAgree) {
-      const fetchAddAgree = async () => {
-        try {
-          const res = await API.post("/suggestion/increase/agree/" + pagenum);
-          if (res.data === 'success') {
-            setAgreeCnt(agreeCnt + 1);
-            setIsAgree(!isAgree);
+  const handleAgreeState = (e) => {
+    if(location.state?.isAdmin){
+      e.preventDefault();
+    }else{
+      if (!isAgree) {
+        const fetchAddAgree = async () => {
+          try {
+            const res = await API.post("/suggestion/increase/agree/" + pagenum);
+            if (res.data === 'success') {
+              setAgreeCnt(agreeCnt + 1);
+              setIsAgree(!isAgree);
+            }
+          } catch (error) {
+            console.error(error);
           }
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      fetchAddAgree();
-    } else {
-      const fetchDeleteAgree = async () => {
-        try {
-          const res = await API.post("/suggestion/decrease/agree/" + pagenum);
-          if (res.data === 'success') {
-            setIsAgree(!isAgree);
+        };
+        fetchAddAgree();
+      } else {
+        const fetchDeleteAgree = async () => {
+          try {
+            const res = await API.post("/suggestion/decrease/agree/" + pagenum);
+            if (res.data === 'success') {
+              setIsAgree(!isAgree);
+            }
+          } catch (error) {
+            console.error(error);
           }
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      fetchDeleteAgree();
+        };
+        fetchDeleteAgree();
+      }
     }
   };
+
+  const handleProcess = async(processState) => {
+    try {
+      const res = await API.patch("/suggestion/state/update",{
+        suggestionId: pagenum,
+        suggestionState: processState
+      });
+      if(res.data === 'success') window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  }
   
   return loading ? (
     <Loading />
@@ -120,12 +140,28 @@ const DetailSuggestion = () => {
         </TimeDormitory>
         <Title>{detailData.title}</Title>
         <Content>{detailData.content}</Content>
-        <AgreeBtn onClick={() => handleAgreeState()}>
+        <AgreeBtn onClick={(e) => handleAgreeState(e)}>
           <AgreeIcon src={isAgree ? FillAgree : Agree} />
           <AgreeTxt isAgree={isAgree}>
             {isAgree ? agreeCnt + `명이 동의해요` : `동의하기`}
           </AgreeTxt>
         </AgreeBtn>
+        {detailData.suggestionState === 'ONGOING' && <ProcessBar btnName={`처리 중`}></ProcessBar>}
+        {detailData.suggestionState === 'COMPLETE' && <ProcessBar btnName={`처리 완료`}></ProcessBar>}
+        {detailData.suggestionState === 'DEFER' && <ProcessBar btnName={`처리 보류`}></ProcessBar>}
+        {location.state?.isAdmin && (
+          <>
+            {detailData.suggestionState !== 'ONGOING' && (
+              <ProcessBtn btnName={`처리 중`} onClick={() => handleProcess('ONGOING')} />
+            )}
+            {detailData.suggestionState !== 'COMPLETE' && (
+              <ProcessBtn btnName={`처리 완료`} onClick={() => handleProcess('COMPLETE')} />
+            )}
+            {detailData.suggestionState !== 'DEFER' && (
+              <ProcessBtn btnName={`처리 보류`} onClick={() => handleProcess('DEFER')} />
+            )}
+          </>
+        )}
       </c.ScreenComponent>
     </c.Totalframe>
   );

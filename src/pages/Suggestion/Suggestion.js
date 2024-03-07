@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import API from "../../axios/BaseUrl";
 import * as c from "../../components/Common/CommonStyle";
@@ -79,7 +79,10 @@ const Suggestion = () => {
   const [cursor, setCursor] = useState(0);
   const [hasNext, setHasNext] = useState(true);
   const [filterState, setFilterState] = useState("");
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const isAdmin = location.state?.isAdmin;
 
   const handleFilter = (state) => {
     filterState === state ? setFilterState(false) : setFilterState(state);
@@ -141,15 +144,15 @@ const Suggestion = () => {
           content={data.content}
           time={caclTime(data.createDate)}
           cnt={data.agreeCount === 0 ? false : data.agreeCount}
-          onClick={() => navigate(`/suggestion/show/${data.suggestionId}`)}
+          onClick={() => navigate(`/suggestion/show/${data.suggestionId}`,{ state: {isAdmin: isAdmin} })}
         />
         ))}
         <FetchMore items={post} setCursor={setCursor}/>
       </c.ScreenComponent>
-      <WritePostBox onClick={() => navigate("/writesuggestion")}>
+      {!isAdmin && <WritePostBox onClick={() => navigate("/writesuggestion")}>
         <WritePostIcon src={WritePost} />
         <WriteTxt>{`건의하기`}</WriteTxt>
-      </WritePostBox>
+      </WritePostBox>}
       <NavigationBar type={`suggestion`} />
     </c.Totalframe>
   );
