@@ -46,7 +46,7 @@ const Managermain = () => {
         <ManagerTotal>
           <LogoImg src={GeeksLogo} />
           <ManagerText>{`관리자 계정으로\n로그인 되었습니다.`}</ManagerText>
-          <DirectBtn>{`건의함 바로가기`}</DirectBtn>
+          <DirectBtn onClick={() => navigate('/suggestion', { state: {isAdmin: true} })}>{`건의함 바로가기`}</DirectBtn>
           <DirectBtn>{`커뮤니티 바로가기`}</DirectBtn>
         </ManagerTotal>
       </c.ScreenComponent>
