@@ -91,7 +91,6 @@ const Suggestion = () => {
   async function fetchSuggestion() {
     try {
       const res = await API.get("/suggestion/main/"+cursor);
-      console.log(res.data)
       setLoading(false);
       setHasNext(res.data.hasNextPage);
       setPost((prev) => [...prev, ...res.data.suggestions]);
@@ -140,6 +139,7 @@ const Suggestion = () => {
         </c.Flex>
         {post?.map((data)=>(
           <SuggestionPost
+          process={data.suggestionState !== 'NONE' ? (data.suggestionState === 'ONGOING' ? '처리 중' : (data.suggestionState === 'COMPLETE' ? '처리 완료' : '처리 보류')) : null}
           title={data.title}
           content={data.content}
           time={caclTime(data.createDate)}
