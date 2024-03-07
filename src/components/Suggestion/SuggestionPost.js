@@ -8,6 +8,18 @@ const PostTotalTitle = styled.div`
   margin-top: 20px;
   display: flex;
 `;
+const ProcessSmallBtn = styled.div`
+  width: max-content;
+  margin-right: 8px;
+  height: 26px;
+  padding: 4px 8px 4px 8px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: ${(props)=>props.process === '처리 중' ? '#FCEDE8' : props.proccess === '처리 완료' ? '#EDF7FD' : '#EFEFEF'};
+  color: ${(props)=>props.process == '처리 중' ? '#AA3106' : props.proccess == '처리 완료' ? '#184B96' : '#707070'};
+`;
+// props.btnName === '처리 중' ? '#FCEDE8' : props.btnName === '처리 완료' ? '#EDF7FD' : '#F7F7F7'};
 const PostTitle = styled.div`
   font-size: 1.125rem;
   font-weight: 600;
@@ -55,6 +67,7 @@ const SuggestionPost = (props) => {
   return (
     <div onClick={props.onClick}>
       <PostTotalTitle>
+        {props.process !== null && <ProcessSmallBtn process={props.process}>{props.process}</ProcessSmallBtn>}
         <PostTitle>{props.title}</PostTitle>
         {props.cnt && (
           <Icons>
