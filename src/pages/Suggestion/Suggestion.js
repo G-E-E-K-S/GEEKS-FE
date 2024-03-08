@@ -7,7 +7,7 @@ import NavigationBar from "../../components/Main/NavigationBar";
 import SuggestionPost from "../../components/Suggestion/SuggestionPost";
 import FetchMore from "../../components/Community/FetchMore";
 import moment from "moment";
-import 'moment/locale/ko';
+import "moment/locale/ko";
 import Loading from "../Loading";
 import GeeksLogo from "../../assets/img/Common/geeksLogo.svg";
 import Search from "../../assets/img/Home/search.svg";
@@ -76,6 +76,7 @@ const WriteTxt = styled.div`
 const Suggestion = () => {
   const [loading, setLoading] = useState(false);
   const [post, setPost] = useState([]);
+  const [filterPost, setFilterPost] = useState([]);
   const [cursor, setCursor] = useState(0);
   const [hasNext, setHasNext] = useState(true);
   const [filterState, setFilterState] = useState("");
@@ -83,14 +84,23 @@ const Suggestion = () => {
   const navigate = useNavigate();
 
   const isAdmin = location.state?.isAdmin;
-
-  const handleFilter = (state) => {
-    filterState === state ? setFilterState(false) : setFilterState(state);
-  };
+  async function fetchFilter() {
+    setCursor(0);
+    try {
+      const res = await API.get(`/suggestion/filter/${filterState}/${cursor}`);
+      setFilterPost(res.data.suggestions);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  useEffect(() => {
+    if(filterState != false) fetchFilter();
+  }, [filterState,cursor]);
 
   async function fetchSuggestion() {
     try {
-      const res = await API.get("/suggestion/main/"+cursor);
+      const res = await API.get(`/suggestion/main/${cursor}`);
       setLoading(false);
       setHasNext(res.data.hasNextPage);
       setPost((prev) => [...prev, ...res.data.suggestions]);
@@ -99,7 +109,11 @@ const Suggestion = () => {
     }
   }
   
+
   useEffect(() => {
+    if (cursor === undefined) {
+      return;
+    }
     if (!hasNext) {
       return;
     }
@@ -108,8 +122,8 @@ const Suggestion = () => {
 
   const caclTime = (uploadTime) => {
     moment.locale("ko"); // 언어를 한국어로 설정
-    return moment(uploadTime).fromNow(`A`)+'전'; // 지금으로부터 계산
-  }
+    return moment(uploadTime).fromNow(`A`) + "전"; // 지금으로부터 계산
+  };
   return loading ? (
     <Loading />
   ) : (
@@ -125,34 +139,58 @@ const Suggestion = () => {
         <SuggestionTxt>{`기숙사에게 원하는 것을\n건의해 보세요`}</SuggestionTxt>
         <c.Flex>
           <ProcessBox
-            isSelect={filterState === "ing"}
-            onClick={() => handleFilter("ing")}
+            isSelect={filterState === "NONE"}
+            // filterState === state ? setFilterState(false) : setFilterState(state);
+            onClick={() => setFilterState(prevState => prevState === "NONE" ? false : "NONE")}
+          >{`처리 전`}</ProcessBox>
+          <ProcessBox
+            isSelect={filterState === "ONGOING"}
+            onClick={() => setFilterState(prevState => prevState === "ONGOING" ? false : "ONGOING")}
           >{`처리 중`}</ProcessBox>
           <ProcessBox
-            isSelect={filterState === "done"}
-            onClick={() => handleFilter("done")}
+            isSelect={filterState === "COMPLETE"}
+            onClick={() => setFilterState(prevState => prevState === "COMPLETE" ? false : "COMPLETE")}
           >{`처리 완료`}</ProcessBox>
           <ProcessBox
-            isSelect={filterState === "no"}
-            onClick={() => handleFilter("no")}
+            isSelect={filterState === "DEFER"}
+            onClick={() => setFilterState(prevState => prevState === "DEFER" ? false : "DEFER")}
           >{`처리 보류`}</ProcessBox>
         </c.Flex>
-        {post?.map((data)=>(
-          <SuggestionPost
-          process={data.suggestionState !== 'NONE' ? (data.suggestionState === 'ONGOING' ? '처리 중' : (data.suggestionState === 'COMPLETE' ? '처리 완료' : '처리 보류')) : null}
-          title={data.title}
-          content={data.content}
-          time={caclTime(data.createDate)}
-          cnt={data.agreeCount === 0 ? false : data.agreeCount}
-          onClick={() => navigate(`/suggestion/show/${data.suggestionId}`,{ state: {isAdmin: isAdmin} })}
-        />
-        ))}
-        <FetchMore items={post} setCursor={setCursor}/>
+        {filterState === "" || filterState === false
+          ? post.map((data) => (
+              <SuggestionPost
+                process={ data.suggestionState !== "NONE" ? data.suggestionState === "ONGOING" ? "처리 중" : data.suggestionState === "COMPLETE" ? "처리 완료": "처리 보류" : null}
+                title={data.title}
+                content={data.content}
+                time={caclTime(data.createDate)}
+                cnt={data.agreeCount === 0 ? false : data.agreeCount}
+                onClick={() =>
+                  navigate(`/suggestion/show/${data.suggestionId}`, {state: { isAdmin: isAdmin },})
+                }
+              />
+            ))
+          : filterPost.map((data) => (
+              <SuggestionPost
+                process={ data.suggestionState !== "NONE" ? data.suggestionState === "ONGOING" ? "처리 중" : data.suggestionState === "COMPLETE" ? "처리 완료" : "처리 보류" : null}
+                title={data.title}
+                content={data.content}
+                time={caclTime(data.createDate)}
+                cnt={data.agreeCount === 0 ? false : data.agreeCount}
+                onClick={() =>
+                  navigate(`/suggestion/show/${data.suggestionId}`, {
+                    state: { isAdmin: isAdmin },
+                  })
+                }
+              />
+            ))}
+        <FetchMore items={post} setCursor={setCursor} />
       </c.ScreenComponent>
-      {!isAdmin && <WritePostBox onClick={() => navigate("/writesuggestion")}>
-        <WritePostIcon src={WritePost} />
-        <WriteTxt>{`건의하기`}</WriteTxt>
-      </WritePostBox>}
+      {!isAdmin && (
+        <WritePostBox onClick={() => navigate("/writesuggestion")}>
+          <WritePostIcon src={WritePost} />
+          <WriteTxt>{`건의하기`}</WriteTxt>
+        </WritePostBox>
+      )}
       <NavigationBar type={`suggestion`} />
     </c.Totalframe>
   );

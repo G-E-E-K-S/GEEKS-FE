@@ -26,6 +26,10 @@ const PostTitle = styled.div`
   line-height: 24px;
   text-align: left;
   color: #333333;
+  width: 48.71vw;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 `;
 const PostContent = styled.div`
   font-size: 1rem;
@@ -34,6 +38,10 @@ const PostContent = styled.div`
   text-align: left;
   color: #525252;
   margin-bottom: 8px;
+  width: 100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 `;
 const PostTime = styled.div`
   font-size: 0.875rem;
