@@ -236,47 +236,29 @@ const Welcome = () => {
           isNextPage={true}
         />
         {/* {deferredPrompt && <button onClick={handleInstall}>앱 설치</button>} */}
-        {deferredPrompt ||
-        updateState ||
-        (!window.matchMedia("(display-mode: standalone)").matches &&
-          /iPad|iPhone|iPod/.test(navigator.userAgent)) ? (
-          <Modal padding={`40px 24px 28px 24px`} isWelcome={true}>
-            <Ceter>
-              <LogoImg src={Logo} />
-              <img src={TextLogo} />
-            </Ceter>
-            <ModalText>{`긱스를 터치 한 번으로\n바로 시작해 보세요!`}</ModalText>
-            {navigator.userAgent.toLowerCase().indexOf("android") > -1 ? (
-              <DownLoadApp
-                onClick={() => handleInstall()}
-              >{`앱 내려받기`}</DownLoadApp>
-            ) : (
-              <pwa-install
-                installbuttontext={"앱 내려받기"}
-                iosinstallinfotext={
-                  '공유 버튼 클릭 후 "홈 화면에 추가" 를 눌러주세요!'
-                }
-                descriptionheader={``}
-              />
-            )}
-          </Modal>
-        ) : (
-          isModalOpen && (
+        {updateState ||
+          (!window.matchMedia("(display-mode: standalone)").matches && (
             <Modal padding={`40px 24px 28px 24px`} isWelcome={true}>
-              <ModalApologizeTxt>{`[2024년 03월 02일 이전 가입하신 분들께]\n안녕하세요 모든 긱스 사용자 여러분.
-            현재 긱스는 '건의함' 신기능을 개발하고 있습니다. 그러나, 해당 기능을 개발하던 도중. 운영진들의 실수로, 2024년 03월 02일 이전에 가입해주신 분들의 회원가입 정보가 삭제되었습니다. 
-            2024년 03월 02일 이전에 가입해주신 모든 분들께서는 번거로우시겠지만, 다시 한 번 가입을 진행해주시면 감사하겠습니다.\n\n
-            이 사태를 바탕으로 더 나은 긱스를 제공하기 위해 최선을 다하겠습니다. 이해와 협조를 부탁드리며, 불편을 끼쳐드려 다시 한 번 깊이 사과드립니다.
-        \n\n- 긱스 운영진 올림 -`}</ModalApologizeTxt>
-              <Close
-                onClick={() => {
-                  localStorage.setItem("apologize", false);
-                  setIsModalOpen(false);
-                }}
-              >{`닫기`}</Close>
+              <Ceter>
+                <LogoImg src={Logo} />
+                <img src={TextLogo} />
+              </Ceter>
+              <ModalText>{`긱스를 터치 한 번으로\n바로 시작해 보세요!`}</ModalText>
+              {navigator.userAgent.toLowerCase().indexOf("android") > -1 ? (
+                <DownLoadApp
+                  onClick={() => handleInstall()}
+                >{`앱 내려받기`}</DownLoadApp>
+              ) : (
+                <pwa-install
+                  installbuttontext={"앱 내려받기"}
+                  iosinstallinfotext={
+                    '공유 버튼 클릭 후 "홈 화면에 추가" 를 눌러주세요!'
+                  }
+                  descriptionheader={``}
+                />
+              )}
             </Modal>
-          )
-        )}
+          ))}
       </c.ScreenComponent>
     </c.Totalframe>
   );
