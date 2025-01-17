@@ -6,7 +6,7 @@ import LocationTxt from "./LocationTxt";
 import MarketingTxt from "./MarketingTxt";
 import AccessRight from "./AccessRight";
 import Welcome from "./Welcome/Welcome";
-import Login from "./Login";
+import Login from "./Login/Login";
 import InputEmail from "./InputEmail";
 import InputCode from "./InputCode";
 import Password from "./Password";
@@ -16,7 +16,7 @@ import Major from "./Major";
 import Gender from "./Gender";
 import Dormitory from "./Dormitory";
 import FinalPage from "./FinalPage";
-import ForgetEmail from "./ForgetEmail";
+import FindPassword from "./FindPassword/FindPassword";
 import AlreadyRegist from "./AlreadyRegist";
 
 export {
@@ -38,6 +38,6 @@ export {
 	Gender,
 	Dormitory,
 	FinalPage,
-	ForgetEmail,
+	FindPassword,
 	AlreadyRegist
 };

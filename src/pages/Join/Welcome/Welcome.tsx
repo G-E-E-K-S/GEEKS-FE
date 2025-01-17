@@ -34,7 +34,7 @@ export default function Welcome() {
 		}
 	}, [location]);
 
-	const handleBeforeInstallPrompt = (event) => {
+	const handleBeforeInstallPrompt = (event: any) => {
 		event.preventDefault();
 
 		setDeferredPrompt(event);
@@ -43,7 +43,7 @@ export default function Welcome() {
 	const handleInstall = () => {
 		if (deferredPrompt) {
 			deferredPrompt.prompt();
-			deferredPrompt.userChoice.then((choiceResult) => {
+			deferredPrompt.userChoice.then((choiceResult: any) => {
 				if (choiceResult.outcome === "accepted") {
 					console.log("사용자가 앱 설치를 동의했습니다.");
 				} else {
