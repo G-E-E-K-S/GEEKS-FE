@@ -1,5 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
+import Typography from "../Common/Layouts/Typography";
+import Row from "../Common/Layouts/Row";
 
 const TotalClubBox = styled.div`
     padding: 1.7vh 20px;
@@ -58,6 +60,7 @@ const TotalJoin = styled.div`
 const ClubBox = (props) => {
     return(
         <TotalClubBox>
+           <Row horizonAlign="center" verticalAlign="center"></Row>
             <Profiles>
                 <ProfileImg src={props.profileImg}></ProfileImg>
                 <NickName>{props.nickName}</NickName>

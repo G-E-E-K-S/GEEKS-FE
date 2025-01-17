@@ -3,7 +3,7 @@ import { jsx } from "react/jsx-runtime";
 
 import * as S from "./style";
 import { theme } from "../../../styles/theme";
-import { Color } from "../../../type/color";
+import { Color } from "../../../types/color";
 
 type TypographTypoType =
 	| "H1"
@@ -14,7 +14,7 @@ type TypographTypoType =
 	| "T2_semibold"
 	| "T3_bold"
 	| "T3_semibold"
-	| " T3_medium"
+	| "T3_medium"
 	| "T4_medium"
 	| "T4_semibold"
 	| "B1_bold"
@@ -48,16 +48,20 @@ const TypoMap = {
 const Typography = ({
 	color,
 	typoSize,
-	children
+	children,
+	style,
+	textAlign
 }: {
 	color?: Color;
+	style?: {};
 	typoSize: TypographTypoType;
 	children: ReactNode;
+	textAlign?: "center" | "left" | "right";
 }) => {
 	const Typo = TypoMap[typoSize];
 
 	const Color = theme[color as keyof typeof theme];
 
-	return jsx(Typo, { style: { color: Color }, children });
+	return jsx(Typo, { style: { color: Color, textAlign: textAlign, whiteSpace: "pre-wrap", ...style }, children });
 };
 export default Typography;
