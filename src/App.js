@@ -18,8 +18,8 @@ import {
 	Major,
 	Gender,
 	Dormitory,
+	FindPassword,
 	FinalPage,
-	ForgetEmail,
 	Welcome,
 	AlreadyRegist
 } from "./pages/Join/Index";
@@ -71,7 +71,7 @@ function App() {
 					<Route path="/questiontext" element={<QuesText />} />
 					<Route path="/major" element={<Major />} />
 					<Route path="/finalpage" element={<FinalPage />} />
-					<Route path="/forgetemail" element={<ForgetEmail />} />
+					<Route path="/findPassword" element={<FindPassword />} />
 					<Route path="/alreadyregist" element={<AlreadyRegist />} />
 					<Route path="/gender" element={<Gender />} />
 					<Route path="/dormitory" element={<Dormitory />} />

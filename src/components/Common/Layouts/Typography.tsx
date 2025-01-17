@@ -8,7 +8,7 @@ import { Color } from "../../../types/color";
 type TypographTypoType =
 	| "H1"
 	| "H2"
-	| "H2"
+	| "H3"
 	| "T1"
 	| "T2_bold"
 	| "T2_semibold"
@@ -28,6 +28,7 @@ type TypographTypoType =
 const TypoMap = {
 	H1: S.H1,
 	H2: S.H2,
+	H3: S.H3,
 	T1: S.T1,
 	T2_bold: S.T2_bold,
 	T2_semibold: S.T2_semibold,
