@@ -5,7 +5,7 @@ export const Button = styled.div<{ isNextPage?: boolean }>`
 	justify-content: center;
 	align-items: center;
 	position: fixed;
-	bottom: 30.45vh;
+	bottom: 10.17vh;
 	width: 89.74vw;
 	height: 60px;
 	background-color: ${({ isNextPage }) => (isNextPage ? "#FFC700" : "#F7F7F7")};

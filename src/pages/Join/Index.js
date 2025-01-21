@@ -10,12 +10,12 @@ import Login from "./Login/Login";
 import InputEmail from "./InputEmail/InputEmail";
 import InputCode from "./InputCode/InputCode";
 import Password from "./Password/Password";
-import NickName from "./NickName";
-import QuesText from "./QuesText";
-import Major from "./Major";
-import Gender from "./Gender";
-import Dormitory from "./Dormitory";
-import FinalPage from "./FinalPage";
+import NickName from "./NickName/NickName";
+import QuesText from "./QuesText/QuesText";
+import Major from "./Major/Major";
+import Gender from "./Gender/Gender";
+import Dormitory from "./Dormitory/Dormitory";
+import FinalPage from "./FinalPage/Finalpage";
 import FindPassword from "./FindPassword/FindPassword";
 import AlreadyRegist from "./AlreadyRegist";
 

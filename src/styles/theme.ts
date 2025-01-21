@@ -14,7 +14,7 @@ export const theme = {
 	Gray500: "#949494",
 	Gray600: "#707070",
 	Gray700: "#525252",
-	Gray800: "##333333",
+	Gray800: "#333333",
 	Gray900: "#1A1A1A",
 
 	//Geeks Yellow Gray
