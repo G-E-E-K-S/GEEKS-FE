@@ -25,10 +25,10 @@ export default function FinalPage() {
 			background={`linear-gradient(180deg, rgba(255, 199, 0, 0.10) 0%, rgba(250, 250, 250, 0.10) 100%)`}
 		>
 			<CS.ScreenComponent>
-				<Typography typoSize="H1" color="Gray800" style={{ marginTop: "14.21vh", textAlign: "center" }}>
+				<Typography typoSize="H1" color="Gray800" textAlign="center" style={{ marginTop: "14.21vh" }}>
 					{"환영합니다!"}
 				</Typography>
-				<Typography typoSize="T3_medium" color="Gray600" style={{ marginTop: "2.84vh", textAlign: "center" }}>
+				<Typography typoSize="T3_medium" color="Gray600" textAlign="center" style={{ marginTop: "2.84vh" }}>
 					{"이제부터 긱스와 함께\n행복한 기숙사 생활 해봐요"}
 				</Typography>
 				<Row horizonAlign="center" verticalAlign="center">
