@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-import API from "../../axios/BaseUrl";
+import { useState } from "react";
+import API from "../../../axios/BaseUrl";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import * as c from "../../components/Common/CommonStyle";
-import HeaderMenu from "../../components/Common/HeaderMenu";
-import JoinButton from "../../components/Join/JoinButton";
-import MainText from "../../components/Join/MainText";
-import GenderBox from "../../components/Join/GenderBox";
-import Girl from "../../assets/img/Join/girl.svg";
-import SelectGirl from "../../assets/img/Join/selectGirl.svg";
-import Boy from "../../assets/img/Join/man.svg";
-import SelectBoy from "../../assets/img/Join/selectMan.svg";
-import Loading from "../Loading";
+import * as CS from "../../../components/Common/CommonStyle";
+import HeaderMenu from "../../../components/Common/HeaderMenu";
+import JoinButton from "../../../components/Join/JoinButton";
+import MainText from "../../../components/Join/MainText";
+import GenderBox from "../../../components/Join/GenderBox";
+import Girl from "../../../assets/img/Join/girl.svg";
+import SelectGirl from "../../../assets/img/Join/selectGirl.svg";
+import Boy from "../../../assets/img/Join/man.svg";
+import SelectBoy from "../../../assets/img/Join/selectMan.svg";
+import Loading from "../../Loading";
+import Button from "../../../components/DesignStuff/Button/Button";
+import { useGender } from "../../../store/useGender";
 
 const GenderTotal = styled.div`
 	display: flex;
@@ -19,27 +21,22 @@ const GenderTotal = styled.div`
 		margin-right: 8px;
 	}
 `;
-const Gender = () => {
-	const [isSelected, setIsSelected] = useState(false);
+export default function Gender() {
+	const { setUseGender } = useGender();
 	const [isgirl, setIsgirl] = useState(false);
 	const [isboy, setIsboy] = useState(false);
 	const [isNextPage, setIsNextPage] = useState(false);
-	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
-	const ChangeColor = () => {
-		setIsSelected(true);
-	};
-
-	const SelectGender = (gender) => {
+	const SelectGender = (gender:"여자" | "남자") => {
 		if (gender == "여자") {
 			setIsgirl(true);
 			setIsboy(false);
-			localStorage.setItem("mode", 2);
+			setUseGender("girl");
 		} else {
 			setIsgirl(false);
 			setIsboy(true);
-			localStorage.setItem("mode", 1);
+			setUseGender("boy");
 		}
 		setIsNextPage(true);
 	};
@@ -47,7 +44,6 @@ const Gender = () => {
 	const checkGender = () => {
 		const CurGender = isgirl ? "FEMALE" : "MALE";
 		async function fetchGenderPage() {
-			setLoading(true);
 			try {
 				const res = await API.get("/member/gender?gender=" + CurGender);
 				if (res.data === "success") navigate("/dormitory");
@@ -58,11 +54,9 @@ const Gender = () => {
 		fetchGenderPage();
 	};
 
-	return loading ? (
-		<Loading />
-	) : (
-		<c.Totalframe>
-			<c.ScreenComponent>
+	return (
+		<CS.Totalframe>
+			<CS.ScreenComponent>
 				<HeaderMenu />
 				<MainText maintitle={`성별을 알려주세요`} />
 				<GenderTotal>
@@ -81,10 +75,8 @@ const Gender = () => {
 						SelectGender={SelectGirl}
 					/>
 				</GenderTotal>
-				<JoinButton btnName={"다음"} handleClick={() => checkGender()} isNextPage={isNextPage} />
-			</c.ScreenComponent>
-		</c.Totalframe>
+				<Button text={"다음"} onClick={() => checkGender()} isNextPage={isNextPage} />
+			</CS.ScreenComponent>
+		</CS.Totalframe>
 	);
-};
-
-export default Gender;
+}

@@ -7,6 +7,7 @@ interface textFieldsType {
 	placeholder?: string;
 	text?: string;
 	fixedText?: string;
+	inputLen?: number;
 	totalNum?: number;
 	isError?: boolean;
 	icon?: string;
@@ -19,6 +20,7 @@ export default function TextFields({
 	placeholder,
 	text,
 	fixedText,
+	inputLen,
 	totalNum,
 	isError,
 	icon,
@@ -29,21 +31,28 @@ export default function TextFields({
 }: textFieldsType) {
 	const [isSelect, setIsSelect] = useState(false);
 	return (
-		<S.InputInfos isSelected={isSelect} isError={isError}>
-			<S.Input
-				placeholder={placeholder}
-				onFocus={() => setIsSelect(true)}
-				onBlur={() => setIsSelect(false)}
-				value={text}
-				type={inputType}
-				maxLength={maxLength}
-				onChange={(e) => onChange(e.target.value)}
-			/>
-			<Typography typoSize="T1" color="Gray400">
-				{fixedText}
-			</Typography>
-			<img src={icon} onClick={onClick} />
-		</S.InputInfos>
+		<>
+			<S.InputInfos isSelected={isSelect} isError={isError}>
+				<S.Input
+					placeholder={placeholder}
+					onFocus={() => setIsSelect(true)}
+					onBlur={() => setIsSelect(false)}
+					value={text}
+					type={inputType}
+					maxLength={maxLength}
+					onChange={(e) => onChange(e.target.value)}
+				/>
+				<Typography typoSize="T1" color="Gray400">
+					{fixedText}
+				</Typography>
+				<img src={icon} onClick={onClick} />
+			</S.InputInfos>
+			{totalNum && (
+				<Typography typoSize="B2_medium" color="Gray400" style={{ marginTop: "8px" }}>
+					{inputLen}/{totalNum}
+				</Typography>
+			)}
+		</>
 	);
 }
 
