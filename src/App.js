@@ -48,6 +48,7 @@ import {
 import "./index.css";
 import Loading from "./pages/Loading";
 import Manager from "./pages/Manager/ManagerMain";
+import Calendar from './pages/Calendar/Calendar';
 
 function App() {
 	return (
@@ -113,6 +114,7 @@ function App() {
 					<Route path="/writesuggestion" element={<WriteSuggestion />} />
 					<Route path="/suggestion/show/:pagenum" element={<DetailSuggestion />} />
 					<Route path="/managermain" element={<Manager />} />
+					<Route path="/calendar" element={<Calendar />} />
 				</Routes>
 			</Router>
 		</div>
