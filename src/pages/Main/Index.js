@@ -1,4 +1,4 @@
-import Home from "./Home";
+import Home from "./Home/Home";
 import LiveRule from "./LiveRule";
 import Search from "./Search";
 
