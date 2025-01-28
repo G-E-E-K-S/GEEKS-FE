@@ -1,4 +1,4 @@
-import FindRoommate from "./FindRoommate";
+import FindRoommate from "./FindRoommate/FindRoommate";
 import User from "./User";
 import RoommateSendTxt from "./RoommateSendTxt";
 import FinishRoommate from "./FinishRoommate";
