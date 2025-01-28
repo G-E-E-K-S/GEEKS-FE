@@ -6,7 +6,9 @@ export default function Calendar () {
 		<c.Totalframe>
 			<c.ScreenComponent navigation={true}>
 				<c.SubScreen>
-					<CalendarGrid />
+					<CalendarGrid
+						type="modal"
+					/>
 				</c.SubScreen>
 			</c.ScreenComponent>
 		</c.Totalframe>
