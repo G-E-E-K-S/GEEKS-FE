@@ -22,7 +22,9 @@ export const getDaysInMonth = (currentDate: Dayjs): (string | number)[][] => {
 				day++;
 			}
 		}
-		calendar.push(week);
+		if (!week.every((value: string | number) => value === "")) {
+			calendar.push(week);
+		}
 	}
 	return calendar;
 };

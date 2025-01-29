@@ -10,11 +10,12 @@ import Row from "../../../components/Common/Layouts/Row";
 interface CalendarHeaderProps {
 	type: "calendar" | "modal";
 	currentDate: Dayjs;
-	handlePrevMonth: () => void;
-	handleNextMonth: () => void;
+	handlePrevMonth?: () => void;
+	handleNextMonth?: () => void;
+	handleTodayClick?: () => void;
 }
 
-export default function CalendarHeader ({ type, currentDate, handlePrevMonth, handleNextMonth }: CalendarHeaderProps) {
+export default function CalendarHeader ({ type, currentDate, handlePrevMonth, handleNextMonth, handleTodayClick }: CalendarHeaderProps) {
 	return (
 		<CalendarHeaderWrapper $type={type}>
 			{type === "calendar" ? (
@@ -27,7 +28,7 @@ export default function CalendarHeader ({ type, currentDate, handlePrevMonth, ha
 							<DownArrowIcon />
 						</Button>
 					</Row>
-					<Button>
+					<Button onClick={handleTodayClick}>
 						<Typography typoSize="B1_semibold" color="Gray800">
 							오늘
 						</Typography>

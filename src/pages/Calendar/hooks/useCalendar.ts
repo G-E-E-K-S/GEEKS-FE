@@ -7,15 +7,16 @@ interface UseCalendarProps {
 
 interface UseCalendarReturn {
 	currentDate: Dayjs;
-	selectedDate: Dayjs | null;
+	selectedDate: string | null;
 	handlePrevMonth: () => void;
 	handleNextMonth: () => void;
 	handleDayClick: (day: string | number) => void;
+	handleTodayClick: () => void;
 }
 
 export const useCalendar = ({ type }: UseCalendarProps): UseCalendarReturn => {
 	const [currentDate, setCurrentDate] = useState<Dayjs>(dayjs());
-	const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+	const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
 	const handlePrevMonth = (): void => {
 		setCurrentDate(currentDate.subtract(1, "month"));
@@ -28,7 +29,7 @@ export const useCalendar = ({ type }: UseCalendarProps): UseCalendarReturn => {
 	const handleDayClick = (day: string | number) => {
 		if (day !== "") {
 			const clickedDate = currentDate.date(Number(day));
-			setSelectedDate(clickedDate);
+			setSelectedDate(clickedDate.format('YYYY-MM-DD'));
 			
 			if (type === "calendar") {
 				// calendar 타입일 때의 추가 로직
@@ -38,11 +39,17 @@ export const useCalendar = ({ type }: UseCalendarProps): UseCalendarReturn => {
 		}
 	};
 
+	const handleTodayClick = () => {
+		const today = dayjs();
+		setSelectedDate(today.format('YYYY-MM-DD'));
+	};
+
 	return {
 		currentDate,
 		selectedDate,
 		handlePrevMonth,
 		handleNextMonth,
 		handleDayClick,
+		handleTodayClick,
 	};
 };
