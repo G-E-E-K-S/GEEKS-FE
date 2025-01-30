@@ -13,9 +13,17 @@ interface CalendarHeaderProps {
 	handlePrevMonth?: () => void;
 	handleNextMonth?: () => void;
 	handleTodayClick?: () => void;
+	toggleIsOpen?: () => void;
 }
 
-export default function CalendarHeader ({ type, currentDate, handlePrevMonth, handleNextMonth, handleTodayClick }: CalendarHeaderProps) {
+export default function CalendarHeader ({
+	type,
+	currentDate,
+	handlePrevMonth,
+	handleNextMonth,
+	handleTodayClick,
+	toggleIsOpen
+}: CalendarHeaderProps) {
 	return (
 		<CalendarHeaderWrapper $type={type}>
 			{type === "calendar" ? (
@@ -24,7 +32,7 @@ export default function CalendarHeader ({ type, currentDate, handlePrevMonth, ha
 						<Typography typoSize="H3" color="Gray800">
 							{currentDate.format("YYYY.M")}
 						</Typography>
-						<Button>
+						<Button onClick={toggleIsOpen}>
 							<DownArrowIcon />
 						</Button>
 					</Row>
@@ -57,7 +65,7 @@ const CalendarHeaderWrapper = styled.div<{ $type: "calendar" | "modal" }>`
     justify-content: ${({ $type }) => ($type === "calendar" ? "space-between" : "center")};
     margin-bottom: ${({ $type }) => ($type === "calendar" ? "16px" : "36px")};
     gap: ${({ $type }) => ($type === "calendar" ? "0" : "12px")};
-	padding:${({ $type }) => ($type === "calendar" ? "12px 0" : "0")};
+    padding: ${({ $type }) => ($type === "calendar" ? "12px 0" : "0")};
 `;
 
 const Button = styled.button`

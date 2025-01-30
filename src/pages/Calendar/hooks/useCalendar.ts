@@ -12,6 +12,7 @@ interface UseCalendarReturn {
 	handleNextMonth: () => void;
 	handleDayClick: (day: string | number) => void;
 	handleTodayClick: () => void;
+	setCurrentDate: (date: Dayjs) => void;
 }
 
 export const useCalendar = ({ type }: UseCalendarProps): UseCalendarReturn => {
@@ -29,8 +30,8 @@ export const useCalendar = ({ type }: UseCalendarProps): UseCalendarReturn => {
 	const handleDayClick = (day: string | number) => {
 		if (day !== "") {
 			const clickedDate = currentDate.date(Number(day));
-			setSelectedDate(clickedDate.format('YYYY-MM-DD'));
-			
+			setSelectedDate(clickedDate.format("YYYY-MM-DD"));
+
 			if (type === "calendar") {
 				// calendar 타입일 때의 추가 로직
 			} else if (type === "modal") {
@@ -41,7 +42,7 @@ export const useCalendar = ({ type }: UseCalendarProps): UseCalendarReturn => {
 
 	const handleTodayClick = () => {
 		const today = dayjs();
-		setSelectedDate(today.format('YYYY-MM-DD'));
+		setSelectedDate(today.format("YYYY-MM-DD"));
 	};
 
 	return {
@@ -51,5 +52,6 @@ export const useCalendar = ({ type }: UseCalendarProps): UseCalendarReturn => {
 		handleNextMonth,
 		handleDayClick,
 		handleTodayClick,
+		setCurrentDate,
 	};
 };

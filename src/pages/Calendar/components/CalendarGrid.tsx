@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { theme } from "../../../styles/theme";
 import Typography from "../../../components/Common/Layouts/Typography";
 import { getDaysInMonth, isToday } from "../utils";
-import CalendarHeader from "../ui/CalendarHeader";
 import { ReactComponent as AddIcon } from "../.././../assets/img/Calendar/AddIcon.svg";
 import Row from "../../../components/Common/Layouts/Row";
 import { Dayjs } from "dayjs";
@@ -23,9 +22,6 @@ interface CalendarGridProps {
 	selectedDate: string | null;
 	handleDayClick: (day: string | number) => void;
 	scheduleData?: { [key: string]: { title: string, type: string; content: string; time: string }[] };
-	handlePrevMonth?: () => void;
-	handleNextMonth?: () => void;
-	handleTodayClick?: () => void;
 }
 
 const scheduleTypes = ["외출", "외박", "공동 일정", "기타"];
@@ -35,10 +31,7 @@ export default function CalendarGrid ({
 	scheduleData,
 	currentDate,
 	selectedDate,
-	handlePrevMonth,
-	handleNextMonth,
 	handleDayClick,
-	handleTodayClick
 }: CalendarGridProps) {
 	const getScheduleForDay = (day: string | number) => {
 		if (day === "") return [];
@@ -74,13 +67,6 @@ export default function CalendarGrid ({
 
 	return (
 		<CalendarContainer>
-			<CalendarHeader
-				type={type}
-				currentDate={currentDate}
-				handlePrevMonth={handlePrevMonth}
-				handleNextMonth={handleNextMonth}
-				handleTodayClick={handleTodayClick}
-			/>
 			{type === "calendar" && (
 				<ScheduleHeader>
 					{scheduleTypes.map((scheduleType: string) => (
