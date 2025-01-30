@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import API from "../../../axios/BaseUrl";
 import styled from "styled-components";
-import * as c from "../../../components/Common/CommonStyle";
-import Header from "../../../components/Main/Header";
+import * as CS from "../../../components/Common/CommonStyle";
 import Condition from "../../../components/Roommate/Condition";
 import OtherProfile from "../../../components/Main/OtherProfile";
 import NavigationBar from "../../../components/Main/NavigationBar";
@@ -14,6 +13,7 @@ import Loading from "../../Loading";
 import Typography from "../../../components/Common/Layouts/Typography";
 import ChoiceCondition from "../../../components/Roommate/ChoiceCondition";
 import BottomSheet from "../../../components/DesignStuff/BottomSheet/BottomSheet";
+import Header from "../../../components/Main/Header/Header";
 
 const ConditionScroll = styled.div`
 	display: flex;
@@ -84,63 +84,61 @@ export default function FindRoommate() {
 	return loading ? (
 		<Loading />
 	) : (
-		<c.Totalframe background={`linear-gradient(180deg, #FFF 0%, #F7F7F7 71%)`}>
-			<c.ScreenComponent navigation={true}>
-				<c.SubScreen>
-					<Header isNoti={true} isEdit={false} onClick={() => navigate("/search")} />
-					<Typography typoSize="H3" color="Gray800" style={{ marginTop: "3.31vh", marginBottom: "3.79vh" }}>
-						{"내가 원하는 기준으로\n룸메이트를 찾아보세요"}
-					</Typography>
-					<ConditionScroll onClick={() => setIsOpen(true)}>
-						<Condition condition={`전공`} />
-						<Condition condition={`학번`} />
-						<Condition condition={`흡연`} />
-						<Condition condition={`잠버릇`} />
-						<Condition condition={`외출`} />
-						<Condition condition={`장소`} />
-						<Condition condition={`성향`} />
-					</ConditionScroll>
-					{isExist ? (
-						// TODO API연결 후
-						// userdata.map((user) => (
-						<></>
-					) : (
-						// 	// <OtherProfile
-						// 	// 	smoking={user.smoking}
-						// 	// 	userprofile={user.photoName}
-						// 	// 	nickName={user.nickname}
-						// 	// 	major={user.major}
-						// 	// 	id={user.studentID}
-						// 	// 	score={user.point}
-						// 	// 	intro={user.introduction}
-						// 	// 	onClick={() => navigate("/detail/details/" + user.userId)}
-						// 	// />
+		<CS.Totalframe background={`linear-gradient(180deg, #FFF 0%, #F7F7F7 71%)`}>
+			<CS.ScreenComponent navigation={true}>
+				<Header />
+				<Typography typoSize="H3" color="Gray800" style={{ marginTop: "3.31vh", marginBottom: "3.79vh" }}>
+					{"내가 원하는 기준으로\n룸메이트를 찾아보세요"}
+				</Typography>
+				<ConditionScroll onClick={() => setIsOpen(true)}>
+					<Condition condition={`전공`} />
+					<Condition condition={`학번`} />
+					<Condition condition={`흡연`} />
+					<Condition condition={`잠버릇`} />
+					<Condition condition={`외출`} />
+					<Condition condition={`장소`} />
+					<Condition condition={`성향`} />
+				</ConditionScroll>
+				{isExist ? (
+					// TODO API연결 후
+					// userdata.map((user) => (
+					<></>
+				) : (
+					// 	// <OtherProfile
+					// 	// 	smoking={user.smoking}
+					// 	// 	userprofile={user.photoName}
+					// 	// 	nickName={user.nickname}
+					// 	// 	major={user.major}
+					// 	// 	id={user.studentID}
+					// 	// 	score={user.point}
+					// 	// 	intro={user.introduction}
+					// 	// 	onClick={() => navigate("/detail/details/" + user.userId)}
+					// 	// />
 
-						// ))
-						// <OtherProfile
-						// 	isSmoke={true}
-						// 	// userprofile={user.photoName}
-						// 	nickName={"dlthdbs"}
-						// 	major={"test"}
-						// 	ID={"2091"}
-						// 	score={"82"}
-						// 	intro={"dkdls"}
-						// 	onClick={() => navigate("/detail/details/")}
-						// />
-						<>
-							<BlurIcon src={BlurImg} />
-							<EnrollLifeStyle>
-								<Typography typoSize={"B1_medium"} color={"Gray800"} textAlign="center">
-									{"생활 습관을 등록하면\n나와 맞는 룸메이트를 찾을 수 있어요"}
-								</Typography>
-								<EnroolLifeStyleBtn
-									onClick={() => navigate("/lifestyle")}
-								>{`생활 습관 등록하러 가기`}</EnroolLifeStyleBtn>
-							</EnrollLifeStyle>
-						</>
-					)}
-				</c.SubScreen>
-			</c.ScreenComponent>
+					// ))
+					// <OtherProfile
+					// 	isSmoke={true}
+					// 	// userprofile={user.photoName}
+					// 	nickName={"dlthdbs"}
+					// 	major={"test"}
+					// 	ID={"2091"}
+					// 	score={"82"}
+					// 	intro={"dkdls"}
+					// 	onClick={() => navigate("/detail/details/")}
+					// />
+					<>
+						<BlurIcon src={BlurImg} />
+						<EnrollLifeStyle>
+							<Typography typoSize={"B1_medium"} color={"Gray800"} textAlign="center">
+								{"생활 습관을 등록하면\n나와 맞는 룸메이트를 찾을 수 있어요"}
+							</Typography>
+							<EnroolLifeStyleBtn
+								onClick={() => navigate("/lifestyle")}
+							>{`생활 습관 등록하러 가기`}</EnroolLifeStyleBtn>
+						</EnrollLifeStyle>
+					</>
+				)}
+			</CS.ScreenComponent>
 			{isOpen ? (
 				<BottomSheet height={84.83} isOpen={isOpen}>
 					<ChoiceCondition onClick={() => setIsOpen(false)} />
@@ -148,6 +146,6 @@ export default function FindRoommate() {
 			) : (
 				<NavigationBar type={`rommate`} />
 			)}
-		</c.Totalframe>
+		</CS.Totalframe>
 	);
 }
