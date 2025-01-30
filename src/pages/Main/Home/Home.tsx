@@ -19,6 +19,7 @@ import Close from "../../../assets/img/Home/close.svg";
 import Find from "../../../assets/gif/find.gif";
 import BasicProfile from "../../../assets/img/MyPage/basicProfile.svg";
 import ForwardArrow from "../../../assets/img/Home/forwardArrow.svg";
+import SendAlarm from "../../../assets/img/Home/alarm.svg";
 import BoldClose from "../../../assets/img/Home/boldClose.svg";
 import Loading from "../../Loading";
 import Row from "../../../components/Common/Layouts/Row";
@@ -27,6 +28,7 @@ import Typography from "../../../components/Common/Layouts/Typography";
 import ButtonBox from "../../../components/DesignStuff/ButtonBox/ButtonBox";
 import { useUserNickName } from "../../../store/useNickName";
 import * as S from "./style";
+import Tooltip from "../../../components/DesignStuff/ToolTip/ToolTip";
 
 // const System = styled.div`
 // 	width: 100%;
@@ -185,16 +187,14 @@ export default function Home() {
 	];
 	const { userNickName } = useUserNickName();
 	const [showPopup, setShowPopup] = useState(false);
-	const [userName, setUserName] = useState("");
 	const [isShowWriteReview, setIsShowWriteReview] = useState(localStorage.getItem("show") !== "false");
 
 	const [isExist, setIsExist] = useState(false);
 	const [isRoommateApply, setRoommateApply] = useState(true);
 	const [point, setPoint] = useState([]);
-	const [posts, setPosts] = useState([]);
-	const [weeklyPost, setWeeklyPost] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [active, setActive] = useState(false);
+	const [isSendMessage, setIsSendMessgae] = useState(false);
 	const navigate = useNavigate();
 
 	const handleHeader = (headerKey: string) => {
@@ -230,15 +230,17 @@ export default function Home() {
 				setRoommateApply(res.data.roommateApply);
 				setIsExist(res.data.exist);
 				setPoint(res.data.points);
-				setPosts(res.data.livePosts);
-				setWeeklyPost(res.data.weeklyPosts);
-				setUserName(res.data.nickname);
 				setLoading(false);
 			} catch (error) {
 				console.error(error);
 			}
 		}
 		fetchEmailPage();
+		const isVisited = localStorage.getItem("vap"); //VisitedAlarmPage
+
+		if (isVisited === null) {
+			localStorage.setItem("vap", "true");
+		}
 	}, []);
 
 	const caclTime = (uploadTime) => {
@@ -251,6 +253,8 @@ export default function Home() {
 	//   setRoommateApply(false);
 	//   localStorage.setItem("showApply", false);
 	// }
+
+	const isVisited = localStorage.getItem("vap");
 	return loading ? (
 		<Loading />
 	) : (
@@ -259,6 +263,12 @@ export default function Home() {
 				message={`곧 만날 수 있으니 조금만 기다려 주세요!`}
 				setShowPopup={setShowPopup}
 				isShowPopup={showPopup}
+				top={`9.5`}
+			/>
+			<Popup
+				message={`귀가 알림을 성공적으로 보냈어요!`}
+				setShowPopup={setIsSendMessgae}
+				isShowPopup={isSendMessage}
 				top={`9.5`}
 			/>
 			<CS.ScreenComponent navigation={true}>
@@ -280,6 +290,22 @@ export default function Home() {
 							</Column>
 						))}
 					</Row>
+					<ButtonBox backgroundColor="YellowGray100">
+						<Row horizonAlign="distribute">
+							<Column gap={4}>
+								<Typography typoSize="T3_bold" color="YellowGray800">
+									{"귀가 알림 보내기"}
+								</Typography>
+								<Typography typoSize="B2_medium" color="YellowGray600">
+									{"룸메이트에게 미리 알림을 보낼 수 있어요"}
+								</Typography>
+							</Column>
+							<Tooltip message="누르면 알림이 전송돼요" isVisible={isVisited !== "true"}>
+								<img src={SendAlarm} onClick={() => setIsSendMessgae(true)} alt="sendAlarmToRoommate" />
+							</Tooltip>
+						</Row>
+					</ButtonBox>
+
 					{isRoommateApply && (
 						<ButtonBox backgroundColor="Yellow100" onClick={() => navigate("/roommate/apply")}>
 							<Row horizonAlign="distribute">
