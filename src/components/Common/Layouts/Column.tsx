@@ -54,8 +54,6 @@ const ColumnCSS = (props?: ColumnProps) => css`
 				case "w-full":
 					return "100%";
 			}
-		} else {
-			return "flex-start";
 		}
 	})()};
 `;
