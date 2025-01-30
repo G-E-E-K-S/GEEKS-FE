@@ -5,6 +5,7 @@ type RowProps = {
 	horizonAlign?: "center" | "left" | "right" | "distribute";
 	gap?: number;
 	wrap?: "nowrap" | "wrap";
+	width?: "w-full";
 };
 
 const RowCSS = (props?: RowProps) => css`
@@ -55,6 +56,17 @@ const RowCSS = (props?: RowProps) => css`
 				case "wrap":
 					return "wrap";
 			}
+		}
+	})()};
+
+	width: ${(() => {
+		if (props?.width) {
+			switch (props.width) {
+				case "w-full":
+					return "100%";
+			}
+		} else {
+			return "flex-start";
 		}
 	})()};
 `;

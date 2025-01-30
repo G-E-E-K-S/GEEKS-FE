@@ -5,7 +5,7 @@ import "moment/locale/ko";
 import API from "../../../axios/BaseUrl";
 import styled from "styled-components";
 import * as CS from "../../../components/Common/CommonStyle";
-import Header from "../../../components/Main/Header";
+import Header from "../../../components/Main/Header/Header";
 import NavigationBar from "../../../components/Main/NavigationBar";
 import MainOtherProfile from "../../../components/Main/MainOtherProfile";
 import HomeBox from "../../../components/Main/HomeBox";
@@ -223,7 +223,6 @@ export default function Home() {
 	//   }
 	// }, [location]);
 
-	
 	useEffect(() => {
 		async function fetchEmailPage() {
 			try {
@@ -264,7 +263,7 @@ export default function Home() {
 			/>
 			<CS.ScreenComponent navigation={true}>
 				<Column gap={24}>
-					<Header isNoti={true} onClick={() => navigate("/search")} />
+					<Header />
 					<Row gap={31}>
 						{MAIN_HEADER.map((header) => (
 							<Column

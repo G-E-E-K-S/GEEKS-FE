@@ -23,7 +23,7 @@ import {
 	Welcome,
 	AlreadyRegist
 } from "./pages/Join/Index";
-import { LiveRule, Home, Search } from "./pages/Main/Index";
+import { LiveRule, Home, Search, Alarm } from "./pages/Main/Index";
 import { FindRoommate, User, RoommateSendTxt, FinishRoommate } from "./pages/FindRoommate/Index";
 import { ComingSoon, Suggestion, WriteSuggestion, DetailSuggestion } from "./pages/Suggestion/Index";
 import { Chat, ChatRoom } from "./pages/Chat/Index";
@@ -78,6 +78,7 @@ function App() {
 					<Route path="/home" element={<Home />} />
 					<Route path="/liverule" element={<LiveRule />} />
 					<Route path="/search" element={<Search />} />
+					<Route path="/noti" element={<Alarm />} />
 					<Route path="/mypage" element={<MyPage />} />
 					<Route path="/myprofile" element={<MyProfile />} />
 					<Route path="/secessionreason" element={<SecessionReason />} />

@@ -58,5 +58,5 @@ export const FlexCenter = styled.div`
 `;
 
 export const Header = styled.div`
-
+	
 `;
