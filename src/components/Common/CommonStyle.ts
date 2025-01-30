@@ -56,3 +56,7 @@ export const FlexCenter = styled.div`
 	justify-content: center;
 	align-items: center;
 `;
+
+export const Header = styled.div`
+
+`;
