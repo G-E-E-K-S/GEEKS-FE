@@ -11,6 +11,7 @@ import { ReactComponent as CloseModal } from "../../assets/img/Join/closeModal.s
 import Row from "../../components/Common/Layouts/Row";
 import React, { useState } from "react";
 import ScrollPicker from "../../components/DesignStuff/ScrollPicker/ScrollPicker";
+import { MONTHS } from "./utils/const";
 
 const scheduleData = {
 	"2025-01-03": [{ title: "친구와 외출", type: "외출", content: "친구랑 놀러감", time: "13:00 - 17:00" }],
@@ -97,8 +98,8 @@ export default function Calendar () {
 								<CloseModal />
 							</Button>
 						</Row>
-						<ScrollPicker
-							options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+						<ScrollPicker<number, string>
+							options={MONTHS}
 							onOptionSelect={handleMonthSelect}
 							height={220}
 						/>
