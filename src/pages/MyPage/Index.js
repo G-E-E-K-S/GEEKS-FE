@@ -1,4 +1,4 @@
-import MyPage from "./MyPage";
+import MyPage from "./MyPage/MyPage";
 import LifeStyles from "./LifeStyles";
 import EditProfile from "./EditProfile";
 import SettingUserInfo from "./SettingUserInfo";
@@ -15,19 +15,19 @@ import ChangePassword from "./ChangePassword";
 import ReviewEvent from "./ReviewEvent";
 
 export {
-  MyPage,
-  LifeStyles,
-  EditProfile,
-  SettingUserInfo,
-  SaveList,
-  Notice,
-  FAQ,
-  FaqContent,
-  RoommateApply,
-  MyProfile,
-  SecessionReason,
-  NoticeDetail,
-  EventNoticeDetail,
-  ChangePassword,
-  ReviewEvent
+	MyPage,
+	LifeStyles,
+	EditProfile,
+	SettingUserInfo,
+	SaveList,
+	Notice,
+	FAQ,
+	FaqContent,
+	RoommateApply,
+	MyProfile,
+	SecessionReason,
+	NoticeDetail,
+	EventNoticeDetail,
+	ChangePassword,
+	ReviewEvent
 };
