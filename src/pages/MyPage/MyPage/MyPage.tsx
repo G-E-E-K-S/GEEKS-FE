@@ -21,7 +21,6 @@ import List from "../../../assets/img/MyPage/Menu/icon-list.svg";
 import logout from "../../../assets/img/MyPage/Menu/logout.svg";
 import closeIcon from "../../../assets/img/MyPage/Menu/icon-close-circle-fill.svg";
 import { useSetRecoilState } from "recoil";
-import { UserNickName } from "../../../recoil/UserNickName";
 import Loading from "../../Loading";
 import Typography from "../../../components/Common/Layouts/Typography";
 import MenuList from "../../../components/MyPage/MenuList/MenuList";
@@ -97,8 +96,6 @@ export default function MyPage() {
 	const [userInfo, setUserInfo] = useState("");
 	const [userMajor, setUserMajor] = useState("");
 	const [loading, setLoading] = useState(false);
-
-	const setContent = useSetRecoilState(UserNickName);
 
 	const clickedToggle = () => {
 		let toggleVal = !toggle;
