@@ -1,6 +1,8 @@
 import React from "react";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme";
 import {
 	Intro,
 	AccessRight,
@@ -51,7 +53,7 @@ import Manager from "./pages/Manager/ManagerMain";
 
 function App() {
 	return (
-		<div>
+		<ThemeProvider theme={theme}>
 			{/* <GlobalStyle /> */}
 			<Router>
 				<Routes>
@@ -115,7 +117,7 @@ function App() {
 					<Route path="/managermain" element={<Manager />} />
 				</Routes>
 			</Router>
-		</div>
+		</ThemeProvider>
 	);
 }
 

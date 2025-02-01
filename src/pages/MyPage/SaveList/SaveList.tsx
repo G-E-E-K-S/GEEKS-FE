@@ -16,6 +16,7 @@ import Row from "../../../components/Common/Layouts/Row";
 import Typography from "../../../components/Common/Layouts/Typography";
 import Button from "../../../components/DesignStuff/Button/Button";
 import UserProfile from "../../../components/Main/UserProfile/UserProfile";
+import Confirm from "../../../components/DesignStuff/Confirm/Confirm";
 
 const CheckImg = styled.img`
 	cursor: pointer;
@@ -89,6 +90,7 @@ export default function LifeStyle() {
 					) : (
 						<S.EditImg src={Edit} onClick={() => handleEdit()} />
 					)}
+					{/* <Confirm confirmName={"변경 사항이 저장되지 않았어요\n이대로 저장할까요?"} /> */}
 				</Row>
 				{/* total save list */}
 				<Typography
