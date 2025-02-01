@@ -14,6 +14,7 @@ import Logo from "../../../assets/img/Common/mainLogo.png";
 import TextLogo from "../../../assets/img/Common/yellowLogo.svg";
 import Column from "../../../components/Common/Layouts/Column";
 import "@pwabuilder/pwainstall";
+import Button from "../../../components/DesignStuff/Button/Button";
 
 export default function Welcome() {
 	const [showPopup, setShowPopup] = useState(false);
@@ -89,10 +90,6 @@ export default function Welcome() {
 		};
 	}, []);
 
-	const nextPage = () => {
-		navigate("/agree");
-	};
-
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
@@ -111,7 +108,7 @@ export default function Welcome() {
 				<S.TotalImg>
 					<S.TopImg src={House} />
 				</S.TotalImg>
-				<JoinButton btnName={"이메일 회원가입"} handleClick={nextPage} isNextPage={true} />
+				<Button text="이메일 회원가입" isNextPage={true} onClick={() => navigate("/agree")} />
 				<S.LoginButton onClick={() => navigate("/login")}>로그인</S.LoginButton>
 				{/* {deferredPrompt && <button onClick={handleInstall}>앱 설치</button>} */}
 				{updateState ||
