@@ -6,7 +6,7 @@ import SaveList from "./SaveList/SaveList";
 import Notice from "./Notice";
 import FAQ from "./Faq";
 import FaqContent from "./FaqContent";
-import RoommateApply from "./RoommateApply";
+import RoommateApply from "./RoommateApply/RoommateApply";
 import MyProfile from "./MyProfile";
 import SecessionReason from "./SecessionReason";
 import NoticeDetail from "./NoticeDetail";
