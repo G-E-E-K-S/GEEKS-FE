@@ -65,8 +65,6 @@ const RowCSS = (props?: RowProps) => css`
 				case "w-full":
 					return "100%";
 			}
-		} else {
-			return "flex-start";
 		}
 	})()};
 `;
