@@ -2,7 +2,7 @@ import MyPage from "./MyPage/MyPage";
 import LifeStyles from "./LifeStyles";
 import EditProfile from "./EditProfile";
 import SettingUserInfo from "./SettingUserInfo";
-import SaveList from "./SaveList";
+import SaveList from "./SaveList/SaveList";
 import Notice from "./Notice";
 import FAQ from "./Faq";
 import FaqContent from "./FaqContent";

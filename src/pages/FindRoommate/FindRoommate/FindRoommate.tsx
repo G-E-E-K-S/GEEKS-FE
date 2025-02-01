@@ -5,7 +5,6 @@ import API from "../../../axios/BaseUrl";
 import styled from "styled-components";
 import * as CS from "../../../components/Common/CommonStyle";
 import Condition from "../../../components/Roommate/Condition";
-import OtherProfile from "../../../components/Main/OtherProfile";
 import NavigationBar from "../../../components/Main/NavigationBar";
 import basicProfile from "../../../assets/img/MyPage/basicProfile.svg";
 import BlurImg from "../../../assets/img/Roommate/blurImg.svg";
