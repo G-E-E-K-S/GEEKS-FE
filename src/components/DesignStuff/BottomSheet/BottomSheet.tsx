@@ -7,7 +7,7 @@ export default function BottomSheet({
 	children,
 	isOpen
 }: {
-	height: number;
+	height: string;
 	children: ReactNode;
 	isOpen?: boolean;
 }) {

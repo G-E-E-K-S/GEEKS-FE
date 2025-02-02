@@ -26,9 +26,9 @@ import Row from "../../../components/Common/Layouts/Row";
 import Column from "../../../components/Common/Layouts/Column";
 import Typography from "../../../components/Common/Layouts/Typography";
 import ButtonBox from "../../../components/DesignStuff/ButtonBox/ButtonBox";
-import { useUserNickName } from "../../../store/useNickName";
 import * as S from "./style";
 import Tooltip from "../../../components/DesignStuff/ToolTip/ToolTip";
+import { useUserInfo } from "../../../store/useUserInfo";
 
 // const System = styled.div`
 // 	width: 100%;
@@ -185,7 +185,7 @@ export default function Home() {
 		{ key: "dormitorynoti", menuName: "기숙사 공지", Icon: dormiNoti },
 		{ key: "dormitorynoti", menuName: "기숙사 공지", Icon: dormiNoti }
 	];
-	const { userNickName } = useUserNickName();
+	const { nickname } = useUserInfo();
 	const [showPopup, setShowPopup] = useState(false);
 	const [isShowWriteReview, setIsShowWriteReview] = useState(localStorage.getItem("show") !== "false");
 
@@ -322,8 +322,8 @@ export default function Home() {
 					<ButtonBox backgroundColor="White">
 						<Typography typoSize="H3" color="Gray800">
 							{isExist
-								? `${userNickName} 님과 딱 맞는\n룸메이트를 찾았어요`
-								: `${userNickName} 님과 딱 맞는\n룸메이트를 찾아드려요`}
+								? `${nickname} 님과 딱 맞는\n룸메이트를 찾았어요`
+								: `${nickname} 님과 딱 맞는\n룸메이트를 찾아드려요`}
 						</Typography>
 						{isExist ? (
 							point.map((opponent, index) => (

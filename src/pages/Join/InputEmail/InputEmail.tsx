@@ -8,14 +8,15 @@ import HeaderMenu from "../../../components/Common/HeaderMenu";
 import Button from "../../../components/DesignStuff/Button/Button";
 import TextFields from "../../../components/DesignStuff/TextFields/TextFields";
 import MainText from "../../../components/Join/MainText";
-import TopNumber from "../../../components/Join/TopNumber";
 import ErrorPopup from "../../../components/Common/ErrorPopup";
+import { useUserInfo } from "../../../store/useUserInfo";
+import TopNumber from "../../../components/Join/TopNumber";
 
 export default function InputEmail() {
-	const [email, setEmail] = useState("");
 	const [isDuplicate, setIsDuplicate] = useState(false);
 	const [isNextPage, setIsNextPage] = useState(false);
 	const navigate = useNavigate();
+	const { email, setEmail } = useUserInfo();
 
 	const handleEmailVal = (val: string) => {
 		setEmail(val);

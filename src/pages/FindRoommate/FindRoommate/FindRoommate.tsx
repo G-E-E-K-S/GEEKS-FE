@@ -139,7 +139,7 @@ export default function FindRoommate() {
 					</>
 				)}
 			</CS.ScreenComponent>
-			<BottomSheet height={84.83} isOpen={isOpen}>
+			<BottomSheet height={"84.83vh"} isOpen={isOpen}>
 				<ChoiceCondition onClick={() => setIsOpen(false)} />
 			</BottomSheet>
 			{!isOpen && <NavigationBar type={`rommate`} />}
