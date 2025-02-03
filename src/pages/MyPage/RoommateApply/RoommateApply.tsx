@@ -8,9 +8,7 @@ import * as CS from "../../../components/Common/CommonStyle";
 import * as S from "./style";
 import Header from "../../../components/MyPage/Header/Header";
 import OtherProfileApply from "../../../components/MyPage/OtherProfileApply";
-import { UserNickName } from "../../../recoil/UserNickName";
 import Popup from "../../../components/Common/Popup";
-import BottomSheet from "../../../components/Common/BottomSheet";
 import Modal from "../../../components/Common/Modal";
 import Colse from "../../../assets/img/MyPage/close.svg";
 import CancelRoommate from "../../../assets/img/MyPage/cancleRoommate.svg";
@@ -21,6 +19,11 @@ import Loading from "../../Loading";
 import { useNavigate } from "react-router-dom";
 import Row from "../../../components/Common/Layouts/Row";
 import Typography from "../../../components/Common/Layouts/Typography";
+import Column from "../../../components/Common/Layouts/Column";
+import UserProfile from "../../../components/Main/UserProfile/UserProfile";
+import BottomSheet from "../../../components/DesignStuff/BottomSheet/BottomSheet";
+import Button from "../../../components/DesignStuff/Button/Button";
+import ButtonBox from "../../../components/DesignStuff/ButtonBox/ButtonBox";
 
 const ApplyTop = styled.div`
 	display: flex;
@@ -69,15 +72,12 @@ const ApplyDate = styled.div`
 	line-height: 18px;
 	margin-bottom: 1.42vh;
 `;
-const CancleBtn = styled.div`
+const CancleBtn = styled(Row)`
 	border-radius: 8px;
 	border: 1px solid #e2e2e2;
 	background: #fff;
 	height: 42px;
 	width: 14.61vw;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	cursor: pointer;
 	padding: 0 4.1vw;
 	white-space: nowrap;
@@ -212,7 +212,6 @@ export default function RoommateApply() {
 	const [matching, setMatching] = useState(false);
 	const [openMatchingModal, setOpenMatchingModal] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const content = useRecoilValue(UserNickName);
 	const navigate = useNavigate();
 	// useState(() => {
 	// 	async function fetchSentApply() {
@@ -237,19 +236,20 @@ export default function RoommateApply() {
 	// 	fetchSentApply();
 	// }, []);
 
-	// const handleCancle = () => {
-	// 	setIsBtsShow(false);
-	// 	setShowPopup(true);
-	// 	async function fetchDeleteAply() {
-	// 		try {
-	// 			const res = await API.get("/roommate/remove?yournickname=" + opponentNickName);
-	// 			setSentApply(sentApply.filter((data) => data.nickname !== opponentNickName));
-	// 		} catch (e) {
-	// 			console.log(e);
-	// 		}
-	// 	}
-	// 	fetchDeleteAply();
-	// };
+	const handleCancle = () => {
+		setIsBtsShow(false);
+		setShowPopup(true);
+		// TODO React-Query
+		// async function fetchDeleteAply() {
+		// 	try {
+		// 		const res = await API.get("/roommate/remove?yournickname=" + opponentNickName);
+		// 		setSentApply(sentApply.filter((data) => data.nickname !== opponentNickName));
+		// 	} catch (e) {
+		// 		console.log(e);
+		// 	}
+		// }
+		// fetchDeleteAply();
+	};
 
 	const AcceptRoommate = (opponentId) => {
 		async function fetchAccept() {
@@ -318,7 +318,7 @@ export default function RoommateApply() {
 				</S.Notice>
 				{/* axios add  */}
 				{isChoose === "send" &&
-					(sentApply.length === 0 ? (
+					(sentApply.length !== 0 ? (
 						<div style={{ marginTop: "4.5vh" }}>
 							<Typography
 								typoSize="T4_semibold"
@@ -332,9 +332,15 @@ export default function RoommateApply() {
 						</div>
 					) : (
 						<div>
-							<Semester>{`2024년도 1학기`}</Semester>
+							<Typography
+								typoSize="B3_medium"
+								color="Gray500"
+								textAlign="center"
+								style={{ marginBottom: "8px" }}
+							>{`2024년도`}</Typography>
 							{sentApply.map((userData) => (
-								<ApplyTotalInfo>
+								<Column gap={8}>
+									{/* TODO API연결 */}
 									{/* <ApplyDate>{moment(userData.createdDate).format("M월 D일")}</ApplyDate>
 									<Row horizonAlign="distribute">
 										<OtherProfileApply
@@ -345,12 +351,35 @@ export default function RoommateApply() {
 										/>
 										<CancleBtn onClick={() => handleBtsShow(userData.nickname)}>취소</CancleBtn>
 									</Row> */}
-								</ApplyTotalInfo>
+								</Column>
 							))}
+							{/* 임시 데이터 */}
+							<Column gap={8} width="w-full">
+								<Typography typoSize="B2_medium" color="Gray500">
+									{"10.01"}
+								</Typography>
+								<Row horizonAlign="distribute" width="w-full">
+									<UserProfile
+										nickName={"hi"}
+										major={"test"}
+										ID={19}
+										activeCheck={false}
+										isSmoke
+										// userprofile={userData.photoName.length !== 0 ? userData.photoName : null}
+									/>
+									<CancleBtn
+										horizonAlign="center"
+										verticalAlign="center"
+										onClick={() => handleBtsShow("hi")}
+									>
+										{"취소"}
+									</CancleBtn>
+								</Row>
+							</Column>
 						</div>
 					))}
 				{isChoose === "receive" &&
-					(receivedApply.length === 0 ? (
+					(receivedApply.length !== 0 ? (
 						<div style={{ marginTop: "4.5vh" }}>
 							{/* 중복코드 줄일 방법 생각 */}
 							<Typography
@@ -365,7 +394,12 @@ export default function RoommateApply() {
 						</div>
 					) : (
 						<div>
-							<Semester>{`2024년도 1학기`}</Semester>
+							<Typography
+								typoSize="B3_medium"
+								color="Gray500"
+								textAlign="center"
+								style={{ marginBottom: "8px" }}
+							>{`2024년도`}</Typography>
 							{receivedApply.map((userData) => (
 								<ApplyTotalInfo>
 									{/* <ApplyDate>{moment(userData.createdDate).format("MM.DD")}</ApplyDate>
@@ -410,20 +444,49 @@ export default function RoommateApply() {
 									)}
 								</ApplyTotalInfo>
 							))}
+							<Column gap={8} width="w-full">
+								<Typography typoSize="B2_medium" color="Gray500">
+									{"10.01"}
+								</Typography>
+								<Row horizonAlign="distribute" width="w-full">
+									<UserProfile
+										nickName={"hi"}
+										major={"test"}
+										ID={19}
+										activeCheck={false}
+										isSmoke
+										score="19"
+										// userprofile={userData.photoName.length !== 0 ? userData.photoName : null}
+									/>
+								</Row>
+								<Row gap={8} width="w-full">
+									<ButtonBox backgroundColor="White">
+										<Typography typoSize="T4_semibold" color="Gray700" textAlign="center">
+											{"거절하기"}
+										</Typography>
+									</ButtonBox>
+									<ButtonBox backgroundColor="Yellow500">
+										<Typography typoSize="T4_semibold" color="Gray700" textAlign="center">
+											{"수락하기"}
+										</Typography>
+									</ButtonBox>
+								</Row>
+							</Column>
 						</div>
 					))}
-				<div>
-					<BottomSheet height={`331px`} padding={`24px`} isOpen={isBtsShow} interaction={true}>
-						<ContainBottom>
-							<DeleteContent>
-								<DeletMainIcon src={CancelRoommate} />
-								<DeleteMsg>{opponentNickName + `님께\n전송한 룸메이트 신청을 취소할까요?`}</DeleteMsg>
-							</DeleteContent>
-							<CloseIcon src={Colse} onClick={() => setIsBtsShow(false)} />
-						</ContainBottom>
-						{/* <BtsCancelBtn onClick={() => handleCancle()}>취소하기</BtsCancelBtn> */}
-					</BottomSheet>
-				</div>
+				<BottomSheet height={"356px"} isOpen={isBtsShow}>
+					<Row gap={8} horizonAlign="right">
+						<Column horizonAlign="center" verticalAlign="center">
+							<DeletMainIcon src={CancelRoommate} />
+							<Typography typoSize="T2_bold" color="Gray800" textAlign="center">
+								{opponentNickName + `님께\n전송한 룸메이트 신청을 취소할까요?`}
+							</Typography>
+						</Column>
+						<CloseIcon src={Colse} onClick={() => setIsBtsShow(false)} />
+					</Row>
+					<Button text="신청 취소하기" isNextPage onClick={() => handleCancle()} />
+				</BottomSheet>
+
 				<Popup
 					bottom={`9.95`}
 					isShowPopup={showPopup}

@@ -14,4 +14,5 @@ export const Notice = styled.div`
 	padding: 14px 20px 14px 20px;
 	width: 100vw;
 	margin-left: calc(-50vw + 50%);
+	margin-bottom: 24px;
 `;
