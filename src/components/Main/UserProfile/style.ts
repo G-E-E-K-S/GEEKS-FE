@@ -5,9 +5,8 @@ export const TotalProfile = styled.div<{ activeCheck: boolean }>`
 	width: 100%;
 	border-radius: 12px;
 	background: ${({ activeCheck }) => (activeCheck ? "#FFF4CD" : "#fff")};
-	border: 1px solid ${({ activeCheck }) => (activeCheck ? "#ECAA00" : "#EFEFEF")};
+	border: 1px solid ${({ activeCheck }) => (activeCheck ? "#ECAA00" : "transparent")};
 	padding: 14px 5.12vw;
-	margin-bottom: 16px;
 	overflow-x: auto;
 `;
 export const Smoking = styled(Column)`

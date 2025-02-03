@@ -13,9 +13,9 @@ interface UserProfileProps {
 	nickName: string;
 	isSmoke: boolean;
 	major: string;
-	score: string;
+	score?: string;
 	ID: number;
-	intro: string;
+	intro?: string;
 	onClick?: (e: React.MouseEvent<HTMLImageElement>) => void;
 }
 
@@ -66,23 +66,25 @@ export default function UserProfile({
 						</Typography>
 					</Column>
 				</Row>
-				<Row horizonAlign="center" verticalAlign="center">
-					<Typography
-						typoSize="H3"
-						color={score >= "70" ? "Blue600" : score >= "40" ? "Yellow700" : "YellowGray600"}
-					>
-						{score}
-					</Typography>
-					<Typography
-						style={{ marginLeft: "2px" }}
-						typoSize="B1_semibold"
-						color={score >= "70" ? "Blue600" : score >= "40" ? "Yellow700" : "YellowGray600"}
-					>
-						{"점"}
-					</Typography>
-				</Row>
+				{score && (
+					<Row horizonAlign="center" verticalAlign="center">
+						<Typography
+							typoSize="H3"
+							color={score >= "70" ? "Blue600" : score >= "40" ? "Yellow700" : "YellowGray600"}
+						>
+							{score}
+						</Typography>
+						<Typography
+							style={{ marginLeft: "2px" }}
+							typoSize="B1_semibold"
+							color={score >= "70" ? "Blue600" : score >= "40" ? "Yellow700" : "YellowGray600"}
+						>
+							{"점"}
+						</Typography>
+					</Row>
+				)}
 			</Row>
-			{intro.length && (
+			{intro && (
 				<Column horizonAlign="distribute" verticalAlign="center" style={{ marginTop: "12px" }}>
 					<S.Intro>{intro}</S.Intro>
 					{/* <SaveImg src={fill? fillSave : save} onClick={(e)=>handleFill(e,props.nickName)}/> */}
