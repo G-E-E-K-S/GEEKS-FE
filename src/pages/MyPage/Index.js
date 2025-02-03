@@ -1,5 +1,5 @@
 import MyPage from "./MyPage/MyPage";
-import LifeStyles from "./LifeStyles";
+import LifeStyles from "./LifeStyles/LifeStyles";
 import EditProfile from "./EditProfile";
 import SettingUserInfo from "./SettingUserInfo";
 import SaveList from "./SaveList/SaveList";
