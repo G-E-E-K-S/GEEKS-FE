@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../../axios/BaseUrl";
 import styled from "styled-components";
@@ -6,7 +6,7 @@ import * as CS from "../../../components/Common/CommonStyle";
 import PageName from "../../../components/Main/PageName";
 import UserInfo from "../../../components/Main/UserInfo";
 import MyPageMenu from "../../../components/Main/MyPageMenu";
-import NavigationBar from "../../../components/Main/NavigationBar";
+import NavigationBar from "../../../components/Main/NavigationBar/NavigationBar";
 import Br from "../../../components/Common/Br";
 import basicProfile from "../../../assets/img/MyPage/basicProfile.svg";
 import enrollLifeStyle from "../../../assets/img/MyPage/Menu/enrollLIfeStyle.svg";
