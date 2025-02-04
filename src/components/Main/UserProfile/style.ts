@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Column from "../../Common/Layouts/Column";
 
-export const TotalProfile = styled.div<{ activeCheck: boolean }>`
+export const TotalProfile = styled.div<{ activeCheck?: boolean }>`
 	width: 100%;
 	border-radius: 12px;
 	background: ${({ activeCheck }) => (activeCheck ? "#FFF4CD" : "#fff")};

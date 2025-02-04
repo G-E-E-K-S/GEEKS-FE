@@ -121,9 +121,9 @@ export default function LifeStyle() {
 						ID={18}
 						activeCheck={checkUserName.includes("test")}
 						intro="gkdld"
-						isSmoke
+						smoke="NONSMOKER"
 						major="hi"
-						score="39"
+						score={39}
 						nickName="test"
 						onClick={() => navigate("/detail/details/" + 19)}
 					/>
