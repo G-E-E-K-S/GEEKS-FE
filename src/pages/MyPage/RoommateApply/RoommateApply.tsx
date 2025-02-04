@@ -364,7 +364,7 @@ export default function RoommateApply() {
 										major={"test"}
 										ID={19}
 										activeCheck={false}
-										isSmoke
+										smoke="SMOKER"
 										// userprofile={userData.photoName.length !== 0 ? userData.photoName : null}
 									/>
 									<CancleBtn
@@ -454,8 +454,8 @@ export default function RoommateApply() {
 										major={"test"}
 										ID={19}
 										activeCheck={false}
-										isSmoke
-										score="19"
+										smoke="NONSMOKER"
+										score={19}
 										// userprofile={userData.photoName.length !== 0 ? userData.photoName : null}
 									/>
 								</Row>

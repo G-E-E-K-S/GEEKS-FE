@@ -9,11 +9,11 @@ import Row from "../../Common/Layouts/Row";
 import Typography from "../../Common/Layouts/Typography";
 
 interface UserProfileProps {
-	activeCheck: boolean;
+	activeCheck?: boolean;
 	nickName: string;
-	isSmoke: boolean;
+	smoke: "NONSMOKER" | "SMOKER";
 	major: string;
-	score?: string;
+	score?: number;
 	ID: number;
 	intro?: string;
 	onClick?: (e: React.MouseEvent<HTMLImageElement>) => void;
@@ -22,7 +22,7 @@ interface UserProfileProps {
 export default function UserProfile({
 	activeCheck,
 	nickName,
-	isSmoke,
+	smoke,
 	major,
 	score,
 	ID,
@@ -53,7 +53,7 @@ export default function UserProfile({
 							<Typography color="Gray800" typoSize="T3_semibold">
 								{nickName}
 							</Typography>
-							{isSmoke && (
+							{smoke === "SMOKER" && (
 								<S.Smoking horizonAlign="center" verticalAlign="center">
 									<Typography typoSize="B3_medium" color="Gray700">
 										{"흡연자"}
@@ -70,14 +70,14 @@ export default function UserProfile({
 					<Row horizonAlign="center" verticalAlign="center">
 						<Typography
 							typoSize="H3"
-							color={score >= "70" ? "Blue600" : score >= "40" ? "Yellow700" : "YellowGray600"}
+							color={score >= 70 ? "Blue600" : score >= 40 ? "Yellow700" : "YellowGray600"}
 						>
 							{score}
 						</Typography>
 						<Typography
 							style={{ marginLeft: "2px" }}
 							typoSize="B1_semibold"
-							color={score >= "70" ? "Blue600" : score >= "40" ? "Yellow700" : "YellowGray600"}
+							color={score >= 70 ? "Blue600" : score >= 40 ? "Yellow700" : "YellowGray600"}
 						>
 							{"점"}
 						</Typography>
