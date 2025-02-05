@@ -13,6 +13,7 @@ import NoticeDetail from "./NoticeDetail";
 import EventNoticeDetail from "./EventNoticeDetail";
 import ChangePassword from "./ChangePassword/ChangePassword";
 import ReviewEvent from "./ReviewEvent";
+import Notification from "./Notification/Notification";
 
 export {
 	MyPage,
@@ -29,5 +30,6 @@ export {
 	NoticeDetail,
 	EventNoticeDetail,
 	ChangePassword,
-	ReviewEvent
+	ReviewEvent,
+	Notification
 };
