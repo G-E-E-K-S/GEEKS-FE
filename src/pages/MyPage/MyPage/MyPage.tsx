@@ -224,7 +224,7 @@ export default function MyPage() {
 				/>
 				<Br />
 				<MenuList icon={userInfoImg} menuName={`회원 정보 설정`} onClick={() => navigate("/settinguserinfo")} />
-				<MenuList icon={notice} menuName={`알림 설정`} />
+				<MenuList icon={notice} menuName={`알림 설정`} onClick={() => navigate("/notification")} />
 				<MenuList icon={announce} menuName={`공지사항`} onClick={() => navigate("/notice")} />
 				<MenuList icon={HeadPhone} menuName={`문의하기`} onClick={() => navigate("/notice")} />
 				{/* <MenuList icon={question} menuName={`자주 묻는 질문`} onClick={() => navigate("/faq")} /> */}
