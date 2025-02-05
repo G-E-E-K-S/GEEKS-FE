@@ -1,7 +1,7 @@
 import MyPage from "./MyPage/MyPage";
 import LifeStyles from "./LifeStyles/LifeStyles";
 import EditProfile from "./EditProfile";
-import SettingUserInfo from "./SettingUserInfo";
+import SettingUserInfo from "./SettingUserInfo/SettingUserInfo";
 import SaveList from "./SaveList/SaveList";
 import Notice from "./Notice/Notice";
 import FAQ from "./Faq";
@@ -11,7 +11,7 @@ import MyProfile from "./MyProfile";
 import SecessionReason from "./SecessionReason";
 import NoticeDetail from "./NoticeDetail";
 import EventNoticeDetail from "./EventNoticeDetail";
-import ChangePassword from "./ChangePassword";
+import ChangePassword from "./ChangePassword/ChangePassword";
 import ReviewEvent from "./ReviewEvent";
 
 export {
