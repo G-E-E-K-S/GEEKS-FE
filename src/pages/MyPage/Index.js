@@ -3,7 +3,7 @@ import LifeStyles from "./LifeStyles/LifeStyles";
 import EditProfile from "./EditProfile";
 import SettingUserInfo from "./SettingUserInfo";
 import SaveList from "./SaveList/SaveList";
-import Notice from "./Notice";
+import Notice from "./Notice/Notice";
 import FAQ from "./Faq";
 import FaqContent from "./FaqContent";
 import RoommateApply from "./RoommateApply/RoommateApply";
