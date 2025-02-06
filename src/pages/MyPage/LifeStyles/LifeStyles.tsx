@@ -14,13 +14,13 @@ import { useQuery } from "@tanstack/react-query";
 export default function LifeStyles() {
 	const navigate = useNavigate();
 	const [lifestyleSelections, setLifestyleSelections] = useState({
-		smoke: null,
-		habit: null,
-		ear: null,
-		activityTime: null,
-		outing: null,
-		cleaning: null,
-		tendency: null
+		smoke: "",
+		habit: "",
+		ear: "",
+		activityTime: "",
+		outing: "",
+		cleaning: "",
+		tendency: ""
 	});
 
 	const handleSelect = (title: string, value: string) => {
@@ -32,13 +32,13 @@ export default function LifeStyles() {
 
 	const handleReset = () => {
 		setLifestyleSelections({
-			smoke: null,
-			habit: null,
-			ear: null,
-			activityTime: null,
-			outing: null,
-			cleaning: null,
-			tendency: null
+			smoke: "",
+			habit: "",
+			ear: "",
+			activityTime: "",
+			outing: "",
+			cleaning: "",
+			tendency: ""
 		});
 	};
 
@@ -60,12 +60,33 @@ export default function LifeStyles() {
 		enabled: false
 	});
 
+	const { data } = useQuery({
+		queryKey: ["getLifeStyle"],
+		queryFn: async () => {
+			const res = await API.get(`/api/v1/user/detail/get`);
+			return res.data;
+		}
+	});
+
+	useEffect(() => {
+		if (!data) return;
+		setLifestyleSelections({
+			smoke: data.data.smoke === "SMOKER" ? "흡연자" : "비흡연자",
+			habit: data.data.habit === "NONHABIT" ? "잠버릇 없어요" : "잠버릇 있어요",
+			ear: data.data.ear === "DARK" ? "귀 어두워요" : "귀 밝아요",
+			activityTime: data.data.activityTime === "DAWN" ? "새벽형이에요" : "아침형이에요",
+			outing: data.data.outing === "OUTSIDE" ? "나가는 걸 좋아해요" : "집에 있는 걸 좋아해요",
+			cleaning: data.data.cleaning === "DIRTY" ? "주기적으로 청소해요" : "더러워지면 청소해요",
+			tendency: data.data.tendency === "ALONE" ? "혼자 조용히 지내요" : "함께 놀고 싶어요"
+		});
+	}, [data]);
+
 	const handleApply = () => {
 		refetch().then((val) => {
 			val.status === "success" && navigate("/mypage");
 		});
 	};
-	const isAllSelected = Object.values(lifestyleSelections).every((value) => value !== null);
+	const isAllSelected = Object.values(lifestyleSelections).every((value) => value !== "");
 
 	return (
 		<CS.Totalframe>
