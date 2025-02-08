@@ -1,10 +1,9 @@
 import styled from "styled-components";
+import Row from "../../Common/Layouts/Row";
 
-export const TotalHeader = styled.div`
-	display: flex;
-	justify-content: space-between;
+export const TotalHeader = styled(Row)`
 	width: 100%;
 	z-index: 10;
 	position: relative;
-	margin-top: 8px;
+	padding: 11px 0px;
 `;

@@ -16,10 +16,13 @@ const Content = styled.div`
 	}
 `;
 const BottomMenu = styled(Row)`
-	padding: 2.38vh 20px 0px 20px;
+	padding-top: 2.38vh;
 	height: 148px;
 	border-top: 1px solid #efefef;
 	background: #fff;
+	position: fixed;
+	width: calc(100% - 40px);
+	margin-left: calc(-50vw + 50%);
 `;
 const Reset = styled(Row)`
 	border-radius: 12px;
@@ -27,7 +30,7 @@ const Reset = styled(Row)`
 	height: max-content;
 	margin-right: 12px;
 	background: #efefef;
-	height: 56px;
+	height: 64px;
 	white-space: nowrap;
 	cursor: pointer;
 `;
@@ -41,8 +44,7 @@ const ApplyBtn = styled(Row)`
 	background-color: #ffc700;
 	width: 100%;
 	padding: 16px 0;
-	height: 56px;
-	height: max-content;
+	height: 64px;
 `;
 export default function ChoiceCondition({ onClick }: { onClick: (e: React.MouseEvent<HTMLImageElement>) => void }) {
 	const [lifestyleSelections, setLifestyleSelections] = useState({

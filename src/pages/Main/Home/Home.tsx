@@ -180,7 +180,7 @@ const ShowReviewBox = styled.div`
 
 export default function Home() {
 	const MAIN_HEADER = [
-		{ key: "checklist", menuName: "체크리스트", Icon: checklist },
+		{ key: "checklist", menuName: "생활 규칙", Icon: checklist },
 		{ key: "stayout", menuName: "외박 신청", Icon: stayOut },
 		{ key: "dormitorynoti", menuName: "기숙사 공지", Icon: dormiNoti },
 		{ key: "dormitorynoti", menuName: "기숙사 공지", Icon: dormiNoti }

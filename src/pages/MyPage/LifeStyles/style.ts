@@ -5,7 +5,7 @@ import Row from "../../../components/Common/Layouts/Row";
 export const BottomMenu = styled(Row)`
 	width: 100%;
 	/* height: 10.625rem; */
-	padding: 20.17px 5.12vw 20.5px 5.12vw;
+	padding: 20.17px 5.12vw 86px 5.12vw;
 	border-top: 1px solid #efefef;
 	position: fixed;
 	bottom: 0;
@@ -18,7 +18,7 @@ export const Reset = styled(Row)`
 	height: max-content;
 	margin-right: 12px;
 	background: #efefef;
-	height: 56px;
+	height: 64px;
 	white-space: nowrap;
 	cursor: pointer;
 `;
@@ -32,7 +32,6 @@ export const ApplyBtn = styled(Row)<{ isApply: boolean }>`
 	background-color: ${({ theme, isApply }) => (isApply ? theme.Yellow500 : theme.Gray50)};
 	width: 100%;
 	padding: 16px 0;
-	height: 56px;
-	height: max-content;
+	height: 64px;
 	pointer-events: ${({ isApply }) => (isApply ? "default" : "none")};
 `;
