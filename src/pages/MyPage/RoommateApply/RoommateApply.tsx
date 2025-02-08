@@ -294,6 +294,7 @@ export default function RoommateApply() {
 						horizonAlign="center"
 						verticalAlign="center"
 						isChoose={isChoose === "send"}
+						isLeft={isChoose === "send"}
 						onClick={() => setIsChoose("send")}
 					>
 						<Typography typoSize="T3_semibold" color={isChoose === "send" ? "Gray800" : "Gray400"}>
@@ -303,6 +304,7 @@ export default function RoommateApply() {
 					<S.ApplyList
 						horizonAlign="center"
 						verticalAlign="center"
+						isLeft={isChoose === "send"}
 						isChoose={isChoose === "receive"}
 						onClick={() => setIsChoose("receive")}
 					>

@@ -11,7 +11,7 @@ export const ToggleBtn = styled(Row)<{ isToggle: boolean }>`
 	background-color: ${({ isToggle }) => (isToggle ? "#FFF4CD" : "#EFEFEF")};
 	position: relative;
 
-	transition: all 0.5s ease-in-out;
+	transition: all 0.3s ease-in-out;
 `;
 export const Circle = styled.div<{ isToggle: boolean }>`
 	background-color: ${({ isToggle }) => (isToggle ? "#FFC700" : "#949494")};
@@ -20,7 +20,7 @@ export const Circle = styled.div<{ isToggle: boolean }>`
 	border-radius: 50%;
 	position: absolute;
 	right: 5px;
-	transition: all 0.5s ease-in-out;
+	transition: all 0.3s ease-in-out;
 	${({ isToggle }) =>
 		isToggle &&
 		`

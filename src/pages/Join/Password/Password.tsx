@@ -74,19 +74,19 @@ export default function Password() {
 					icon={showPwd ? ShowPwd : NoShowPwd}
 					onClick={() => setShowPwd(!showPwd)}
 				/>
-				<Row gap={8} style={{ marginBottom: "1.42vh" }}>
+				<Row gap={8} style={{ marginBottom: "8px", marginTop: "32px" }}>
 					{pwdValidate.pwdLen ? <img src={Check} /> : <img src={NoneCheck} />}
 					<Typography typoSize="B2_medium" color={pwdValidate.pwdLen ? "Teal600" : "Gray700"}>
 						{"8자 이상, 15자 이하로 설정해 주세요"}
 					</Typography>
 				</Row>
-				<Row gap={8} style={{ marginBottom: "1.42vh" }}>
+				<Row gap={8} style={{ marginBottom: "8px" }}>
 					{pwdValidate.pwdSpecial ? <img src={Check} /> : <img src={NoneCheck} />}
 					<Typography typoSize="B2_medium" color={pwdValidate.pwdSpecial ? "Teal600" : "Gray700"}>
 						{"특수 문자를 사용해 주세요"}
 					</Typography>
 				</Row>
-				<Row gap={8} style={{ marginBottom: "1.42vh" }}>
+				<Row gap={8} style={{ marginBottom: "8px" }}>
 					{pwdValidate.pwdSame ? <img src={Check} /> : <img src={NoneCheck} />}
 					<Typography typoSize="B2_medium" color={pwdValidate.pwdSame ? "Teal600" : "Gray700"}>
 						{"똑같은 문자가 4번 반복되면 안돼요"}

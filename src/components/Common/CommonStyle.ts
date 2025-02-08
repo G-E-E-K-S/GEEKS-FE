@@ -58,5 +58,6 @@ export const FlexCenter = styled.div`
 `;
 
 export const Header = styled.div`
-	
+	margin-top: 52px;
+	margin-bottom: 16px;
 `;
