@@ -16,20 +16,11 @@ import BottomSheet from "../../../components/DesignStuff/BottomSheet/BottomSheet
 import Header from "../../../components/Main/Header/Header";
 import UserProfile from "../../../components/Main/UserProfile/UserProfile";
 import Column from "../../../components/Common/Layouts/Column";
-
-interface userData {
-	id: number;
-	introduction?: string;
-	major: string;
-	nickname: string;
-	point: number;
-	smoke: "NONSMOKER" | "SMOKER";
-	studentNum: number;
-}
+import { UserProfileType } from "../../../types/userProfileType";
 
 export default function FindRoommate() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [userData, setUserData] = useState<userData[]>([]);
+	const [userData, setUserData] = useState<UserProfileType[]>([]);
 	const [isExist, setIsExist] = useState(true);
 
 	const navigate = useNavigate();
@@ -47,8 +38,6 @@ export default function FindRoommate() {
 		setUserData(data.opponentInfos);
 		setIsExist(data.exists);
 	}, [data]);
-
-	console.log(";;", userData, isExist);
 
 	return isLoading ? (
 		<Loading />
@@ -75,12 +64,13 @@ export default function FindRoommate() {
 						{userData.map((user) => (
 							<UserProfile
 								smoke={user.smoke}
-								// userprofile={user.photoName}
+								image={user.image}
 								nickName={user.nickname}
 								major={user.major}
-								ID={user.id}
+								ID={user.studentNum}
 								score={user.point}
 								intro={user.introduction ?? "this is sample"}
+								hasPadding
 								onClick={() => navigate("/detail/details/")}
 							/>
 						))}

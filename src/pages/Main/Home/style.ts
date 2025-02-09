@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Row from "../../../components/Common/Layouts/Row";
 
 export const FindIcon = styled.img`
 	width: 120px;
@@ -27,4 +28,11 @@ export const NotiSendAlarm = styled.div`
 		top: 40px;
 		left: 160px;
 	}
+`;
+
+export const EnrollRule = styled(Row)`
+	width: 100%;
+	height: 56px;
+	border-radius: 12px;
+	background: #ffc700;
 `;

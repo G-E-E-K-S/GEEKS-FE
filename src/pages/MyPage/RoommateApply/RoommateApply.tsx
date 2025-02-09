@@ -364,6 +364,7 @@ export default function RoommateApply() {
 								</Typography>
 								<Row horizonAlign="distribute" width="w-full">
 									<UserProfile
+										image={null}
 										nickName={"hi"}
 										major={"test"}
 										ID={19}
@@ -454,6 +455,7 @@ export default function RoommateApply() {
 								</Typography>
 								<Row horizonAlign="distribute" width="w-full">
 									<UserProfile
+										image={null}
 										nickName={"hi"}
 										major={"test"}
 										ID={19}

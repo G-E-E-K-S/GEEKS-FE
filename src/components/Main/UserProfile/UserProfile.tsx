@@ -17,6 +17,8 @@ interface UserProfileProps {
 	ID: number;
 	intro?: string;
 	isMe?: boolean;
+	image: string | null;
+	hasPadding?: boolean;
 	onClick?: (e: React.MouseEvent<HTMLImageElement>) => void;
 }
 
@@ -29,26 +31,30 @@ export default function UserProfile({
 	ID,
 	intro,
 	isMe,
+	hasPadding = false,
+	image,
 	onClick
 }: UserProfileProps) {
 	const [fill, isFill] = useState(false);
-	const handleFill = (e, yournickname) => {
-		isFill(!fill);
-		e.stopPropagation();
-		async function fetchSaveUser() {
-			try {
-				const res = await API.get("/roommate/save?yournickname=" + yournickname);
-			} catch (e) {
-				console.log(e);
-			}
-		}
-		fetchSaveUser();
-	};
+	// const handleFill = (e, yournickname) => {
+	// 	isFill(!fill);
+	// 	e.stopPropagation();
+	// 	async function fetchSaveUser() {
+	// 		try {
+	// 			const res = await API.get("/roommate/save?yournickname=" + yournickname);
+	// 		} catch (e) {
+	// 			console.log(e);
+	// 		}
+	// 	}
+	// 	fetchSaveUser();
+	// };
 	return (
-		<S.TotalProfile activeCheck={activeCheck} onClick={onClick} isMe={isMe}>
+		<S.TotalProfile activeCheck={activeCheck} onClick={onClick} isMe={isMe} hasPadding={hasPadding ?? false}>
 			<Row horizonAlign="distribute">
-				<Row>
-					{/* <UserProfile src={props.userprofile.length == 0 ? BasicProfile : process.env.REACT_APP_BUCKET_BASEURL + props.userprofile} /> */}
+				<Row gap={14}>
+					<S.UserProfile
+						src={image ? process.env.REACT_APP_BUCKET_BASEURL + image : BasicProfile}
+					></S.UserProfile>
 					<Column gap={6}>
 						<Row horizonAlign="center" verticalAlign="center">
 							<Typography color="Gray800" typoSize="T3_semibold">
@@ -86,7 +92,9 @@ export default function UserProfile({
 				)}
 				{isMe && (
 					<S.Edit>
-						<Typography typoSize="T4_semibold" color="Gray700">{"내 프로필"}</Typography>
+						<Typography typoSize="T4_semibold" color="Gray700">
+							{"내 프로필"}
+						</Typography>
 					</S.Edit>
 				)}
 			</Row>

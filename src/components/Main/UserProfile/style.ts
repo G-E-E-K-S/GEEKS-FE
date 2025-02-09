@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import Column from "../../Common/Layouts/Column";
 
-export const TotalProfile = styled.div<{ activeCheck?: boolean; isMe?: boolean }>`
+export const TotalProfile = styled.div<{ activeCheck?: boolean; isMe?: boolean; hasPadding?: boolean }>`
 	width: 100%;
 	border-radius: ${({ isMe }) => !isMe && "12px"};
 	background: ${({ activeCheck }) => (activeCheck ? "#FFF4CD" : "#fff")};
 	border: 1px solid ${({ activeCheck }) => (activeCheck ? "#ECAA00" : "transparent")};
-	padding: ${({ isMe }) => !isMe && "14px 5.12vw"};
+	padding: ${({ isMe, hasPadding }) => (!isMe || hasPadding) && "14px 5.12vw"};
 	overflow-x: auto;
 `;
 export const Smoking = styled(Column)`
@@ -35,4 +35,10 @@ export const Edit = styled.div`
 	border-radius: 8px;
 	border: 1px solid #e2e2e2;
 	cursor: pointer;
+`;
+
+export const UserProfile = styled.img`
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
 `;

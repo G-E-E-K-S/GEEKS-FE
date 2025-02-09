@@ -120,6 +120,7 @@ export default function LifeStyle() {
 				<Row horizonAlign="center" verticalAlign="center" onClick={() => handleCheck("test")}>
 					{activeEdit && <CheckImg src={checkUserName.includes("test") ? Check : NoCheck} />}
 					<UserProfile
+						image={null}
 						ID={18}
 						activeCheck={checkUserName.includes("test")}
 						intro="gkdld"
