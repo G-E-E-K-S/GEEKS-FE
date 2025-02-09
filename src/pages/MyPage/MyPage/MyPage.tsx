@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../../axios/BaseUrl";
 import styled from "styled-components";
@@ -27,6 +27,7 @@ import MenuList from "../../../components/MyPage/MenuList/MenuList";
 import Toggle from "../../../components/DesignStuff/Toggle/Toggle";
 import Row from "../../../components/Common/Layouts/Row";
 import Column from "../../../components/Common/Layouts/Column";
+import UserProfile from "../../../components/Main/UserProfile/UserProfile";
 
 const UserInfoTop = styled.div`
 	margin-top: 4.5vh;
@@ -153,12 +154,13 @@ export default function MyPage() {
 	) : (
 		<CS.Totalframe>
 			<CS.ScreenComponent navigation={true}>
-				<Typography typoSize="H3" color="Gray800">
-					{"마이"}
-				</Typography>
-				<UserInfoTop>
-					{/* TODO API연결 후 */}
-					{/* <UserInfo
+				<CS.Header backgroundColor="White">
+					<Typography typoSize="H3" color="Gray800">
+						{"마이"}
+					</Typography>
+				</CS.Header>
+				{/* TODO API연결 후 */}
+				{/* <UserInfo
 							profileImg={
 								userInfo.photoName?.length === 0
 									? basicProfile
@@ -169,15 +171,16 @@ export default function MyPage() {
 							UserId={userInfo.studentID}
 							enrollLifeStyle={!userInfo.exist}
 						/> */}
-					{/* 임시 데이터  */}
-					<UserInfo
-						profileImg={basicProfile}
-						userName={"긱스"}
-						userMajor={"글로벌지역학부"}
-						UserId={"23학번"}
-						enrollLifeStyle={true}
-					/>
-				</UserInfoTop>
+
+				{/* 임시 데이터  */}
+				<UserProfile
+					ID={23}
+					major="글로벌지역학부"
+					nickName="테스트"
+					smoke="NONSMOKER"
+					activeCheck={false}
+					isMe
+				/>
 				{/* TODO */}
 				{/* {userInfo.introduction?.length !== 0 && <SelfIntro>{userInfo.introduction}</SelfIntro>} */}
 				{/* <ShowMyProfile>
@@ -191,14 +194,14 @@ export default function MyPage() {
                 <Circle toggle={toggle} />
               </ToggleBtn>
             </ShowMyProfile> */}
-				<div style={{ padding: "16px 0" }}>
+				<div style={{ padding: "16px 0", marginTop: "20px" }}>
 					<Row horizonAlign="distribute">
 						<Column gap={4}>
 							<Typography typoSize="T3_semibold" color="Gray800">
 								{"내 프로필 노출하기"}
 							</Typography>
 							<Typography typoSize="B2_medium" color="Gray600">
-								{"내 프로필 노출하기"}
+								{"룸메이트가 맺어지면 내 프로필이 숨겨져요"}
 							</Typography>
 						</Column>
 						<Toggle onClick={clickedToggle} isToggle={toggle} />

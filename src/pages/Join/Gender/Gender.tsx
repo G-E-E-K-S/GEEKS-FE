@@ -26,7 +26,9 @@ export default function Gender() {
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<HeaderMenu />
+				<CS.Header backgroundColor="background">
+					<HeaderMenu />
+				</CS.Header>
 				<MainText maintitle={`성별을 알려주세요`} />
 				<Row gap={10}>
 					<GenderBox

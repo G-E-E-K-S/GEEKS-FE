@@ -79,19 +79,21 @@ export default function LifeStyle() {
 	) : (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<Row horizonAlign="distribute">
-					<Header title={"저장 목록"} />
-					{activeEdit ? (
-						<S.Button isDone={isDone} onClick={() => setActiveEdit(false)}>
-							<Typography typoSize="T4_semibold" color="Gray400">
-								{"완료"}
-							</Typography>
-						</S.Button>
-					) : (
-						<S.EditImg src={Edit} onClick={() => handleEdit()} />
-					)}
-					{/* <Confirm confirmName={"변경 사항이 저장되지 않았어요\n이대로 저장할까요?"} /> */}
-				</Row>
+				<CS.Header backgroundColor="White">
+					<Row horizonAlign="distribute">
+						<Header title={"저장 목록"} />
+						{activeEdit ? (
+							<S.Button isDone={isDone} onClick={() => setActiveEdit(false)}>
+								<Typography typoSize="T4_semibold" color="Gray400">
+									{"완료"}
+								</Typography>
+							</S.Button>
+						) : (
+							<S.EditImg src={Edit} onClick={() => handleEdit()} />
+						)}
+						{/* <Confirm confirmName={"변경 사항이 저장되지 않았어요\n이대로 저장할까요?"} /> */}
+					</Row>
+				</CS.Header>
 				{/* total save list */}
 				<Typography
 					typoSize="B2_medium"

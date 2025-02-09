@@ -55,7 +55,9 @@ const NickName = () => {
 	return (
 		<c.Totalframe>
 			<c.ScreenComponent>
-				<HeaderMenu />
+				<c.Header backgroundColor="White">
+					<HeaderMenu />
+				</c.Header>
 				<TopNumber page={4} />
 				<MainText maintitle={`회원님을 표현할\n닉네임을 알려주세요`} />
 				<TextFields

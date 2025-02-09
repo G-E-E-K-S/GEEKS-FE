@@ -16,20 +16,21 @@ const Content = styled.div`
 	}
 `;
 const BottomMenu = styled(Row)`
-	padding-top: 2.38vh;
-	height: 148px;
+	width: 100%;
+	/* height: 10.625rem; */
+	padding: 20.17px 5.12vw 86px 5.12vw;
 	border-top: 1px solid #efefef;
-	background: #fff;
 	position: fixed;
-	width: calc(100% - 40px);
-	margin-left: calc(-50vw + 50%);
+	bottom: 0;
+	background-color: #fff;
 `;
 const Reset = styled(Row)`
 	border-radius: 12px;
 	padding: 16px 5.512vw;
 	height: max-content;
 	margin-right: 12px;
-	background: #efefef;
+	background: #fff;
+	border: 1px solid #e2e2e2;
 	height: 64px;
 	white-space: nowrap;
 	cursor: pointer;

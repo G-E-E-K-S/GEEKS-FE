@@ -62,7 +62,9 @@ export default function Password() {
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<HeaderMenu />
+				<CS.Header backgroundColor="White">
+					<HeaderMenu />
+				</CS.Header>
 				<TopNumber page={3} />
 				<MainText maintitle={`로그인 시 사용할\n비밀번호를 입력해 주세요`} />
 				<TextFields

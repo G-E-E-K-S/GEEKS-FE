@@ -288,7 +288,9 @@ export default function RoommateApply() {
 	) : (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<Header title="신청 목록" />
+				<CS.Header backgroundColor="background">
+					<Header title="신청 목록" />
+				</CS.Header>
 				<Row>
 					<S.ApplyList
 						horizonAlign="center"

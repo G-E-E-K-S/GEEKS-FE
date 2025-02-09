@@ -26,8 +26,10 @@ const Dormitory = () => {
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<HeaderMenu />
-				<MainText maintitle={`어떤 기숙사에서 생활하시나요?`} />
+				<CS.Header backgroundColor="Background">
+					<HeaderMenu />
+				</CS.Header>
+				<MainText maintitle={`어떤 기숙사에서 생활하시나요`} />
 				<DormitoryTotal>
 					<DormitoryBox
 						disable={false}

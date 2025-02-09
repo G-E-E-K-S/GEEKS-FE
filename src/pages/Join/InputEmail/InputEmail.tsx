@@ -42,7 +42,9 @@ export default function InputEmail() {
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<HeaderMenu />
+				<CS.Header backgroundColor="White">
+					<HeaderMenu />
+				</CS.Header>
 				<TopNumber page={1} />
 				<MainText maintitle={`재학생 인증을 위해\n학교 이메일 주소를 입력해 주세요`} />
 				<TextFields
