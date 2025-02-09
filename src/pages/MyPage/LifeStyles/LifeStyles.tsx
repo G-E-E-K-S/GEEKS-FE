@@ -70,10 +70,12 @@ export default function LifeStyles() {
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent navigation={true}>
-				<Column gap={20} style={{ marginBottom: "2.5rem" }}>
-					<GoBack />
-					<Typography typoSize="H3" color="Gray800">{`나의 생활 습관을\n등록해 보세요`}</Typography>
-				</Column>
+				<CS.Header backgroundColor="White">
+					<Column gap={20} style={{ marginBottom: "2.5rem" }}>
+						<GoBack />
+						<Typography typoSize="H3" color="Gray800">{`나의 생활 습관을\n등록해 보세요`}</Typography>
+					</Column>
+				</CS.Header>
 				<LifeStyle
 					title="흡연"
 					options={["흡연자", "비흡연자"]}

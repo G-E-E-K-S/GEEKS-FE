@@ -272,8 +272,10 @@ export default function Home() {
 				top={`9.5`}
 			/>
 			<CS.ScreenComponent navigation={true}>
-				<Column gap={24}>
+				<CS.Header backgroundColor="Background">
 					<Header />
+				</CS.Header>
+				<Column gap={24}>
 					<Row gap={31}>
 						{MAIN_HEADER.map((header) => (
 							<Column

@@ -17,7 +17,8 @@ export const Reset = styled(Row)`
 	padding: 16px 5.512vw;
 	height: max-content;
 	margin-right: 12px;
-	background: #efefef;
+	background: #fff;
+	border: 1px solid #efefef;
 	height: 64px;
 	white-space: nowrap;
 	cursor: pointer;

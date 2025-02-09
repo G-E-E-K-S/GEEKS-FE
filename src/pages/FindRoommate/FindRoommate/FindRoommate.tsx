@@ -55,8 +55,10 @@ export default function FindRoommate() {
 	) : (
 		<CS.Totalframe background={`linear-gradient(180deg, #FFF 0%, #F7F7F7 71%)`}>
 			<CS.ScreenComponent navigation={true}>
-				<Header />
-				<Typography typoSize="H3" color="Gray800" style={{ marginTop: "3.31vh", marginBottom: "3.79vh" }}>
+				<CS.Header backgroundColor={isOpen ? "linear-gradient(180deg, #FFF 0%, #F7F7F7 71%)" : "White"}>
+					<Header />
+				</CS.Header>
+				<Typography typoSize="H3" color="Gray800" style={{ marginBottom: "3.79vh" }}>
 					{"내가 원하는 기준으로\n룸메이트를 찾아보세요"}
 				</Typography>
 				<S.ConditionScroll onClick={() => setIsOpen(true)}>

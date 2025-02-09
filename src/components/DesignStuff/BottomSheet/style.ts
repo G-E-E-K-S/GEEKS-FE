@@ -11,7 +11,7 @@ export const ModalBackground = styled.div<{ isOpen?: boolean }>`
 	background-color: rgba(0, 0, 0, 0.5);
 	opacity: 0.5;
 	z-index: 20;
-	transition: transform 0.15s ease;
+	transition: transform 0.3s ease;
 	visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
 `;
 

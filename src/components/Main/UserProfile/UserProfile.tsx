@@ -16,6 +16,7 @@ interface UserProfileProps {
 	score?: number;
 	ID: number;
 	intro?: string;
+	isMe?: boolean;
 	onClick?: (e: React.MouseEvent<HTMLImageElement>) => void;
 }
 
@@ -27,10 +28,10 @@ export default function UserProfile({
 	score,
 	ID,
 	intro,
+	isMe,
 	onClick
 }: UserProfileProps) {
 	const [fill, isFill] = useState(false);
-
 	const handleFill = (e, yournickname) => {
 		isFill(!fill);
 		e.stopPropagation();
@@ -44,7 +45,7 @@ export default function UserProfile({
 		fetchSaveUser();
 	};
 	return (
-		<S.TotalProfile activeCheck={activeCheck} onClick={onClick}>
+		<S.TotalProfile activeCheck={activeCheck} onClick={onClick} isMe={isMe}>
 			<Row horizonAlign="distribute">
 				<Row>
 					{/* <UserProfile src={props.userprofile.length == 0 ? BasicProfile : process.env.REACT_APP_BUCKET_BASEURL + props.userprofile} /> */}
@@ -82,6 +83,11 @@ export default function UserProfile({
 							{"점"}
 						</Typography>
 					</Row>
+				)}
+				{isMe && (
+					<S.Edit>
+						<Typography typoSize="T4_semibold" color="Gray700">{"내 프로필"}</Typography>
+					</S.Edit>
 				)}
 			</Row>
 			{intro && (

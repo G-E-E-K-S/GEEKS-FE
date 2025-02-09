@@ -83,7 +83,9 @@ export default function Agree() {
 	return (
 		<c.Totalframe>
 			<c.ScreenComponent>
-				<HeaderMenu />
+				<c.Header backgroundColor="White">
+					<HeaderMenu />
+				</c.Header>
 				<MainText maintitle={`편리한 이용을 위해\n아래 약관에 동의해 주세요`} />
 				{/* <AgreeTotal isTotalCheck={isTotalCheck}>
 						<CheckRadioButton onClick={}/>

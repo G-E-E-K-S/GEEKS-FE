@@ -75,7 +75,9 @@ const Major = () => {
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<HeaderMenu />
+				<CS.Header backgroundColor={isBottomSheetOpen || isDepartmentOpen ? " rgba(0, 0, 0, 0.5)" : "White"}>
+					<HeaderMenu />
+				</CS.Header>
 				<MainText maintitle={`전공/학과와\n학번을 알려주세요`} />
 				<MajorTotal onClick={() => handleBottomSheet()}>
 					<Typography typoSize="T1" color={major ? "Gray800" : "Gray400"}>

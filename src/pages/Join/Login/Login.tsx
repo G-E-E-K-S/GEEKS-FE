@@ -85,7 +85,9 @@ const InputEmail = () => {
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<HeaderMenu />
+				<CS.Header backgroundColor="White">
+					<HeaderMenu />
+				</CS.Header>
 				<MainText maintitle={"학교 이메일 주소로\n로그인 해주세요"} />
 				<Column gap={20}>
 					<TextFields

@@ -5,7 +5,6 @@ import search from "../../../assets/img/Home/search.svg";
 import noti from "../../../assets/img/Home/noti.svg";
 import GeeksLogo from "../../../assets/img/Common/geeksLogo.svg";
 import * as S from "./style";
-import * as CS from "../../../components/Common/CommonStyle";
 
 export default function Header() {
 	const navigate = useNavigate();
