@@ -96,7 +96,7 @@ function App() {
 					<Route path="/faq/:type/:pageNum" element={<FaqContent />} />
 					<Route path="/roommate" element={<FindRoommate />} />
 					<Route path="/finishroommate" element={<FinishRoommate />} />
-					<Route path="/detail/details/:userId" element={<User />} />
+					<Route path="/detail/details/:matchingId/:opponentId" element={<User />} />
 					<Route path="/roommatesendtxt" element={<RoommateSendTxt />} />
 					<Route path="/chat" element={<Chat />} />
 					<Route path="/chat/chatroom/:roomId" element={<ChatRoom />} />

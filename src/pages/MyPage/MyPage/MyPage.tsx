@@ -174,6 +174,7 @@ export default function MyPage() {
 
 				{/* 임시 데이터  */}
 				<UserProfile
+					image={null}
 					ID={23}
 					major="글로벌지역학부"
 					nickName="테스트"
