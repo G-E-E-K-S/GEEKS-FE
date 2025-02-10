@@ -16,7 +16,7 @@ export default function RoommateSendText() {
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<Row horizonAlign="center" verticalAlign="center" width="w-full">
+				<Row horizonAlign="center" verticalAlign="center" width="w-full" style={{ marginBottom: "30.17px" }}>
 					<S.CheckImg src={Check} />
 				</Row>
 				<Column gap={24} horizonAlign="center" verticalAlign="center">
