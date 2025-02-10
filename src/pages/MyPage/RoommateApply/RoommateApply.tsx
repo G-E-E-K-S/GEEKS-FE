@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import moment from "moment";
 import "moment/locale/ko";
@@ -7,7 +7,6 @@ import styled from "styled-components";
 import * as CS from "../../../components/Common/CommonStyle";
 import * as S from "./style";
 import Header from "../../../components/MyPage/Header/Header";
-import OtherProfileApply from "../../../components/MyPage/OtherProfileApply";
 import Popup from "../../../components/Common/Popup";
 import Modal from "../../../components/Common/Modal";
 import Colse from "../../../assets/img/MyPage/close.svg";
@@ -20,10 +19,12 @@ import { useNavigate } from "react-router-dom";
 import Row from "../../../components/Common/Layouts/Row";
 import Typography from "../../../components/Common/Layouts/Typography";
 import Column from "../../../components/Common/Layouts/Column";
-import UserProfile from "../../../components/Main/UserProfile/UserProfile";
 import BottomSheet from "../../../components/DesignStuff/BottomSheet/BottomSheet";
 import Button from "../../../components/DesignStuff/Button/Button";
 import ButtonBox from "../../../components/DesignStuff/ButtonBox/ButtonBox";
+import { useQuery } from "@tanstack/react-query";
+import { UserProfileType } from "../../../types/userProfileType";
+import UserProfile from "../../../components/Main/UserProfile/UserProfile";
 
 const ApplyTop = styled.div`
 	display: flex;
@@ -76,8 +77,8 @@ const CancleBtn = styled(Row)`
 	border-radius: 8px;
 	border: 1px solid #e2e2e2;
 	background: #fff;
-	height: 42px;
-	width: 14.61vw;
+	height: 52px;
+	width: 100%;
 	cursor: pointer;
 	padding: 0 4.1vw;
 	white-space: nowrap;
@@ -202,39 +203,36 @@ const OkBtn = styled.div`
 	color: #1a1a1a;
 	margin-top: 32px;
 `;
+
+type userProfile = {
+	roommateId?: number;
+	createdDate: Date;
+};
+
 export default function RoommateApply() {
 	const [isChoose, setIsChoose] = useState("send");
 	const [isBtsShow, setIsBtsShow] = useState(false);
 	const [showPopup, setShowPopup] = useState(false);
-	const [sentApply, setSentApply] = useState([]);
+	const [sentApplyData, setSentApplyData] = useState<(UserProfileType & userProfile)[]>([]);
 	const [receivedApply, setReceivedApply] = useState([]);
 	const [opponentNickName, setOpponentNickName] = useState("");
 	const [matching, setMatching] = useState(false);
 	const [openMatchingModal, setOpenMatchingModal] = useState(false);
-	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
-	// useState(() => {
-	// 	async function fetchSentApply() {
-	// 		try {
-	// 			const res = await API.get("/roommate/sent");
-	// 			setSentApply(res.data);
-	// 			setLoading(false);
-	// 		} catch (e) {
-	// 			console.log(e);
-	// 		}
-	// 	}
-	// 	async function fetchReceivedApply() {
-	// 		try {
-	// 			const res = await API.get("/roommate/received");
-	// 			setReceivedApply(res.data);
-	// 			console.log(res.data);
-	// 		} catch (e) {
-	// 			console.log(e);
-	// 		}
-	// 	}
-	// 	fetchReceivedApply();
-	// 	fetchSentApply();
-	// }, []);
+
+	const { data, isLoading } = useQuery({
+		queryKey: ["roommateApply"],
+		queryFn: async () => {
+			const response = await API.get(`/api/v1/roommate/send/list`);
+			return response.data.data;
+		}
+	});
+
+	useEffect(() => {
+		if (!data) return;
+		setSentApplyData(data);
+	}, [data, sentApplyData]);
+	console.log(";;;;", sentApplyData);
 
 	const handleCancle = () => {
 		setIsBtsShow(false);
@@ -251,17 +249,17 @@ export default function RoommateApply() {
 		// fetchDeleteAply();
 	};
 
-	const AcceptRoommate = (opponentId) => {
-		async function fetchAccept() {
-			try {
-				const res = await API.post(`/roommate/accept/${opponentId}`);
-				if (res.data === "success") setOpenMatchingModal(true);
-			} catch (e) {
-				console.log(e);
-			}
-		}
-		fetchAccept();
-	};
+	// const AcceptRoommate = (opponentId) => {
+	// 	async function fetchAccept() {
+	// 		try {
+	// 			const res = await API.post(`/roommate/accept/${opponentId}`);
+	// 			if (res.data === "success") setOpenMatchingModal(true);
+	// 		} catch (e) {
+	// 			console.log(e);
+	// 		}
+	// 	}
+	// 	fetchAccept();
+	// };
 
 	const RefuseRoommate = (opponentId) => {
 		async function fetchRefuse() {
@@ -283,12 +281,12 @@ export default function RoommateApply() {
 		setMatching(true);
 		setOpenMatchingModal(false);
 	};
-	return loading ? (
+	return isLoading ? (
 		<Loading />
 	) : (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<CS.Header backgroundColor="background">
+				<CS.Header backgroundColor="White">
 					<Header title="신청 목록" />
 				</CS.Header>
 				<Row>
@@ -317,12 +315,11 @@ export default function RoommateApply() {
 				</Row>
 				<S.Notice>
 					<Typography typoSize="B2_medium" color="Gray600">
-						{`룸메이트가 맺어지면, 다른 사람에게 보낸 받은 신청과 보낸 신청은 모두 사라져요`}
+						{`룸메이트가 맺어지면, 다른 사람에게 받은 신청과 보낸 신청은 모두 사라져요`}
 					</Typography>
 				</S.Notice>
-				{/* axios add  */}
 				{isChoose === "send" &&
-					(sentApply.length !== 0 ? (
+					(sentApplyData.length === 0 ? (
 						<div style={{ marginTop: "4.5vh" }}>
 							<Typography
 								typoSize="T4_semibold"
@@ -341,45 +338,26 @@ export default function RoommateApply() {
 								color="Gray500"
 								textAlign="center"
 								style={{ marginBottom: "8px" }}
-							>{`2024년도`}</Typography>
-							{sentApply.map((userData) => (
-								<Column gap={8}>
-									{/* TODO API연결 */}
-									{/* <ApplyDate>{moment(userData.createdDate).format("M월 D일")}</ApplyDate>
-									<Row horizonAlign="distribute">
-										<OtherProfileApply
-											nickName={userData.nickname}
-											major={userData.major}
-											id={userData.studentID}
-											userprofile={userData.photoName.length !== 0 ? userData.photoName : null}
-										/>
-										<CancleBtn onClick={() => handleBtsShow(userData.nickname)}>취소</CancleBtn>
-									</Row> */}
+							>
+								{"2025년"}
+							</Typography>
+							<Column gap={20} width="w-full">
+							{sentApplyData.map((userData) => (
+								<Column gap={8} width="w-full">
+									<ApplyDate>{moment(userData.createdDate).format("M월 D일")}</ApplyDate>
+									<UserProfile
+										nickName={userData.nickname}
+										ID={userData.studentNum}
+										image={userData.image ? userData.image : null}
+										major={userData.major}
+										smoke={userData.smoke}
+										score={userData.point}
+									/>
+									<CancleBtn horizonAlign="center" verticalAlign="center" onClick={() => handleBtsShow(userData.nickname)}>
+										<Typography typoSize="T4_semibold" color="Gray700">{"취소 하기"}</Typography>
+									</CancleBtn>
 								</Column>
 							))}
-							{/* 임시 데이터 */}
-							<Column gap={8} width="w-full">
-								<Typography typoSize="B2_medium" color="Gray500">
-									{"10.01"}
-								</Typography>
-								<Row horizonAlign="distribute" width="w-full">
-									<UserProfile
-										image={null}
-										nickName={"hi"}
-										major={"test"}
-										ID={19}
-										activeCheck={false}
-										smoke="SMOKER"
-										// userprofile={userData.photoName.length !== 0 ? userData.photoName : null}
-									/>
-									<CancleBtn
-										horizonAlign="center"
-										verticalAlign="center"
-										onClick={() => handleBtsShow("hi")}
-									>
-										{"취소"}
-									</CancleBtn>
-								</Row>
 							</Column>
 						</div>
 					))}
