@@ -176,8 +176,9 @@ export default function Home() {
 						</Row>
 						{isExist ? (
 							<Column gap={28}>
-								{matchingTop3User.map((user, index) => (
+								{matchingTop3User.map((user) => (
 									<UserProfile
+										key={user.nickname}
 										ID={user.studentNum}
 										major={user.major}
 										nickName={user.nickname}
@@ -187,7 +188,7 @@ export default function Home() {
 										image={user.image}
 										onClick={(ev) => {
 											ev.stopPropagation();
-											navigate("/detail/details/" + user.matchingId + user.opponentId);
+											navigate(`/detail/details/${user.matchingPointId}/${user.opponentId}`);
 										}}
 									/>
 								))}
