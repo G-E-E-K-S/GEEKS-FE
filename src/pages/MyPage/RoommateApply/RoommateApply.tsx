@@ -217,10 +217,15 @@ export default function RoommateApply() {
 	const [receivedApply, setReceivedApply] = useState([]);
 	const [opponentNickName, setOpponentNickName] = useState("");
 	const [matching, setMatching] = useState(false);
+	const [deleteUserID, setDeleteUserID] = useState(0);
 	const [openMatchingModal, setOpenMatchingModal] = useState(false);
 	const navigate = useNavigate();
 
-	const { data, isLoading } = useQuery({
+	const {
+		data,
+		refetch: roommateApplyRefetch,
+		isLoading
+	} = useQuery({
 		queryKey: ["roommateApply"],
 		queryFn: async () => {
 			const response = await API.get(`/api/v1/roommate/send/list`);
@@ -228,25 +233,30 @@ export default function RoommateApply() {
 		}
 	});
 
-	useEffect(() => {
+	useMemo(() => {
 		if (!data) return;
 		setSentApplyData(data);
-	}, [data, sentApplyData]);
-	console.log(";;;;", sentApplyData);
+	}, [data]);
+
+	const { refetch: cancleRoommateFetch } = useQuery({
+		queryKey: ["cancleRoommate"],
+		queryFn: async () => {
+			const res = await API.delete(`/api/v1/roommate/send/cancel/${deleteUserID}`);
+			return res.data;
+		},
+		enabled: true
+	});
 
 	const handleCancle = () => {
 		setIsBtsShow(false);
-		setShowPopup(true);
-		// TODO React-Query
-		// async function fetchDeleteAply() {
-		// 	try {
-		// 		const res = await API.get("/roommate/remove?yournickname=" + opponentNickName);
-		// 		setSentApply(sentApply.filter((data) => data.nickname !== opponentNickName));
-		// 	} catch (e) {
-		// 		console.log(e);
-		// 	}
-		// }
-		// fetchDeleteAply();
+
+		cancleRoommateFetch().then((res) => {
+			if (res.data.data === "success") {
+				setDeleteUserID(0);
+				setShowPopup(true);
+				roommateApplyRefetch();
+			}
+		});
 	};
 
 	// const AcceptRoommate = (opponentId) => {
@@ -272,9 +282,11 @@ export default function RoommateApply() {
 		fetchRefuse();
 	};
 
-	const handleBtsShow = (opponent) => {
+	const handleBtsShow = (opponent: UserProfileType & userProfile) => {
 		setIsBtsShow(!isBtsShow);
-		setOpponentNickName(opponent);
+		setOpponentNickName(opponent.nickname);
+
+		opponent.roommateId && setDeleteUserID(opponent.roommateId);
 	};
 
 	const handleModal = () => {
@@ -342,22 +354,28 @@ export default function RoommateApply() {
 								{"2025년"}
 							</Typography>
 							<Column gap={20} width="w-full">
-							{sentApplyData.map((userData) => (
-								<Column gap={8} width="w-full">
-									<ApplyDate>{moment(userData.createdDate).format("M월 D일")}</ApplyDate>
-									<UserProfile
-										nickName={userData.nickname}
-										ID={userData.studentNum}
-										image={userData.image ? userData.image : null}
-										major={userData.major}
-										smoke={userData.smoke}
-										score={userData.point}
-									/>
-									<CancleBtn horizonAlign="center" verticalAlign="center" onClick={() => handleBtsShow(userData.nickname)}>
-										<Typography typoSize="T4_semibold" color="Gray700">{"취소 하기"}</Typography>
-									</CancleBtn>
-								</Column>
-							))}
+								{sentApplyData.map((userData) => (
+									<Column gap={8} width="w-full">
+										<ApplyDate>{moment(userData.createdDate).format("M월 D일")}</ApplyDate>
+										<UserProfile
+											nickName={userData.nickname}
+											ID={userData.studentNum}
+											image={userData.image ? userData.image : null}
+											major={userData.major}
+											smoke={userData.smoke}
+											score={userData.point}
+										/>
+										<CancleBtn
+											horizonAlign="center"
+											verticalAlign="center"
+											onClick={() => handleBtsShow(userData)}
+										>
+											<Typography typoSize="T4_semibold" color="Gray700">
+												{"취소 하기"}
+											</Typography>
+										</CancleBtn>
+									</Column>
+								))}
 							</Column>
 						</div>
 					))}
