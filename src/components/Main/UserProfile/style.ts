@@ -6,7 +6,7 @@ export const TotalProfile = styled.div<{ activeCheck?: boolean; isMe?: boolean; 
 	border-radius: ${({ isMe }) => !isMe && "12px"};
 	background: ${({ activeCheck }) => (activeCheck ? "#FFF4CD" : "#fff")};
 	border: 1px solid ${({ activeCheck }) => (activeCheck ? "#ECAA00" : "transparent")};
-	padding: ${({ isMe, hasPadding }) => (!isMe || hasPadding) && "14px 5.12vw"};
+	padding: ${({ hasPadding }) => hasPadding && "14px 5.12vw"};
 	overflow-x: auto;
 `;
 export const Smoking = styled(Column)`

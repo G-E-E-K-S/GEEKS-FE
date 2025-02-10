@@ -49,7 +49,7 @@ export default function UserProfile({
 	// 	fetchSaveUser();
 	// };
 	return (
-		<S.TotalProfile activeCheck={activeCheck} onClick={onClick} isMe={isMe} hasPadding={hasPadding ?? false}>
+		<S.TotalProfile activeCheck={activeCheck} onClick={onClick} isMe={isMe} hasPadding={hasPadding}>
 			<Row horizonAlign="distribute">
 				<Row gap={14}>
 					<S.UserProfile

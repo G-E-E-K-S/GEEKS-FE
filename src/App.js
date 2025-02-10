@@ -26,7 +26,7 @@ import {
 	AlreadyRegist
 } from "./pages/Join/Index";
 import { LiveRule, Home, Search, Alarm } from "./pages/Main/Index";
-import { FindRoommate, User, RoommateSendTxt, FinishRoommate } from "./pages/FindRoommate/Index";
+import { FindRoommate, CompareUserInfo, RoommateSendText, FinishRoommate } from "./pages/FindRoommate/Index";
 import { ComingSoon, Suggestion, WriteSuggestion, DetailSuggestion } from "./pages/Suggestion/Index";
 import { Chat, ChatRoom } from "./pages/Chat/Index";
 import { WritePost, Post, Community, MyCommunity, ScrapPost, CommunityWrite, OpenGroup } from "./pages/Community/Index";
@@ -96,8 +96,8 @@ function App() {
 					<Route path="/faq/:type/:pageNum" element={<FaqContent />} />
 					<Route path="/roommate" element={<FindRoommate />} />
 					<Route path="/finishroommate" element={<FinishRoommate />} />
-					<Route path="/detail/details/:matchingId/:opponentId" element={<User />} />
-					<Route path="/roommatesendtxt" element={<RoommateSendTxt />} />
+					<Route path="/detail/details/:matchingId/:opponentId" element={<CompareUserInfo />} />
+					<Route path="/roommatesendtext" element={<RoommateSendText />} />
 					<Route path="/chat" element={<Chat />} />
 					<Route path="/chat/chatroom/:roomId" element={<ChatRoom />} />
 					<Route path="/roommate/apply" element={<RoommateApply />} />
