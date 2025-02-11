@@ -34,3 +34,8 @@ export const isToday = (currentDate: Dayjs, day: string | number): boolean => {
 	const date = currentDate.date(Number(day));
 	return dayjs().format("YYYY-MM-DD") === date.format("YYYY-MM-DD");
 };
+
+export const floorToNearest30 = (date) => {
+	const minutes = Math.floor(date.minute() / 30) * 30;
+	return date.minute(minutes).second(0);
+};

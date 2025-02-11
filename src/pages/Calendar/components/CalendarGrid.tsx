@@ -5,7 +5,7 @@ import { getDaysInMonth, isToday } from "../utils";
 import { ReactComponent as AddIcon } from "../.././../assets/img/Calendar/AddIcon.svg";
 import Row from "../../../components/Common/Layouts/Row";
 import { Dayjs } from "dayjs";
-import { ScheduleMark } from "../utils/styles/ScheduleMark.styled";
+import { ScheduleMark, ScheduleType } from "../utils/styles/ScheduleMark.styled";
 
 interface DayProps {
 	$isEmpty: boolean;
@@ -35,7 +35,7 @@ export default function CalendarGrid ({
 }: CalendarGridProps) {
 	const getScheduleForDay = (day: string | number) => {
 		if (day === "") return [];
-		const dateString = currentDate.date(Number(day)).format("YYYY-MM-DD");
+		const dateString = currentDate.date(Number(day)).format("YYYY.M.D");
 		return scheduleData?.[dateString] || [];
 	};
 
@@ -94,7 +94,7 @@ export default function CalendarGrid ({
 								$isWeekend={dayIdx === 0 || dayIdx === 6}
 								$isSunday={dayIdx === 0}
 								$isToday={isToday(currentDate, day)}
-								$isSelected={selectedDate === currentDate.date(Number(day)).format("YYYY-MM-DD")}
+								$isSelected={selectedDate === currentDate.date(Number(day)).format("YYYY.M.D")}
 								$type={type}
 								onClick={() => handleDayClick(day)}
 							>
@@ -200,28 +200,6 @@ const ScheduleHeader = styled.div`
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 24px;
-`;
-
-const ScheduleType = styled.div<{ $type: string }>`
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    background-color: ${({ $type }) => {
-        switch ($type) {
-            case "외출":
-                return theme.Blue50;
-            case "외박":
-                return theme.Red50;
-            case "공동 일정":
-                return theme.Teal50;
-            case "기타":
-                return theme.YellowGray50;
-            default:
-                return "transparent";
-        }
-    }};
 `;
 
 const ScheduleMarkWrapper = styled.div`

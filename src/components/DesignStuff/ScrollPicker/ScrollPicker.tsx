@@ -1,14 +1,14 @@
 import Typography from "../../Common/Layouts/Typography";
 import * as S from "./style";
-import React from "react";
+import React, { ReactNode } from "react";
 
-interface ScrollPickerProps<TId extends string | number, TOption> {
+interface ScrollPickerProps<TId extends string | number, TOption extends ReactNode | string | number> {
 	options: { id: TId; option: TOption }[];
 	height: number;
 	onOptionSelect: (optionId: TId) => void; // 옵션 선택시 동작할 함수
 }
 
-export default function ScrollPicker<TId extends string | number, TOption> ({
+export default function ScrollPicker<TId extends string | number, TOption extends ReactNode | string | number> ({
 	options,
 	height,
 	onOptionSelect
@@ -22,7 +22,7 @@ export default function ScrollPicker<TId extends string | number, TOption> ({
 			{options.map((option) => (
 				<S.PickerOption key={option.id} onClick={() => {handleSelect(option.id);}}>
 					<Typography typoSize="T1" color="Gray700" textAlign="center">
-						{String(option.option)}
+						{option.option}
 					</Typography>
 				</S.PickerOption>
 			))}

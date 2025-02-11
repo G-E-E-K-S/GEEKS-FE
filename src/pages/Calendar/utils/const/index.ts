@@ -12,4 +12,3 @@ export const MONTHS = [
 	{ id: 11, option: "11" },
 	{ id: 12, option: "12" }
 ];
-

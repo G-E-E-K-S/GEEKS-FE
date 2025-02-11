@@ -49,6 +49,8 @@ import "./index.css";
 import Loading from "./pages/Loading";
 import Manager from "./pages/Manager/ManagerMain";
 import Calendar from './pages/Calendar/Calendar';
+import Schedule from "./pages/Schedule/Schedule";
+import ScheduleEdit from "./pages/Schedule/ScheduleEdit/ScheduleEdit";
 
 function App() {
 	return (
@@ -115,6 +117,9 @@ function App() {
 					<Route path="/suggestion/show/:pagenum" element={<DetailSuggestion />} />
 					<Route path="/managermain" element={<Manager />} />
 					<Route path="/calendar" element={<Calendar />} />
+					<Route path="/schedule/:scheduleId" element={<Schedule />} />
+					<Route path="/schedule/add" element={<ScheduleEdit />} />
+					<Route path="/schedule/:scheduleId/modify" element={<ScheduleEdit />} />
 				</Routes>
 			</Router>
 		</div>

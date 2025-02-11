@@ -6,14 +6,16 @@ import Typography from "../../../components/Common/Layouts/Typography";
 import Column from "../../../components/Common/Layouts/Column";
 import Row from "../../../components/Common/Layouts/Row";
 import { ScheduleMark } from "../utils/styles/ScheduleMark.styled";
+import { useNavigate } from "react-router-dom";
 
 interface TodaySchedulesProps {
 	selectedDate: string | null;
 	handleDayClick: (day: string | number) => void;
-	todayScheduleDatas: { title: string; type: string; content: string; time: string }[];
+	todayScheduleDatas: { scheduleId: number; title: string; type: string; content: string; time: string }[];
 }
 
 export default function TodaySchedules ({ selectedDate, todayScheduleDatas }: TodaySchedulesProps) {
+	const navigate = useNavigate();
 	const date = selectedDate ? dayjs(selectedDate).locale("ko") : dayjs().locale("ko");
 	const formattedDate = `${date.format("M.D")} ${date.format("ddd")}`;
 
@@ -22,7 +24,7 @@ export default function TodaySchedules ({ selectedDate, todayScheduleDatas }: To
 			<Typography typoSize="T3_semibold" color="Gray800">{formattedDate}</Typography>
 			<ScheduleList>
 				{todayScheduleDatas?.map((schedule, index) => (
-					<Column gap={2} key={index}>
+					<Column gap={2} key={index} onClick={() => navigate(`/schedule/${schedule.scheduleId}`)}>
 						<Row gap={8} verticalAlign="center">
 							<ScheduleMark $type={schedule.type} />
 							<Typography typoSize="T4_medium" color="Gray500">{schedule.time}</Typography>
