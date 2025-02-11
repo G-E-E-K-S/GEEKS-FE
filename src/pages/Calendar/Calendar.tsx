@@ -43,6 +43,10 @@ const scheduleData = {
 	"2025.2.3": [
 		{ scheduleId: 15, title: "동아리 회식", type: "기타", content: "동아리 회식", time: "18:00 - 20:00" },
 		{ scheduleId: 16, title: "분가하는 날", type: "기타", content: "분가 가는 날", time: "18:00 - 20:00" }
+	],
+	"2025.2.11": [
+		{ scheduleId: 17, title: "동아리 회식", type: "기타", content: "동아리 회식", time: "18:00 - 20:00" },
+		{ scheduleId: 18, title: "분가하는 날", type: "기타", content: "분가 가는 날", time: "18:00 - 20:00" }
 	]
 };
 
@@ -55,7 +59,7 @@ export default function Calendar () {
 		handleDayClick,
 		handleTodayClick,
 		setCurrentDate
-	} = useCalendar({ type: "calendar" });
+	} = useCalendar();
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	const toggleIsOpen = () => {

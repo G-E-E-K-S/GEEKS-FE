@@ -30,3 +30,13 @@ export const TIMES = Array.from({ length: 48 }, (_, i) => {
 	const minutes = i % 2 === 0 ? "00" : "30";
 	return { id: i, option: `${hours}:${minutes}` };
 });
+
+export const HOURS = Array.from({ length: 24 }, (_, i) => ({
+	id: i,
+	option: String(i).padStart(2, "0"),
+}));
+
+export const MINUTES = Array.from({ length: 12 }, (_, i) => ({
+	id: i,
+	option: String(i * 5).padStart(2, "0"),
+}));
