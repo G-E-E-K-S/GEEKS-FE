@@ -100,7 +100,7 @@ export default function Calendar () {
 						handleDayClick={handleDayClick}
 						todayScheduleDatas={todayScheduleDatas}
 					/>
-					<BottomSheet isOpen={isOpen} height={45.73}>
+					<BottomSheet isOpen={isOpen} height="45.73vh">
 						<Row horizonAlign="distribute" style={{ marginBottom: "1.25rem" }}>
 							<Typography color="Gray800" typoSize="T2_bold">
 								{"월 선택"}

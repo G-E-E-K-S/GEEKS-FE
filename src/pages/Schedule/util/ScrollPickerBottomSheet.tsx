@@ -22,7 +22,7 @@ export default function ScrollPickerBottomSheet<TId extends string | number, TOp
 	onSelect
 }: ScrollPickerBottomSheetProps<TId, TOption>) {
 	return (
-		<BottomSheet isOpen={isOpen} height={45.73}>
+		<BottomSheet isOpen={isOpen} height="45.73vh">
 			<Row horizonAlign="distribute" style={{ marginBottom: "1.25rem" }}>
 				<Typography color="Gray800" typoSize="T2_bold">
 					{title}

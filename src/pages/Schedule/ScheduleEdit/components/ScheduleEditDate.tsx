@@ -113,7 +113,7 @@ export default function ScheduleEditDate({
             </Column>
 
             {/*날짜 선택 모달*/}
-            <BottomSheet isOpen={isStartDateOpen || isEndDateOpen} height={65.16}>
+            <BottomSheet isOpen={isStartDateOpen || isEndDateOpen} height="65.16vh">
                 <Row horizonAlign="distribute" style={{marginBottom: "1.25rem"}}>
                     <Typography color="Gray800" typoSize="T2_bold">
                         날짜
@@ -151,7 +151,7 @@ export default function ScheduleEditDate({
             </BottomSheet>
 
             {/*시간 선택 모달*/}
-            <BottomSheet isOpen={isStartTimeOpen || isEndTimeOpen} height={54.73}>
+            <BottomSheet isOpen={isStartTimeOpen || isEndTimeOpen} height="54.73vh">
                 <Row horizonAlign="distribute" style={{marginBottom: "1.25rem"}}>
                     <Typography color="Gray800" typoSize="T2_bold">
                         시간
