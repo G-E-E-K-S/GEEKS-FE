@@ -76,6 +76,7 @@ export default function Calendar () {
 		? scheduleData[selectedDate]
 		: scheduleData[currentDate.format("YYYY-MM-DD")];
 
+export default function Calendar () {
 	return (
 		<c.Totalframe>
 			<c.ScreenComponent navigation={true}>
@@ -120,6 +121,7 @@ export default function Calendar () {
 							일정 추가
 						</Typography>
 					</ScheduleAddButton>
+					<CalendarGrid />
 				</c.SubScreen>
 			</c.ScreenComponent>
 		</c.Totalframe>
@@ -152,5 +154,3 @@ const ScheduleAddButton = styled(Button)`
     padding: 14px 20px;
     gap: 8px;
 `;
-
-
