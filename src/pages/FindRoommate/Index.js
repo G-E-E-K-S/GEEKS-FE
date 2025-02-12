@@ -1,6 +1,6 @@
-import FindRoommate from "./FindRoommate";
-import User from "./User";
-import RoommateSendTxt from "./RoommateSendTxt";
+import FindRoommate from "./FindRoommate/FindRoommate";
+import CompareUserInfo from "./CompareUserInfo/CompareUserInfo";
+import RoommateSendText from "./RoommateSendText/RoommateSendText";
 import FinishRoommate from "./FinishRoommate";
 
-export { FindRoommate, User, RoommateSendTxt, FinishRoommate };
+export { FindRoommate, CompareUserInfo, RoommateSendText, FinishRoommate };

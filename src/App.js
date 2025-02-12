@@ -1,6 +1,8 @@
 import React from "react";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme";
 import {
 	Intro,
 	AccessRight,
@@ -23,8 +25,8 @@ import {
 	Welcome,
 	AlreadyRegist
 } from "./pages/Join/Index";
-import { LiveRule, Home, Search } from "./pages/Main/Index";
-import { FindRoommate, User, RoommateSendTxt, FinishRoommate } from "./pages/FindRoommate/Index";
+import { LiveRule, Home, Search, Alarm } from "./pages/Main/Index";
+import { FindRoommate, CompareUserInfo, RoommateSendText, FinishRoommate } from "./pages/FindRoommate/Index";
 import { ComingSoon, Suggestion, WriteSuggestion, DetailSuggestion } from "./pages/Suggestion/Index";
 import { Chat, ChatRoom } from "./pages/Chat/Index";
 import { WritePost, Post, Community, MyCommunity, ScrapPost, CommunityWrite, OpenGroup } from "./pages/Community/Index";
@@ -49,10 +51,12 @@ import "./index.css";
 import Loading from "./pages/Loading";
 import Manager from "./pages/Manager/ManagerMain";
 import Calendar from './pages/Calendar/Calendar';
+import Schedule from "./pages/Schedule/Schedule";
+import ScheduleEdit from "./pages/Schedule/ScheduleEdit/ScheduleEdit";
 
 function App() {
 	return (
-		<div>
+		<ThemeProvider theme={theme}>
 			{/* <GlobalStyle /> */}
 			<Router>
 				<Routes>
@@ -79,6 +83,7 @@ function App() {
 					<Route path="/home" element={<Home />} />
 					<Route path="/liverule" element={<LiveRule />} />
 					<Route path="/search" element={<Search />} />
+					<Route path="/noti" element={<Alarm />} />
 					<Route path="/mypage" element={<MyPage />} />
 					<Route path="/myprofile" element={<MyProfile />} />
 					<Route path="/secessionreason" element={<SecessionReason />} />
@@ -94,8 +99,8 @@ function App() {
 					<Route path="/faq/:type/:pageNum" element={<FaqContent />} />
 					<Route path="/roommate" element={<FindRoommate />} />
 					<Route path="/finishroommate" element={<FinishRoommate />} />
-					<Route path="/detail/details/:userId" element={<User />} />
-					<Route path="/roommatesendtxt" element={<RoommateSendTxt />} />
+					<Route path="/detail/details/:matchingId/:opponentId" element={<CompareUserInfo />} />
+					<Route path="/roommatesendtext" element={<RoommateSendText />} />
 					<Route path="/chat" element={<Chat />} />
 					<Route path="/chat/chatroom/:roomId" element={<ChatRoom />} />
 					<Route path="/roommate/apply" element={<RoommateApply />} />
@@ -114,9 +119,12 @@ function App() {
 					<Route path="/suggestion/show/:pagenum" element={<DetailSuggestion />} />
 					<Route path="/managermain" element={<Manager />} />
 					<Route path="/calendar" element={<Calendar />} />
+					<Route path="/schedule/:scheduleId" element={<Schedule />} />
+					<Route path="/schedule/add" element={<ScheduleEdit />} />
+					<Route path="/schedule/:scheduleId/modify" element={<ScheduleEdit />} />
 				</Routes>
 			</Router>
-		</div>
+		</ThemeProvider>
 	);
 }
 

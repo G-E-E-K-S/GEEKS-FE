@@ -1,12 +1,12 @@
-import MyPage from "./MyPage";
-import LifeStyles from "./LifeStyles";
+import MyPage from "./MyPage/MyPage";
+import LifeStyles from "./LifeStyles/LifeStyles";
 import EditProfile from "./EditProfile";
 import SettingUserInfo from "./SettingUserInfo";
-import SaveList from "./SaveList";
-import Notice from "./Notice";
+import SaveList from "./SaveList/SaveList";
+import Notice from "./Notice/Notice";
 import FAQ from "./Faq";
 import FaqContent from "./FaqContent";
-import RoommateApply from "./RoommateApply";
+import RoommateApply from "./RoommateApply/RoommateApply";
 import MyProfile from "./MyProfile";
 import SecessionReason from "./SecessionReason";
 import NoticeDetail from "./NoticeDetail";
@@ -15,19 +15,19 @@ import ChangePassword from "./ChangePassword";
 import ReviewEvent from "./ReviewEvent";
 
 export {
-  MyPage,
-  LifeStyles,
-  EditProfile,
-  SettingUserInfo,
-  SaveList,
-  Notice,
-  FAQ,
-  FaqContent,
-  RoommateApply,
-  MyProfile,
-  SecessionReason,
-  NoticeDetail,
-  EventNoticeDetail,
-  ChangePassword,
-  ReviewEvent
+	MyPage,
+	LifeStyles,
+	EditProfile,
+	SettingUserInfo,
+	SaveList,
+	Notice,
+	FAQ,
+	FaqContent,
+	RoommateApply,
+	MyProfile,
+	SecessionReason,
+	NoticeDetail,
+	EventNoticeDetail,
+	ChangePassword,
+	ReviewEvent
 };

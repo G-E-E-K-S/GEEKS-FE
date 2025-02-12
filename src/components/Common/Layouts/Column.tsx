@@ -4,6 +4,7 @@ type ColumnProps = {
 	verticalAlign?: "center" | "top" | "bottom" | "distribute";
 	horizonAlign?: "center" | "left" | "right" | "distribute";
 	gap?: number;
+	width?: "w-full";
 };
 
 const ColumnCSS = (props?: ColumnProps) => css`
@@ -44,6 +45,15 @@ const ColumnCSS = (props?: ColumnProps) => css`
 			return `${props.gap}px`;
 		} else {
 			return 0;
+		}
+	})()};
+
+	width: ${(() => {
+		if (props?.width) {
+			switch (props.width) {
+				case "w-full":
+					return "100%";
+			}
 		}
 	})()};
 `;

@@ -4,6 +4,8 @@ type RowProps = {
 	verticalAlign?: "center" | "top" | "bottom" | "distribute";
 	horizonAlign?: "center" | "left" | "right" | "distribute";
 	gap?: number;
+	wrap?: "nowrap" | "wrap";
+	width?: "w-full";
 };
 
 const RowCSS = (props?: RowProps) => css`
@@ -43,6 +45,26 @@ const RowCSS = (props?: RowProps) => css`
 			return `${props.gap}px`;
 		} else {
 			return 0;
+		}
+	})()};
+
+	flex-wrap: ${(() => {
+		if (props?.wrap) {
+			switch (props.wrap) {
+				case "nowrap":
+					return "nowrap";
+				case "wrap":
+					return "wrap";
+			}
+		}
+	})()};
+
+	width: ${(() => {
+		if (props?.width) {
+			switch (props.width) {
+				case "w-full":
+					return "100%";
+			}
 		}
 	})()};
 `;

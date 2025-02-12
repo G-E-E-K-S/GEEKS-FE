@@ -1,26 +1,22 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../../axios/BaseUrl";
-import styled from "styled-components";
 import * as c from "../../../components/Common/CommonStyle";
 import HeaderMenu from "../../../components/Common/HeaderMenu";
-import TopNumber from "../../../components/Join/TopNumber";
-import JoinButton from "../../../components/Join/JoinButton";
 import MainText from "../../../components/Join/MainText";
 import ErrorPopup from "../../../components/Common/ErrorPopup";
 import TextFields from "../../../components/DesignStuff/TextFields/TextFields";
 import Button from "../../../components/DesignStuff/Button/Button";
-import Typography from "../../../components/Common/Layouts/Typography";
-import { useUserNickName } from "../../../store/useNickName";
+import { useUserInfo } from "../../../store/useUserInfo";
+import { useQuery } from "@tanstack/react-query";
+import TopNumber from "../../../components/Join/TopNumber";
 
 const NickName = () => {
-	const { setUserNickName } = useUserNickName();
-	const [inputNickName, setInputNickName] = useState("");
-	const [valuableName, setValuableName] = useState("");
 	const [isNextPage, setIsNextPage] = useState(false);
 	const [isPopup, setIsPopup] = useState(false);
 	const [errorPopup, setErrorPopup] = useState(false);
 	const letterCnt = useRef(0);
+	const { nickname, setNickname } = useUserInfo();
 	const navigate = useNavigate();
 
 	const handleInputChange = (value: string) => {
@@ -28,59 +24,46 @@ const NickName = () => {
 		if (value.length > 0 && !regex.test(value)) {
 			setErrorPopup(true);
 		}
-		setInputNickName(value);
-		setUserNickName(value);
+		setNickname(value);
 		const length = value.length;
 		letterCnt.current = length;
 		length > 0 && regex.test(value) ? setIsNextPage(true) : setIsNextPage(false);
 	};
 
-	const handleNickName = () => {
-		if (!isNextPage) {
-			return;
-		}
-		async function fetchNickName() {
-			try {
-				const res = await API.get("/member/nickname?nickname=" + inputNickName);
-				if (res.data === "success") navigate("/questiontext", { state: { inputNickName } });
-			} catch (error) {
-				console.error(error);
-			}
-		}
-		fetchNickName();
-	};
+	const { refetch } = useQuery({
+		queryKey: ["useNickName", nickname],
+		queryFn: async () => {
+			const res = await API.get(`/api/v1/user/check/nickname/` + nickname);
+			return res.data;
+		},
+		enabled: false
+	});
 
 	useEffect(() => {
 		const timeId = setTimeout(() => {
-			fetchCheckNickName();
+			refetch();
 		}, 800);
 		return () => {
 			clearTimeout(timeId);
 		};
-		async function fetchCheckNickName() {
-			try {
-				const res = await API.get("/member/check/nickname?nickname=" + inputNickName);
-				setValuableName(res.data);
-				if (res.data === "duplicate") {
-					setIsNextPage(false);
-					setIsPopup(true);
-				}
-			} catch (error) {
-				console.error(error);
-			}
-		}
-	}, [inputNickName]);
+	}, [nickname]);
+
+	useEffect(() => {
+		setNickname("");
+	}, []);
 
 	return (
 		<c.Totalframe>
 			<c.ScreenComponent>
-				<HeaderMenu />
+				<c.Header backgroundColor="White">
+					<HeaderMenu />
+				</c.Header>
 				<TopNumber page={4} />
 				<MainText maintitle={`회원님을 표현할\n닉네임을 알려주세요`} />
 				<TextFields
 					maxLength={8}
 					onChange={(val) => handleInputChange(val)}
-					inputLen={inputNickName.length}
+					inputLen={nickname.length}
 					totalNum={8}
 				/>
 				<ErrorPopup
@@ -96,7 +79,7 @@ const NickName = () => {
 					isShowPopup={errorPopup}
 					bottom={"18.72"}
 				/>
-				<Button text={"다음"} onClick={() => handleNickName()} isNextPage={isNextPage} />
+				<Button text={"다음"} onClick={() => navigate("/questiontext")} isNextPage={isNextPage} />
 			</c.ScreenComponent>
 		</c.Totalframe>
 	);

@@ -7,7 +7,6 @@ import styled from "styled-components";
 import * as c from "../../components/Common/CommonStyle";
 import Header from "../../components/MyPage/Header";
 import OtherProfileApply from "../../components/MyPage/OtherProfileApply";
-import { UserNickName } from "../../recoil/UserNickName";
 import Popup from "../../components/Common/Popup";
 import BottomSheet from "../../components/Common/BottomSheet";
 import Modal from "../../components/Common/Modal";
@@ -249,7 +248,6 @@ const RoommateApply = () => {
   const [matching, setMatching] = useState(false);
   const [openMatchingModal, setOpenMatchingModal] = useState(false);
   const [loading, setLoading] = useState(true);
-  const content = useRecoilValue(UserNickName);
   const navigate = useNavigate();
   useState(() => {
     async function fetchSentApply() {
