@@ -12,7 +12,7 @@ export const TopImg = styled.img`
 `;
 export const LoginButton = styled.div`
 	width: 89.74vw;
-	height: 60px;
+	height: 64px;
 	border-radius: 12px;
 	border: 1px solid #e2e2e2;
 	background: #fff;
@@ -20,7 +20,7 @@ export const LoginButton = styled.div`
 	justify-content: center;
 	align-items: center;
 	position: fixed;
-	bottom: calc(60px + 10.18vh + 12px);
+	bottom: calc(60px + 10.18vh + 16px);
 	cursor: pointer;
 	color: #333;
 	font-size: 1.125rem;

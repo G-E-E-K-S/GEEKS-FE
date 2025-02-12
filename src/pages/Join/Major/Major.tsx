@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../../axios/BaseUrl";
 import styled from "styled-components";
 import * as CS from "../../../components/Common/CommonStyle";
 import HeaderMenu from "../../../components/Common/HeaderMenu";
 import MainText from "../../../components/Join/MainText";
-import BottomSheet from "../../../components/Common/BottomSheet";
 import Department from "../../../components/Join/Department";
 import UnderArrow from "../../../assets/img/Join/arrow_under.svg";
 import Close from "../../../assets/img/Join/closeModal.svg";
@@ -14,6 +13,8 @@ import Button from "../../../components/DesignStuff/Button/Button";
 import Typography from "../../../components/Common/Layouts/Typography";
 import Row from "../../../components/Common/Layouts/Row";
 import DepartmentList from "../../../JSON/DepartmentList.json";
+import BottomSheet from "../../../components/DesignStuff/BottomSheet/BottomSheet";
+import { useUserInfo } from "../../../store/useUserInfo";
 
 const InputStudentId = styled.input`
 	outline: none;
@@ -46,55 +47,37 @@ const CloseImg = styled.img`
 	height: 28px;
 `;
 const Major = () => {
-	const [isSelected, setIsSelected] = useState(false);
 	const [isNextPage, setIsNextPage] = useState(false);
-	const [isMajorOpen, setIsMajorOpen] = useState(false);
+	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
-	const [department, setDepartment] = useState("디자인대학");
-	const [major, setMajor] = useState(null);
-	const [studentID, setStudentID] = useState(null);
-	const [loading, setLoading] = useState(false);
+	const { major, setMajor, department, setDepartment, studentNum, setStudentNum } = useUserInfo();
 	const navigate = useNavigate();
 
 	const handleBottomSheet = () => {
-		setIsMajorOpen(!isMajorOpen);
-	};
-	const handleStudentId = (ID) => {
-		if (isNaN(ID)) return;
-		else {
-			setIsNextPage(ID.trim() !== "");
-			setStudentID(ID);
-		}
+		setIsBottomSheetOpen(!isBottomSheetOpen);
 	};
 
-	const openBottomSheet = (department) => {
-		setIsMajorOpen(!isMajorOpen);
+	const openBottomSheet = (department: string) => {
 		setIsDepartmentOpen(!isDepartmentOpen);
 		setDepartment(department);
 	};
-	const handleMajor = (major) => {
+	const handleMajor = (major: string) => {
 		setMajor(major);
-		setIsDepartmentOpen(!department);
-	};
-	const sendData = () => {
-		async function fetchMjor() {
-			setLoading(true);
-			try {
-				const res = await API.get("/member/major?major=" + `${major}` + "&studentID=" + `${studentID}`);
-				if (res.data === "success") navigate("/gender");
-			} catch (error) {
-				console.error(error);
-			}
-		}
-		fetchMjor();
+		setIsDepartmentOpen(false);
+		setIsBottomSheetOpen(false);
 	};
 
-	return loading ? (
-		<Loading />
-	) : (
+	useEffect(() => {
+		setStudentNum(19);
+		major && studentNum ? setIsNextPage(true) : setIsNextPage(false);
+	}, [major, studentNum]);
+
+	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<HeaderMenu />
+				<CS.Header backgroundColor={isBottomSheetOpen || isDepartmentOpen ? " rgba(0, 0, 0, 0.5)" : "White"}>
+					<HeaderMenu />
+				</CS.Header>
 				<MainText maintitle={`전공/학과와\n학번을 알려주세요`} />
 				<MajorTotal onClick={() => handleBottomSheet()}>
 					<Typography typoSize="T1" color={major ? "Gray800" : "Gray400"}>
@@ -102,13 +85,7 @@ const Major = () => {
 					</Typography>
 					<img src={UnderArrow} />
 				</MajorTotal>
-				{/* open Major Bottom Sheet */}
-				<BottomSheet
-					height={`487px`}
-					padding={`24px 5.12vw 0px 5.12vw`}
-					isOpen={isMajorOpen}
-					interaction={true}
-				>
+				<BottomSheet isOpen={isBottomSheetOpen} height={"487px"}>
 					<CS.SpaceBetween>
 						<MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
 						<CloseImg src={Close} onClick={() => handleBottomSheet()} />
@@ -122,12 +99,7 @@ const Major = () => {
 					))}
 				</BottomSheet>
 				{isDepartmentOpen && (
-					<BottomSheet
-						height={`630px`}
-						padding={`24px 5.12vw 0px 5.12vw`}
-						isOpen={isDepartmentOpen}
-						interaction={false}
-					>
+					<BottomSheet height={`630px`} isOpen={isDepartmentOpen}>
 						<Row horizonAlign="distribute">
 							<Typography typoSize="T2_bold" color="Gray800">
 								{"학과/전공"}
@@ -139,22 +111,7 @@ const Major = () => {
 						))}
 					</BottomSheet>
 				)}
-
-				{/* <StudentIdTotal
-					onFocus={() => handleFocus(true)}
-					onBlur={() => handleFocus(false)}
-					isSelected={isSelected}
-				>
-					<InputStudentId
-						placeholder="학번 입력"
-						type="text"
-						maxlength={"2"}
-						value={studentID}
-						onChange={(e) => handleStudentId(e.target.value)}
-					/>
-				</StudentIdTotal> */}
-
-				<Button text={"다음"} isNextPage={isNextPage} onClick={() => sendData()} />
+				<Button text={"다음"} isNextPage={isNextPage} onClick={() => navigate("/gender")} />
 			</CS.ScreenComponent>
 		</CS.Totalframe>
 	);

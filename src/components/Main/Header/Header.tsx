@@ -9,7 +9,7 @@ import * as S from "./style";
 export default function Header() {
 	const navigate = useNavigate();
 	return (
-		<S.TotalHeader>
+		<S.TotalHeader horizonAlign="distribute">
 			<img src={GeeksLogo} />
 			<Row gap={16}>
 				<img src={search} onClick={() => navigate("/search")} />

@@ -11,24 +11,24 @@ export const ModalBackground = styled.div<{ isOpen?: boolean }>`
 	background-color: rgba(0, 0, 0, 0.5);
 	opacity: 0.5;
 	z-index: 20;
-	transition: 0.3s ease;
+	transition: transform 0.3s ease;
 	visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
 `;
 
-export const TotalBottomSheet = styled.div<{ height: number; isOpen?: boolean }>`
+export const TotalBottomSheet = styled.div<{ height: string; isOpen?: boolean }>`
 	z-index: 20;
 	position: fixed;
 	width: 100vw;
 	left: 50%;
 	bottom: 0;
-	height: ${({ height }) => `${height}vh`};
+	height: ${({ height }) => `${height}`};
 	border-radius: 20px 20px 0px 0px;
 	padding: 24px 20px 0 20px;
 	background: #fff;
 	overflow-y: auto;
 	overflow-x: hidden;
 	transform: translateX(-50%) translateY(${({ isOpen }) => (isOpen ? "0" : "100%")});
-	transition: transform 0.5s ease;
+	transition: transform 0.3s ease;
 	&::-webkit-scrollbar {
 		display: none;
 	}

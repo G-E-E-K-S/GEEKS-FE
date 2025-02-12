@@ -106,10 +106,12 @@ export default function Search() {
 	return (
 		<CS.Totalframe background={`#fff`}>
 			<CS.ScreenComponent>
-				<Row horizonAlign="center" verticalAlign="center" gap={12}>
-					<GoBack />
-					<SearchBar placeHolder="검색할 키워드를 입력하세요" inputVal={(val) => console.log(val)} />
-				</Row>
+				<CS.Header backgroundColor="White">
+					<Row horizonAlign="center" verticalAlign="center" gap={12}>
+						<GoBack />
+						<SearchBar placeHolder="검색할 키워드를 입력하세요" inputVal={(val) => console.log(val)} />
+					</Row>
+				</CS.Header>
 
 				{/* <ContentBox>
 					{isSelect === "post" &&

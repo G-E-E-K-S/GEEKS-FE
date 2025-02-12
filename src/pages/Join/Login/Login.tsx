@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState, useRef, useMemo } from "react";
+import { useState, useMemo } from "react";
 import styled from "styled-components";
 import API from "../../../axios/BaseUrl";
-import * as c from "../../../components/Common/CommonStyle";
+import * as CS from "../../../components/Common/CommonStyle";
 import HeaderMenu from "../../../components/Common/HeaderMenu";
 import MainText from "../../../components/Join/MainText";
 import ErrorPopup from "../../../components/Common/ErrorPopup";
@@ -17,6 +17,7 @@ import ForgetPwdImg from "../../../assets/img/Join/forgetPwd.svg";
 import NoShowPwd from "../../../assets/img/Join/NoShowPwd.svg";
 import ShowPwd from "../../../assets/img/Join/ShowPwd.svg";
 import Automatic from "../../../assets/img/Join/automatic.svg";
+import Column from "../../../components/Common/Layouts/Column";
 
 const ForgetPwdIcon = styled.img`
 	width: 16px;
@@ -82,32 +83,36 @@ const InputEmail = () => {
 		navigate("/home");
 	};
 	return (
-		<c.Totalframe>
-			<c.ScreenComponent>
-				<HeaderMenu />
+		<CS.Totalframe>
+			<CS.ScreenComponent>
+				<CS.Header backgroundColor="White">
+					<HeaderMenu />
+				</CS.Header>
 				<MainText maintitle={"학교 이메일 주소로\n로그인 해주세요"} />
-				<TextFields
-					// TODO API연결 후 진행
-					isError={false}
-					onChange={(val) => setEmail(val)}
-					fixedText={"@sangmyung.kr"}
-					placeholder={"학번"}
-					inputType="number"
-					maxLength={9}
-				/>
-				<TextFields
-					isError={false}
-					onChange={(val) => setPassword(val)}
-					placeholder={"비밀번호"}
-					inputType={showPwd ? "text" : "password"}
-					maxLength={15}
-					icon={showPwd ? ShowPwd : NoShowPwd}
-					onClick={handlePwd}
-				/>
-				<Row verticalAlign="center" gap={4} onClick={() => navigate("/findPassword")}>
-					<Typography typoSize="B2_medium" color="Gray600">{`비밀번호를 잊어버리셨나요?`}</Typography>
-					<ForgetPwdIcon src={ForgetPwdImg} />
-				</Row>
+				<Column gap={20}>
+					<TextFields
+						// TODO API연결 후 진행
+						isError={false}
+						onChange={(val) => setEmail(val)}
+						fixedText={"@sangmyung.kr"}
+						placeholder={"학번"}
+						inputType="number"
+						maxLength={9}
+					/>
+					<TextFields
+						isError={false}
+						onChange={(val) => setPassword(val)}
+						placeholder={"비밀번호"}
+						inputType={showPwd ? "text" : "password"}
+						maxLength={15}
+						icon={showPwd ? ShowPwd : NoShowPwd}
+						onClick={handlePwd}
+					/>
+					<Row verticalAlign="center" gap={4} onClick={() => navigate("/findPassword")}>
+						<Typography typoSize="B2_medium" color="Gray600">{`비밀번호를 잊어버리셨나요?`}</Typography>
+						<ForgetPwdIcon src={ForgetPwdImg} />
+					</Row>
+				</Column>
 				<ErrorPopup
 					message={`위 이메일로 가입된 정보가 없어요`}
 					bottom={`38.98`}
@@ -128,8 +133,8 @@ const InputEmail = () => {
 				>
 					<No onClick={() => NoneAutomaticLogin()}>{`안 할래요`}</No>
 				</ApplyCancelBottomSheet>
-			</c.ScreenComponent>
-		</c.Totalframe>
+			</CS.ScreenComponent>
+		</CS.Totalframe>
 	);
 };
 

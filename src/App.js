@@ -1,6 +1,8 @@
 import React from "react";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme";
 import {
 	Intro,
 	AccessRight,
@@ -24,7 +26,7 @@ import {
 	AlreadyRegist
 } from "./pages/Join/Index";
 import { LiveRule, Home, Search, Alarm } from "./pages/Main/Index";
-import { FindRoommate, User, RoommateSendTxt, FinishRoommate } from "./pages/FindRoommate/Index";
+import { FindRoommate, CompareUserInfo, RoommateSendText, FinishRoommate } from "./pages/FindRoommate/Index";
 import { ComingSoon, Suggestion, WriteSuggestion, DetailSuggestion } from "./pages/Suggestion/Index";
 import { Chat, ChatRoom } from "./pages/Chat/Index";
 import { WritePost, Post, Community, MyCommunity, ScrapPost, CommunityWrite, OpenGroup } from "./pages/Community/Index";
@@ -54,7 +56,7 @@ import ScheduleEdit from "./pages/Schedule/ScheduleEdit/ScheduleEdit";
 
 function App() {
 	return (
-		<div>
+		<ThemeProvider theme={theme}>
 			{/* <GlobalStyle /> */}
 			<Router>
 				<Routes>
@@ -97,8 +99,8 @@ function App() {
 					<Route path="/faq/:type/:pageNum" element={<FaqContent />} />
 					<Route path="/roommate" element={<FindRoommate />} />
 					<Route path="/finishroommate" element={<FinishRoommate />} />
-					<Route path="/detail/details/:userId" element={<User />} />
-					<Route path="/roommatesendtxt" element={<RoommateSendTxt />} />
+					<Route path="/detail/details/:matchingId/:opponentId" element={<CompareUserInfo />} />
+					<Route path="/roommatesendtext" element={<RoommateSendText />} />
 					<Route path="/chat" element={<Chat />} />
 					<Route path="/chat/chatroom/:roomId" element={<ChatRoom />} />
 					<Route path="/roommate/apply" element={<RoommateApply />} />
@@ -122,7 +124,7 @@ function App() {
 					<Route path="/schedule/:scheduleId/modify" element={<ScheduleEdit />} />
 				</Routes>
 			</Router>
-		</div>
+		</ThemeProvider>
 	);
 }
 

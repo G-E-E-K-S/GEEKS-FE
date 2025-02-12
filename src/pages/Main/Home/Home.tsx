@@ -1,199 +1,45 @@
-import React, { useEffect, useState, memo } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import moment from "moment";
-import "moment/locale/ko";
+import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
 import API from "../../../axios/BaseUrl";
-import styled from "styled-components";
+import * as S from "./style";
 import * as CS from "../../../components/Common/CommonStyle";
 import Header from "../../../components/Main/Header/Header";
-import NavigationBar from "../../../components/Main/NavigationBar";
-import MainOtherProfile from "../../../components/Main/MainOtherProfile";
-import HomeBox from "../../../components/Main/HomeBox";
+import NavigationBar from "../../../components/Main/NavigationBar/NavigationBar";
 import Popup from "../../../components/Common/Popup";
-import MainPost from "../../../components/Main/MainPost";
 import checklist from "../../../assets/img/Home/checkList.svg";
-import rule from "../../../assets/img/Home/Rule.svg";
 import stayOut from "../../../assets/img/Home/stayOut.svg";
 import dormiNoti from "../../../assets/img/Home/dormiNoti.svg";
+import Call from "../../../assets/img/Home/callHeader.svg";
 import Close from "../../../assets/img/Home/close.svg";
 import Find from "../../../assets/gif/find.gif";
-import BasicProfile from "../../../assets/img/MyPage/basicProfile.svg";
 import ForwardArrow from "../../../assets/img/Home/forwardArrow.svg";
 import SendAlarm from "../../../assets/img/Home/alarm.svg";
-import BoldClose from "../../../assets/img/Home/boldClose.svg";
 import Loading from "../../Loading";
 import Row from "../../../components/Common/Layouts/Row";
 import Column from "../../../components/Common/Layouts/Column";
 import Typography from "../../../components/Common/Layouts/Typography";
 import ButtonBox from "../../../components/DesignStuff/ButtonBox/ButtonBox";
-import { useUserNickName } from "../../../store/useNickName";
-import * as S from "./style";
+
 import Tooltip from "../../../components/DesignStuff/ToolTip/ToolTip";
-
-// const System = styled.div`
-// 	width: 100%;
-// 	display: flex;
-// 	margin: 4.26vh 1.28vw 0 1.28vw;
-// 	& > :last-child {
-// 		margin-right: 0; /* 마지막 이미지에는 간격을 적용하지 않음 */
-// 	}
-// `;
-// const Icons = styled.div`
-// 	width: 16.41vw;
-// 	display: flex;
-// 	align-items: center;
-// 	justify-content: center;
-// 	flex-direction: column;
-// 	margin-right: 7.17vw;
-// 	cursor: pointer;
-// `;
-// const Icon = styled.img`
-// 	margin: auto;
-// 	display: block;
-// 	margin-bottom: 8px;
-// `;
-// const IconText = styled.div`
-// 	color: #333;
-// 	text-align: center;
-// 	white-space: nowrap;
-// 	font-size: 14px;
-// 	font-style: normal;
-// 	font-weight: 500;
-// `;
-// const ApplyRoommate = styled.div`
-// 	widht: 100%;
-// 	background: #fff4cd;
-// 	padding: 20px 20px 32px 20px;
-// 	margin-top: 32px;
-// 	border-radius: 20px;
-// `;
-// const ApplyNoticeTxt = styled.div`
-// 	font-size: 1.5rem;
-// 	font-weight: 700;
-// 	line-height: 32px;
-// 	text-align: left;
-// 	white-space: pre-wrap;
-// `;
-// const ApplyCloseImg = styled.img`
-// 	width: 20px;
-// 	height: 20px;
-// `;
-// const FindRoommateTxt = styled.div`
-// 	white-space: pre-wrap;
-// 	color: #707070;
-// 	text-align: center;
-// 	font-size: 1rem;
-// 	font-weight: 500;
-// 	line-height: 24px;
-// 	margin-top: 1.89vh;
-// `;
-const EnrollRule = styled(Row)`
-	width: 100%;
-	height: 56px;
-	border-radius: 12px;
-	background: #ffc700;
-`;
-const ShowReviewBox = styled.div`
-	width: 100%;
-	height: 86px;
-	padding: 20px 5.12vw;
-	border-radius: 20px;
-	background: #fcede8;
-	margin-top: 3.7vh;
-`;
-// const ReviewTxt = styled.div`
-// 	color: #1a1a1a;
-// 	font-size: 1.125rem;
-// 	font-weight: 700;
-// 	line-height: 24px;
-// 	margin-bottom: 4px;
-// `;
-// const CloseImg = styled.img`
-// 	width: 20px;
-// 	height: 20px;
-// `;
-// const MoreSecurityTxt = styled.div`
-// 	color: #525252;
-// 	font-size: 0.875;
-// 	font-style: normal;
-// 	font-weight: 500;
-// 	line-height: 18px;
-// `;
-// const PopularPostBox = styled.div`
-// 	display: flex;
-// 	height: 48px;
-// 	width: 100%;
-// 	padding: 4px 1.02vw;
-// 	border-radius: 12px;
-// 	background: #f7f7f7;
-// 	margin-bottom: 22px;
-// 	position: relative;
-// `;
-
-// const PopularPostText = styled.div`
-// 	width: calc(100% / 2);
-// 	height: 100%;
-// 	${(props) => props.toggle && "position: absolute; left: 0; top: 0"};
-// 	background-color: ${(props) => props.toggle && "#FFF"};
-// 	color: ${(props) => (props.toggle ? "#1A1A1A" : "#949494")};
-// 	font-weight: ${(props) => (props.toggle ? "600" : "500")};
-// 	border-radius: ${(props) => props.toggle && "8px"};
-// 	box-shadow: ${(props) => props.toggle && "2px 2px 4px 0px rgba(0, 0, 0, 0.04)"};
-// 	text-align: center;
-// 	display: flex;
-// 	align-items: center;
-// 	justify-content: center;
-// 	${(props) => !props.view && "opacity: 0"};
-
-// 	transition: ${(props) => props.toggle && "transform 0.5s ease,"}opacity 1s ease;
-
-// 	transform: ${(props) => (props.toggle ? (props.isWeeklyPost ? "translateX(100%)" : "translateX(0%)") : null)};
-
-// 	&.active {
-// 		opacity: 1;
-// 	}
-
-// 	&:not(.active) {
-// 		opacity: 0;
-// 	}
-// `;
-
-// const PopularPostTextInDiv = styled.div`
-// 	position: absolute;
-// 	left: 0;
-// 	top: 0;
-// 	width: 100%;
-// 	height: 100%;
-// 	text-align: center;
-// 	display: flex;
-// 	align-items: center;
-// 	justify-content: center;
-
-// 	${(props) => (props.isWeeklyPost ? "opacity: 1" : "opacity: 0")};
-
-// 	transition: opacity 0.6s ease;
-
-// 	&.active {
-// 		opacity: 1;
-// 	}
-// `;
+import { useUserInfo } from "../../../store/useUserInfo";
+import UserProfile from "../../../components/Main/UserProfile/UserProfile";
+import { UserProfileType } from "../../../types/userProfileType";
 
 export default function Home() {
 	const MAIN_HEADER = [
-		{ key: "checklist", menuName: "체크리스트", Icon: checklist },
+		{ key: "checklist", menuName: "생활 규칙", Icon: checklist },
 		{ key: "stayout", menuName: "외박 신청", Icon: stayOut },
 		{ key: "dormitorynoti", menuName: "기숙사 공지", Icon: dormiNoti },
-		{ key: "dormitorynoti", menuName: "기숙사 공지", Icon: dormiNoti }
+		{ key: "dormitoryCall", menuName: "문의하기", Icon: Call }
 	];
-	const { userNickName } = useUserNickName();
+	const { nickname } = useUserInfo();
 	const [showPopup, setShowPopup] = useState(false);
 	const [isShowWriteReview, setIsShowWriteReview] = useState(localStorage.getItem("show") !== "false");
-
 	const [isExist, setIsExist] = useState(false);
 	const [isRoommateApply, setRoommateApply] = useState(true);
-	const [point, setPoint] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const [active, setActive] = useState(false);
+	const [matchingTop3User, setMatchingTop3User] = useState<UserProfileType[]>([]);
 	const [isSendMessage, setIsSendMessgae] = useState(false);
 	const navigate = useNavigate();
 
@@ -208,13 +54,12 @@ export default function Home() {
 			case "dormitorynoti":
 				window.open("https://www.smu.ac.kr/dormi2/board/notice.do", "_blank");
 				break;
+			case "dormitoryCall":
+				window.location.href = "tel:041-623-0350";
+				break;
 		}
 	};
 
-	const isNavigate = () => {
-		isExist && navigate("/roommate");
-	};
-	const location = useLocation();
 	// React.useEffect(() => {
 	//   if ('serviceWorker' in navigator) {
 	//     navigator.serviceWorker.ready.then((registration) => {
@@ -223,39 +68,38 @@ export default function Home() {
 	//   }
 	// }, [location]);
 
-	useEffect(() => {
-		async function fetchEmailPage() {
-			try {
-				const res = await API.get("/home/main");
-				setRoommateApply(res.data.roommateApply);
-				setIsExist(res.data.exist);
-				setPoint(res.data.points);
-				setLoading(false);
-			} catch (error) {
-				console.error(error);
-			}
-		}
-		fetchEmailPage();
-		const isVisited = localStorage.getItem("vap"); //VisitedAlarmPage
+	// useEffect(() => {
+	// 	async function fetchEmailPage() {
+	// 		try {
+	// 			const res = await API.get("/home/main");
+	// 			setRoommateApply(res.data.roommateApply);
+	// 			setIsExist(res.data.exist);
+	// 			setPoint(res.data.points);
+	// 			setLoading(false);
+	// 		} catch (error) {
+	// 			console.error(error);
+	// 		}
+	// 	}
+	// 	fetchEmailPage();
+	// 	const isVisited = localStorage.getItem("vap"); //VisitedAlarmPage
 
-		if (isVisited === null) {
-			localStorage.setItem("vap", "true");
+	const { data: top3UserData, isLoading } = useQuery({
+		queryKey: ["getTop3User"],
+		queryFn: async () => {
+			const res = await API.get(`/api/v1/matching/points/top3`);
+			return res.data.data;
 		}
-	}, []);
+	});
 
-	const caclTime = (uploadTime) => {
-		moment.locale("ko"); // 언어를 한국어로 설정
-		// return moment(uploadTime).fromNow(`A`) + "전"; // 지금으로부터 계산
-	};
-	const handleShowReview = (e) => {};
-	// const handleShowApplyRoommate = (e) =>{
-	//   e.preventDefault();
-	//   setRoommateApply(false);
-	//   localStorage.setItem("showApply", false);
-	// }
+	useMemo(() => {
+		if (!top3UserData) return;
+		setIsExist(top3UserData.exists);
+		setMatchingTop3User(top3UserData.opponentInfos);
+	}, [top3UserData]);
 
 	const isVisited = localStorage.getItem("vap");
-	return loading ? (
+
+	return isLoading ? (
 		<Loading />
 	) : (
 		<CS.Totalframe background={`#FAFAFA`}>
@@ -272,8 +116,10 @@ export default function Home() {
 				top={`9.5`}
 			/>
 			<CS.ScreenComponent navigation={true}>
-				<Column gap={24}>
+				<CS.Header backgroundColor="Background">
 					<Header />
+				</CS.Header>
+				<Column gap={24}>
 					<Row gap={31}>
 						{MAIN_HEADER.map((header) => (
 							<Column
@@ -319,27 +165,34 @@ export default function Home() {
 							</Row>
 						</ButtonBox>
 					)}
-					<ButtonBox backgroundColor="White">
-						<Typography typoSize="H3" color="Gray800">
-							{isExist
-								? `${userNickName} 님과 딱 맞는\n룸메이트를 찾았어요`
-								: `${userNickName} 님과 딱 맞는\n룸메이트를 찾아드려요`}
-						</Typography>
+					<ButtonBox backgroundColor="White" onClick={() => navigate("/roommate")}>
+						<Row horizonAlign="distribute">
+							<Typography typoSize="H3" color="Gray800" style={{ marginBottom: "32px" }}>
+								{isExist
+									? `${nickname} 님과 딱 맞는\n룸메이트를 찾았어요`
+									: `${nickname} 님과 딱 맞는\n룸메이트를 찾아드려요`}
+							</Typography>
+							<img src={ForwardArrow} style={{ width: "20px", height: "20px" }} />
+						</Row>
 						{isExist ? (
-							point.map((opponent, index) => (
-								// TODO : API연결 후
-								<></>
-								// <MainOtherProfile
-								// 	onClick={() => navigate("/detail/details/" + opponent.userId)}
-								// 	nickName={opponent.nickname}
-								// 	userprofile={opponent.photoName}
-								// 	major={opponent.major}
-								// 	id={opponent.studentID}
-								// 	score={opponent.point}
-								// 	smoke={opponent.smoking}
-								// 	marginBottom={point.length === index + 1 ? "0px" : "36px"}
-								// />
-							))
+							<Column gap={28}>
+								{matchingTop3User.map((user) => (
+									<UserProfile
+										key={user.nickname}
+										ID={user.studentNum}
+										major={user.major}
+										nickName={user.nickname}
+										smoke={user.smoke}
+										intro={user.introduction}
+										score={user.point}
+										image={user.image}
+										onClick={(ev) => {
+											ev.stopPropagation();
+											navigate(`/detail/details/${user.matchingPointId}/${user.opponentId}`);
+										}}
+									/>
+								))}
+							</Column>
 						) : (
 							<Column gap={16} horizonAlign="center" verticalAlign="center">
 								<S.FindIcon src={Find} />
@@ -348,13 +201,13 @@ export default function Home() {
 									color="Gray600"
 									textAlign="center"
 								>{`생활 습관을 등록하고\n나와 딱 맞는 룸메이트를 찾아보세요!`}</Typography>
-								<EnrollRule
+								<S.EnrollRule
 									horizonAlign="center"
 									verticalAlign="center"
 									onClick={() => navigate("/lifestyle")}
 								>
 									<Typography typoSize="T3_semibold" color="Black">{`생활습관 등록하기`}</Typography>
-								</EnrollRule>
+								</S.EnrollRule>
 							</Column>
 						)}
 					</ButtonBox>
