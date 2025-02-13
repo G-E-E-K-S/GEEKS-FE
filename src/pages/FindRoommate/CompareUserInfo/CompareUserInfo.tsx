@@ -297,7 +297,6 @@ export default function CompareUserInfo() {
 
 	useMemo(() => {
 		if (!data) return;
-		console.log(";;data", data);
 		setOpponentInfo(data.opponent);
 		setOpponentLifeStyle(data.opponentDetail);
 	}, [data]);
@@ -344,18 +343,34 @@ export default function CompareUserInfo() {
 	// 	fetchChatRoom();
 	// };
 
-	// const saveOther = () => {
-	// 	setIsSave(!isSave);
-	// 	async function fetchSave() {
-	// 		try {
-	// 			const res = await API.get("/roommate/save?yourNickname=" + opponentUser.nickname);
-	// 			console.log(res);
-	// 		} catch (e) {
-	// 			console.log(e);
-	// 		}
-	// 	}
-	// 	fetchSave();
-	// };
+	const { data: saveRoommateData, refetch: refetchSaveRooommate } = useQuery({
+		queryKey: ["saveRoommate", opponentId],
+		queryFn: async () => {
+			const response = await API.post(`/api/v1/roommate/bookmark/${matchingId}/${opponentId}`);
+			return response.data.data;
+		},
+		enabled: false
+	});
+
+	const { refetch: refetchCancelSavRoommate } = useQuery({
+		queryKey: ["cancelSaveRoommate", opponentId],
+		queryFn: async () => {
+			const response = await API.delete(`/api/v1/roommate/bookmark/cancel`, {
+				// bookmarkID나오면 수정하기
+				data: { bookmarkIds: [4] }
+			});
+			return response.data.data;
+		},
+		enabled: false
+	});
+
+	const saveRoommate = () => {
+		setIsSave(!isSave);
+		console.log(";;", saveRoommateData);
+		{
+			isSave ? refetchCancelSavRoommate() : refetchSaveRooommate();
+		}
+	};
 
 	if (!opponentInfo) return;
 
@@ -406,6 +421,7 @@ export default function CompareUserInfo() {
 					)}
 				</Column>
 				<Br style={{ marginTop: "20px" }} />
+
 				{/* match score */}
 				<S.MatchText horizonAlign="center" verticalAlign="center">
 					<div>{opponentInfo.point >= 40 && opponentInfo.point <= 60 ? "서로" : "나와"}</div>
@@ -518,9 +534,11 @@ export default function CompareUserInfo() {
 				))}
 				<S.BottomEnroll horizonAlign="distribute" verticalAlign="center">
 					<Column horizonAlign="center" verticalAlign="center">
-						{/* onClick={() => saveOther()} */}
-						<img src={isSave ? FillSave : Save} />
-						{/* style={{width:'24px'}} */}
+						<img
+							src={isSave ? FillSave : Save}
+							style={{ width: "28px", height: "28px" }}
+							onClick={() => saveRoommate()}
+						/>
 						<Typography typoSize="B2_medium" color="Gray500">
 							{"저장"}
 						</Typography>
