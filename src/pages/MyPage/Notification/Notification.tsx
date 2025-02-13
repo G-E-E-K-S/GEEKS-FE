@@ -44,7 +44,9 @@ export default function Notification() {
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<Header subtitle={`알림 설정`} />
+				<CS.Header backgroundColor="White">
+					<Header subtitle={`알림 설정`} />
+				</CS.Header>
 				<S.MenuWrapper horizonAlign="distribute" verticalAlign="center">
 					<Typography typoSize="T3_semibold" color="Gray800">
 						{"전체 알림"}

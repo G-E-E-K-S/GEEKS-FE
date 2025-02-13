@@ -11,7 +11,9 @@ export default function Notice() {
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<Header subtitle={`공지사항`} />
+				<CS.Header backgroundColor="White">
+					<Header subtitle={`공지사항`} />
+				</CS.Header>
 				{NoticeData.notice.map((item) => (
 					<>
 						<div style={{ padding: "20px 0px" }} onClick={() => navigate("/notice/details/event")}>
