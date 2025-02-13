@@ -74,9 +74,9 @@ export const BottomEnroll = styled(Row)`
 	padding-right: 5.12vw;
 	padding-bottom: calc(11.84vh - 56px - 20.17px + 12px);
 	border-top: 1px solid #efefef;
-	bottom: -24px;
+	bottom: -30px;
 	margin-left: calc(-50vw + 50%);
-	margin-bottom: -24px;
+	margin-bottom: -30px;
 	width: 100vw;
 	background-color: #fff;
 `;

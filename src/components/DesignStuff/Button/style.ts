@@ -8,6 +8,7 @@ export const Button = styled.div<{ isNextPage?: boolean }>`
 	bottom: 10.17vh;
 	width: 89.74vw;
 	height: 64px;
+	z-index: 100;
 	background-color: ${({ isNextPage }) => (isNextPage ? "#FFC700" : "#F7F7F7")};
 	/* pointer-events: ${({ isNextPage }) => (isNextPage ? "auto" : "none")}; */
 	border-radius: 12px;

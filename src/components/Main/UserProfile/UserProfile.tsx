@@ -52,9 +52,7 @@ export default function UserProfile({
 		<S.TotalProfile activeCheck={activeCheck} onClick={onClick} isMe={isMe} hasPadding={hasPadding}>
 			<Row horizonAlign="distribute">
 				<Row gap={14}>
-					<S.UserProfile
-						src={image ? process.env.REACT_APP_BUCKET_BASEURL + image : BasicProfile}
-					></S.UserProfile>
+					<S.UserProfile src={image ? process.env.REACT_APP_BUCKET_BASEURL + image : BasicProfile} />
 					<Column gap={6}>
 						<Row horizonAlign="center" verticalAlign="center">
 							<Typography color="Gray800" typoSize="T3_semibold">
