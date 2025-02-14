@@ -107,13 +107,13 @@ export default function Home() {
 				message={`곧 만날 수 있으니 조금만 기다려 주세요!`}
 				setShowPopup={setShowPopup}
 				isShowPopup={showPopup}
-				top={`9.5`}
+				top={`12.5`}
 			/>
 			<Popup
 				message={`귀가 알림을 성공적으로 보냈어요!`}
 				setShowPopup={setIsSendMessgae}
 				isShowPopup={isSendMessage}
-				top={`9.5`}
+				top={`12.5`}
 			/>
 			<CS.ScreenComponent navigation={true}>
 				<CS.Header backgroundColor="Background">
