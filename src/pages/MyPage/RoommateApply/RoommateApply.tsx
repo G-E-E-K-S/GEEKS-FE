@@ -35,11 +35,11 @@ export default function RoommateApply() {
 	const [isBtsShow, setIsBtsShow] = useState(false);
 	const [isReject, setIsReject] = useState(false);
 	const [showPopup, setShowPopup] = useState(false);
-	const [sentApply, setSentApply] = useState([]);
 	const [receivedApply, setReceivedApply] = useState<(UserProfileType & acceptData)[]>([]);
+	const [sendApply, setSendApply] = useState<(UserProfileType & acceptData)[]>([]);
+	const [cancelRoommateID, setCancelRoommateID] = useState(0);
 	const [opponentNickName, setOpponentNickName] = useState("");
 	const [opponentID, setOpponentID] = useState(0);
-	// const [matching, setMatching] = useState(false);
 	const [openMatchingModal, setOpenMatchingModal] = useState(false);
 
 	const navigate = useNavigate();
@@ -48,6 +48,14 @@ export default function RoommateApply() {
 		queryKey: ["receiveRoommate"],
 		queryFn: async () => {
 			const response = await API.get(`/api/v1/roommate/receive/list`);
+			return response.data.data;
+		}
+	});
+
+	const { data: sendRommateData, isLoading: sendRoommateLoading } = useQuery({
+		queryKey: ["sendRoommate"],
+		queryFn: async () => {
+			const response = await API.get(`/api/v1/roommate/send/list`);
 			return response.data.data;
 		}
 	});
@@ -84,18 +92,35 @@ export default function RoommateApply() {
 		setIsReject(true);
 	};
 
+	const { refetch: refetchCancelSendRoommate } = useQuery({
+		queryKey: ["refuseRoommate"],
+		queryFn: async () => {
+			const response = await API.delete(`/api/v1/roommate/send/cancel/${cancelRoommateID}`);
+			return response.data.data;
+		},
+		enabled: false
+	});
+
 	const handleCancle = () => {
-		setIsReject(false);
-		setShowPopup(true);
-		refetchRefuseRoommate().then((res) => {
-			if (res.data === "success") {
-				setReceivedApply(receivedApply.filter((val) => val.nickname !== opponentNickName));
-			}
-		});
-	};
-	const handleBtsShow = (opponent) => {
-		setIsBtsShow(!isBtsShow);
-		setOpponentNickName(opponent);
+		switch (isChoose) {
+			case "receive":
+				setIsReject(false);
+				setShowPopup(true);
+				refetchRefuseRoommate().then((res) => {
+					if (res.data === "success") {
+						setReceivedApply(receivedApply.filter((val) => val.nickname !== opponentNickName));
+					}
+				});
+				break;
+			case "send":
+				setIsBtsShow(false);
+				refetchCancelSendRoommate().then((res) => {
+					if (res.data === "success") {
+						setSendApply(sendApply.filter((val) => val.roommateId !== cancelRoommateID));
+					}
+				});
+				break;
+		}
 	};
 
 	const handleModal = () => {
@@ -107,12 +132,17 @@ export default function RoommateApply() {
 		!isLoading && setReceivedApply(receiveRommateData);
 	}, [receiveRommateData]);
 
+	useMemo(() => {
+		if (!sendRommateData) return;
+		!sendRoommateLoading && setSendApply(sendRommateData);
+	}, [sendRommateData]);
+
 	return isLoading ? (
 		<Loading />
 	) : (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<CS.Header backgroundColor="background">
+				<CS.Header backgroundColor="White">
 					<Header title="신청 목록" />
 				</CS.Header>
 				<Row>
@@ -144,9 +174,8 @@ export default function RoommateApply() {
 						{`룸메이트가 맺어지면, 다른 사람에게 보낸 받은 신청과 보낸 신청은 모두 사라져요`}
 					</Typography>
 				</S.Notice>
-				{/* axios add  */}
 				{isChoose === "send" &&
-					(sentApply.length !== 0 ? (
+					(sendApply.length === 0 ? (
 						<div style={{ marginTop: "4.5vh" }}>
 							<Typography
 								typoSize="T4_semibold"
@@ -159,53 +188,44 @@ export default function RoommateApply() {
 							</S.FinRoommateBtn>
 						</div>
 					) : (
-						<div>
+						<>
 							<Typography
 								typoSize="B3_medium"
 								color="Gray500"
 								textAlign="center"
 								style={{ marginBottom: "8px" }}
-							>{`2024년도`}</Typography>
-							{sentApply.map((userData) => (
-								<Column gap={8}>
-									{/* TODO API연결 */}
-									{/* <ApplyDate>{moment(userData.createdDate).format("M월 D일")}</ApplyDate>
-									<Row horizonAlign="distribute">
-										<OtherProfileApply
+							>{`2025년도`}</Typography>
+							<Column gap={20} width="w-full">
+								{sendApply.map((userData) => (
+									<Column gap={8} width="w-full">
+										<Typography typoSize="B2_medium" color="Gray500">
+											{moment(userData.createdDate).format("MM.DD")}
+										</Typography>
+										<UserProfile
+											image={userData.image}
 											nickName={userData.nickname}
 											major={userData.major}
-											id={userData.studentID}
-											userprofile={userData.photoName.length !== 0 ? userData.photoName : null}
+											ID={userData.studentNum}
+											activeCheck={false}
+											smoke={userData.smoke}
+											score={userData.point}
 										/>
-										<CancleBtn onClick={() => handleBtsShow(userData.nickname)}>취소</CancleBtn>
-									</Row> */}
-								</Column>
-							))}
-							{/* 임시 데이터 */}
-							<Column gap={8} width="w-full">
-								<Typography typoSize="B2_medium" color="Gray500">
-									{"10.01"}
-								</Typography>
-								<Row horizonAlign="distribute" width="w-full">
-									<UserProfile
-										image={null}
-										nickName={"hi"}
-										major={"test"}
-										ID={19}
-										activeCheck={false}
-										smoke="SMOKER"
-										// userprofile={userData.photoName.length !== 0 ? userData.photoName : null}
-									/>
-									<S.CancleBtn
-										horizonAlign="center"
-										verticalAlign="center"
-										onClick={() => handleBtsShow("hi")}
-									>
-										{"취소"}
-									</S.CancleBtn>
-								</Row>
+										<S.CancleBtn
+											width="w-full"
+											horizonAlign="center"
+											verticalAlign="center"
+											onClick={() => {
+												setIsBtsShow(true);
+												setCancelRoommateID(userData.roommateId);
+												setOpponentNickName(userData.nickname);
+											}}
+										>
+											{"취소"}
+										</S.CancleBtn>
+									</Column>
+								))}
 							</Column>
-						</div>
+						</>
 					))}
 				{isChoose === "receive" &&
 					(receivedApply.length === 0 ? (
@@ -228,7 +248,7 @@ export default function RoommateApply() {
 								color="Gray500"
 								textAlign="center"
 								style={{ marginBottom: "8px" }}
-							>{`20245년도`}</Typography>
+							>{`2025년도`}</Typography>
 							<Column gap={20} width="w-full">
 								{receivedApply.map((userData) => (
 									<>

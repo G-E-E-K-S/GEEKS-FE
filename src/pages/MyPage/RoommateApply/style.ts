@@ -55,11 +55,10 @@ export const CancleBtn = styled(Row)`
 	border-radius: 8px;
 	border: 1px solid #e2e2e2;
 	background: #fff;
-	height: 42px;
-	width: 14.61vw;
+	height: 52px;
 	cursor: pointer;
 	padding: 0 4.1vw;
-	white-space: nowrap;
+	margin-top: 16px;
 `;
 
 export const DeletMainIcon = styled.img`
