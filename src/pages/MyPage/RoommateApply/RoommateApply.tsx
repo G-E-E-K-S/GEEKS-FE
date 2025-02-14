@@ -1,7 +1,6 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import "moment/locale/ko";
 import moment from "moment";
-import "moment/locale/ko";
 import API from "../../../axios/BaseUrl";
 import styled from "styled-components";
 import * as CS from "../../../components/Common/CommonStyle";
@@ -26,188 +25,6 @@ import Button from "../../../components/DesignStuff/Button/Button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { UserProfileType } from "../../../types/userProfileType";
 
-const ApplyTop = styled.div`
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 16px;
-	height: 52px;
-	margin-top: 6.16vh;
-	padding: 1.42vh 0;
-`;
-
-const FinRoommateBtn = styled.div`
-	border: 1px solid #e2e2e2;
-	padding: 14px 20px 14px 20px;
-	border-radius: 12px;
-	height: 52px;
-	width: max-content;
-	display: flex;
-	margin: 0 auto;
-	margin-top: 20px;
-`;
-const FindRoommateIcon = styled.img`
-	width: 24px;
-	height: 24px;
-	margin-right: 8px;
-	display: flex;
-	align-items: center;
-`;
-
-const Semester = styled.div`
-	color: #949494;
-	text-align: center;
-	font-size: 0.875rem;
-	font-style: normal;
-	font-weight: 500;
-	margin-top: 2.84vh;
-`;
-const ApplyDate = styled.div`
-	color: #b7b7b7;
-	font-size: 0.875;
-	font-weight: 500;
-	line-height: 18px;
-	margin-bottom: 1.42vh;
-`;
-const CancleBtn = styled(Row)`
-	border-radius: 8px;
-	border: 1px solid #e2e2e2;
-	background: #fff;
-	height: 42px;
-	width: 14.61vw;
-	cursor: pointer;
-	padding: 0 4.1vw;
-	white-space: nowrap;
-`;
-// const ReceiveBtn = styled.div`
-// 	width: calc((100% - 2.05vw) / 2);
-// 	height: 56px;
-// 	border-radius: 12px;
-// 	border: ${(props) => !props.isAccept && "1px solid #e2e2e2"};
-// 	background: ${(props) => (props.isAccept ? "#FFC700" : "#fff")};
-// 	display: flex;
-// 	justify-content: center;
-// 	align-items: center;
-// 	cursor: pointer;
-// 	margin-right: ${(props) => (props.isAccept ? null : "2.05vw")};
-
-// 	color: #333;
-// 	font-size: 1rem;
-// 	font-weight: 600;
-// 	line-height: 24px; /* 150% */
-// `;
-const BtsCancelBtn = styled.div`
-	width: 100%;
-	height: 62px;
-	border-radius: 12px;
-	background: #ffc700;
-	font-size: 1.125rem;
-	font-style: normal;
-	font-weight: 600;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 36px;
-	cursor: pointer;
-`;
-const DeleteContent = styled.div`
-	display: flex;
-	width: 65.64vw;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-`;
-const ContainBottom = styled.div`
-	width: 100%;
-	display: flex;
-	justify-content: flex-end;
-`;
-const DeletMainIcon = styled.img`
-	width: 56px;
-	height: 56px;
-	margin-bottom: 20px;
-`;
-const DeleteMsg = styled.div`
-	color: #333;
-	font-size: 1.125rem;
-	font-weight: 700;
-	line-height: 24px; /* 133.333% */
-	white-space: pre-wrap;
-`;
-const CloseIcon = styled.img`
-	width: 28px;
-	height: 28px;
-	cursor: pointer;
-	margin-left: 2.17vw;
-`;
-const SuccessGif = styled.img`
-	position: absolute;
-	width: 157px;
-	height: 157px;
-	top: -133px;
-`;
-const MatchingTxt = styled.div`
-	font-size: 1.25rem;
-	font-weight: 700;
-	line-height: 26px;
-	text-align: center;
-	margin-bottom: 28px;
-`;
-const OpponentProfileBox = styled.div`
-	width: 100%;
-	height: 150px;
-	border-radius: 12px;
-	background: #f7f7f7;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-`;
-const ProfileImg = styled.img`
-	width: 56px;
-	height: 56px;
-	border-radius: 50%;
-`;
-const OpponentName = styled.div`
-	margin-top: 8px;
-	margin-bottom: 4px;
-	font-size: 1rem;
-	font-weight: 600;
-	line-height: 24px;
-	text-align: center;
-	color: #1a1a1a;
-`;
-const OpponentMajor = styled.div`
-	font-size: 0.875rem;
-	font-weight: 500;
-	line-height: 18px;
-	text-align: center;
-	color: #707070;
-`;
-const OkBtn = styled.div`
-	width: 100%;
-	height: 56px;
-	border-radius: 12px;
-	font-size: 1.125rem;
-	font-weight: 600;
-	line-height: 24px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: #ffc700;
-	color: #1a1a1a;
-	margin-top: 32px;
-`;
-
-const ReceiveBtn = styled(Row)<{ isAccept: boolean }>`
-	width: calc((100% - 2.05vw) / 2);
-	height: 56px;
-	border-radius: 12px;
-	border: ${({ isAccept }) => !isAccept && "1px solid #e2e2e2"};
-	background: ${({ isAccept }) => (isAccept ? "#FFC700" : "#fff")};
-	cursor: pointer;
-	margin-right: ${({ isAccept }) => (isAccept ? null : "2.05vw")};
-`;
 type acceptData = {
 	createdDate: Date;
 	roommateId: number;
@@ -217,13 +34,12 @@ export default function RoommateApply() {
 	const [isChoose, setIsChoose] = useState("send");
 	const [isBtsShow, setIsBtsShow] = useState(false);
 	const [isReject, setIsReject] = useState(false);
-
 	const [showPopup, setShowPopup] = useState(false);
 	const [sentApply, setSentApply] = useState([]);
 	const [receivedApply, setReceivedApply] = useState<(UserProfileType & acceptData)[]>([]);
 	const [opponentNickName, setOpponentNickName] = useState("");
 	const [opponentID, setOpponentID] = useState(0);
-	const [matching, setMatching] = useState(false);
+	// const [matching, setMatching] = useState(false);
 	const [openMatchingModal, setOpenMatchingModal] = useState(false);
 
 	const navigate = useNavigate();
@@ -236,16 +52,21 @@ export default function RoommateApply() {
 		}
 	});
 
-	const AcceptRoommate = (opponentId) => {
-		async function fetchAccept() {
-			try {
-				const res = await API.post(`/roommate/accept/${opponentId}`);
-				if (res.data === "success") setOpenMatchingModal(true);
-			} catch (e) {
-				console.log(e);
-			}
+	const acceptRoommateMutation = useMutation({
+		mutationFn: async (roommateId: number) => {
+			const response = await API.patch(`/api/v1/roommate/receive/accept/${roommateId}`);
+			return response.data.data;
+		},
+		onSuccess: () => {
+			setOpenMatchingModal(true);
+		},
+		onError: (error) => {
+			console.error("룸메이트 신청 수락 실패:", error);
 		}
-		fetchAccept();
+	});
+
+	const handleAccept = (roommateID: number) => {
+		acceptRoommateMutation.mutate(roommateID);
 	};
 
 	const { refetch: refetchRefuseRoommate } = useQuery({
@@ -253,7 +74,8 @@ export default function RoommateApply() {
 		queryFn: async () => {
 			const response = await API.delete(`/api/v1/roommate/receive/refuse/${opponentID}`);
 			return response.data.data;
-		}
+		},
+		enabled: false
 	});
 
 	const refuseRoommate = (roommateID: number, roommateNickName: string) => {
@@ -277,7 +99,6 @@ export default function RoommateApply() {
 	};
 
 	const handleModal = () => {
-		setMatching(true);
 		setOpenMatchingModal(false);
 	};
 
@@ -285,8 +106,6 @@ export default function RoommateApply() {
 		if (!receiveRommateData) return;
 		!isLoading && setReceivedApply(receiveRommateData);
 	}, [receiveRommateData]);
-
-	console.log(";;receivedApply", receivedApply);
 
 	return isLoading ? (
 		<Loading />
@@ -334,10 +153,10 @@ export default function RoommateApply() {
 								color="Gray800"
 								textAlign="center"
 							>{`보낸 룸메이트 신청이 없어요`}</Typography>
-							<FinRoommateBtn onClick={() => navigate("/roommate")}>
-								<FindRoommateIcon src={Roommate} />
+							<S.FinRoommateBtn onClick={() => navigate("/roommate")}>
+								<S.FindRoommateIcon src={Roommate} />
 								<Typography typoSize="T4_semibold" color="Gray700">{`룸메이트 찾으러 가기`}</Typography>
-							</FinRoommateBtn>
+							</S.FinRoommateBtn>
 						</div>
 					) : (
 						<div>
@@ -377,13 +196,13 @@ export default function RoommateApply() {
 										smoke="SMOKER"
 										// userprofile={userData.photoName.length !== 0 ? userData.photoName : null}
 									/>
-									<CancleBtn
+									<S.CancleBtn
 										horizonAlign="center"
 										verticalAlign="center"
 										onClick={() => handleBtsShow("hi")}
 									>
 										{"취소"}
-									</CancleBtn>
+									</S.CancleBtn>
 								</Row>
 							</Column>
 						</div>
@@ -397,10 +216,10 @@ export default function RoommateApply() {
 								color="Gray800"
 								textAlign="center"
 							>{`보낸 룸메이트 신청이 없어요`}</Typography>
-							<FinRoommateBtn onClick={() => navigate("/roommate")}>
-								<FindRoommateIcon src={Roommate} />
+							<S.FinRoommateBtn onClick={() => navigate("/roommate")}>
+								<S.FindRoommateIcon src={Roommate} />
 								<Typography typoSize="T4_semibold" color="Gray700">{`룸메이트 찾으러 가기`}</Typography>
-							</FinRoommateBtn>
+							</S.FinRoommateBtn>
 						</div>
 					) : (
 						<div>
@@ -427,7 +246,7 @@ export default function RoommateApply() {
 												score={userData.point}
 											/>
 											<Row gap={8} width="w-full">
-												<ReceiveBtn
+												<S.ReceiveBtn
 													isAccept={false}
 													horizonAlign="center"
 													verticalAlign="center"
@@ -442,12 +261,12 @@ export default function RoommateApply() {
 													>
 														{"거절하기"}
 													</Typography>
-												</ReceiveBtn>
-												{/* onClick={() => AcceptRoommate(userData.userId)} */}
-												<ReceiveBtn
+												</S.ReceiveBtn>
+												<S.ReceiveBtn
 													isAccept={true}
 													horizonAlign="center"
 													verticalAlign="center"
+													onClick={() => handleAccept(userData.roommateId)}
 												>
 													<Typography
 														typoSize="T4_semibold"
@@ -456,40 +275,32 @@ export default function RoommateApply() {
 													>
 														{"수락하기"}
 													</Typography>
-												</ReceiveBtn>
+												</S.ReceiveBtn>
 											</Row>
 										</Column>
-										{/*
-									{!matching && (
-										<Row>
-											<ReceiveBtn
-												isAccept={false}
-												onClick={() => RefuseRoommate(userData.userId)}
-											>{`거절하기`}</ReceiveBtn>
-											<ReceiveBtn
-												isAccept={true}
-												onClick={() => AcceptRoommate(userData.userId)}
-											>{`수락하기`}</ReceiveBtn>
-										</Row>
-									)} */}
 										{openMatchingModal && (
 											<Modal padding={`28px 20px 22px 20px`}>
-												<SuccessGif src={Success} />
-												<MatchingTxt>{`룸메이트가 맺어졌어요!`}</MatchingTxt>
-												{/* <OpponentProfileBox>
-												<ProfileImg
-													src={
-														userData.photoName.length !== 0
-															? process.env.REACT_APP_BUCKET_BASEURL + userData.photoName
-															: BasicrProfile
-													}
-												/>
-												<OpponentName>{userData.nickname}</OpponentName>
-												<OpponentMajor>
-													{userData.major} · {userData.studentID + "학번"}
-												</OpponentMajor>
-											</OpponentProfileBox> */}
-												<OkBtn onClick={() => handleModal()}>{`확인`}</OkBtn>
+												<S.SuccessGif src={Success} />
+												<Typography
+													typoSize="T2_bold"
+													color="Gray800"
+												>{`룸메이트가 맺어졌어요!`}</Typography>
+												<S.OpponentProfileBox>
+													<S.ProfileImg
+														src={
+															userData.image
+																? process.env.REACT_APP_BUCKET_BASEURL + userData.image
+																: BasicrProfile
+														}
+													/>
+													<Typography typoSize="T3_semibold" color="Gray800">
+														{userData.nickname}
+													</Typography>
+													<Typography typoSize="B2_medium" color="Gray600">
+														{userData.major} · {userData.studentNum + "학번"}
+													</Typography>
+												</S.OpponentProfileBox>
+												<S.OkBtn onClick={() => handleModal()}>{`확인`}</S.OkBtn>
 											</Modal>
 										)}
 									</>
@@ -500,12 +311,12 @@ export default function RoommateApply() {
 				<BottomSheet height={"356px"} isOpen={isBtsShow}>
 					<Row gap={8} horizonAlign="right">
 						<Column horizonAlign="center" verticalAlign="center">
-							<DeletMainIcon src={CancelRoommate} />
+							<S.DeletMainIcon src={CancelRoommate} />
 							<Typography typoSize="T2_bold" color="Gray800" textAlign="center">
 								{opponentNickName + `님께\n전송한 룸메이트 신청을 취소할까요?`}
 							</Typography>
 						</Column>
-						<CloseIcon src={Colse} onClick={() => setIsBtsShow(false)} />
+						<S.CloseIcon src={Colse} onClick={() => setIsBtsShow(false)} />
 					</Row>
 					<Button text="신청 취소하기" isNextPage onClick={() => handleCancle()} />
 				</BottomSheet>
@@ -514,12 +325,12 @@ export default function RoommateApply() {
 				<BottomSheet height={"356px"} isOpen={isReject}>
 					<Row gap={33} horizonAlign="right">
 						<Column horizonAlign="center" verticalAlign="center">
-							<DeletMainIcon src={CancelRoommate} />
+							<S.DeletMainIcon src={CancelRoommate} />
 							<Typography typoSize="T2_bold" color="Gray800" textAlign="center">
 								{opponentNickName + `님의\n룸메이트 신청을 거절할까요??`}
 							</Typography>
 						</Column>
-						<CloseIcon src={Colse} onClick={() => setIsReject(false)} />
+						<S.CloseIcon src={Colse} onClick={() => setIsReject(false)} />
 					</Row>
 					<Button text="거절하기" isNextPage onClick={() => handleCancle()} />
 				</BottomSheet>
