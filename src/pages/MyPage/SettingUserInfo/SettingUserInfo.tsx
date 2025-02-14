@@ -18,8 +18,9 @@ export default function SettingUserInfo() {
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
-				<Header subtitle={`회원 정보 설정`} />
-				{/* <AccountInfoTxt>계정 정보</AccountInfoTxt> */}
+				<CS.Header backgroundColor="White">
+					<Header subtitle={`회원 정보 설정`} />
+				</CS.Header>
 				<Typography typoSize="B2_medium" color="Gray500">
 					{"계정 정보"}
 				</Typography>
