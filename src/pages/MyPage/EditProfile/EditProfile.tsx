@@ -20,6 +20,9 @@ import Header from "../../../components/MyPage/Header/Header";
 import Column from "../../../components/Common/Layouts/Column";
 import TextFields from "../../../components/DesignStuff/TextFields/TextFields";
 import DepartmentList from "../../../JSON/DepartmentList.json";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import Loading from "../../Loading";
+import { UserProfileType } from "../../../types/userProfileType";
 
 const EditBtn = styled.div<{ isChange: boolean }>`
 	display: flex;
@@ -164,238 +167,156 @@ const DormitroyBox = styled.div<{ isSelect: boolean }>`
 	background: ${({ isSelect }) => (isSelect ? "#FFF4CD" : "transparent")};
 	border: 1px solid ${({ isSelect }) => (isSelect ? "#ECAA00" : "#E2E2E2")};
 `;
-const IntroMySelf = styled.div`
-	font-size: 1.25rem;
-	font-weight: 700;
-	line-height: 28px;
-	text-align: center;
-	white-space: pre-wrap;
-	margin-bottom: 8px;
-`;
-const IntroSub = styled.div`
-	font-size: 1rem;
-	font-weight: 500;
-	line-height: 24px;
-	text-align: center;
-	white-space: pre-wrap;
-	color: #707070;
-	margin-bottom: 20px;
-`;
-const ExampleBox = styled.div`
-	width: 274px;
-	height: 134px;
-	padding: 20px 16px;
-	border-radius: 12px;
-	background: #fafafa;
-`;
-const BasicProfile = styled.img`
-	width: 40px;
-	height: 40px;
-	margin-right: 12px;
-`;
-const ExNickName = styled.div`
-	font-size: 0.875rem;
-	font-weight: 600;
-	line-height: 18px;
-`;
-const ExMajor = styled(ExNickName)`
-	color: #949494;
-	margin-top: 4px;
-`;
-const ExSub = styled.div`
-	width: 100%;
-	height: 38px;
-	padding: 10px 16px;
-	border-radius: 8px;
-	border: 1px solid #ecaa00;
-	background: linear-gradient(0deg, #fffbee, #fffbee);
-	margin-top: 16px;
-	font-size: 0.875rem;
-	font-weight: 500;
-	line-height: 18px;
-`;
 export default function EditProfile() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [userInfo, setUserInfo] = useState(null);
+	const [userInfo, setUserInfo] = useState<UserProfileType>();
 	const [nickname, setNickname] = useState<string>("");
 	const [isDuplicate, setIsDuplicate] = useState(false);
-	const [isFocus, setIsFocus] = useState(false);
-	const [prevNickname, setPrevNickname] = useState(null);
 	const [photo, setPhoto] = useState("");
-	const [introduction, setIntroduction] = useState(null);
-	const [prevIntroduction, setPrevIntroduction] = useState(null);
-	const [isSelected, setIsSelected] = useState(false);
+	const [inputPhoto] = useState("");
+	const [introduction, setIntroduction] = useState<string>("");
 	const [dormitory, setDormitory] = useState("");
-	const [prevDormitory, setPrevDormitory] = useState("");
 	const DormitoryKind = ["구관", "신관", "행복기숙사"];
 	const [file, setFile] = useState(null);
-	const [fileUrl, setFileUrl] = useState(null);
+	// const [fileUrl, setFileUrl] = useState<string>("");
 	const [studentID, setStudentID] = useState(null);
-	const [prevStudentID, setPrevStudentID] = useState(null);
+
 	const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
 	const [department, setDepartment] = useState("");
-	const [prevMajor, setPrevMajor] = useState("");
 	const [major, setMajor] = useState(null);
 	const [isMajorOpen, setIsMajorOpen] = useState(false);
-	const [isChange, setIsChange] = useState(false);
-	const [gender, setGender] = useState("");
+
 	const navigate = useNavigate();
 	const handleMajor = (major) => {
 		setMajor(major);
 		setIsDepartmentOpen(!department);
 	};
+
+	const { data, isLoading } = useQuery({
+		queryKey: ["myData"],
+		queryFn: async () => {
+			const response = await API.get(`/api/v1/user/profile`);
+			return response.data.data;
+		}
+	});
+
+	const isModified = () => {
+		const original = JSON.stringify({
+			nickname: data?.nickname,
+			major: data?.major,
+			dormitory: data?.dormitory === "NEW" ? "신관" : data?.dormitory === "OLD" ? "구관" : "행복기숙사",
+			introduction: data?.introduction,
+			photo: data?.image
+		});
+
+		const modified = JSON.stringify({ nickname, major, dormitory, introduction, photo });
+
+		return original !== modified;
+	};
+
+	useEffect(() => {
+		if (!data) return;
+		setUserInfo(data);
+		setNickname(data.nickname);
+		setMajor(data.major);
+		setDormitory(data.dormitory === "NEW" ? "신관" : data.dormitory === "OLD" ? "구관" : "행복기숙사");
+		setIntroduction(data.introduction);
+		setPhoto(data.image);
+	}, [data]);
+
+	console.log(";;", data);
 	// useEffect(() => {
-	// 	async function fetchUserInfo() {
+	// 	if (nickname === prevNickname) return;
+
+	// 	const timeId = setTimeout(() => {
+	// 		fetchCheckNickName();
+	// 	}, 800);
+
+	// 	return () => {
+	// 		clearTimeout(timeId);
+	// 	};
+
+	// 	async function fetchCheckNickName() {
 	// 		try {
-	// 			const res = await API.get("/member/myPage");
-	// 			console.log(res.data);
-	// 			setUserInfo(res.data);
-	// 			setNickname(res.data.nickname);
-	// 			setPrevNickname(res.data.nickname);
-	// 			setPhoto(res.data.photoName);
-	// 			setIntroduction(res.data.introduction);
-	// 			setPrevIntroduction(res.data.introduction);
-	// 			setStudentID(res.data.studentID);
-	// 			setPrevStudentID(res.data.studentID);
-	// 			setMajor(res.data.major);
-	// 			setPrevMajor(res.data.major);
-	// 			setDormitory(res.data.type === "NEW" ? "신관" : res.data.type === "OLD" ? "구관" : "행복기숙사");
-	// 			setPrevDormitory(res.data.type === "NEW" ? "신관" : res.data.type === "OLD" ? "구관" : "행복기숙사");
-	// 			setGender(res.data.gender);
+	// 			const res = await API.get("/member/check/nickname?nickname=" + nickname);
+
+	// 			if (res.data === "duplicate") {
+	// 				setIsDuplicate(true);
+	// 			} else {
+	// 				setIsDuplicate(false);
+	// 			}
 	// 		} catch (error) {
 	// 			console.error(error);
 	// 		}
 	// 	}
-
-	// 	fetchUserInfo();
-	// }, []);
-	// useEffect(()=>{
-
-	// },[])
-
-	useEffect(() => {
-		if (nickname === prevNickname) return;
-
-		const timeId = setTimeout(() => {
-			fetchCheckNickName();
-		}, 800);
-
-		return () => {
-			clearTimeout(timeId);
-		};
-
-		async function fetchCheckNickName() {
-			try {
-				const res = await API.get("/member/check/nickname?nickname=" + nickname);
-
-				if (res.data === "duplicate") {
-					setIsDuplicate(true);
-				} else {
-					setIsDuplicate(false);
-				}
-			} catch (error) {
-				console.error(error);
-			}
-		}
-	}, [nickname]);
+	// }, [nickname]);
 
 	const handleFile = (event) => {
-		setFile(event.target.files);
-		const selectedFile = event.target.files[0];
-		if (selectedFile) {
+		const files = event.target.files;
+		setFile(files);
+
+		if (files && files.length > 0) {
+			const selectedFile = files[0];
 			const imageUrl = URL.createObjectURL(selectedFile);
-			// setFileUrl(imageUrl);
+			setPhoto(imageUrl);
+			// setPhotoPreview(imageUrl);
 		}
 	};
 
-	const hadleEditProfile = () => {
-		if (isChange === false) return;
-		const formData = new FormData();
+	const profileUpdateMutation = useMutation({
+		mutationFn: async (formData: FormData) => {
+			const response = await API.put("/api/v1/user/profile/update", formData, {
+				headers: {
+					"Content-Type": "multipart/form-data"
+				}
+			});
+			return response.data;
+		},
+		onSuccess: (data) => {
+			if (data === "success") {
+				navigate("/mypage");
+			}
+		}
+	});
 
-		const postData = {
+	const handlePostSubmit = () => {
+		if (!(nickname && dormitory)) return;
+		const userData = {
 			nickname: nickname,
 			major: major,
-			type: dormitory === "구관" ? "OLD" : dormitory === "신관" ? "NEW" : "HAPPY",
-			studentID: studentID,
-			introduction: introduction
+			studentNum: 23,
+			dormitory: dormitory === "신관" ? "NEW" : dormitory === "구관" ? "OLD" : "HAPPY"
 		};
 
-		formData.append("dto", new Blob([JSON.stringify(postData)], { type: "application/json" }));
+		const formData = new FormData();
+		formData.append("dto", new Blob([JSON.stringify(userData)], { type: "application/json" }));
 
-		if (file !== null) {
-			Object.values(file).forEach((f: any) => {
-				formData.append("file", f);
+		if (photo !== null) {
+			Object.values(photo).forEach((f: any) => {
+				formData.append("files", f);
 			});
 		}
 
-		async function fetchProfile() {
-			try {
-				const res = await API.post("/member/edit/profile", formData, {
-					headers: {
-						"Content-Type": `multipart/form-data`
-					}
-				});
-
-				if (res.data === "success") {
-					navigate("/mypage");
-				}
-			} catch (error) {
-				console.error(error);
-			}
-		}
-		fetchProfile();
+		profileUpdateMutation.mutate(formData);
 	};
 
-	const handleFocus = (state) => {
-		setIsSelected(state);
-	};
-	const handleBottomSheet = () => {
-		setIsMajorOpen(!isMajorOpen);
-	};
-	const handleStudentId = (ID) => {
-		setStudentID(ID);
-	};
 	const openBottomSheet = (department) => {
 		setIsMajorOpen(!isMajorOpen);
 		setIsDepartmentOpen(!isDepartmentOpen);
 		setDepartment(department);
 	};
 
-	useEffect(() => {
-		if (
-			!isDuplicate &&
-			(prevNickname !== nickname ||
-				prevMajor !== major ||
-				prevStudentID !== studentID ||
-				prevDormitory !== dormitory ||
-				prevIntroduction !== introduction ||
-				file !== null)
-		)
-			setIsChange(true);
-		else setIsChange(false);
-	}, [nickname, major, studentID, prevNickname, dormitory, introduction, file, isDuplicate]);
-
-	const editUserName = (userName: string) => {
-		setNickname(userName);
-	};
-	return (
+	return isLoading ? (
+		<Loading />
+	) : (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
 				<CS.Header backgroundColor="White">
-					<Header title="" hasDone onClick={hadleEditProfile} isChange={isChange} buttonName={"완료"} />
+					<Header title="" hasDone onClick={handlePostSubmit} isChange={isModified()} buttonName={"완료"} />
 				</CS.Header>
 				<UploadProfile>
-					<ProfileImg
-						key={1}
-						src={
-							fileUrl !== null
-								? fileUrl
-								: photo.length !== 0
-								? process.env.REACT_APP_BUCKET_BASEURL + photo
-								: Profile
-						}
-						isProfile={fileUrl !== null}
-					/>
+					<ProfileImg key={1} src={photo ? photo : Profile} isProfile={!!photo} />
+
 					<HiddenFileInput type="file" accept="image/*" onChange={handleFile} />
 					<CameraIcons>
 						<img src={Camera} />
@@ -414,29 +335,30 @@ export default function EditProfile() {
 				</Row>
 				<TextFields
 					maxLength={8}
-					onChange={(val) => editUserName(val)}
-					inputLen={nickname.length}
+					onChange={(val) => setNickname(val)}
+					inputLen={11}
 					totalNum={8}
+					text={nickname}
 				/>
-
+				{/* 중복체크 */}
 				{/* {nickname !== null && (
-					<InputSelf
-						borderColor={isDuplicate ? "#CB3D0B" : nickname.length > 0 ? "#ECAA00" : "#EFEFEF"}
-						setIsDuplicate={setIsDuplicate}
-						isDuplicate={isDuplicate}
-						totalLen={8}
-						placeholder={`닉네임 입력`}
-						value={nickname}
-						disabled={true}
-						changeValue={setNickname}
-					/>
-				)} */}
+				<InputSelf
+					borderColor={isDuplicate ? "#CB3D0B" : nickname.length > 0 ? "#ECAA00" : "#EFEFEF"}
+					setIsDuplicate={setIsDuplicate}
+					isDuplicate={isDuplicate}
+					totalLen={8}
+					placeholder={`닉네임 입력`}
+					value={nickname}
+					disabled={true}
+					changeValue={setNickname}
+				/>
+			)} */}
 
 				{/* choose major */}
 				<Typography typoSize="B2_medium" color="Gray500" style={{ marginTop: "40px" }}>
 					{"전공/학번"}
 				</Typography>
-				<MajorTotal onClick={() => handleBottomSheet()}>
+				<MajorTotal onClick={() => setIsMajorOpen(!isMajorOpen)}>
 					<MajorText major={major === null}>{major === null ? "학과/전공" : major}</MajorText>
 					<img src={UnderArrow} />
 				</MajorTotal>
@@ -448,7 +370,7 @@ export default function EditProfile() {
 				>
 					<CS.SpaceBetween>
 						<MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
-						<CloseImg src={Close} onClick={() => handleBottomSheet()} />
+						<CloseImg src={Close} onClick={() => setIsMajorOpen(!isMajorOpen)} />
 					</CS.SpaceBetween>
 					{DepartmentList.departmentList.map((department) => (
 						<Department
@@ -470,23 +392,23 @@ export default function EditProfile() {
 					</BottomSheet>
 				)}
 				{/* <StudentIdTotal
-					onFocus={() => handleFocus(true)}
-					onBlur={() => handleFocus(false)}
-					isSelected={isSelected}
-				>
-					<InputStudentId
-						placeholder="학번"
-						onChange={(e) => handleStudentId(e.target.value)}
-						maxlength={"2"}
-						value={studentID}
-					/>
-				</StudentIdTotal> */}
+				onFocus={() => handleFocus(true)}
+				onBlur={() => handleFocus(false)}
+				isSelected={isSelected}
+			>
+				<InputStudentId
+					placeholder="학번"
+					onChange={(e) => handleStudentId(e.target.value)}
+					maxlength={"2"}
+					value={studentID}
+				/>
+			</StudentIdTotal> */}
 				<Typography typoSize="B2_medium" color="Gray500" style={{ marginTop: "40px" }}>
 					{"기숙사"}
 				</Typography>
 				<Row gap={8}>
-					{DormitoryKind.map((kind) =>
-						gender === "MALE" && kind === "구관" ? null : (
+					{DormitoryKind.map(
+						(kind) => (
 							<DormitroyBox onClick={() => setDormitory(kind)} isSelect={dormitory === kind}>
 								<Typography
 									typoSize={"T4_semibold"}
@@ -496,6 +418,16 @@ export default function EditProfile() {
 								</Typography>
 							</DormitroyBox>
 						)
+						// userInfo.gender === "MALE" && kind === "구관" ? null : (
+						// 	<DormitroyBox onClick={() => setDormitory(kind)} isSelect={dormitory === kind}>
+						// 		<Typography
+						// 			typoSize={"T4_semibold"}
+						// 			color={dormitory === kind ? "Yellow900" : "Gray700"}
+						// 		>
+						// 			{kind}
+						// 		</Typography>
+						// 	</DormitroyBox>
+						// )
 					)}
 				</Row>
 				<Br marginTop={`3.31vh`} />
@@ -504,10 +436,11 @@ export default function EditProfile() {
 					{"나를 소개하는 한 줄"}
 				</Typography>
 				<TextFields
-					maxLength={8}
-					onChange={(val) => editUserName(val)}
-					inputLen={nickname.length}
+					maxLength={25}
+					onChange={(val) => setIntroduction(val)}
+					inputLen={introduction?.length ?? 0}
 					totalNum={25}
+					text={introduction}
 				/>
 			</CS.ScreenComponent>
 		</CS.Totalframe>
