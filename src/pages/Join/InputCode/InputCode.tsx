@@ -10,6 +10,7 @@ import MainText from "../../../components/Join/MainText";
 import ErrorPopup from "../../../components/Common/ErrorPopup";
 import Timmer from "../../../assets/img/Join/timmer.svg";
 import Loading from "../../Loading";
+import { useUserInfo } from "../../../store/useUserInfo";
 
 const TotalSendMail = styled.div`
 	display: flex;
@@ -97,9 +98,9 @@ const InputCode = () => {
 	const [timer, setTimer] = useState(180);
 	const [min, setMin] = useState(3);
 	const [sec, setSec] = useState(0);
-	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const location = useLocation();
+	const { email } = useUserInfo();
 
 	const handleInputChange = (index, event) => {
 		const nextIndex = index + 1;
@@ -136,8 +137,8 @@ const InputCode = () => {
 
 		async function fetchCode() {
 			try {
-				const res = await API.get("/mail/auth?code=" + code);
-				if (res.data === "success!") {
+				const res = await API.get(`/api/v1/user/auth/code/${email}/${code}`);
+				if (res.data === "success") {
 					navigate("/password");
 				} else {
 					setIsErrorPopup(true);
@@ -189,9 +190,7 @@ const InputCode = () => {
 		return () => clearInterval(id);
 	}, [timer]);
 
-	return loading ? (
-		<Loading />
-	) : (
+	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
 				<CS.Header backgroundColor="White">
