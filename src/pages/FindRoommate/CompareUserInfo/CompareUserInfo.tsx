@@ -257,6 +257,7 @@ export default function CompareUserInfo() {
 	const [roommateState, setRoommateState] = useState(false);
 	const [acceptRoommate, setAcceptRoommate] = useState(false);
 	const [roommateApplyState, setRoommateApplyState] = useState(false);
+	const [showPopup, setShowPopup] = useState(false);
 	const [opponentUser, setOpponentUser] = useState(null);
 	const [isBtsOpen, setIsBtsOpen] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
@@ -366,9 +367,11 @@ export default function CompareUserInfo() {
 
 	const saveRoommate = () => {
 		setIsSave(!isSave);
-		console.log(";;", saveRoommateData);
-		{
-			isSave ? refetchCancelSavRoommate() : refetchSaveRooommate();
+		if (isSave) {
+			refetchCancelSavRoommate();
+		} else {
+			setShowPopup(true);
+			refetchSaveRooommate();
 		}
 	};
 
@@ -571,129 +574,12 @@ export default function CompareUserInfo() {
 				onClick={() => ApplyRoommate()}
 				applyRoommate={() => setApplyRommate(false)}
 			/>
+			<Popup
+				bottom={`13.95`}
+				isShowPopup={showPopup}
+				setShowPopup={setShowPopup}
+				message={`룸메이트가 저장되었어요!`}
+			/>
 		</SC.Totalframe>
 	);
-
-	// <SC.Totalframe>
-	// 	<SC.ScreenComponent navigation={true}>
-	// 		<HeaderMenu>
-	// 			<img src={Dots} onClick={() => setIsBtsOpen(true)} />
-	// 		</HeaderMenu>
-	// 		<BottomSheet height={`max-content`} padding={`12px 20px 0 20px`} isOpen={isBtsOpen} interaction={true}>
-	// 			{/* <MenuBox Report={true} onClick={() => handleDeclaration()}>{`신고하기`}</MenuBox> */}
-	// 			{/* <CloseBtn onClick={() => setIsBtsOpen(false)}>{`닫기`}</CloseBtn> */}
-	// 		</BottomSheet>
-	// 		{finishState && (
-	//             <></>
-	// 			// <FinishRoommate
-	// 			// 	opponenNickname={opponentUser?.nickname}
-	// 			// 	onClick={() => startChatForFinish()}
-	// 			// 	description={true}
-	// 			// 	choiceMent={"네, 그만둘래요"}
-	// 			// 	noOnClick={() => setFinishState(false)}
-	// 			// 	ment={opponentUser.nickname + ` 님과\n룸메이트를 그만둘까요?`}
-	// 			// />
-	// 		)}
-
-	// 		{roommateState && (
-	//             <>{'hi'}</>
-	// 			// <MyRoommateNoti>
-	// 			// 	<MyRoommateNotiTxt>{`현재 나의 룸메이트에요`}</MyRoommateNotiTxt>
-	// 			// 	<EndRoommate onClick={() => setFinishState(true)}>{`룸메이트 끊기`}</EndRoommate>
-	// 			// </MyRoommateNoti>
-	// 		)}
-	// 		{/* <TopProfile> */}
-	// 			<SC.SpaceBetween>
-	// 				<div>
-	// 					{/* <Profile
-	// 						src={
-	// 							opponentUser?.photoName.length === 0
-	// 								? BasicProfile
-	// 								: process.env.REACT_APP_BUCKET_BASEURL + opponentUser?.photoName
-	// 						}
-	// 					/>
-	// 					<SC.Flex>
-	// 						<NickName>{opponentUser?.nickname}</NickName>
-	// 						{lifeStyles[1].smoking && <Smoke>{`흡연자`}</Smoke>}
-	// 					</SC.Flex>
-	// 					<Major>
-	// 						{opponentUser?.major} · {opponentUser?.studentID}
-	// 					</Major>
-	// 				</div>
-	// 				<Chat>
-	// 					<ChatImage src={ChatImg} />
-	// 					<ChatText onClick={() => startChat()}>대화하기</ChatText>
-	// 				</Chat> */}
-	// 			</SC.SpaceBetween>
-	// 			{/* <UserMessageBox> */}
-	// 				{/* <SC.Flex>
-	// 					<InfoImg src={Info} />
-	// 					<InfoMessage>{opponentUser?.introduction}</InfoMessage>
-	// 				</SC.Flex> */}
-	// 			{/* </UserMessageBox> */}
-	// 			<Br />
-	// 			{/* match score */}
-	// 			{/* <MatchText>
-	// 				<div>{opponentUser?.point >= 40 && opponentUser?.point <= 60 ? "서로" : "나와"}</div>
-	// 				<MatchColorText isFit={opponentUser?.point}>
-	// 					{opponentUser?.point >= 70
-	// 						? "잘 맞아요!"
-	// 						: opponentUser?.point >= 40 && opponentUser?.point <= 60
-	// 						? "맞춰가면 좋아요!"
-	// 						: "잘 맞지 않아요"}
-	// 				</MatchColorText>
-	// 			</MatchText> */}
-	// 			{/* Match Text */}
-	// 			{/* <CharContainer>
-	// 				{data !== null && textCenter !== null && (
-	// 					<Chart type="doughnut" data={data} plugins={[textCenter]} />
-	// 				)}
-	// 			</CharContainer>
-	// 			<OtherAndMeTxt>
-	// 				<Other>{`상대방`}</Other>
-	// 				<Me>{`나`}</Me>
-	// 			</OtherAndMeTxt> */}
-	// 			{lifeStyles.length !== 0 &&
-	// 				lifeStyleList?.map((list) => (
-	// 					<LifeStyle
-	// 						lifeStyle={list.name}
-	// 						isSame={lifeStyles[0][`${list.key}`] === lifeStyles[1][`${list.key}`]}
-	// 						opponentLifeStyle={list[`${lifeStyles[1][`${list.key}`]}`]}
-	// 						myLifeStyle={list[`${lifeStyles[0][`${list.key}`]}`]}
-	// 					/>
-	// 				))}
-	// 		{/* </TopProfile> */}
-	// 	</SC.ScreenComponent>
-	// 	{/* <BottomEnroll>
-	// 		<div onClick={() => saveOther()}>
-	// 			<SaveImg src={isSave ? FillSave : Save} />
-	// 			<SaveTxt>저장</SaveTxt>
-	// 		</div>
-	// 		<EnrollBtn
-	// 			state={roommateApplyState || roommateState || acceptRoommate}
-	// 			onClick={() => setApplyRommate(true)}
-	// 		>
-	// 			<EnrollTxt state={roommateApplyState || roommateState || acceptRoommate}>
-	// 				룸메이트 신청하기
-	// 			</EnrollTxt>
-	// 		</EnrollBtn>
-	// 	</BottomEnroll> */}
-	// 	<Popup
-	// 		message={`신고가 정상적으로 접수되었어요`}
-	// 		setShowPopup={setShowPopup}
-	// 		isShowPopup={showPopup}
-	// 		bottom={`19.5`}
-	// 	/>
-	// 	{/* <ApplyCancelBottomSheet
-	// 		height={`393px`}
-	// 		padding={`24px 20px 85px 20px`}
-	// 		Icon={ApplyRoommateIcon}
-	// 		message={opponentUser?.nickname + `님께\n룸메이트를 신청할까요?`}
-	// 		subMessage={`상대방이 수락하기 전까지는\n언제든지 취소 가능해요`}
-	// 		btnName={`신청하기`}
-	// 		isOpen={applyRoommate && !roommateApplyState && !roommateState}
-	// 		onClick={() => ApplyRoommate()}
-	// 		applyRoommate={() => setApplyRommate(false)}
-	// 	/> */}
-	// </SC.Totalframe>
 }

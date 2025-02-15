@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "moment/locale/ko";
+import API from "../../../axios/BaseUrl";
 
 import * as S from "./style";
 import * as CS from "../../../components/Common/CommonStyle";
@@ -8,9 +9,24 @@ import Header from "../../../components/MyPage/Header";
 import Popup from "../../../components/Common/Popup";
 import Typography from "../../../components/Common/Layouts/Typography";
 import { useUserInfo } from "../../../store/useUserInfo";
+import { useQuery } from "@tanstack/react-query";
 
 export default function SettingUserInfo() {
-	const { email } = useUserInfo();
+	// const { email } = useUserInfo();
+	const [email, setEmail] = useState("");
+
+	const { data } = useQuery({
+		queryKey: ["myData"],
+		queryFn: async () => {
+			const response = await API.get(`/api/v1/user/profile`);
+			return response.data.data;
+		}
+	});
+
+	useMemo(() => {
+		if (!data) return;
+		setEmail(data.email);
+	}, [data]);
 
 	const [showPopup, setShowPopup] = useState(false);
 	const navigate = useNavigate();
@@ -30,7 +46,7 @@ export default function SettingUserInfo() {
 						{"아이디(이메일)"}
 					</Typography>
 					<Typography typoSize="B1_medium" color="Gray600">
-						{email}
+						{""}
 					</Typography>
 				</S.AccountInfoBox>
 				{/* Password */}

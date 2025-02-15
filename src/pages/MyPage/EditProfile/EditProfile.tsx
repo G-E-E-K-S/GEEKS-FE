@@ -16,29 +16,14 @@ import Close from "../../../assets/img/Join/closeModal.svg";
 import UnderArrow from "../../../assets/img/Join/arrow_under.svg";
 import Row from "../../../components/Common/Layouts/Row";
 import Typography from "../../../components/Common/Layouts/Typography";
-import Header from "../../../components/MyPage/Header/Header";
 import Column from "../../../components/Common/Layouts/Column";
 import TextFields from "../../../components/DesignStuff/TextFields/TextFields";
 import DepartmentList from "../../../JSON/DepartmentList.json";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Loading from "../../Loading";
+import * as S from "./style";
 import { UserProfileType } from "../../../types/userProfileType";
 
-const EditBtn = styled.div<{ isChange: boolean }>`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 8px;
-	height: 40px;
-	width: 50px;
-	background: ${({ isChange }) => (isChange ? "#FFC700" : "#efefef")};
-	color: ${({ isChange }) => (isChange ? "#333" : "#949494")};
-	font-size: 1rem;
-	font-weight: 600;
-	&:active {
-		background: ${({ isChange }) => isChange && "#ECAA00"};
-	}
-`;
 const UploadProfile = styled.div`
 	width: 100%;
 	display: flex;
@@ -312,7 +297,10 @@ export default function EditProfile() {
 		<CS.Totalframe>
 			<CS.ScreenComponent>
 				<CS.Header backgroundColor="White">
-					<Header title="" hasDone onClick={handlePostSubmit} isChange={isModified()} buttonName={"완료"} />
+					<S.Header>
+						<GoBack />
+						<S.EditBtn onClick={handlePostSubmit} isChange={isModified()}>{`수정`}</S.EditBtn>
+					</S.Header>
 				</CS.Header>
 				<UploadProfile>
 					<ProfileImg key={1} src={photo ? photo : Profile} isProfile={!!photo} />
@@ -336,9 +324,10 @@ export default function EditProfile() {
 				<TextFields
 					maxLength={8}
 					onChange={(val) => setNickname(val)}
-					inputLen={11}
+					inputLen={nickname.length}
 					totalNum={8}
 					text={nickname}
+					pageType="myPage"
 				/>
 				{/* 중복체크 */}
 				{/* {nickname !== null && (

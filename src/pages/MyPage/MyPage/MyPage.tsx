@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../../axios/BaseUrl";
 
+import * as S from "./style";
 import * as CS from "../../../components/Common/CommonStyle";
 import PageName from "../../../components/Main/PageName";
 import UserInfo from "../../../components/Main/UserInfo";
@@ -35,6 +36,7 @@ export default function MyPage() {
 	const [toggle, setToggle] = useState(true);
 	const navigate = useNavigate();
 	const [userInfo, setUserInfo] = useState<UserProfileType>();
+	const [roommateInfo, setRoommateIinfo] = useState<UserProfileType>();
 	// const [userMajor, setUserMajor] = useState("");
 
 	const clickedToggle = () => {
@@ -42,7 +44,7 @@ export default function MyPage() {
 		setToggle(toggleVal);
 		async function fetchShowProfile() {
 			try {
-				const res = await API.get("/member/open?open=" + toggleVal);
+				await API.patch("/api/v1/user/profile/change/open");
 			} catch (error) {
 				console.error(error);
 			}
@@ -53,7 +55,7 @@ export default function MyPage() {
 	const { data, isLoading } = useQuery({
 		queryKey: ["myData"],
 		queryFn: async () => {
-			const response = await API.get(`/api/v1/user/profile`);
+			const response = await API.get(`/api/v1/user/mypage`);
 			return response.data.data;
 		}
 	});
@@ -61,6 +63,7 @@ export default function MyPage() {
 	useMemo(() => {
 		if (!data) return;
 		setUserInfo(data);
+		setRoommateIinfo(data.myRoommate);
 	}, [data]);
 
 	const Logout = () => {
@@ -97,22 +100,26 @@ export default function MyPage() {
 					major={userInfo.major}
 					nickName={userInfo.nickname}
 					smoke={userInfo.smoke}
+					intro={userInfo.introduction}
 					activeCheck={false}
 					isMe
 				/>
-				{/* TODO */}
-				{/* {userInfo.introduction?.length !== 0 && <SelfIntro>{userInfo.introduction}</SelfIntro>} */}
-				{/* <ShowMyProfile>
-              <div>
-                <ShowProfileTxt>내 프로필 노출하기</ShowProfileTxt>
-                <ShowProfileSubtxt>
-                  룸메이트가 맺어지면 내 프로필이 숨겨져요
-                </ShowProfileSubtxt>
-              </div>
-              <ToggleBtn onClick={clickedToggle} toggle={toggle}>
-                <Circle toggle={toggle} />
-              </ToggleBtn>
-            </ShowMyProfile> */}
+				{roommateInfo && (
+					<S.RoommateWrapper>
+						<Typography typoSize="B3_medium" color="Gray700">
+							{"내 룸메이트"}
+						</Typography>
+						<UserProfile
+							image={roommateInfo?.image}
+							ID={roommateInfo?.studentNum}
+							major={roommateInfo.major}
+							nickName={roommateInfo.nickname}
+							smoke={roommateInfo.smoke}
+							activeCheck={false}
+							isMe
+						/>
+					</S.RoommateWrapper>
+				)}
 				<div style={{ padding: "16px 0", marginTop: "20px" }}>
 					<Row horizonAlign="distribute">
 						<Column gap={4}>
@@ -148,11 +155,11 @@ export default function MyPage() {
 				{/* <MenuList icon={question} menuName={`자주 묻는 질문`} onClick={() => navigate("/faq")} /> */}
 				<MenuList icon={List} menuName={`약관 및 정책`} onClick={() => navigate("/termpolicy")} />
 				<MenuList icon={logout} menuName={`로그아웃`} onClick={() => Logout()} />
-				<MenuList
+				{/* <MenuList
 					icon={closeIcon}
 					menuName={`서비스 탈퇴`}
 					// onClick={() => navigate("/secessionreason", { state: { userName: userInfo.nickname } })}
-				/>
+				/> */}
 			</CS.ScreenComponent>
 			<NavigationBar type={`mypage`} />
 		</CS.Totalframe>

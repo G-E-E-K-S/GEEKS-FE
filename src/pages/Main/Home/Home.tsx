@@ -13,6 +13,7 @@ import stayOut from "../../../assets/img/Home/stayOut.svg";
 import dormiNoti from "../../../assets/img/Home/dormiNoti.svg";
 import Call from "../../../assets/img/Home/callHeader.svg";
 import Close from "../../../assets/img/Home/close.svg";
+import ApplyRoommate from "../../../assets/gif/applyRoommateGIf.gif";
 import Find from "../../../assets/gif/find.gif";
 import ForwardArrow from "../../../assets/img/Home/forwardArrow.svg";
 import SendAlarm from "../../../assets/img/Home/alarm.svg";
@@ -34,7 +35,7 @@ export default function Home() {
 		{ key: "dormitorynoti", menuName: "기숙사 공지", Icon: dormiNoti },
 		{ key: "dormitoryCall", menuName: "문의하기", Icon: Call }
 	];
-	const { nickname } = useUserInfo();
+	const { nickname, setNickname } = useUserInfo();
 	const [showPopup, setShowPopup] = useState(false);
 	const [isShowWriteReview, setIsShowWriteReview] = useState(localStorage.getItem("show") !== "false");
 	const [isExist, setIsExist] = useState(false);
@@ -91,11 +92,20 @@ export default function Home() {
 		}
 	});
 
+	const { data: mydata } = useQuery({
+		queryKey: ["myData"],
+		queryFn: async () => {
+			const response = await API.get(`/api/v1/user/profile`);
+			return response.data.data;
+		}
+	});
+
 	useMemo(() => {
-		if (!top3UserData) return;
+		if (!top3UserData || !mydata) return;
 		setIsExist(top3UserData.exists);
 		setMatchingTop3User(top3UserData.opponentInfos);
-	}, [top3UserData]);
+		setNickname(mydata.nickname);
+	}, [top3UserData, mydata]);
 
 	const isVisited = localStorage.getItem("vap");
 
@@ -161,7 +171,7 @@ export default function Home() {
 								<img src={ForwardArrow} style={{ width: "20px", height: "20px" }} />
 							</Row>
 							<Row horizonAlign="center" verticalAlign="center">
-								<S.FindIcon src={Find} />
+								<S.FindIcon src={ApplyRoommate} />
 							</Row>
 						</ButtonBox>
 					)}

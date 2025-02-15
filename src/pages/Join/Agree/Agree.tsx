@@ -120,7 +120,7 @@ export default function Agree() {
 					text={"동의하기"}
 					isNextPage={service && personal && location}
 					onClick={() => handleNextPage()}
-				></Button>
+				/>
 			</c.ScreenComponent>
 		</c.Totalframe>
 	);

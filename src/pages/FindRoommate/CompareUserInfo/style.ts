@@ -79,4 +79,5 @@ export const BottomEnroll = styled(Row)`
 	margin-bottom: -30px;
 	width: 100vw;
 	background-color: #fff;
+	z-index: 20;
 `;

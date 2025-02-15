@@ -16,7 +16,8 @@ export default function Header({
 	onClick?: (e: React.MouseEvent<HTMLImageElement>) => void;
 }) {
 	return (
-		<S.TotalHeader gap={8} verticalAlign="center" horizonAlign="distribute">
+		//여기 수정하지말기 -> horizonAlign="distribute"이거로
+		<S.TotalHeader gap={8} verticalAlign="center">
 			<GoBack />
 			<Typography typoSize="H3" color="Gray800">
 				{title}
