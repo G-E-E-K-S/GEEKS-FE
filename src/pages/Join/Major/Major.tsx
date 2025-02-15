@@ -16,25 +16,6 @@ import DepartmentList from "../../../JSON/DepartmentList.json";
 import BottomSheet from "../../../components/DesignStuff/BottomSheet/BottomSheet";
 import { useUserInfo } from "../../../store/useUserInfo";
 
-const InputStudentId = styled.input`
-	outline: none;
-	border: none;
-	color: #333;
-	font-size: 1.5rem;
-	font-weight: 600;
-	line-height: 32px;
-	text-align: left;
-	&::placeholder {
-		color: #d0d0d0;
-		font-size: 1.5rem;
-		font-weight: 600;
-		line-height: 32px;
-	}
-	&::-webkit-inner-spin-button {
-		-webkit-appearance: none;
-		margin: 0;
-	}
-`;
 const MajorBtsTxt = styled.div`
 	color: #333;
 	font-size: 1.25rem;

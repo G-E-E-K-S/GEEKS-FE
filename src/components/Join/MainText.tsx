@@ -3,7 +3,7 @@ import Typography from "../Common/Layouts/Typography";
 
 const MainText = ({ maintitle }: { maintitle: string }) => {
 	return (
-		<Typography typoSize="H3" color="Gray800" style={{ marginTop: "16px", marginBottom: "4.5rem" }}>
+		<Typography typoSize="H3" color="Gray800" style={{ marginTop: "16px", marginBottom: "40px" }}>
 			{maintitle}
 		</Typography>
 	);

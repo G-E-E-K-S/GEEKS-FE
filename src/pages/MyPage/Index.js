@@ -1,6 +1,6 @@
 import MyPage from "./MyPage/MyPage";
 import LifeStyles from "./LifeStyles/LifeStyles";
-import EditProfile from "./EditProfile";
+import EditProfile from "./EditProfile/EditProfile";
 import SettingUserInfo from "./SettingUserInfo/SettingUserInfo";
 import SaveList from "./SaveList/SaveList";
 import Notice from "./Notice/Notice";
@@ -14,6 +14,7 @@ import EventNoticeDetail from "./EventNoticeDetail";
 import ChangePassword from "./ChangePassword/ChangePassword";
 import ReviewEvent from "./ReviewEvent";
 import Notification from "./Notification/Notification";
+import TermPolicy from "./TermPolicy/TermPolicy";
 
 export {
 	MyPage,
@@ -31,5 +32,6 @@ export {
 	EventNoticeDetail,
 	ChangePassword,
 	ReviewEvent,
-	Notification
+	Notification,
+	TermPolicy
 };

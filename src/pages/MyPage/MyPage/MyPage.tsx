@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../../axios/BaseUrl";
-import styled from "styled-components";
+
 import * as CS from "../../../components/Common/CommonStyle";
 import PageName from "../../../components/Main/PageName";
 import UserInfo from "../../../components/Main/UserInfo";
@@ -28,75 +28,14 @@ import Toggle from "../../../components/DesignStuff/Toggle/Toggle";
 import Row from "../../../components/Common/Layouts/Row";
 import Column from "../../../components/Common/Layouts/Column";
 import UserProfile from "../../../components/Main/UserProfile/UserProfile";
+import { UserProfileType } from "../../../types/userProfileType";
+import { useQuery } from "@tanstack/react-query";
 
-const UserInfoTop = styled.div`
-	margin-top: 4.5vh;
-	margin-bottom: 2.72vh;
-`;
-const SelfIntro = styled.div`
-	border-radius: 8px;
-	background: #f7f7f7;
-	display: flex;
-	width: 89.74vw;
-	padding: 10px 16px;
-	align-items: center;
-	margin-top: 1.42vh;
-
-	color: #333;
-	text-align: center;
-	font-size: 1rem;
-	font-style: normal;
-	font-weight: 500;
-`;
-const ShowMyProfile = styled.div`
-	display: flex;
-	justify-content: space-between;
-	margin-top: 4.14vh;
-	margin-bottom: 2.72vh;
-`;
-const ShowProfileTxt = styled.div`
-	color: #333;
-	font-size: 1.125rem;
-	font-style: normal;
-	font-weight: 600;
-`;
-const ShowProfileSubtxt = styled.div`
-	color: #949494;
-	font-size: 0.875rem;
-	font-style: normal;
-	font-weight: 500;
-	margin-top: 0.71vh;
-`;
-
-const WelcomeKit = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	height: 68px;
-	padding: 0px 6.15vw;
-	margin: 2.36vh 0px;
-	border-radius: 12px;
-	background: #ffc700;
-	color: #333;
-	font-size: 0.875rem;
-	font-style: normal;
-	font-weight: 600;
-	white-space: pre-wrap;
-	line-height: 18px; /* 128.571% */
-	background: #ffecac;
-	position: relative;
-`;
-const GiftBoxImg = styled.img`
-	position: absolute;
-	right: 9.8vw;
-	top: -25px;
-`;
 export default function MyPage() {
 	const [toggle, setToggle] = useState(true);
-	const [userInfo, setUserInfo] = useState("");
-	const [userMajor, setUserMajor] = useState("");
-	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
+	const [userInfo, setUserInfo] = useState<UserProfileType>();
+	// const [userMajor, setUserMajor] = useState("");
 
 	const clickedToggle = () => {
 		let toggleVal = !toggle;
@@ -110,26 +49,19 @@ export default function MyPage() {
 		}
 		fetchShowProfile();
 	};
-	const navigate = useNavigate();
 
-	// useEffect(() => {
-	// 	async function fetchUserInfo() {
-	// 		try {
-	// 			const res = await API.get("/member/myPage");
-	// 			setUserInfo(res.data);
-	// 			setContent(res.data.nickname);
-	// 			setToggle(res.data.open);
-	// 			if (res.data.major.includes("공학과")) setUserMajor(res.data.major.replace("공학과", ""));
-	// 			else if (res.data.major.includes("학과")) setUserMajor(res.data.major.replace("학과", ""));
-	// 			else if (res.data.major.includes("전공")) setUserMajor(res.data.major.replace("전공", ""));
-	// 			else setUserMajor(res.data.major);
-	// 			setLoading(false);
-	// 		} catch (error) {
-	// 			console.error(error);
-	// 		}
-	// 	}
-	// 	fetchUserInfo();
-	// }, []);
+	const { data, isLoading } = useQuery({
+		queryKey: ["myData"],
+		queryFn: async () => {
+			const response = await API.get(`/api/v1/user/profile`);
+			return response.data.data;
+		}
+	});
+
+	useMemo(() => {
+		if (!data) return;
+		setUserInfo(data);
+	}, [data]);
 
 	const Logout = () => {
 		async function fetchLogOut() {
@@ -149,7 +81,7 @@ export default function MyPage() {
 		fetchLogOut();
 	};
 
-	return loading ? (
+	return isLoading || !userInfo ? (
 		<Loading />
 	) : (
 		<CS.Totalframe>
@@ -159,26 +91,12 @@ export default function MyPage() {
 						{"마이"}
 					</Typography>
 				</CS.Header>
-				{/* TODO API연결 후 */}
-				{/* <UserInfo
-							profileImg={
-								userInfo.photoName?.length === 0
-									? basicProfile
-									: process.env.REACT_APP_BUCKET_BASEURL + userInfo.photoName
-							}
-							userName={userInfo.nickname}
-							userMajor={userMajor}
-							UserId={userInfo.studentID}
-							enrollLifeStyle={!userInfo.exist}
-						/> */}
-
-				{/* 임시 데이터  */}
 				<UserProfile
-					image={null}
-					ID={23}
-					major="글로벌지역학부"
-					nickName="테스트"
-					smoke="NONSMOKER"
+					image={userInfo?.image}
+					ID={userInfo?.studentNum}
+					major={userInfo.major}
+					nickName={userInfo.nickname}
+					smoke={userInfo.smoke}
 					activeCheck={false}
 					isMe
 				/>
@@ -228,7 +146,7 @@ export default function MyPage() {
 				<MenuList icon={announce} menuName={`공지사항`} onClick={() => navigate("/notice")} />
 				<MenuList icon={HeadPhone} menuName={`문의하기`} onClick={() => navigate("/notice")} />
 				{/* <MenuList icon={question} menuName={`자주 묻는 질문`} onClick={() => navigate("/faq")} /> */}
-				<MenuList icon={List} menuName={`약관 및 정책`} onClick={() => navigate("/notice")} />
+				<MenuList icon={List} menuName={`약관 및 정책`} onClick={() => navigate("/termpolicy")} />
 				<MenuList icon={logout} menuName={`로그아웃`} onClick={() => Logout()} />
 				<MenuList
 					icon={closeIcon}

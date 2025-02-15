@@ -46,7 +46,8 @@ import {
 	EventNoticeDetail,
 	ChangePassword,
 	ReviewEvent,
-	Notification
+	Notification,
+	TermPolicy
 } from "./pages/MyPage/Index";
 import "./index.css";
 import Loading from "./pages/Loading";
@@ -117,6 +118,7 @@ function App() {
 					<Route path="/writesuggestion" element={<WriteSuggestion />} />
 					<Route path="/suggestion/show/:pagenum" element={<DetailSuggestion />} />
 					<Route path="/managermain" element={<Manager />} />
+					<Route path="/termpolicy" element={<TermPolicy />} />
 				</Routes>
 			</Router>
 		</ThemeProvider>
