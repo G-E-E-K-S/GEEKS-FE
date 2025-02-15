@@ -15,6 +15,8 @@ import Row from "../../../components/Common/Layouts/Row";
 import DepartmentList from "../../../JSON/DepartmentList.json";
 import BottomSheet from "../../../components/DesignStuff/BottomSheet/BottomSheet";
 import { useUserInfo } from "../../../store/useUserInfo";
+import ScrollPicker from "../../../components/DesignStuff/ScrollPicker/ScrollPicker";
+import {STUDENT_NUM} from "../const";
 
 const MajorBtsTxt = styled.div`
 	color: #333;
@@ -31,6 +33,7 @@ const Major = () => {
 	const [isNextPage, setIsNextPage] = useState(false);
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
+	const [isStudentNumOpen, setIsStudentNumOpen] = useState(false);
 	const { major, setMajor, department, setDepartment, studentNum, setStudentNum } = useUserInfo();
 	const navigate = useNavigate();
 
@@ -48,8 +51,15 @@ const Major = () => {
 		setIsBottomSheetOpen(false);
 	};
 
+	const openStudentNumBottomSheet = () => {
+		setIsStudentNumOpen(!isStudentNumOpen);
+	}
+
+	const handleStudentNum = (studentNum: number) => {
+		setStudentNum(studentNum);
+		setIsStudentNumOpen(false);
+	}
 	useEffect(() => {
-		setStudentNum(19);
 		major && studentNum ? setIsNextPage(true) : setIsNextPage(false);
 	}, [major, studentNum]);
 
@@ -66,6 +76,21 @@ const Major = () => {
 					</Typography>
 					<img src={UnderArrow} />
 				</MajorTotal>
+
+				<StudentNumTotal onClick={() => openStudentNumBottomSheet()}>
+					<Typography typoSize="T1" color={studentNum ? "Gray800" : "Gray400"}>
+						{studentNum || "학번"}
+					</Typography>
+					<img src={UnderArrow}/>
+				</StudentNumTotal>
+				<BottomSheet isOpen={isStudentNumOpen} height={"487px"}>
+					<CS.SpaceBetween>
+						<MajorBtsTxt>{`학번`}</MajorBtsTxt>
+						<CloseImg src={Close} onClick={() => openStudentNumBottomSheet()}/>
+					</CS.SpaceBetween>
+					<ScrollPicker options={STUDENT_NUM} height={220} onOptionSelect={handleStudentNum}/>
+				</BottomSheet>
+
 				<BottomSheet isOpen={isBottomSheetOpen} height={"487px"}>
 					<CS.SpaceBetween>
 						<MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
@@ -107,6 +132,11 @@ const MajorTotal = styled.div`
 	justify-content: space-between;
 	width: 100%;
 	border-bottom: 2px solid #efefef;
+`;
+
+const StudentNumTotal = styled(MajorTotal)`
+    width: fit-content;
+    gap: 30px;
 `;
 // const MajorText = styled.div`
 // 	color: ${(props) => (props.major ? "#d0d0d0" : "#333333")};
