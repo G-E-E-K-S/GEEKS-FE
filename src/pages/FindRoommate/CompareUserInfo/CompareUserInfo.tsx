@@ -158,7 +158,20 @@ export default function CompareUserInfo() {
 		}
 	};
 
-	const handleRemoveRoommate = () => {};
+	const { refetch: refetchCancelRoommate } = useQuery({
+		queryKey: ["cancelSaveRoommate", opponentId],
+		queryFn: async () => {
+			const response = await API.delete(`/api/v1/roommate/sever`);
+			return response.data.data;
+		},
+		enabled: false
+	});
+
+	const handleRemoveRoommate = () => {
+		refetchCancelRoommate();
+	};
+	const [cancelRoommate, setCancelRoommate] = useState(false);
+
 	if (!opponentInfo) return;
 
 	return isLoading ? (
@@ -173,10 +186,20 @@ export default function CompareUserInfo() {
 				{roommateState === "ACCEPT" && (
 					<S.MyRoommateNoti>
 						<S.MyRoommateNotiTxt>{`현재 나의 룸메이트에요`}</S.MyRoommateNotiTxt>
-						<S.EndRoommate onClick={() => handleRemoveRoommate()}>{`룸메이트 끊기`}</S.EndRoommate>
+						<S.EndRoommate onClick={() => setCancelRoommate(true)}>{`룸메이트 끊기`}</S.EndRoommate>
 					</S.MyRoommateNoti>
 				)}
-				{roommateState !== "PENDING" && (
+				{cancelRoommate && (
+					<FinishRoommate
+						opponenNickname={opponentInfo.nickname}
+						onClick={() => handleRemoveRoommate()}
+						description={true}
+						choiceMent={"네, 그만둘래요"}
+						noOnClick={() => setCancelRoommate(false)}
+						ment={opponentInfo.nickname + ` 님과\n룸메이트를 그만둘까요?`}
+					/>
+				)}
+				{roommateState === "PENDING" && (
 					<S.MyRoommateNoti>
 						<S.MyRoommateNotiTxt>{`현재d 나의 룸메이트에요`}</S.MyRoommateNotiTxt>
 						<S.EndRoommate onClick={() => handleRemoveRoommate()}>{`룸메이트 끊기`}</S.EndRoommate>

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../../axios/BaseUrl";
 
@@ -57,13 +57,10 @@ export default function MyPage() {
 		queryFn: async () => {
 			const response = await API.get(`/api/v1/user/mypage`);
 			return response.data.data;
-		},
-		staleTime: 0, // 데이터를 항상 최신으로 유지
-		refetchOnMount: true, // 다시 방문 시 무조건 refetch
-		refetchOnWindowFocus: true
+		}
 	});
 
-	useMemo(() => {
+	useEffect(() => {
 		if (!data) return;
 		setUserInfo(data);
 		setRoommateIinfo(data.myRoommate);
@@ -98,7 +95,7 @@ export default function MyPage() {
 					</Typography>
 				</CS.Header>
 				<UserProfile
-					image={userInfo?.image}
+					image={userInfo.image}
 					ID={userInfo?.studentNum}
 					major={userInfo.major}
 					nickName={userInfo.nickname}

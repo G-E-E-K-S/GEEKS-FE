@@ -165,8 +165,7 @@ export default function EditProfile() {
 		queryFn: async () => {
 			const response = await API.get(`/api/v1/user/profile`);
 			return response.data.data;
-		},
-		staleTime: 0
+		}
 	});
 
 	const isModified = () => {
