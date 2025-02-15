@@ -7,6 +7,7 @@ import BasicProfile from "../../../assets/img/MyPage/basicProfile.svg";
 import Column from "../../Common/Layouts/Column";
 import Row from "../../Common/Layouts/Row";
 import Typography from "../../Common/Layouts/Typography";
+import { useNavigate } from "react-router-dom";
 
 interface UserProfileProps {
 	activeCheck?: boolean;
@@ -36,6 +37,7 @@ export default function UserProfile({
 	onClick
 }: UserProfileProps) {
 	const [fill, isFill] = useState(false);
+	const navigate = useNavigate();
 	// const handleFill = (e, yournickname) => {
 	// 	isFill(!fill);
 	// 	e.stopPropagation();
@@ -52,9 +54,7 @@ export default function UserProfile({
 		<S.TotalProfile activeCheck={activeCheck} onClick={onClick} isMe={isMe} hasPadding={hasPadding}>
 			<Row horizonAlign="distribute">
 				<Row gap={14}>
-					<S.UserProfile
-						src={image ? process.env.REACT_APP_BUCKET_BASEURL + image : BasicProfile}
-					></S.UserProfile>
+					<S.UserProfile src={image ? process.env.REACT_APP_BUCKET_BASEURL + image : BasicProfile} />
 					<Column gap={6}>
 						<Row horizonAlign="center" verticalAlign="center">
 							<Typography color="Gray800" typoSize="T3_semibold">
@@ -91,7 +91,7 @@ export default function UserProfile({
 					</Row>
 				)}
 				{isMe && (
-					<S.Edit>
+					<S.Edit onClick={() => navigate("/editprofile")}>
 						<Typography typoSize="T4_semibold" color="Gray700">
 							{"내 프로필"}
 						</Typography>

@@ -17,64 +17,65 @@ import Typography from "../../../components/Common/Layouts/Typography";
 import Button from "../../../components/DesignStuff/Button/Button";
 import UserProfile from "../../../components/Main/UserProfile/UserProfile";
 import Confirm from "../../../components/DesignStuff/Confirm/Confirm";
+import { useQuery } from "@tanstack/react-query";
+import { UserProfileType } from "../../../types/userProfileType";
 
 const CheckImg = styled.img`
 	cursor: pointer;
 	margin-right: 1.02vw;
 `;
+type Bookmark = {
+	bookmarkId: number;
+};
 export default function LifeStyle() {
 	const [activeEdit, setActiveEdit] = useState(false);
-	const [checkUserName, setCheckUserName] = useState<string[]>([]);
+	const [checkToDelete, setCheckToDelete] = useState<number[]>([]);
 	const [showPopup, setShowPopup] = useState(false);
-	const [saveList, setSaveList] = useState([]);
-	const [isDone, setIsDone] = useState(false);
-	const [loading, setLoading] = useState(false);
-	const navigate = useNavigate();
+	const [saveList, setSaveList] = useState<(UserProfileType & Bookmark)[]>([]);
 	const handleEdit = () => {
 		setActiveEdit(true);
 	};
 
-	const handleDelete = () => {
-		if (checkUserName.length > 0) {
-			// async function fetchDeleteSaveList() {
-			// 	try {
-			// 		setLoading(true);
-			// 		const res = await API.get("/roommate/removesave?nickname=" + checkUserName);
-			// 		if (res.status == "200") {
-			// 			setLoading(false);
-			// 			setShowPopup(true);
-			// 			setSaveList(saveList.filter((data) => !checkUserName.includes(data.nickname)));
-			// 			setCheckUserName([]);
-			// 			setIsDone(!isDone);
-			// 		}
-			// 		console.log(res);
-			// 	} catch (e) {
-			// 		console.log(e);
-			// 	}
-			// }
-			// fetchDeleteSaveList();
+	const { data: saveRoommateList, isLoading } = useQuery({
+		queryKey: ["saveRoommateList"],
+		queryFn: async () => {
+			const res = await API.get(`/api/v1/roommate/bookmark/list`);
+			return res.data.data;
 		}
-		setSaveList(saveList.filter((list) => list !== checkUserName));
-	};
+	});
+
+	const { refetch } = useQuery({
+		queryKey: ["removeRoommateList"],
+		queryFn: async () => {
+			const response = await API.delete(`/api/v1/roommate/bookmark/cancel`, {
+				data: { bookmarkIds: checkToDelete }
+			});
+			return response.data.data;
+		},
+		enabled: false
+	});
+
 	useEffect(() => {
-		async function fetchSaveList() {
-			try {
-				const res = await API.get("/roommate/savelist");
-				setSaveList(res.data);
-				setLoading(false);
-			} catch (e) {
-				console.log(e);
-			}
-		}
-		fetchSaveList();
-	}, []);
+		if (!saveRoommateList) return;
+		setSaveList(saveRoommateList);
+	}, [saveRoommateList]);
 
-	const handleCheck = (userName: string) => {
-		setCheckUserName((value) => [...value, userName]);
-		if (checkUserName.includes(userName)) setCheckUserName(checkUserName.filter((nowName) => nowName !== userName));
+	const handleCheck = (bookmarkId: number) => {
+		setCheckToDelete((value) => [...value, bookmarkId]);
+		if (checkToDelete.includes(bookmarkId))
+			setCheckToDelete(checkToDelete.filter((nowBookmarkId) => nowBookmarkId !== bookmarkId));
 	};
 
-	return loading ? (
+	const handleDelete = () => {
+		refetch().then((res) => {
+			if (res.data === "success") {
+				setShowPopup(true);
+				setSaveList(saveList.filter((item) => !checkToDelete.includes(item.bookmarkId)));
+			}
+		});
+	};
+
+	return isLoading ? (
 		<Loading />
 	) : (
 		<CS.Totalframe>
@@ -83,8 +84,8 @@ export default function LifeStyle() {
 					<Row horizonAlign="distribute">
 						<Header title={"저장 목록"} />
 						{activeEdit ? (
-							<S.Button isDone={isDone} onClick={() => setActiveEdit(false)}>
-								<Typography typoSize="T4_semibold" color="Gray400">
+							<S.Button isDone={showPopup} onClick={() => setActiveEdit(false)}>
+								<Typography typoSize="T4_semibold" color={showPopup ? "Black" : "Gray400"}>
 									{"완료"}
 								</Typography>
 							</S.Button>
@@ -100,39 +101,22 @@ export default function LifeStyle() {
 					color="Gray500"
 					style={{ margin: "16px 0 12px 0" }}
 				>{`총 ${saveList.length}명`}</Typography>
-				{saveList.map((userData) => (
-					// TODO API연결 후
-					// <Row onClick={activeEdit ? () => handleCheckIndex(userData.nickname) : null}>
-					// 	{activeEdit && <CheckImg src={checkUserName.includes(userData.nickname) ? Check : NoCheck} />}
-					// 	<OtherProfile
-					// 		activeCheck={checkUserName.includes(userData.nickname)}
-					// 		score={userData.point}
-					// 		userprofile={userData.photoName}
-					// 		nickName={userData.nickname}
-					// 		major={userData.major}
-					// 		id={userData.studentID}
-					// 		intro={userData.introduction}
-					// 		onClick={() => navigate("/detail/details/" + userData.userId)}
-					// 	/>
-					// </Row>
-					<></>
+				{saveList?.map((userData) => (
+					<Row horizonAlign="center" verticalAlign="center" onClick={() => handleCheck(userData.bookmarkId)}>
+						{activeEdit && <CheckImg src={checkToDelete.includes(userData.bookmarkId) ? Check : NoCheck} />}
+						<UserProfile
+							activeCheck={checkToDelete.includes(userData.bookmarkId)}
+							hasPadding
+							image={userData.image}
+							ID={userData.studentNum}
+							major={userData.major}
+							nickName={userData.nickname}
+							smoke={userData.smoke}
+						/>
+					</Row>
 				))}
-				<Row horizonAlign="center" verticalAlign="center" onClick={() => handleCheck("test")}>
-					{activeEdit && <CheckImg src={checkUserName.includes("test") ? Check : NoCheck} />}
-					<UserProfile
-						image={null}
-						ID={18}
-						activeCheck={checkUserName.includes("test")}
-						intro="gkdld"
-						smoke="NONSMOKER"
-						major="hi"
-						score={39}
-						nickName="test"
-						onClick={() => navigate("/detail/details/" + 19)}
-					/>
-				</Row>
 				{activeEdit && (
-					<Button text="삭제하기" isNextPage={checkUserName.length > 0} onClick={() => handleDelete()} />
+					<Button text="삭제하기" isNextPage={checkToDelete.length > 0} onClick={() => handleDelete()} />
 				)}
 				<Popup
 					bottom={`20.24`}

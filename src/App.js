@@ -45,7 +45,9 @@ import {
 	NoticeDetail,
 	EventNoticeDetail,
 	ChangePassword,
-	ReviewEvent
+	ReviewEvent,
+	Notification,
+	TermPolicy
 } from "./pages/MyPage/Index";
 import "./index.css";
 import Loading from "./pages/Loading";
@@ -92,6 +94,7 @@ function App() {
 					<Route path="/settinguserinfo" element={<SettingUserInfo />} />
 					<Route path="/savelist" element={<SaveList />} />
 					<Route path="/notice" element={<Notice />} />
+					<Route path="/notification" element={<Notification />} />
 					<Route path="/changepassword" element={<ChangePassword />} />
 					<Route path="/notice/details/:noticenum" element={<NoticeDetail />} />
 					<Route path="/notice/details/event" element={<EventNoticeDetail />} />
@@ -118,6 +121,7 @@ function App() {
 					<Route path="/writesuggestion" element={<WriteSuggestion />} />
 					<Route path="/suggestion/show/:pagenum" element={<DetailSuggestion />} />
 					<Route path="/managermain" element={<Manager />} />
+					<Route path="/termpolicy" element={<TermPolicy />} />
 					<Route path="/calendar" element={<Calendar />} />
 					<Route path="/schedule/:scheduleId" element={<Schedule />} />
 					<Route path="/schedule/add" element={<ScheduleEdit />} />

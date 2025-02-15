@@ -16,7 +16,10 @@ export const Input = styled.input`
 	width: 100%;
 	border: none;
 	outline: none;
-	font-size: 1.25rem;
+	font-size: 18px;
+	line-height: 24px;
+	letter-spacing: 0%;
+
 	&::placeholder {
 		color: #d0d0d0;
 	}
