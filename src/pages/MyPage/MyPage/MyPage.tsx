@@ -57,7 +57,10 @@ export default function MyPage() {
 		queryFn: async () => {
 			const response = await API.get(`/api/v1/user/mypage`);
 			return response.data.data;
-		}
+		},
+		staleTime: 0, // 데이터를 항상 최신으로 유지
+		refetchOnMount: true, // 다시 방문 시 무조건 refetch
+		refetchOnWindowFocus: true
 	});
 
 	useMemo(() => {

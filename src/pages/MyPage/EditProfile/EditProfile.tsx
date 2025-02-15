@@ -127,24 +127,7 @@ const CloseImg = styled.img`
 	width: 28px;
 	height: 28px;
 `;
-const BottomBtn = styled.div`
-	height: 17.29vh;
-`;
-const SelectDone = styled.div`
-	height: 60px;
-	width: 100%;
-	border-radius: 12px;
-	background: #f7f7f7;
-	color: #b7b7b7;
-	text-align: center;
-	font-size: 1.125rem;
-	font-style: normal;
-	font-weight: 600;
-	line-height: 24px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`;
+
 const DormitroyBox = styled.div<{ isSelect: boolean }>`
 	width: max-content;
 	border-radius: 20px;
@@ -182,7 +165,8 @@ export default function EditProfile() {
 		queryFn: async () => {
 			const response = await API.get(`/api/v1/user/profile`);
 			return response.data.data;
-		}
+		},
+		staleTime: 0
 	});
 
 	const isModified = () => {
@@ -209,7 +193,6 @@ export default function EditProfile() {
 		setPhoto(data.image);
 	}, [data]);
 
-	console.log(";;", data);
 	// useEffect(() => {
 	// 	if (nickname === prevNickname) return;
 
@@ -236,6 +219,8 @@ export default function EditProfile() {
 	// 	}
 	// }, [nickname]);
 
+	const [profileImage, setProfileImage] = useState("");
+
 	const handleFile = (event) => {
 		const files = event.target.files;
 		setFile(files);
@@ -244,7 +229,7 @@ export default function EditProfile() {
 			const selectedFile = files[0];
 			const imageUrl = URL.createObjectURL(selectedFile);
 			setPhoto(imageUrl);
-			// setPhotoPreview(imageUrl);
+			setProfileImage(imageUrl);
 		}
 	};
 
@@ -258,7 +243,7 @@ export default function EditProfile() {
 			return response.data;
 		},
 		onSuccess: (data) => {
-			if (data === "success") {
+			if (data.data === "success") {
 				navigate("/mypage");
 			}
 		}
@@ -277,7 +262,8 @@ export default function EditProfile() {
 		formData.append("dto", new Blob([JSON.stringify(userData)], { type: "application/json" }));
 
 		if (photo !== null) {
-			Object.values(photo).forEach((f: any) => {
+			//@ts-ignore
+			Object.values(file).forEach((f: File) => {
 				formData.append("files", f);
 			});
 		}
@@ -303,8 +289,11 @@ export default function EditProfile() {
 					</S.Header>
 				</CS.Header>
 				<UploadProfile>
-					<ProfileImg key={1} src={photo ? photo : Profile} isProfile={!!photo} />
-
+					<ProfileImg
+						key={1}
+						src={profileImage ? photo : photo ? process.env.REACT_APP_BUCKET_BASEURL + photo : Profile}
+						isProfile={!!photo}
+					/>
 					<HiddenFileInput type="file" accept="image/*" onChange={handleFile} />
 					<CameraIcons>
 						<img src={Camera} />

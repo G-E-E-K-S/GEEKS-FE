@@ -28,235 +28,17 @@ import { UserProfileType } from "../../../types/userProfileType";
 import Column from "../../../components/Common/Layouts/Column";
 import CompareLifeStyle from "../../../components/Roommate/CompareLifeStyle/CompareLifeStyle";
 
-// const MenuBox = styled.div`
-// 	padding: 20px 0;
-// 	color: ${(props) => (props.Report ? "#CB3D0B" : "#525252")};
-// 	font-size: 1.125rem;
-// 	font-style: normal;
-// 	font-weight: 600;
-// 	line-height: 24px;
-// `;
-// const CloseBtn = styled.div`
-// 	padding: 16px 0;
-// 	border-radius: 12px;
-// 	border: 1px solid #e2e2e2;
-// 	background: #fff;
-// 	text-align: center;
-// 	color: #333;
-// 	font-size: 1.125rem;
-// 	font-weight: 500;
-// 	line-height: 24px;
-// 	margin-top: 20px;
-// 	margin-bottom: 94px;
-// `;
-// const MyRoommateNoti = styled.div`
-// 	background-color: #fff4cd;
-// 	width: 100vw;
-// 	margin-left: calc(-50vw + 50%);
-// 	padding: 12px 8px;
-// 	color: #865800;
-// 	text-align: center;
-// `;
-// const MyRoommateNotiTxt = styled.div`
-// 	font-size: 0.875rem;
-// 	font-weight: 500;
-// 	line-height: 18px;
-// 	margin-bottom: 2px;
-// `;
-// const EndRoommate = styled(MyRoommateNotiTxt)`
-// 	border-bottom: 1px solid #865800;
-// 	width: max-content;
-// 	margin: 0 auto;
-// `;
-// const TopProfile = styled.div`
-// 	margin-top: 20px;
-// `;
-// const Profile = styled.img`
-// 	width: 72px;
-// 	height: 72px;
-// `;
-// const NickName = styled.div`
-// 	color: #1a1a1a;
-// 	font-size: 1.25rem;
-// 	font-weight: 700;
-// 	line-height: 28px;
-// 	margin-top: 10px;
-// 	margin-bottom: 2px;
-// `;
-// const Major = styled.div`
-// 	color: #707070;
-// 	font-size: 1rem;
-// 	font-style: normal;
-// 	font-weight: 500;
-// 	line-height: 24px;
-// 	margin-top: 10px;
-// 	margin-bottom: 4px;
-// `;
-// const Chat = styled.div`
-// 	display: flex;
-// 	width: 120px;
-// 	height: 52px;
-// 	padding: 14px 16px;
-// 	border-radius: 12px;
-// 	border: 1px solid #e2e2e2;
-// 	background: #fff;
-// 	&:active {
-// 		background: #f7f7f7;
-// 	}
-// `;
-// const ChatImage = styled.img`
-// 	width: 24px;
-// 	height: 24px;
-// `;
-// const ChatText = styled.div`
-// 	color: #333;
-// 	text-align: center;
-// 	font-size: 1rem;
-// 	font-style: normal;
-// 	font-weight: 600;
-// 	line-height: 24px;
-// 	margin-left: 2.05vw;
-// 	white-space: nowrap;
-// `;
-// const UserMessageBox = styled.div`
-// 	position: relative;
-// 	width: 100%;
-// 	height: max-content;
-// 	border-radius: 12px;
-// 	background: #faf6f1;
-// 	padding: 14px;
-// 	margin-top: 10px;
-// 	margin-bottom: 2.84vh;
-// 	&::before {
-// 		content: "";
-// 		position: absolute;
-// 		top: 0;
-// 		left: 12px;
-// 		border: 23px solid transparent;
-// 		border-bottom-color: #faf6f1;
-// 		border-top: 0;
-// 		margin-top: -10px;
-// 	}
-// `;
-// const InfoImg = styled.img`
-// 	width: 16px;
-// 	height: 16px;
-// 	margin-top: 2px;
-// `;
-// const InfoMessage = styled.div`
-// 	margin-left: 1.53vw;
-// 	color: #665d4f;
-// 	font-size: 0.875rem;
-// 	font-style: normal;
-// 	font-weight: 500;
-// 	line-height: 20px;
-// `;
-
-// const MatchColorText = styled.div`
-// 	color: ${(props) =>
-// 		props.isFit >= 70 ? "#2B75CB" : props.isFit <= 60 && props.isFit >= 40 ? "#D68D00" : "#7B7161"};
-// 	text-align: center;
-// 	margin-left: 7px;
-// `;
-// const BottomEnroll = styled.div`
-// 	display: flex;
-// 	justify-content: space-between;
-// 	padding-top: 20.17px;
-// 	padding-right: 5.12vw;
-// 	padding-left: 5.12vw;
-// 	padding-bottom: calc(11.84vh - 56px - 20.17px + 12px);
-// 	border-top: 1px solid #efefef;
-// 	position: fixed;
-// 	bottom: 0px;
-// 	width: 100%;
-// 	background-color: #fff;
-// `;
-// const SaveImg = styled.img`
-// 	margin-top: 4px;
-// 	width: 28px;
-// 	height: 28px;
-// `;
-// const SaveTxt = styled.div`
-// 	color: #b7b7b7;
-// 	text-align: center;
-// 	font-size: 12px;
-// 	font-style: normal;
-// 	font-weight: 600;
-// 	letter-spacing: 0.5px;
-// `;
-// const EnrollBtn = styled.div`
-// 	width: 57.42vw;
-// 	height: 56px;
-// 	padding: 18px 12.17vw;
-// 	border-radius: 12px;
-// 	background: ${(props) => (props.state == true ? "#F7F7F7" : "#ffc700")};
-// 	position: relative;
-// 	z-index: 20;
-// 	&:active {
-// 		background: ${(props) => props.state !== true && "#ECAA00"};
-// 	}
-// `;
-// const EnrollTxt = styled.div`
-// 	color: ${(props) => (props.state == true ? "#B7B7B7" : "#333")};
-// 	text-align: center;
-// 	font-size: 1.125rem;
-// 	font-style: normal;
-// 	font-weight: 600;
-// 	white-space: nowrap;
-// 	cursor: pointer;
-// `;
-// const MatchBox = styled.div`
-// 	width: 100%;
-// 	border-radius: 16px;
-// 	background: #fafafa;
-// 	height: max-content;
-// 	padding: 2.36vh 5.12vw;
-// `;
-// const CharContainer = styled.div`
-// 	width: 140px;
-// 	height: 140px;
-// 	margin: 0 auto;
-// `;
-// const OtherAndMeTxt = styled.div`
-// 	display: flex;
-// 	width: 100%;
-// 	color: #707070;
-// 	font-size: 16px;
-// 	font-style: normal;
-// 	font-weight: 600;
-// 	line-height: 24px;
-// 	margin-top: 56.75px;
-// `;
-// const Other = styled.div`
-// 	margin-left: 28.46vw;
-// 	margin-right: 32.45vw;
-// `;
-// const Me = styled.div``;
-// const Smoke = styled.div`
-// 	width: 53px;
-// 	height: 24px;
-// 	border-radius: 6px;
-// 	background: #efefef;
-// 	padding: 4px 8px 4px 8px;
-// 	color: #707070;
-// 	font-size: 0.875rem;
-// 	font-weight: 500;
-// 	line-height: 18px;
-// 	margin-left: 8px;
-// 	display: flex;
-// 	justify-content: center;
-// 	align-items: center;
-// 	margin-top: 13px;
-// `;
-
+interface RoommateApplyType {
+	roommateStatus: "NONE" | "PENDING" | "ACCEPT";
+}
 export default function CompareUserInfo() {
 	const { matchingId, opponentId } = useParams();
 
 	const [isSave, setIsSave] = useState(false);
 	const [applyRoommate, setApplyRommate] = useState(false);
-	const [roommateState, setRoommateState] = useState(false);
+	const [roommateState, setRoommateState] = useState<RoommateApplyType["roommateStatus"]>();
 	const [acceptRoommate, setAcceptRoommate] = useState(false);
-	const [roommateApplyState, setRoommateApplyState] = useState(false);
+	const [roommateApplyState, setRoommateApplyState] = useState();
 	const [showPopup, setShowPopup] = useState(false);
 	const [opponentUser, setOpponentUser] = useState(null);
 	const [isBtsOpen, setIsBtsOpen] = useState(false);
@@ -300,6 +82,7 @@ export default function CompareUserInfo() {
 		if (!data) return;
 		setOpponentInfo(data.opponent);
 		setOpponentLifeStyle(data.opponentDetail);
+		setRoommateState(data.roommateStatus);
 	}, [data]);
 
 	const { refetch: applyRoommateFetch } = useQuery({
@@ -308,7 +91,7 @@ export default function CompareUserInfo() {
 			const res = await API.post(`/api/v1/roommate/send/${matchingId}/${opponentId}`);
 			return res.data;
 		},
-		enabled: true
+		enabled: false
 	});
 
 	const ApplyRoommate = () => {
@@ -353,7 +136,7 @@ export default function CompareUserInfo() {
 		enabled: false
 	});
 
-	const { refetch: refetchCancelSavRoommate } = useQuery({
+	const { refetch: refetchCancelSaveRoommate } = useQuery({
 		queryKey: ["cancelSaveRoommate", opponentId],
 		queryFn: async () => {
 			const response = await API.delete(`/api/v1/roommate/bookmark/cancel`, {
@@ -368,13 +151,14 @@ export default function CompareUserInfo() {
 	const saveRoommate = () => {
 		setIsSave(!isSave);
 		if (isSave) {
-			refetchCancelSavRoommate();
+			refetchCancelSaveRoommate();
 		} else {
 			setShowPopup(true);
 			refetchSaveRooommate();
 		}
 	};
 
+	const handleRemoveRoommate = () => {};
 	if (!opponentInfo) return;
 
 	return isLoading ? (
@@ -386,6 +170,18 @@ export default function CompareUserInfo() {
 				<SC.Header backgroundColor="White">
 					<HeaderMenu />
 				</SC.Header>
+				{roommateState === "ACCEPT" && (
+					<S.MyRoommateNoti>
+						<S.MyRoommateNotiTxt>{`현재 나의 룸메이트에요`}</S.MyRoommateNotiTxt>
+						<S.EndRoommate onClick={() => handleRemoveRoommate()}>{`룸메이트 끊기`}</S.EndRoommate>
+					</S.MyRoommateNoti>
+				)}
+				{roommateState !== "PENDING" && (
+					<S.MyRoommateNoti>
+						<S.MyRoommateNotiTxt>{`현재d 나의 룸메이트에요`}</S.MyRoommateNotiTxt>
+						<S.EndRoommate onClick={() => handleRemoveRoommate()}>{`룸메이트 끊기`}</S.EndRoommate>
+					</S.MyRoommateNoti>
+				)}
 				{/* user Profile */}
 				<Column gap={16}>
 					<Row horizonAlign="distribute" width="w-full">
@@ -549,12 +345,14 @@ export default function CompareUserInfo() {
 					<S.EnrollBtn
 						horizonAlign="center"
 						verticalAlign="center"
-						state={roommateApplyState || roommateState || acceptRoommate}
+						state={roommateApplyState || roommateState !== "NONE" || acceptRoommate}
 						onClick={() => setApplyRommate(true)}
 					>
 						<Typography
 							typoSize="T3_semibold"
-							color={roommateApplyState || roommateState || acceptRoommate ? "Gray400" : "Black"}
+							color={
+								roommateApplyState || roommateState !== "NONE" || acceptRoommate ? "Gray400" : "Black"
+							}
 						>
 							{"룸메이트 신청하기"}
 						</Typography>

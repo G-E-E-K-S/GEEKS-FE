@@ -39,7 +39,7 @@ export default function Home() {
 	const [showPopup, setShowPopup] = useState(false);
 	const [isShowWriteReview, setIsShowWriteReview] = useState(localStorage.getItem("show") !== "false");
 	const [isExist, setIsExist] = useState(false);
-	const [isRoommateApply, setRoommateApply] = useState(true);
+	const [isRoommateApply, setIsRoommateApply] = useState<number>(0);
 	const [matchingTop3User, setMatchingTop3User] = useState<UserProfileType[]>([]);
 	const [isSendMessage, setIsSendMessgae] = useState(false);
 	const navigate = useNavigate();
@@ -60,6 +60,14 @@ export default function Home() {
 				break;
 		}
 	};
+
+	const { data: receiveRommateData } = useQuery({
+		queryKey: ["receiveRoommate"],
+		queryFn: async () => {
+			const response = await API.get(`/api/v1/roommate/receive/list`);
+			return response.data.data;
+		}
+	});
 
 	// React.useEffect(() => {
 	//   if ('serviceWorker' in navigator) {
@@ -105,7 +113,8 @@ export default function Home() {
 		setIsExist(top3UserData.exists);
 		setMatchingTop3User(top3UserData.opponentInfos);
 		setNickname(mydata.nickname);
-	}, [top3UserData, mydata]);
+		setIsRoommateApply(receiveRommateData.length);
+	}, [top3UserData, mydata, receiveRommateData]);
 
 	const isVisited = localStorage.getItem("vap");
 
@@ -162,7 +171,7 @@ export default function Home() {
 						</Row>
 					</ButtonBox>
 
-					{isRoommateApply && (
+					{isRoommateApply !== 0 && (
 						<ButtonBox backgroundColor="Yellow100" onClick={() => navigate("/roommate/apply")}>
 							<Row horizonAlign="distribute">
 								<Typography typoSize="H3" color="Gray800">

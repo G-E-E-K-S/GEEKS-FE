@@ -16,7 +16,7 @@ import DepartmentList from "../../../JSON/DepartmentList.json";
 import BottomSheet from "../../../components/DesignStuff/BottomSheet/BottomSheet";
 import { useUserInfo } from "../../../store/useUserInfo";
 import ScrollPicker from "../../../components/DesignStuff/ScrollPicker/ScrollPicker";
-import {STUDENT_NUM} from "../const";
+import { STUDENT_NUM } from "../const";
 
 const MajorBtsTxt = styled.div`
 	color: #333;
@@ -53,12 +53,12 @@ const Major = () => {
 
 	const openStudentNumBottomSheet = () => {
 		setIsStudentNumOpen(!isStudentNumOpen);
-	}
+	};
 
 	const handleStudentNum = (studentNum: number) => {
 		setStudentNum(studentNum);
 		setIsStudentNumOpen(false);
-	}
+	};
 	useEffect(() => {
 		major && studentNum ? setIsNextPage(true) : setIsNextPage(false);
 	}, [major, studentNum]);
@@ -81,14 +81,14 @@ const Major = () => {
 					<Typography typoSize="T1" color={studentNum ? "Gray800" : "Gray400"}>
 						{studentNum || "학번"}
 					</Typography>
-					<img src={UnderArrow}/>
+					<img src={UnderArrow} />
 				</StudentNumTotal>
-				<BottomSheet isOpen={isStudentNumOpen} height={"487px"}>
+				<BottomSheet isOpen={isStudentNumOpen} height={"390px"}>
 					<CS.SpaceBetween>
 						<MajorBtsTxt>{`학번`}</MajorBtsTxt>
-						<CloseImg src={Close} onClick={() => openStudentNumBottomSheet()}/>
+						<CloseImg src={Close} onClick={() => openStudentNumBottomSheet()} />
 					</CS.SpaceBetween>
-					<ScrollPicker options={STUDENT_NUM} height={220} onOptionSelect={handleStudentNum}/>
+					<ScrollPicker options={STUDENT_NUM} height={220} onOptionSelect={handleStudentNum} />
 				</BottomSheet>
 
 				<BottomSheet isOpen={isBottomSheetOpen} height={"487px"}>
@@ -126,7 +126,7 @@ const Major = () => {
 export default Major;
 
 const MajorTotal = styled.div`
-	margin-top: 6.16vh;
+	margin-top: 20px;
 	padding: 7px 0px 8px 0px;
 	display: flex;
 	justify-content: space-between;
@@ -135,21 +135,6 @@ const MajorTotal = styled.div`
 `;
 
 const StudentNumTotal = styled(MajorTotal)`
-    width: fit-content;
-    gap: 30px;
+	width: fit-content;
+	gap: 30px;
 `;
-// const MajorText = styled.div`
-// 	color: ${(props) => (props.major ? "#d0d0d0" : "#333333")};
-// 	font-size: 1.5rem;
-// 	font-style: normal;
-// 	font-weight: 600;
-// `;
-
-// const StudentIdTotal = styled.div`
-// 	margin-top: 1.77vh;
-// 	padding: 7px 0px 8px 0px;
-// 	display: flex;
-// 	justify-content: flex-start;
-// 	width: 30.82vw;
-// 	border-bottom: 2px solid ${(props) => (props.isSelected ? "#ECAA00" : "#efefef")};
-// `;
