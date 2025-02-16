@@ -68,7 +68,7 @@ export default function Welcome() {
 			try {
 				const res = await API.get("/api/v1/user/validate");
 				if (res.data.success) {
-					localStorage.setItem("token", res.data.data);
+					// localStorage.setItem("token", res.data.data);
 					navigate("/home");
 				}
 			} catch (error) {

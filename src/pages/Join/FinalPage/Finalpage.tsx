@@ -16,13 +16,20 @@ export default function FinalPage() {
 		queryKey: ["sendInfo"],
 		queryFn: async () => {
 			const res = await API.post(`/api/v1/user/signup`, {
-				email: email + "@sangmyung.kr",
-				password,
-				nickname,
-				major,
-				studentNum,
-				dormitory,
-				gender
+				// email: email + "@sangmyung.kr",
+				// password,
+				// nickname,
+				// major,
+				// studentNum,
+				// dormitory,
+				// gender
+				email: "leesoyun4206@naver.com",
+				password: 1234,
+				nickname: "so2",
+				major: "스마트정보통신공학과",
+				studentNum: 19,
+				dormitory: "NEW",
+				gender: "FEMALE"
 			});
 			return res.data;
 		},
@@ -31,7 +38,7 @@ export default function FinalPage() {
 
 	const sendEveryInfo = () => {
 		refetch().then((val) => {
-			if (val.data.data === "success") {
+			if (val.data.success) {
 				localStorage.setItem("token", val.data.data);
 				navigate("/home");
 			}
