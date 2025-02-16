@@ -16,20 +16,13 @@ export default function FinalPage() {
 		queryKey: ["sendInfo"],
 		queryFn: async () => {
 			const res = await API.post(`/api/v1/user/signup`, {
-				// email: email + "@sangmyung.kr",
-				// password,
-				// nickname,
-				// major,
-				// studentNum,
-				// dormitory,
-				// gender
-				email: "leesoyun4206@naver.com",
-				password: 1234,
-				nickname: "so2",
-				major: "스마트정보통신공학과",
-				studentNum: 19,
-				dormitory: "NEW",
-				gender: "FEMALE"
+				email: email + "@sangmyung.kr",
+				password,
+				nickname,
+				major,
+				studentNum,
+				dormitory,
+				gender
 			});
 			return res.data;
 		},
