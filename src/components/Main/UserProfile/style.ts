@@ -1,10 +1,16 @@
 import styled from "styled-components";
 import Column from "../../Common/Layouts/Column";
 
-export const TotalProfile = styled.div<{ activeCheck?: boolean; isMe?: boolean; hasPadding?: boolean }>`
+export const TotalProfile = styled.div<{
+	activeCheck?: boolean;
+	isMe?: boolean;
+	hasPadding?: boolean;
+	hasBackground?: boolean;
+}>`
 	width: 100%;
 	border-radius: ${({ isMe }) => !isMe && "12px"};
-	background: ${({ activeCheck }) => (activeCheck ? "#FFF4CD" : "#fff")};
+	background: ${({ activeCheck, hasBackground }) =>
+		activeCheck ? "#FFF4CD" : hasBackground ? "#fff" : "transparent"};
 	border: 1px solid ${({ activeCheck }) => (activeCheck ? "#ECAA00" : "transparent")};
 	padding: ${({ hasPadding }) => hasPadding && "14px 5.12vw"};
 	overflow-x: auto;

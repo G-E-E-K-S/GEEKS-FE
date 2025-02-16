@@ -69,6 +69,7 @@ export default function FindRoommate() {
 								major={user.major}
 								ID={user.studentNum}
 								score={user.point}
+								hasBackground
 								intro={user.introduction ?? "this is sample"}
 								hasPadding
 								onClick={() => navigate(`/detail/details/${user.matchingPointId}/${user.opponentId}`)}

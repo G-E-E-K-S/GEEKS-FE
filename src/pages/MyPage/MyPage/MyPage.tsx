@@ -52,6 +52,14 @@ export default function MyPage() {
 		fetchShowProfile();
 	};
 
+	const { data: top3UserData } = useQuery({
+		queryKey: ["getTop3User"],
+		queryFn: async () => {
+			const res = await API.get(`/api/v1/matching/points/top3`);
+			return res.data.data;
+		}
+	});
+
 	const { data, isLoading } = useQuery({
 		queryKey: ["myData"],
 		queryFn: async () => {
@@ -105,8 +113,12 @@ export default function MyPage() {
 					isMe
 				/>
 				{roommateInfo && (
-					<S.RoommateWrapper>
-						<Typography typoSize="B3_medium" color="Gray700">
+					<S.RoommateWrapper
+						onClick={() =>
+							navigate(`/detail/details/${roommateInfo.matchingPointId}/${roommateInfo.opponentId}`)
+						}
+					>
+						<Typography typoSize="B3_medium" color="Gray700" style={{ marginBottom: "10px" }}>
 							{"내 룸메이트"}
 						</Typography>
 						<UserProfile
@@ -116,7 +128,6 @@ export default function MyPage() {
 							nickName={roommateInfo.nickname}
 							smoke={roommateInfo.smoke}
 							activeCheck={false}
-							isMe
 						/>
 					</S.RoommateWrapper>
 				)}
@@ -138,8 +149,8 @@ export default function MyPage() {
 				<MenuList
 					icon={enrollLifeStyle}
 					menuName={`생활 습관 등록하기`}
-					isEnroolListStyle={!true}
 					onClick={() => navigate("/lifestyle")}
+					isEnroolListStyle={top3UserData.length === 0}
 				/>
 				<MenuList icon={saveList} menuName={`룸메이트 저장 목록`} onClick={() => navigate("/savelist")} />
 				<MenuList

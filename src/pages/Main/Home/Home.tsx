@@ -107,13 +107,12 @@ export default function Home() {
 			return response.data.data;
 		}
 	});
-
 	useMemo(() => {
 		if (!top3UserData || !mydata) return;
 		setIsExist(top3UserData.exists);
 		setMatchingTop3User(top3UserData.opponentInfos);
 		setNickname(mydata.nickname);
-		setIsRoommateApply(receiveRommateData.length);
+		setIsRoommateApply(receiveRommateData?.length);
 	}, [top3UserData, mydata, receiveRommateData]);
 
 	const isVisited = localStorage.getItem("vap");

@@ -20,6 +20,7 @@ interface UserProfileProps {
 	isMe?: boolean;
 	image: string | null;
 	hasPadding?: boolean;
+	hasBackground?: boolean;
 	onClick?: (e: React.MouseEvent<HTMLImageElement>) => void;
 }
 
@@ -32,6 +33,7 @@ export default function UserProfile({
 	ID,
 	intro,
 	isMe,
+	hasBackground = false,
 	hasPadding = false,
 	image,
 	onClick
@@ -51,7 +53,13 @@ export default function UserProfile({
 	// 	fetchSaveUser();
 	// };
 	return (
-		<S.TotalProfile activeCheck={activeCheck} onClick={onClick} isMe={isMe} hasPadding={hasPadding}>
+		<S.TotalProfile
+			activeCheck={activeCheck}
+			onClick={onClick}
+			isMe={isMe}
+			hasPadding={hasPadding}
+			hasBackground={hasBackground}
+		>
 			<Row horizonAlign="distribute">
 				<Row gap={14}>
 					<S.UserProfile src={image ? process.env.REACT_APP_BUCKET_BASEURL + image : BasicProfile} />

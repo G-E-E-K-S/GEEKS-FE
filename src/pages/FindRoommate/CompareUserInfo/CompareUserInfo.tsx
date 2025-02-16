@@ -41,33 +41,29 @@ export default function CompareUserInfo() {
 	const [roommateApplyState, setRoommateApplyState] = useState();
 	const [showPopup, setShowPopup] = useState(false);
 	const [opponentUser, setOpponentUser] = useState(null);
-	const [isBtsOpen, setIsBtsOpen] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
-	const [lifeStyles, setLifeStyles] = useState([]);
-	const [lifeStyleList, setLifeStyleList] = useState([
-		{ name: "흡연", key: "smoking", true: "흡연자", false: "비흡연자" },
-		{ name: "잠버릇", key: "habit", true: "잠버릇 있어요", false: "잠버릇 없어요" },
+	const lifeStyleList = [
+		{ name: "흡연", key: "smoke", SMOKER: "흡연자", NONSMOKER: "비흡연자" },
+		{ name: "잠버릇", key: "habit", HABIT: "잠버릇 있어요", NONHABIT: "잠버릇 없어요" },
 		{ name: "잠귀", key: "ear", BRIGHT: "귀 밝아요", DARK: "귀 어두워요" },
-		{ name: "취침", key: "sleep", EARLY: "일찍 자요", LATE: "늦게 자요", RANDOM: "때마다 달라요" },
-		{ name: "기상", key: "wakeup", EARLY: "일찍 일어나요", LATE: "늦게 일어나요", RANDOM: "때마다 달라요" },
-		{ name: "외출", key: "out", HOME: "집순이에요", OUT: "밖순이에요", PROMISE: "약속이 있으면 나가요" },
+		{ name: "활동시간", key: "activityTime", MORNING: "일찍 자요", DAWN: "늦게 자요" },
+		{ name: "외출", key: "outing", INSIDE: "집순이에요", OUTSIDE: "밖순이에요" },
 		{
 			name: "청소",
 			key: "cleaning",
 			CLEAN: "주기적으로 청소해요",
-			DIRTY: "더러워지면 청소해요",
-			OPPONENT: "상대에게 맞춰요"
+			DIRTY: "더러워지면 청소해요"
 		},
 		{
 			name: "성향",
 			key: "tendency",
 			ALONE: "혼자 조용히 지내요",
-			TOGETHER: "함께 놀고 싶어요",
-			OPPONENT: "상대에게 맞춰요"
+			TOGETHER: "함께 놀고 싶어요"
 		}
-	]);
+	];
 	const [opponentInfo, setOpponentInfo] = useState<UserProfileType>();
-	const [opponentLifeStyle, setOpponentLifeStyle] = useState();
+	const [opponentLifeStyle, setOpponentLifeStyle] = useState<UserProfileType>();
+	const [myListStyle, setMyLifeStyle] = useState<UserProfileType>();
 	const navigate = useNavigate();
 
 	const { data, isLoading } = useQuery({
@@ -83,6 +79,7 @@ export default function CompareUserInfo() {
 		setOpponentInfo(data.opponent);
 		setOpponentLifeStyle(data.opponentDetail);
 		setRoommateState(data.roommateStatus);
+		setMyLifeStyle(data.myDetail);
 	}, [data]);
 
 	const { refetch: applyRoommateFetch } = useQuery({
@@ -349,9 +346,11 @@ export default function CompareUserInfo() {
 				{lifeStyleList?.map((list) => (
 					<CompareLifeStyle
 						lifeStyle={list.name}
-						// isSame={lifeStyles[0][`${list.key}`] === lifeStyles[1][`${list.key}`]}
-						// opponentLifeStyle={list[`${lifeStyles[1][`${list.key}`]}`]}
-						// myLifeStyle={list[`${lifeStyles[0][`${list.key}`]}`]}
+						isSame={opponentLifeStyle?.[list.key] === myListStyle?.[list.key]}
+						opponentLifeStyle={
+							lifeStyleList.find((item) => item.key === list.key)?.[opponentLifeStyle?.[list.key]]
+						}
+						myLifeStyle={lifeStyleList.find((item) => item.key === list.key)?.[myListStyle?.[list.key]]}
 					/>
 				))}
 				<S.BottomEnroll horizonAlign="distribute" verticalAlign="center">
