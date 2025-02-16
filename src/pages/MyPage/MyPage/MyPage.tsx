@@ -31,6 +31,7 @@ import Column from "../../../components/Common/Layouts/Column";
 import UserProfile from "../../../components/Main/UserProfile/UserProfile";
 import { UserProfileType } from "../../../types/userProfileType";
 import { useQuery } from "@tanstack/react-query";
+import { useGetToken } from "../../../store/useGetToken";
 
 export default function MyPage() {
 	const [toggle, setToggle] = useState(true);
@@ -65,7 +66,9 @@ export default function MyPage() {
 		queryFn: async () => {
 			const response = await API.get(`/api/v1/user/mypage`);
 			return response.data.data;
-		}
+		},
+		retry: 2,
+		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000)
 	});
 
 	useEffect(() => {
@@ -77,8 +80,9 @@ export default function MyPage() {
 	const Logout = () => {
 		async function fetchLogOut() {
 			try {
-				const res = await API.get("/logout");
-				if (res.status == 200) {
+				const res = await API.post("/api/v1/user/logout");
+				if (res.data.success) {
+					useGetToken.getState().resetToken();
 					navigate("/welcome", {
 						state: {
 							prev: "logout"
@@ -150,7 +154,7 @@ export default function MyPage() {
 					icon={enrollLifeStyle}
 					menuName={`생활 습관 등록하기`}
 					onClick={() => navigate("/lifestyle")}
-					isEnroolListStyle={top3UserData?.length === 0}
+					isEnroolListStyle={!top3UserData?.exists}
 				/>
 				<MenuList icon={saveList} menuName={`룸메이트 저장 목록`} onClick={() => navigate("/savelist")} />
 				<MenuList

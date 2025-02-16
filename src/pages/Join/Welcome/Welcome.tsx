@@ -15,6 +15,7 @@ import TextLogo from "../../../assets/img/Common/yellowLogo.svg";
 import Column from "../../../components/Common/Layouts/Column";
 import "@pwabuilder/pwainstall";
 import Button from "../../../components/DesignStuff/Button/Button";
+import { useGetToken } from "../../../store/useGetToken";
 
 export default function Welcome() {
 	const [showPopup, setShowPopup] = useState(false);
@@ -22,7 +23,9 @@ export default function Welcome() {
 	const [popupMessage, setPopupMessage] = useState("");
 	const [updateState, setUpdateState] = useState(true);
 	// const [phoneKind, setPhoneKind] = useState("");
+
 	const [isModalOpen, setIsModalOpen] = useState(true);
+	const { setToken } = useGetToken();
 	const navigate = useNavigate();
 
 	const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -61,19 +64,12 @@ export default function Welcome() {
 		setPopupMessage(location.state?.prev);
 		setShowPopup(location.state?.prev === "logout" || location.state?.prev === "withdrawal" ? true : false);
 
-		// window["isUpdateAvailable"].then((isAvailable) => {
-		//   console.log("isUpdateAvailable");
-		//   if (isAvailable) {
-		//     setUpdateState(true);
-		//   }
-		// });
-		//ios or android확인
-
 		async function fetchAutoLogin() {
 			try {
-				const res = await API.get("/member/auto/login");
+				const res = await API.get("/api/v1/user/validate");
 
-				if (res.data === "success" && localStorage.getItem("autologin") !== "false") {
+				if (res.data.success) {
+					setToken(res.data.data);
 					navigate("/home");
 				}
 			} catch (error) {
@@ -122,17 +118,16 @@ export default function Welcome() {
 								typoSize="T1"
 								color="Gray800"
 							>{`긱스를 터치 한 번으로\n바로 시작해 보세요!`}</Typography>
-							{/* TODO 여기 수정 */}
-							{/* {navigator.userAgent.toLowerCase().indexOf("android") > -1 ? (
+							{navigator.userAgent.toLowerCase().indexOf("android") > -1 ? (
 								<S.DownLoadApp onClick={() => handleInstall()}>{`앱 내려받기`}</S.DownLoadApp>
 							) : (
-								
+								// @ts-ignore
 								<pwa-install
 									installbuttontext={"앱 내려받기"}
 									iosinstallinfotext={'공유 버튼 클릭 후 "홈 화면에 추가" 를 눌러주세요!'}
 									descriptionheader={``}
 								/>
-							)} */}
+							)}
 						</Modal>
 					))}
 			</CS.ScreenComponent>

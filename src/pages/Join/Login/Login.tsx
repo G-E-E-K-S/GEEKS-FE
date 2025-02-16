@@ -6,7 +6,6 @@ import * as CS from "../../../components/Common/CommonStyle";
 import HeaderMenu from "../../../components/Common/HeaderMenu";
 import MainText from "../../../components/Join/MainText";
 import ErrorPopup from "../../../components/Common/ErrorPopup";
-import ApplyCancelBottomSheet from "../../../components/Common/ApplyCancleBottomSheet";
 import TextFields from "../../../components/DesignStuff/TextFields/TextFields";
 import Button from "../../../components/DesignStuff/Button/Button";
 import Typography from "../../../components/Common/Layouts/Typography";
@@ -16,22 +15,16 @@ import Row from "../../../components/Common/Layouts/Row";
 import ForgetPwdImg from "../../../assets/img/Join/forgetPwd.svg";
 import NoShowPwd from "../../../assets/img/Join/NoShowPwd.svg";
 import ShowPwd from "../../../assets/img/Join/ShowPwd.svg";
-import Automatic from "../../../assets/img/Join/automatic.svg";
 import Column from "../../../components/Common/Layouts/Column";
+import { useGetToken } from "../../../store/useGetToken";
 
 const ForgetPwdIcon = styled.img`
 	width: 16px;
 	height: 16px;
 `;
-const No = styled.div`
-	font-size: 1.125rem;
-	font-weight: 600;
-	line-height: 24px;
-	text-align: center;
-	color: #8e9192;
-	margin-top: 22px;
-`;
 const InputEmail = () => {
+	const [isEmailError, setIsEmailError] = useState(false);
+	const [isPwdError, setIsPwdError] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isNextPage, setIsNextPage] = useState(false);
@@ -44,23 +37,21 @@ const InputEmail = () => {
 		email.length > 0 && password.length ? setIsNextPage(true) : setIsNextPage(false);
 	}, [email, password]);
 
-	//TODO BE 연결
 	const handleEmail = () => {
 		async function fetchLogin() {
 			try {
-				const res = await API.post("/login/login", {
-					// email: emailVal.current.value + "@sangmyung.kr",
-					// password: passwordVal.current.value
+				const res = await API.post("/api/v1/user/login", {
+					email: email + "@sangmyung.kr",
+					password: password
 				});
-				if (res.data === "admin") {
-					navigate("/managermain");
-				}
-				if (res.data === "success") {
+
+				if (res.data.success) {
+					localStorage.setItem("token", res.data.data);
 					setAutomaticLogIn(true);
+					navigate("/home");
 				} else {
-					// setIsPwdSelected("error");
-					// setIsEmailSelected("error");
-					setIsErrorPopUp(true);
+					setIsEmailError(true);
+					setIsPwdError(true);
 				}
 			} catch (error) {
 				console.error(error);
@@ -72,16 +63,6 @@ const InputEmail = () => {
 	const handlePwd = () => {
 		setShowPwd(!showPwd);
 	};
-	const AutomaticLogin = () => {
-		setAutomaticLogIn(false);
-		localStorage.setItem("autologin", "true");
-		navigate("/home");
-	};
-	const NoneAutomaticLogin = () => {
-		setAutomaticLogIn(false);
-		localStorage.setItem("autologin", "false");
-		navigate("/home");
-	};
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent>
@@ -91,8 +72,7 @@ const InputEmail = () => {
 				<MainText maintitle={"학교 이메일 주소로\n로그인 해주세요"} />
 				<Column gap={20}>
 					<TextFields
-						// TODO API연결 후 진행
-						isError={false}
+						isError={isEmailError}
 						onChange={(val) => setEmail(val)}
 						fixedText={"@sangmyung.kr"}
 						placeholder={"학번"}
@@ -100,7 +80,7 @@ const InputEmail = () => {
 						maxLength={9}
 					/>
 					<TextFields
-						isError={false}
+						isError={isPwdError}
 						onChange={(val) => setPassword(val)}
 						placeholder={"비밀번호"}
 						inputType={showPwd ? "text" : "password"}
@@ -120,19 +100,6 @@ const InputEmail = () => {
 					isShowPopup={isErrorPopup}
 				/>
 				<Button text={"로그인"} isNextPage={isNextPage} onClick={() => handleEmail()} />
-				<ApplyCancelBottomSheet
-					height={`391px`}
-					padding={`40px 20px 0px 20px`}
-					isOpen={automaticLogIn}
-					interaction={true}
-					onClick={() => AutomaticLogin()}
-					Icon={Automatic}
-					message={`다음부터\n자동으로 로그인할까요?`}
-					btnName={`자동 로그인 할게요`}
-					applyRoommate={() => setAutomaticLogIn(false)}
-				>
-					<No onClick={() => NoneAutomaticLogin()}>{`안 할래요`}</No>
-				</ApplyCancelBottomSheet>
 			</CS.ScreenComponent>
 		</CS.Totalframe>
 	);

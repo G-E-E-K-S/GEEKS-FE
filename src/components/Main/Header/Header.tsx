@@ -11,11 +11,13 @@ export default function Header() {
 	return (
 		<S.TotalHeader horizonAlign="distribute">
 			<img src={GeeksLogo} />
-			<Row gap={16}>
-				<img src={search} onClick={() => navigate("/search")} />
-				<img src={noti} onClick={() => navigate("/noti")} />
-				{/* {props.isEdit && <img src={edit} />} */}
-			</Row>
 		</S.TotalHeader>
 	);
 }
+{
+	/* <Row gap={16}>
+				<img src={search} onClick={() => navigate("/search")} />
+				<img src={noti} onClick={() => navigate("/noti")} />
+				{/* {props.isEdit && <img src={edit} />} */
+}
+// </Row>

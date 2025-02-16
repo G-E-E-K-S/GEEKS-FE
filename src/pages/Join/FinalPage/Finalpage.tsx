@@ -30,7 +30,12 @@ export default function FinalPage() {
 	});
 
 	const sendEveryInfo = () => {
-		refetch().then((val) => val.data.data === "success" && navigate("/home"));
+		refetch().then((val) => {
+			if (val.data.data === "success") {
+				localStorage.setItem("token", val.data.data);
+				navigate("/home");
+			}
+		});
 	};
 
 	return (
