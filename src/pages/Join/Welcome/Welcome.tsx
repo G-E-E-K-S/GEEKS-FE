@@ -67,9 +67,8 @@ export default function Welcome() {
 		async function fetchAutoLogin() {
 			try {
 				const res = await API.get("/api/v1/user/validate");
-
 				if (res.data.success) {
-					setToken(res.data.data);
+					localStorage.setItem("token", res.data.data);
 					navigate("/home");
 				}
 			} catch (error) {
