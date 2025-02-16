@@ -150,7 +150,7 @@ export default function MyPage() {
 					icon={enrollLifeStyle}
 					menuName={`생활 습관 등록하기`}
 					onClick={() => navigate("/lifestyle")}
-					isEnroolListStyle={top3UserData.length === 0}
+					isEnroolListStyle={top3UserData?.length === 0}
 				/>
 				<MenuList icon={saveList} menuName={`룸메이트 저장 목록`} onClick={() => navigate("/savelist")} />
 				<MenuList

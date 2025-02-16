@@ -10,22 +10,30 @@ import Popup from "../../../components/Common/Popup";
 import Typography from "../../../components/Common/Layouts/Typography";
 import { useUserInfo } from "../../../store/useUserInfo";
 import { useQuery } from "@tanstack/react-query";
+import moment from "moment";
 
 export default function SettingUserInfo() {
 	// const { email } = useUserInfo();
 	const [email, setEmail] = useState("");
+	const [myDetailInfo, setMyDetailInfo] = useState({
+		email: "",
+		enRollDate: ""
+	});
 
 	const { data } = useQuery({
-		queryKey: ["myData"],
+		queryKey: ["myInfo"],
 		queryFn: async () => {
-			const response = await API.get(`/api/v1/user/profile`);
+			const response = await API.get(`/api/v1/user/info`);
 			return response.data.data;
 		}
 	});
 
 	useMemo(() => {
 		if (!data) return;
-		setEmail(data.email);
+		setMyDetailInfo({
+			email: data.email,
+			enRollDate: data.createdDate
+		});
 	}, [data]);
 
 	const [showPopup, setShowPopup] = useState(false);
@@ -46,7 +54,7 @@ export default function SettingUserInfo() {
 						{"아이디(이메일)"}
 					</Typography>
 					<Typography typoSize="B1_medium" color="Gray600">
-						{""}
+						{myDetailInfo.email}
 					</Typography>
 				</S.AccountInfoBox>
 				{/* Password */}
@@ -62,7 +70,7 @@ export default function SettingUserInfo() {
 						{"가입 날짜"}
 					</Typography>
 					<Typography typoSize="B1_medium" color="Gray600">
-						{"2015.01.12"}
+						{moment(myDetailInfo.enRollDate).format("YYYY.MM.DD")}
 					</Typography>
 				</S.AccountInfoBox>
 				<Popup

@@ -5,7 +5,7 @@ import API from "../../../axios/BaseUrl";
 import * as CS from "../../../components/Common/CommonStyle";
 import GoBack from "../../../components/Common/GoBack";
 import InputSelf from "../../../components/Main/InputSelf";
-import BottomSheet from "../../../components/Common/BottomSheet";
+// import BottomSheet from "../../../components/Common/BottomSheet";
 import Br from "../../../components/Common/Br";
 import Department from "../../../components/Join/Department";
 import Modal from "../../../components/Common/Modal";
@@ -23,6 +23,10 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Loading from "../../Loading";
 import * as S from "./style";
 import { UserProfileType } from "../../../types/userProfileType";
+import { useUserInfo } from "../../../store/useUserInfo";
+import ScrollPicker from "../../../components/DesignStuff/ScrollPicker/ScrollPicker";
+import { STUDENT_NUM } from "../../Join/const";
+import BottomSheet from "../../../components/DesignStuff/BottomSheet/BottomSheet";
 
 const UploadProfile = styled.div`
 	width: 100%;
@@ -140,19 +144,18 @@ export default function EditProfile() {
 	const [userInfo, setUserInfo] = useState<UserProfileType>();
 	const [nickname, setNickname] = useState<string>("");
 	const [isDuplicate, setIsDuplicate] = useState(false);
+	const [isStudentNumOpen, setIsStudentNumOpen] = useState(false);
 	const [photo, setPhoto] = useState("");
 	const [inputPhoto] = useState("");
 	const [introduction, setIntroduction] = useState<string>("");
 	const [dormitory, setDormitory] = useState("");
 	const DormitoryKind = ["구관", "신관", "행복기숙사"];
 	const [file, setFile] = useState(null);
-	// const [fileUrl, setFileUrl] = useState<string>("");
-	const [studentID, setStudentID] = useState(null);
-
 	const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
 	const [department, setDepartment] = useState("");
 	const [major, setMajor] = useState(null);
 	const [isMajorOpen, setIsMajorOpen] = useState(false);
+	const { studentNum, setStudentNum } = useUserInfo();
 
 	const navigate = useNavigate();
 	const handleMajor = (major) => {
@@ -174,10 +177,11 @@ export default function EditProfile() {
 			major: data?.major,
 			dormitory: data?.dormitory === "NEW" ? "신관" : data?.dormitory === "OLD" ? "구관" : "행복기숙사",
 			introduction: data?.introduction,
-			photo: data?.image
+			photo: data?.image,
+			studentNum: data?.studentNum
 		});
 
-		const modified = JSON.stringify({ nickname, major, dormitory, introduction, photo });
+		const modified = JSON.stringify({ nickname, major, dormitory, introduction, photo, studentNum });
 
 		return original !== modified;
 	};
@@ -190,6 +194,7 @@ export default function EditProfile() {
 		setDormitory(data.dormitory === "NEW" ? "신관" : data.dormitory === "OLD" ? "구관" : "행복기숙사");
 		setIntroduction(data.introduction);
 		setPhoto(data.image);
+		setStudentNum(data.studentNum);
 	}, [data]);
 
 	// useEffect(() => {
@@ -276,6 +281,11 @@ export default function EditProfile() {
 		setDepartment(department);
 	};
 
+	const handleStudentNum = (studentNum: number) => {
+		setStudentNum(studentNum);
+		setIsStudentNumOpen(false);
+	};
+
 	return isLoading ? (
 		<Loading />
 	) : (
@@ -339,12 +349,20 @@ export default function EditProfile() {
 					<MajorText major={major === null}>{major === null ? "학과/전공" : major}</MajorText>
 					<img src={UnderArrow} />
 				</MajorTotal>
-				<BottomSheet
-					height={`487px`}
-					padding={`24px 5.12vw 0px 5.12vw`}
-					isOpen={isMajorOpen}
-					interaction={true}
-				>
+				<StudentNumTotal onClick={() => setIsStudentNumOpen(!isStudentNumOpen)}>
+					<Typography typoSize="T3_semibold" color={studentNum ? "Gray800" : "Gray400"}>
+						{studentNum || "학번"}
+					</Typography>
+					<img src={UnderArrow} />
+				</StudentNumTotal>
+				<BottomSheet isOpen={isStudentNumOpen} height={"390px"}>
+					<CS.SpaceBetween>
+						<MajorBtsTxt>{`학번`}</MajorBtsTxt>
+						<CloseImg src={Close} onClick={() => setIsStudentNumOpen(!isStudentNumOpen)} />
+					</CS.SpaceBetween>
+					<ScrollPicker options={STUDENT_NUM} height={220} onOptionSelect={handleStudentNum} />
+				</BottomSheet>
+				<BottomSheet height={`487px`} isOpen={isMajorOpen}>
 					<CS.SpaceBetween>
 						<MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
 						<CloseImg src={Close} onClick={() => setIsMajorOpen(!isMajorOpen)} />
@@ -358,7 +376,7 @@ export default function EditProfile() {
 					))}
 				</BottomSheet>
 				{isDepartmentOpen && (
-					<BottomSheet height={`630px`} padding={`24px 5.12vw 0px 5.12vw`} isOpen={isDepartmentOpen}>
+					<BottomSheet height={`630px`} isOpen={isDepartmentOpen}>
 						<CS.SpaceBetween>
 							<MajorBtsTxt>{`학과/전공`}</MajorBtsTxt>
 							<CloseImg src={Close} onClick={() => setIsDepartmentOpen(!isDepartmentOpen)} />
@@ -423,3 +441,7 @@ export default function EditProfile() {
 		</CS.Totalframe>
 	);
 }
+const StudentNumTotal = styled(MajorTotal)`
+	width: fit-content;
+	gap: 30px;
+`;

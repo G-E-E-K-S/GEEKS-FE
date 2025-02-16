@@ -165,7 +165,7 @@ export default function CompareUserInfo() {
 	});
 
 	const handleRemoveRoommate = () => {
-		refetchCancelRoommate();
+		refetchCancelRoommate().then((val) => val.status === "success" && navigate("/roommate"));
 	};
 	const [cancelRoommate, setCancelRoommate] = useState(false);
 
