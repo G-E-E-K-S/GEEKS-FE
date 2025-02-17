@@ -50,7 +50,7 @@ export default function FindRoommate() {
 				<Typography typoSize="H3" color="Gray800" style={{ marginBottom: "3.79vh" }}>
 					{"내가 원하는 기준으로\n룸메이트를 찾아보세요"}
 				</Typography>
-				<S.ConditionScroll onClick={() => setIsOpen(true)}>
+				{/* <S.ConditionScroll onClick={() => setIsOpen(true)}>
 					<Condition condition={`전공`} />
 					<Condition condition={`학번`} />
 					<Condition condition={`흡연`} />
@@ -58,7 +58,7 @@ export default function FindRoommate() {
 					<Condition condition={`외출`} />
 					<Condition condition={`장소`} />
 					<Condition condition={`성향`} />
-				</S.ConditionScroll>
+				</S.ConditionScroll> */}
 				{isExist ? (
 					<Column gap={12}>
 						{userData.map((user) => (
@@ -69,9 +69,10 @@ export default function FindRoommate() {
 								major={user.major}
 								ID={user.studentNum}
 								score={user.point}
+								hasBackground
 								intro={user.introduction ?? "this is sample"}
 								hasPadding
-								onClick={() => navigate("/detail/details/")}
+								onClick={() => navigate(`/detail/details/${user.matchingPointId}/${user.opponentId}`)}
 							/>
 						))}
 					</Column>

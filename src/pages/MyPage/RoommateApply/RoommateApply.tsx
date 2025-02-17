@@ -305,7 +305,7 @@ export default function RoommateApply() {
 													typoSize="T2_bold"
 													color="Gray800"
 												>{`룸메이트가 맺어졌어요!`}</Typography>
-												<S.OpponentProfileBox>
+												<S.OpponentProfileBox horizonAlign="center" verticalAlign="center">
 													<S.ProfileImg
 														src={
 															userData.image

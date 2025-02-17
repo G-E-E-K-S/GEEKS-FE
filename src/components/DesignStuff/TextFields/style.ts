@@ -11,12 +11,12 @@ export const InputInfos = styled.div<{ isSelected: boolean; isError?: boolean }>
 	transition: border-color 0.3s;
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<{ pageType?: "myPage" }>`
 	font-weight: 600;
 	width: 100%;
 	border: none;
 	outline: none;
-	font-size: 18px;
+	font-size: ${({ pageType }) => (pageType === "myPage" ? "18px" : "1.5rem")};
 	line-height: 24px;
 	letter-spacing: 0%;
 

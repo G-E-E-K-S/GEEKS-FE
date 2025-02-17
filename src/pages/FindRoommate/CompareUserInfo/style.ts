@@ -79,4 +79,26 @@ export const BottomEnroll = styled(Row)`
 	margin-bottom: -30px;
 	width: 100vw;
 	background-color: #fff;
+	z-index: 20;
+`;
+
+export const MyRoommateNoti = styled.div`
+	background-color: #fff4cd;
+	width: 100vw;
+	margin-left: calc(-50vw + 50%);
+	padding: 12px 8px;
+	color: #865800;
+	text-align: center;
+	margin-bottom: 24px;
+`;
+export const MyRoommateNotiTxt = styled.div`
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 18px;
+	margin-bottom: 2px;
+`;
+export const EndRoommate = styled(MyRoommateNotiTxt)`
+	border-bottom: 1px solid #865800;
+	width: max-content;
+	margin: 0 auto;
 `;

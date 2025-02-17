@@ -30,7 +30,7 @@ const PopupBox = styled.div`
 
 	&.active {
 		opacity: 1;
-		animation: vibrate 0.1s ease-in-out;
+		animation: vibrate 0.5s ease-in-out;
 	}
 
 	@keyframes vibrate {
@@ -59,7 +59,7 @@ const ErrorPopup = (props) => {
 	useEffect(() => {
 		const timeId = setTimeout(() => {
 			props.setShowPopup(false);
-		}, 2000);
+		}, 1000);
 
 		return () => {
 			clearTimeout(timeId);

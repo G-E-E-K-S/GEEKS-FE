@@ -74,7 +74,7 @@ const NickName = () => {
 				/>
 
 				<ErrorPopup
-					message={`닉네임은 한글 / 숫자 / 영어만 입력이 가능합니다`}
+					message={`닉네임은 한글 / 숫자 / 영어만 입력이 가능해요`}
 					setShowPopup={setErrorPopup}
 					isShowPopup={errorPopup}
 					bottom={"18.72"}

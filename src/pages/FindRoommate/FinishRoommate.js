@@ -7,7 +7,7 @@ import SecessionIcon from "../../assets/img/MyPage/secessionModal.svg";
 const Background = styled.div`
   background: #00000033;
   position: relative;
-  z-index: 1;
+  z-index: 30;
 `;
 const WFull = styled.div`
   width: 100%;

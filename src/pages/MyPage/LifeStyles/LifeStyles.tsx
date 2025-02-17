@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../../axios/BaseUrl";
-import styled from "styled-components";
 import * as CS from "../../../components/Common/CommonStyle";
 import * as S from "./style";
 import LifeStyle from "../../../components/Main/LifeStyle";
@@ -65,20 +64,23 @@ export default function LifeStyles() {
 		queryFn: async () => {
 			const res = await API.get(`/api/v1/user/detail/get`);
 			return res.data;
-		}
+		},
+		retry: 2
 	});
 
 	useEffect(() => {
 		if (!data) return;
-		setLifestyleSelections({
-			smoke: data.data.smoke === "SMOKER" ? "흡연자" : "비흡연자",
-			habit: data.data.habit === "NONHABIT" ? "잠버릇 없어요" : "잠버릇 있어요",
-			ear: data.data.ear === "DARK" ? "귀 어두워요" : "귀 밝아요",
-			activityTime: data.data.activityTime === "DAWN" ? "새벽형이에요" : "아침형이에요",
-			outing: data.data.outing === "OUTSIDE" ? "나가는 걸 좋아해요" : "집에 있는 걸 좋아해요",
-			cleaning: data.data.cleaning === "DIRTY" ? "주기적으로 청소해요" : "더러워지면 청소해요",
-			tendency: data.data.tendency === "ALONE" ? "혼자 조용히 지내요" : "함께 놀고 싶어요"
-		});
+		if (data.success) {
+			setLifestyleSelections({
+				smoke: data.data.smoke === "SMOKER" ? "흡연자에요" : "비흡연자에요",
+				habit: data.data.habit === "NONHABIT" ? "잠버릇 없어요" : "잠버릇 있어요",
+				ear: data.data.ear === "DARK" ? "귀 어두워요" : "귀 밝아요",
+				activityTime: data.data.activityTime === "DAWN" ? "새벽형이에요" : "아침형이에요",
+				outing: data.data.outing === "OUTSIDE" ? "나가는 걸 좋아해요" : "집에 있는 걸 좋아해요",
+				cleaning: data.data.cleaning === "DIRTY" ? "주기적으로 청소해요" : "더러워지면 청소해요",
+				tendency: data.data.tendency === "ALONE" ? "혼자 조용히 지내요" : "함께 놀고 싶어요"
+			});
+		}
 	}, [data]);
 
 	const handleApply = () => {
@@ -87,7 +89,7 @@ export default function LifeStyles() {
 		});
 	};
 	const isAllSelected = Object.values(lifestyleSelections).every((value) => value !== "");
-
+	console.log(';;lifestyleSelections?.["smoke"]', lifestyleSelections?.["smoke"]);
 	return (
 		<CS.Totalframe>
 			<CS.ScreenComponent navigation={true}>
@@ -99,44 +101,44 @@ export default function LifeStyles() {
 				</CS.Header>
 				<LifeStyle
 					title="흡연"
-					options={["흡연자", "비흡연자"]}
-					selected={lifestyleSelections["smoke"]}
+					options={["흡연자에요", "비흡연자에요"]}
+					selected={lifestyleSelections?.["smoke"]}
 					onSelect={(value) => handleSelect("smoke", value)}
 				/>
 				<LifeStyle
 					title="잠버릇"
 					options={["잠버릇 있어요", "잠버릇 없어요"]}
-					selected={lifestyleSelections["habit"]}
+					selected={lifestyleSelections?.["habit"]}
 					onSelect={(value) => handleSelect("habit", value)}
 				/>
 				<LifeStyle
 					title="잠귀"
 					options={["귀 밝아요", "귀 어두워요"]}
-					selected={lifestyleSelections["ear"]}
+					selected={lifestyleSelections?.["ear"]}
 					onSelect={(value) => handleSelect("ear", value)}
 				/>
 				<LifeStyle
 					title="활동 시간"
 					options={["아침형이에요", "새벽형이에요"]}
-					selected={lifestyleSelections["activityTime"]}
+					selected={lifestyleSelections?.["activityTime"]}
 					onSelect={(value) => handleSelect("activityTime", value)}
 				/>
 				<LifeStyle
 					title="외출"
 					options={["집에 있는 걸 좋아해요", "나가는 걸 좋아해요"]}
-					selected={lifestyleSelections["outing"]}
+					selected={lifestyleSelections?.["outing"]}
 					onSelect={(value) => handleSelect("outing", value)}
 				/>
 				<LifeStyle
 					title="청소"
 					options={["주기적으로 청소해요", "더러워지면 청소해요"]}
-					selected={lifestyleSelections["cleaning"]}
+					selected={lifestyleSelections?.["cleaning"]}
 					onSelect={(value) => handleSelect("cleaning", value)}
 				/>
 				<LifeStyle
 					title="성향"
 					options={["혼자 조용히 지내요", "함께 놀고 싶어요"]}
-					selected={lifestyleSelections["tendency"]}
+					selected={lifestyleSelections?.["tendency"]}
 					onSelect={(value) => handleSelect("tendency", value)}
 				/>
 			</CS.ScreenComponent>
@@ -154,8 +156,7 @@ export default function LifeStyles() {
 					isApply={isAllSelected}
 				>
 					<Typography typoSize="T3_semibold" color={isAllSelected ? "Black" : "Gray400"}>
-						{"적용하기"}
-						{/* {receiveData?.exist ? "수정하기" : "등록하기"} */}
+						{"등록하기"}
 					</Typography>
 				</S.ApplyBtn>
 			</S.BottomMenu>

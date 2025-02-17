@@ -8,9 +8,10 @@ interface MenuListProps {
 	icon?: string;
 	isEnroolListStyle?: boolean;
 	menuName: string;
+	isEnrollListStyle?: boolean;
 	onClick?: (e: React.MouseEvent<HTMLImageElement>) => void;
 }
-export default function MenuList({ icon, menuName, isEnroolListStyle, onClick }: MenuListProps) {
+export default function MenuList({ icon, menuName, isEnroolListStyle, isEnrollListStyle, onClick }: MenuListProps) {
 	return (
 		<S.TotalMenu horizonAlign="distribute" verticalAlign="center" width="w-full" onClick={onClick}>
 			<Row gap={12}>
@@ -19,8 +20,10 @@ export default function MenuList({ icon, menuName, isEnroolListStyle, onClick }:
 					{menuName}
 				</Typography>
 			</Row>
-			{isEnroolListStyle && <S.RedCircle />}
-			<S.Arrow src={MenuArrow} />
+			<Row verticalAlign="center">
+				{isEnroolListStyle && <S.RedCircle />}
+				<S.Arrow src={MenuArrow} />
+			</Row>
 		</S.TotalMenu>
 	);
 }

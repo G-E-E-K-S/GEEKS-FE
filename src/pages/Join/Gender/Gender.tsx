@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as CS from "../../../components/Common/CommonStyle";
@@ -22,6 +22,10 @@ export default function Gender() {
 		gender === "FEMALE" ? setGender("FEMALE") : setGender("MALE");
 		setIsNextPage(true);
 	};
+
+	useEffect(() => {
+		setIsNextPage(Boolean(gender));
+	}, []);
 
 	return (
 		<CS.Totalframe>

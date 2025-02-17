@@ -13,6 +13,7 @@ interface textFieldsType {
 	icon?: string;
 	inputType?: "password" | "text" | "number";
 	maxLength?: number;
+	pageType?: "myPage";
 	onChange: (value: string) => void;
 	onClick?: (e: React.MouseEvent<HTMLImageElement>) => void;
 }
@@ -26,6 +27,7 @@ export default function TextFields({
 	icon,
 	inputType,
 	maxLength,
+	pageType,
 	onChange,
 	onClick
 }: textFieldsType) {
@@ -41,6 +43,7 @@ export default function TextFields({
 					type={inputType}
 					maxLength={maxLength}
 					onChange={(e) => onChange(e.target.value)}
+					pageType={pageType}
 				/>
 				<Typography typoSize="T1" color="Gray400">
 					{fixedText}

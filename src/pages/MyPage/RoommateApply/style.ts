@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Row from "../../../components/Common/Layouts/Row";
+import Column from "../../../components/Common/Layouts/Column";
 
 export const ApplyList = styled(Row)<{ isChoose: boolean; isLeft: boolean }>`
 	position: relative;
@@ -80,15 +81,10 @@ export const SuccessGif = styled.img`
 	top: -133px;
 `;
 
-export const OpponentProfileBox = styled.div`
+export const OpponentProfileBox = styled(Column)`
 	width: 100%;
-	height: 150px;
 	border-radius: 12px;
-	background: #f7f7f7;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+	margin-top: 32px;
 `;
 export const ProfileImg = styled.img`
 	width: 56px;

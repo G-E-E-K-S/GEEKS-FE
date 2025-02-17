@@ -1,7 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../../axios/BaseUrl";
 
+import * as S from "./style";
 import * as CS from "../../../components/Common/CommonStyle";
 import PageName from "../../../components/Main/PageName";
 import UserInfo from "../../../components/Main/UserInfo";
@@ -30,11 +31,13 @@ import Column from "../../../components/Common/Layouts/Column";
 import UserProfile from "../../../components/Main/UserProfile/UserProfile";
 import { UserProfileType } from "../../../types/userProfileType";
 import { useQuery } from "@tanstack/react-query";
+import { useGetToken } from "../../../store/useGetToken";
 
 export default function MyPage() {
 	const [toggle, setToggle] = useState(true);
 	const navigate = useNavigate();
 	const [userInfo, setUserInfo] = useState<UserProfileType>();
+	const [roommateInfo, setRoommateIinfo] = useState<UserProfileType>();
 	// const [userMajor, setUserMajor] = useState("");
 
 	const clickedToggle = () => {
@@ -42,7 +45,7 @@ export default function MyPage() {
 		setToggle(toggleVal);
 		async function fetchShowProfile() {
 			try {
-				const res = await API.get("/member/open?open=" + toggleVal);
+				await API.patch("/api/v1/user/profile/change/open");
 			} catch (error) {
 				console.error(error);
 			}
@@ -50,24 +53,36 @@ export default function MyPage() {
 		fetchShowProfile();
 	};
 
-	const { data, isLoading } = useQuery({
-		queryKey: ["myData"],
+	const { data: top3UserData } = useQuery({
+		queryKey: ["getTop3User"],
 		queryFn: async () => {
-			const response = await API.get(`/api/v1/user/profile`);
-			return response.data.data;
+			const res = await API.get(`/api/v1/matching/points/top3`);
+			return res.data.data;
 		}
 	});
 
-	useMemo(() => {
+	const { data, isLoading } = useQuery({
+		queryKey: ["myData"],
+		queryFn: async () => {
+			const response = await API.get(`/api/v1/user/mypage`);
+			return response.data.data;
+		},
+		retry: 2,
+		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000)
+	});
+
+	useEffect(() => {
 		if (!data) return;
 		setUserInfo(data);
+		setRoommateIinfo(data.myRoommate);
 	}, [data]);
 
 	const Logout = () => {
 		async function fetchLogOut() {
 			try {
-				const res = await API.get("/logout");
-				if (res.status == 200) {
+				const res = await API.post("/api/v1/user/logout");
+				if (res.data.success) {
+					useGetToken.getState().resetToken();
 					navigate("/welcome", {
 						state: {
 							prev: "logout"
@@ -92,27 +107,34 @@ export default function MyPage() {
 					</Typography>
 				</CS.Header>
 				<UserProfile
-					image={userInfo?.image}
+					image={userInfo.image}
 					ID={userInfo?.studentNum}
 					major={userInfo.major}
 					nickName={userInfo.nickname}
 					smoke={userInfo.smoke}
+					intro={userInfo.introduction}
 					activeCheck={false}
 					isMe
 				/>
-				{/* TODO */}
-				{/* {userInfo.introduction?.length !== 0 && <SelfIntro>{userInfo.introduction}</SelfIntro>} */}
-				{/* <ShowMyProfile>
-              <div>
-                <ShowProfileTxt>내 프로필 노출하기</ShowProfileTxt>
-                <ShowProfileSubtxt>
-                  룸메이트가 맺어지면 내 프로필이 숨겨져요
-                </ShowProfileSubtxt>
-              </div>
-              <ToggleBtn onClick={clickedToggle} toggle={toggle}>
-                <Circle toggle={toggle} />
-              </ToggleBtn>
-            </ShowMyProfile> */}
+				{roommateInfo && (
+					<S.RoommateWrapper
+						onClick={() =>
+							navigate(`/detail/details/${roommateInfo.matchingPointId}/${roommateInfo.opponentId}`)
+						}
+					>
+						<Typography typoSize="B3_medium" color="Gray700" style={{ marginBottom: "10px" }}>
+							{"내 룸메이트"}
+						</Typography>
+						<UserProfile
+							image={roommateInfo?.image}
+							ID={roommateInfo?.studentNum}
+							major={roommateInfo.major}
+							nickName={roommateInfo.nickname}
+							smoke={roommateInfo.smoke}
+							activeCheck={false}
+						/>
+					</S.RoommateWrapper>
+				)}
 				<div style={{ padding: "16px 0", marginTop: "20px" }}>
 					<Row horizonAlign="distribute">
 						<Column gap={4}>
@@ -131,8 +153,8 @@ export default function MyPage() {
 				<MenuList
 					icon={enrollLifeStyle}
 					menuName={`생활 습관 등록하기`}
-					isEnroolListStyle={!true}
 					onClick={() => navigate("/lifestyle")}
+					isEnroolListStyle={!top3UserData?.exists}
 				/>
 				<MenuList icon={saveList} menuName={`룸메이트 저장 목록`} onClick={() => navigate("/savelist")} />
 				<MenuList
@@ -148,11 +170,11 @@ export default function MyPage() {
 				{/* <MenuList icon={question} menuName={`자주 묻는 질문`} onClick={() => navigate("/faq")} /> */}
 				<MenuList icon={List} menuName={`약관 및 정책`} onClick={() => navigate("/termpolicy")} />
 				<MenuList icon={logout} menuName={`로그아웃`} onClick={() => Logout()} />
-				<MenuList
+				{/* <MenuList
 					icon={closeIcon}
 					menuName={`서비스 탈퇴`}
 					// onClick={() => navigate("/secessionreason", { state: { userName: userInfo.nickname } })}
-				/>
+				/> */}
 			</CS.ScreenComponent>
 			<NavigationBar type={`mypage`} />
 		</CS.Totalframe>

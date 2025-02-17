@@ -26,7 +26,7 @@ export default function LifeStyle({
 	onSelect: (value: string) => void;
 	isLast?: boolean;
 }) {
-	console.log(selected,'111');
+
 	return (
 		<>
 			<Typography typoSize="B2_medium" color="Gray500" style={{ marginBottom: "8px" }}>

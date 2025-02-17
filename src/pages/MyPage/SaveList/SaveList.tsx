@@ -19,6 +19,7 @@ import UserProfile from "../../../components/Main/UserProfile/UserProfile";
 import Confirm from "../../../components/DesignStuff/Confirm/Confirm";
 import { useQuery } from "@tanstack/react-query";
 import { UserProfileType } from "../../../types/userProfileType";
+import Column from "../../../components/Common/Layouts/Column";
 
 const CheckImg = styled.img`
 	cursor: pointer;
@@ -32,6 +33,7 @@ export default function LifeStyle() {
 	const [checkToDelete, setCheckToDelete] = useState<number[]>([]);
 	const [showPopup, setShowPopup] = useState(false);
 	const [saveList, setSaveList] = useState<(UserProfileType & Bookmark)[]>([]);
+	const navigate = useNavigate();
 	const handleEdit = () => {
 		setActiveEdit(true);
 	};
@@ -65,12 +67,13 @@ export default function LifeStyle() {
 		if (checkToDelete.includes(bookmarkId))
 			setCheckToDelete(checkToDelete.filter((nowBookmarkId) => nowBookmarkId !== bookmarkId));
 	};
-
+	const [isDone, setIsDone] = useState(false);
 	const handleDelete = () => {
 		refetch().then((res) => {
 			if (res.data === "success") {
 				setShowPopup(true);
 				setSaveList(saveList.filter((item) => !checkToDelete.includes(item.bookmarkId)));
+				setIsDone(true);
 			}
 		});
 	};
@@ -84,8 +87,14 @@ export default function LifeStyle() {
 					<Row horizonAlign="distribute">
 						<Header title={"저장 목록"} />
 						{activeEdit ? (
-							<S.Button isDone={showPopup} onClick={() => setActiveEdit(false)}>
-								<Typography typoSize="T4_semibold" color={showPopup ? "Black" : "Gray400"}>
+							<S.Button
+								isDone={showPopup}
+								onClick={() => {
+									setActiveEdit(false);
+									// navigate("/mypage");
+								}}
+							>
+								<Typography typoSize="T4_semibold" color={isDone ? "Black" : "Gray400"}>
 									{"완료"}
 								</Typography>
 							</S.Button>
@@ -101,20 +110,29 @@ export default function LifeStyle() {
 					color="Gray500"
 					style={{ margin: "16px 0 12px 0" }}
 				>{`총 ${saveList.length}명`}</Typography>
-				{saveList?.map((userData) => (
-					<Row horizonAlign="center" verticalAlign="center" onClick={() => handleCheck(userData.bookmarkId)}>
-						{activeEdit && <CheckImg src={checkToDelete.includes(userData.bookmarkId) ? Check : NoCheck} />}
-						<UserProfile
-							activeCheck={checkToDelete.includes(userData.bookmarkId)}
-							hasPadding
-							image={userData.image}
-							ID={userData.studentNum}
-							major={userData.major}
-							nickName={userData.nickname}
-							smoke={userData.smoke}
-						/>
-					</Row>
-				))}
+				<Column gap={12} width="w-full">
+					{saveList?.map((userData) => (
+						<Row
+							horizonAlign="center"
+							verticalAlign="center"
+							width="w-full"
+							onClick={() => handleCheck(userData.bookmarkId)}
+						>
+							{activeEdit && (
+								<CheckImg src={checkToDelete.includes(userData.bookmarkId) ? Check : NoCheck} />
+							)}
+							<UserProfile
+								activeCheck={checkToDelete.includes(userData.bookmarkId)}
+								hasPadding
+								image={userData.image}
+								ID={userData.studentNum}
+								major={userData.major}
+								nickName={userData.nickname}
+								smoke={userData.smoke}
+							/>
+						</Row>
+					))}
+				</Column>
 				{activeEdit && (
 					<Button text="삭제하기" isNextPage={checkToDelete.length > 0} onClick={() => handleDelete()} />
 				)}

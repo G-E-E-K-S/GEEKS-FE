@@ -8,9 +8,9 @@ export const Button = styled.div<{ isNextPage?: boolean }>`
 	bottom: 10.17vh;
 	width: 89.74vw;
 	height: 64px;
-	z-index: 100;
+	z-index: 15;
 	background-color: ${({ isNextPage }) => (isNextPage ? "#FFC700" : "#F7F7F7")};
-	/* pointer-events: ${({ isNextPage }) => (isNextPage ? "auto" : "none")}; */
+	pointer-events: ${({ isNextPage }) => (isNextPage ? "auto" : "none")};
 	border-radius: 12px;
 
 	color: ${({ isNextPage }) => (isNextPage ? "#333" : "#B7B7B7")};
@@ -20,6 +20,6 @@ export const Button = styled.div<{ isNextPage?: boolean }>`
 	line-height: 24px;
 	cursor: pointer;
 	&:active {
-		background: #ecaa00;
+		background-color: ${({ isNextPage }) => (isNextPage ? "#ecaa00" : "transparent")};
 	}
 `;

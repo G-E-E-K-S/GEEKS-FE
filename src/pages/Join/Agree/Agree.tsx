@@ -12,33 +12,20 @@ import Row from "../../../components/Common/Layouts/Row";
 import Button from "../../../components/DesignStuff/Button/Button";
 import HeaderMenu from "../../../components/Common/HeaderMenu";
 import CheckRadioButton from "../../../components/DesignStuff/CheckRadioButton/CheckRadioButton";
+import Typography from "../../../components/Common/Layouts/Typography";
 
-const AgreeTotal = styled.div`
+const AgreeTotal = styled(Row)<{ isTotalCheck: boolean }>`
 	width: 100%;
-	height: 56px;
-	text-align: center;
+	height: 60px;
 	border-radius: 12px;
+	padding: 19px 20px;
 
 	margin-top: 47px;
 	margin-bottom: 32px;
-	padding: 16px 20px;
+	background-color: ${({ theme, isTotalCheck }) => (isTotalCheck ? theme.Yellow50 : theme.Gray50)};
+	border: 1px solid ${({ theme, isTotalCheck }) => (isTotalCheck ? theme.Yellow600 : "transparent")};
 `;
-const AgreeAll = styled.div`
-	margin-left: 8px;
-	margin-right: 8px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 1rem;
-	font-weight: 600;
-	line-height: 24px;
-	text-align: left;
-`;
-const IncludeSelect = styled(AgreeAll)`
-	font-size: 0.95rem;
-	font-weight: 500;
-	color: #949494;
-`;
+
 const AgreeSection = styled.div`
 	display: flex;
 	margin-bottom: 24px;
@@ -63,20 +50,34 @@ const Choice = styled(Essential)`
 	color: #949494;
 `;
 export default function Agree() {
-	const [service, setService] = useState(false);
-	const [personal, setPersonal] = useState(false);
-	const [location, setLocation] = useState(false);
-	const [marketing, setMarketing] = useState(false);
-	const [isTotalCheck, setIsTotalCheck] = useState(false);
 	const navigate = useNavigate();
+	const [checkedItems, setCheckedItems] = useState({
+		total: false,
+		service: false,
+		personal: false,
+		location: false,
+		marketing: false
+	});
 
-	const handleCheck = () => {
-		setIsTotalCheck(true);
-		setService(true);
-		setPersonal(true);
-		setLocation(true);
-		setMarketing(true);
+	const handleCheckAll = () => {
+		const newState = {
+			total: true,
+			service: true,
+			personal: true,
+			location: true,
+			marketing: true
+		};
+		setCheckedItems(newState);
 	};
+
+	const handleCheckItem = (key) => {
+		const newState = { ...checkedItems, [key]: !checkedItems[key] };
+
+		newState.total = newState.service && newState.personal && newState.location && newState.marketing;
+
+		setCheckedItems(newState);
+	};
+
 	const handleNextPage = () => {
 		navigate("/inputemail");
 	};
@@ -87,40 +88,44 @@ export default function Agree() {
 					<HeaderMenu />
 				</c.Header>
 				<MainText maintitle={`편리한 이용을 위해\n아래 약관에 동의해 주세요`} />
-				{/* <AgreeTotal isTotalCheck={isTotalCheck}>
-						<CheckRadioButton onClick={}/>
-						<AgreeAll isTotalCheck={isTotalCheck}>{`전체 동의하기`}</AgreeAll>
-						<IncludeSelect>{`선택 동의 포함`}</IncludeSelect>
-					
-				</AgreeTotal> */}
+				<AgreeTotal
+					gap={8}
+					verticalAlign="center"
+					isTotalCheck={checkedItems.total}
+					onClick={() => handleCheckAll()}
+				>
+					<img src={checkedItems.total ? FillCheck : Check} />
+					<Typography typoSize="B1_semibold" color="Gray800">{`전체 동의하기`}</Typography>
+					<Typography typoSize="B2_medium" color="Gray500">{`선택 동의 포함`}</Typography>
+				</AgreeTotal>
 				<AgreeSection>
-					<img src={service ? FillCheck : Check} onClick={() => setService(!service)} />
+					<img src={checkedItems.service ? FillCheck : Check} onClick={() => handleCheckItem("service")} />
 					<Essential>{`필수`}</Essential>
 					<AgreeText onClick={() => navigate("/servicetxt")}>{`서비스 이용 약관`}</AgreeText>
 				</AgreeSection>
 				<AgreeSection>
-					<img src={personal ? FillCheck : Check} onClick={() => setPersonal(!personal)} />
+					<img src={checkedItems.personal ? FillCheck : Check} onClick={() => handleCheckItem("personal")} />
 					<Essential>{`필수`}</Essential>
 					<AgreeText onClick={() => navigate("/personalinfotxt")}>{`개인정보 수집 및 이용`}</AgreeText>
 				</AgreeSection>
 				<AgreeSection>
-					<img src={location ? FillCheck : Check} onClick={() => setLocation(!location)} />
+					<img src={checkedItems.location ? FillCheck : Check} onClick={() => handleCheckItem("location")} />
 					<Essential>{`필수`}</Essential>
 					<AgreeText onClick={() => navigate("/locationtxt")}>{`위치정보 수집 및 이용`}</AgreeText>
 				</AgreeSection>
 				<AgreeSection>
 					<img
-						src={marketing ? FillCheck : Check}
-						onClick={() => setMarketing(marketing === false ? true : false)}
+						src={checkedItems.marketing ? FillCheck : Check}
+						onClick={() => handleCheckItem("marketing")}
 					/>
 					<Choice>{`선택`}</Choice>
 					<AgreeText onClick={() => navigate("/marketingtxt")}>{`마케팅 정보 수신 동의`}</AgreeText>
 				</AgreeSection>
 				<Button
 					text={"동의하기"}
-					isNextPage={service && personal && location}
+					isNextPage={checkedItems.service && checkedItems.personal && checkedItems.location}
 					onClick={() => handleNextPage()}
-				></Button>
+				/>
 			</c.ScreenComponent>
 		</c.Totalframe>
 	);

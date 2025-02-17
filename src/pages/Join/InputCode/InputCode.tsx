@@ -137,8 +137,8 @@ const InputCode = () => {
 
 		async function fetchCode() {
 			try {
-				const res = await API.get(`/api/v1/user/auth/code/${email}/${code}`);
-				if (res.data === "success") {
+				const res = await API.get(`/api/v1/user/auth/code/${email + "@sangmyung.kr"}/${code}`);
+				if (res.data.success) {
 					navigate("/password");
 				} else {
 					setIsErrorPopup(true);
